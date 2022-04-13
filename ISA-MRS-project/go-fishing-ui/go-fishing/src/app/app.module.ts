@@ -11,9 +11,11 @@ import { RouterModule } from '@angular/router';
 import { MaterialModule } from './shared/material/material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule } from '@angular/forms';
+import { CottageModule } from './features/cottage/cottage.module';
+import { ReservationModule } from './features/reservation/reservation.module';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations : [AppComponent],
   imports: [
     BrowserModule,
     RouterModule,
@@ -25,6 +27,8 @@ import { FormsModule } from '@angular/forms';
     MaterialModule,
     FormsModule,
     FlexLayoutModule,
+    CottageModule,
+    ReservationModule
   ],
   providers: [],
   bootstrap: [AppComponent],
