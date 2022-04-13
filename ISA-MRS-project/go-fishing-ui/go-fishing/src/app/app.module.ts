@@ -12,6 +12,7 @@ import { MaterialModule } from './shared/material/material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule } from '@angular/forms';
 import { CottageModule } from './features/cottage/cottage.module';
+import { ReservationModule } from './features/reservation/reservation.module';
 
 @NgModule({
   declarations : [AppComponent],
@@ -26,7 +27,8 @@ import { CottageModule } from './features/cottage/cottage.module';
     MaterialModule,
     FormsModule,
     FlexLayoutModule,
-    CottageModule
+    CottageModule,
+    ReservationModule
   ],
   providers: [],
   bootstrap: [AppComponent],
