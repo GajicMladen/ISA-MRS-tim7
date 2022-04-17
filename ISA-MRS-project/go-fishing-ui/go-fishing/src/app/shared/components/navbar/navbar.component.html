@@ -1,17 +1,18 @@
 <mat-toolbar color="primary" md-position-mode="target-right target" class="flexExpand">
     <span>GoFishing!</span>
     <span class="right-align">
-        <button mat-raised-button color="primary" routerLink="/login" routerLinkActive="active" *ngIf="showLoginButton" (click)="loginClicked()">
+        <button mat-raised-button color="primary" routerLink="/login" routerLinkActive="active" *ngIf="showLoginButton">
             <fa-icon class="fa-2x" [icon]="loginIcon" ></fa-icon>
             Log In
         </button>
 
-        <button mat-raised-button color="primary" class="left-spacing" routerLink="/" routerLinkActive="active" *ngIf="showRegisterButton">
+        <button mat-raised-button color="primary" class="left-spacing" routerLink="/register" routerLinkActive="active" *ngIf="showRegisterButton"
+        >
             <fa-icon class="fa-2x" [icon]="registerIcon"></fa-icon>
             Register
         </button>
 
-        <button mat-raised-button color="primary" class="left-spacing" routerLink="/" routerLinkActive="active" *ngIf="showHomeButton" (click)="homeClicked()">
+        <button mat-raised-button color="primary" class="left-spacing" routerLink="/" routerLinkActive="active" *ngIf="showHomeButton">
             <fa-icon class="fa-2x" [icon]="homeIcon"></fa-icon>
             Home
         </button>

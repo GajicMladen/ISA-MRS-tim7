@@ -1,0 +1,55 @@
+<mat-card>
+    <mat-card-content>
+        <form>
+            <h2>Register</h2>
+            
+            <!-- E-mail -->
+            <mat-form-field>
+                <input matInput placeholder="E-mail" name="username" required>
+            </mat-form-field>
+
+            <!-- Password -->
+            <mat-form-field>
+                <input matInput type="password" placeholder="Password" name="password" required>
+            </mat-form-field>
+
+            <!-- Confirm Password -->
+            <mat-form-field>
+                <input matInput type="password" placeholder="Confirm Password" name="confirmPassword" required>
+            </mat-form-field>
+
+            <!-- Name -->
+            <mat-form-field>
+                <input matInput placeholder="Name" name="name" required>
+            </mat-form-field>
+
+            <!-- Surname -->
+            <mat-form-field>
+                <input matInput placeholder="Surname" name="surname" required>
+            </mat-form-field>
+
+            <!-- Country -->
+            <mat-form-field>
+                <input matInput placeholder="Country" name="country" required>
+            </mat-form-field>
+
+            <!-- City/Town -->
+            <mat-form-field>
+                <input matInput placeholder="City/Town" name="cityTown" required>
+            </mat-form-field>
+
+            <!-- Address -->
+            <mat-form-field>
+                <input matInput placeholder="Address" name="address" required>
+            </mat-form-field>
+            
+            <!-- Phone Number -->
+            <mat-form-field>
+                <input matInput placeholder="Phone Number" name="phoneNumber" required>
+            </mat-form-field>
+
+            <button mat-raised-button color="primary">Register</button>
+            <h3 class="top-spacing">Already have an account? <a routerLink="/login" routerLinkActive="active">Log In!</a></h3>
+        </form>
+    </mat-card-content>
+</mat-card>
