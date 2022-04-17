@@ -231,5 +231,61 @@ label.radio input:checked+span::before {
 }
 
 .card-body {
-    padding: 0.3rem 0.3rem 0.2rem
+    padding:0;
+}
+
+.mt-50 {
+    margin-top: 50px
+}
+
+.mb-50 {
+    margin-bottom: 50px
+}
+
+.bg-teal-400 {
+    background-color: #26a69a
+}
+
+a {
+    text-decoration: none !important
+}
+.actions{
+    display: grid;
+    grid-template-columns: minmax(300px, 100%);
+    gap: 10px;
+}
+.action-card-body {
+    padding: 30px 15px;
+    background: #e9ecff;
+}
+.action-info{
+
+    display: grid;
+    grid-template-columns: 30% 70%;
+    grid-gap: 10px;
+}
+
+.action-img{
+
+    width: 150px;
+    margin-right: 15px;
+}
+.action-info-d {
+    background: #aed5ff;
+    border-radius: 20px 0;
+    text-align: center;
+    font-size: 1.1em;
+    padding: 5px;
+}
+
+.action-price{
+
+    background: #fecc35;
+    border-radius: 17px 17px 0 0;
+}
+
+.action-btn-r {
+
+    border-radius: 0 0 15px 15px;
+
 }
