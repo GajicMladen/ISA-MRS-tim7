@@ -4,13 +4,14 @@ import { StartpageLoginComponent } from './features/startpage/components/startpa
 import { StartpagePreviewListComponent } from './features/startpage/components/startpage-preview-list/startpage-preview-list.component';
 import { CottageProfilepageComponent} from './features/cottage/components/cottage-profilepage/cottage-profilepage.component'
 import { ReservationStartpageComponent } from './features/reservation/components/reservation-startpage/reservation-startpage.component';
-
+import { CottageOwnerpageComponent } from './features/cottage/components/cottage-ownerpage/cottage-ownerpage.component';
 
 const routes: Routes = [
   { path: '', component: StartpagePreviewListComponent },
   { path: 'login', component: StartpageLoginComponent },
   { path: 'cottageProfile', component: CottageProfilepageComponent },
   { path: 'reservationStart', component: ReservationStartpageComponent },
+  { path: 'cottageOwner' , component: CottageOwnerpageComponent },
   //Ubaciti komponentu za not found
   { path: '**', component: StartpagePreviewListComponent },
 ];
