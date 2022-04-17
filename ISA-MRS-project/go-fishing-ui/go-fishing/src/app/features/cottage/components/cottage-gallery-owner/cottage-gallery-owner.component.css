@@ -100,6 +100,7 @@
             font-size: 12px;
         }
     }
+    
     .single_advisor_profile:hover .advisor_thumb::after, 
     .single_advisor_profile:focus .advisor_thumb::after {
         background-color: #070a57;
@@ -138,6 +139,10 @@
         color: #ffffff;
     }
 
+    .single_advisor_profile:hover a,
+    .single_advisor_profile:focus a {
+        color: #5187f4;
+    }
     .cottage-location{
         margin: 0;
         -webkit-transition-duration: 500ms;
@@ -188,4 +193,9 @@
         height: 3px;
         background-color: red;
         content: "";
+    }
+
+    a {
+        text-decoration: none;
+        color: #010610;
     }
