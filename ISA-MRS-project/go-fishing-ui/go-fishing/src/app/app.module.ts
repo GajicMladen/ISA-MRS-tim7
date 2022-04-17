@@ -11,6 +11,7 @@ import { RouterModule } from '@angular/router';
 import { MaterialModule } from './shared/material/material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [AppComponent],
@@ -25,6 +26,7 @@ import { FormsModule } from '@angular/forms';
     MaterialModule,
     FormsModule,
     FlexLayoutModule,
+    ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

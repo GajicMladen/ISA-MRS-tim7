@@ -5,6 +5,7 @@ import { StartpageLoginComponent } from './components/startpage-login/startpage-
 import { SharedModule } from 'src/app/shared/shared.module';
 import { StartpageRegisterComponent } from './components/startpage-register/startpage-register.component';
 import { RouterModule } from '@angular/router';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -12,6 +13,6 @@ import { RouterModule } from '@angular/router';
     StartpageLoginComponent,
     StartpageRegisterComponent,
   ],
-  imports: [CommonModule, SharedModule, RouterModule],
+  imports: [CommonModule, SharedModule, RouterModule, ReactiveFormsModule],
 })
 export class StartpageModule {}
