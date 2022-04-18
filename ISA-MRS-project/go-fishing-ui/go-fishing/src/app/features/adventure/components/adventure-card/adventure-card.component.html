@@ -1,0 +1,29 @@
+<div class="container mt-4 mb-4 p-3 d-flex justify-content-center">
+    <div class="card p-4">
+        <div class=" image d-flex flex-column justify-content-center align-items-center">
+            <img src="{{adventure.images[0]}}" height="100" width="100" />
+            <br />
+            <span class="name mt-3">{{adventure.name}}</span>
+            <div class="d-flex flex-row justify-content-center align-items-center gap-2">
+            </div>
+            <div class="d-flex flex-row justify-content-center align-items-center mt-3">
+                <span class="number">12 <span class="follow">Pratilaca</span></span> 
+            </div>
+            <div class=" d-flex mt-2"> 
+                <a href="adventureProfile">
+                    <button mat-raised-button color="primary" id="visitBtn">Poseti</button>
+                </a>
+            </div>
+            <div class="text mt-3"> 
+                <span>{{adventure.promoDescription}}</span> 
+            </div>
+            <br />
+            
+            <div><span class="font-weight-bold">Instruktor: </span><span>{{adventure.instructor}}</span></div>
+            <div><span class="font-weight-bold">Adresa: </span><span>{{adventure.address}}</span></div>
+            <br />
+            <br />
+            <div><span class="font-weight-bold">Cena: </span><span class="font-weight-bold">{{adventure.price | currency}}</span></div>
+        </div>
+    </div>
+</div>

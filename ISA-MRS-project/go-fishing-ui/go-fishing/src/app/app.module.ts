@@ -13,6 +13,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule } from '@angular/forms';
 import { CottageModule } from './features/cottage/cottage.module';
 import { ReservationModule } from './features/reservation/reservation.module';
+import { AdventureModule } from './features/adventure/adventure.module';
 
 @NgModule({
   declarations : [AppComponent],
@@ -28,7 +29,8 @@ import { ReservationModule } from './features/reservation/reservation.module';
     FormsModule,
     FlexLayoutModule,
     CottageModule,
-    ReservationModule
+    ReservationModule,
+    AdventureModule
   ],
   providers: [],
   bootstrap: [AppComponent],
