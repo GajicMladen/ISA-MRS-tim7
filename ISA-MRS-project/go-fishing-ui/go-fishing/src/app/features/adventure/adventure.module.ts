@@ -4,13 +4,15 @@ import { AdventureProfilpageComponent } from './components/adventure-profilpage/
 import { SharedModule } from 'src/app/shared/shared.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { AdventureReservationComponent } from './components/adventure-reservation/adventure-reservation.component';
+import { AdventureCardComponent } from './components/adventure-card/adventure-card.component';
 
 
 
 @NgModule({
   declarations: [
     AdventureProfilpageComponent,
-    AdventureReservationComponent
+    AdventureReservationComponent,
+    AdventureCardComponent
   ],
   imports: [
     CommonModule,

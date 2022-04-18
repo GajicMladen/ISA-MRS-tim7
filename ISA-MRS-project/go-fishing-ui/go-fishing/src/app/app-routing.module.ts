@@ -6,6 +6,7 @@ import { CottageProfilepageComponent} from './features/cottage/components/cottag
 import { ReservationStartpageComponent } from './features/reservation/components/reservation-startpage/reservation-startpage.component';
 import { AdventureProfilpageComponent } from './features/adventure/components/adventure-profilpage/adventure-profilpage.component';
 import { AdventureReservationComponent } from './features/adventure/components/adventure-reservation/adventure-reservation.component';
+import { AdventureCardComponent } from './features/adventure/components/adventure-card/adventure-card.component';
 
 const routes: Routes = [
   { path: '', component: StartpagePreviewListComponent },
@@ -14,6 +15,7 @@ const routes: Routes = [
   { path: 'reservationStart', component: ReservationStartpageComponent },
   { path: 'adventureProfile', component: AdventureProfilpageComponent },
   { path: 'adventureReservation', component: AdventureReservationComponent },
+  { path: 'adventureCard', component: AdventureCardComponent},
   //Ubaciti komponentu za not found
   { path: '**', component: StartpagePreviewListComponent },
 ];
