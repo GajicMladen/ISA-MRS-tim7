@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
 import {
   faArrowRightToBracket,
-  faHome,
   faHouseChimney,
   faUser,
 } from '@fortawesome/free-solid-svg-icons';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-navbar',
@@ -20,13 +21,33 @@ export class NavbarComponent implements OnInit {
   showRegisterButton = true;
   showHomeButton = true;
 
-  constructor() {}
+  constructor(private router: Router) {
+    this.router.events
+      .pipe(
+        filter(
+          (event): event is NavigationEnd => event instanceof NavigationEnd
+        )
+      )
+      .subscribe((event) => {
+        switch (event.url) {
+          case '/':
+            this.homeClicked();
+            break;
+          case '/login':
+          case '/register':
+            this.loginOrRegClicked();
+            break;
+          default:
+            break;
+        }
+      });
+  }
 
   ngOnInit(): void {
     this.showHomeButton = false;
   }
 
-  loginClicked() {
+  loginOrRegClicked() {
     this.showLoginButton = false;
     this.showRegisterButton = false;
     this.showHomeButton = true;

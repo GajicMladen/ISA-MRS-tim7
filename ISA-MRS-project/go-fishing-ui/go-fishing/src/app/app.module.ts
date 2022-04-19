@@ -11,10 +11,11 @@ import { RouterModule } from '@angular/router';
 import { MaterialModule } from './shared/material/material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { CottageModule } from './features/cottage/cottage.module';
 import { ReservationModule } from './features/reservation/reservation.module';
 import { AdventureModule } from './features/adventure/adventure.module';
-
+  
 @NgModule({
   declarations : [AppComponent],
   imports: [
@@ -28,6 +29,7 @@ import { AdventureModule } from './features/adventure/adventure.module';
     MaterialModule,
     FormsModule,
     FlexLayoutModule,
+    ReactiveFormsModule,
     CottageModule,
     ReservationModule,
     AdventureModule
