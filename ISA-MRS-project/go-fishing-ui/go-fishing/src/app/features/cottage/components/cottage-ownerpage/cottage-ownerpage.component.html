@@ -1,0 +1,80 @@
+<div class="">
+    <div class="profile-content">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 ml-auto mr-auto">
+                   <div class="profile">
+                        <div class="display-f-center mt-3">
+                            <img src="https://i.imgur.com/N2fYgvD.png" alt="Circle Image" class="img-raised rounded-circle img-fluid">
+                        </div>
+                        <div class="name">
+                            <h3 class="title display-f-center">Agencija izdavanje NS </h3>
+                            <div class="details">
+                                <h5>Ime:</h5><h4>Mladen</h4>
+                                <h5>Prezime:</h5><h4>Gajić</h4>
+                                <h5>E-mail:</h5><h4>mladengajic00@gmail.com</h4>
+                                <h5>Telefon:</h5><h4>+361 64 4281080</h4>
+                            </div>
+                            <h6 class="display-f-center">Vlasnik vikendice</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="description text-center">
+                <p>Glavni cilj portala za nekretnine jeste zadovoljavanje potreba naših klijenata, bilo individualnih internet korisnika ili agencija, na bolji i efikasniji način od naših konkurenata. U nameri da ostvarimo ovaj cilj, kreiran je program usluga za naše korisnike koji se po svojim bitnim karakteristikama diferenciraju od drugih portala u ove svrhe. </p>
+                
+            </div>
+            <div class="justify-content-end" style="display: flex;">
+                <a routerLink="/editProfile" routerLinkActive="active"  class="btn  btn-link btn-dribbble"><i class="fa fa-edit"></i>Izmeni podatke</a>
+            </div>
+            <div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 ml-auto mr-auto">
+                    <div class="profile-tabs">
+                      <ul class="nav nav-pills nav-pills-icons justify-content-center" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#cottages" role="tab" data-toggle="tab">
+                              <i class="material-icons">house</i>
+                              Vikendice
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#favorite" role="tab" data-toggle="tab">
+                              <i class="material-icons">list</i>
+                                Rezervacije
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#works" role="tab" data-toggle="tab">
+                              <i class="material-icons">star</i>
+                                Ocene
+                            </a>
+                        </li>
+                      </ul>
+                    </div>
+            </div>
+        </div>
+    
+      <div class="tab-content tab-space">
+        <div class="tab-pane active text-center gallery" id="cottages">
+              <div class="row">
+                  <app-cottage-gallery-owner></app-cottage-gallery-owner>
+              </div>
+          </div>
+        <div class="tab-pane text-center gallery" id="works">
+              <div class="row">
+                  
+              </div>
+          </div>
+        <div class="tab-pane text-center gallery" id="favorite">
+              <div class="row">
+                  
+              </div>
+          </div>
+      </div>
+
+    
+        </div>
+    </div>
+</div>

@@ -12,9 +12,12 @@ import { MaterialModule } from './shared/material/material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
-
+import { CottageModule } from './features/cottage/cottage.module';
+import { ReservationModule } from './features/reservation/reservation.module';
+import { AdventureModule } from './features/adventure/adventure.module';
+  
 @NgModule({
-  declarations: [AppComponent],
+  declarations : [AppComponent],
   imports: [
     BrowserModule,
     RouterModule,
@@ -27,6 +30,9 @@ import { ReactiveFormsModule } from '@angular/forms';
     FormsModule,
     FlexLayoutModule,
     ReactiveFormsModule,
+    CottageModule,
+    ReservationModule,
+    AdventureModule
   ],
   providers: [],
   bootstrap: [AppComponent],
