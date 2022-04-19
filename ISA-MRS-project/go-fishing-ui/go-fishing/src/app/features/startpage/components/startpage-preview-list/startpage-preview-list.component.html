@@ -37,8 +37,10 @@
                             </mat-card-content>
                         </mat-card>
                     </mat-list-item>
+                    <p *ngIf = 'cottageList.length == 0' style="text-align:center"> No cottages found!</p>
                 </mat-list>
             </mat-tab>
+
 
             <mat-tab label="Boats">
                 <mat-list role="list" class="inline-list">
@@ -58,6 +60,7 @@
                             </mat-card-content>
                         </mat-card>
                     </mat-list-item>
+                    <p *ngIf='boatList.length == 0' style="text-align:center"> No boats found!</p>
                 </mat-list>
             </mat-tab>
 
@@ -78,6 +81,7 @@
                             </mat-card-content>
                         </mat-card>
                     </mat-list-item>
+                    <p *ngIf='cottageList.length == 0' style="text-align:center"> No adventures found!</p>
                 </mat-list>
             </mat-tab>
         </mat-tab-group>

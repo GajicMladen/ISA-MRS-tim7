@@ -23,7 +23,26 @@ export class StartpagePreviewListComponent implements OnInit {
     this.adventureList = this.getAdventurePreviewList();
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    let searchControl = this.form.controls['searchBar'];
+    searchControl.valueChanges.subscribe(() => {
+      if (searchControl.value === '') {
+        this.boatList = this.getBoatPreviewList();
+        this.cottageList = this.getCottagePreviewList();
+        this.adventureList = this.getAdventurePreviewList();
+      } else {
+        this.boatList = this.boatList.filter((item) =>
+          item['name'].toLowerCase().includes(searchControl.value)
+        );
+        this.cottageList = this.cottageList.filter((item) =>
+          item['name'].toLowerCase().includes(searchControl.value)
+        );
+        this.adventureList = this.adventureList.filter((item) =>
+          item['name'].toLowerCase().includes(searchControl.value)
+        );
+      }
+    });
+  }
 
   getBoatPreviewList(): Array<Boat> {
     return this.previewListService.getBoatPreviewList();
