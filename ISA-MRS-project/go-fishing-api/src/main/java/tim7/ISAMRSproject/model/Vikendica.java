@@ -13,4 +13,6 @@ public class Vikendica extends Usluga{
 	@JoinColumn(name = "vlasnik_id")
 	private VlasnikVikendice vlasnikVikendice;
 	
+	
+	
 }

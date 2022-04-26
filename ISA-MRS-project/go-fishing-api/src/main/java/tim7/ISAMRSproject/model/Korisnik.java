@@ -51,7 +51,9 @@ public class Korisnik {
     @Column(name = "tipKorisnika")
     private TipKorisnika tipKorisnika;
     
-    
+    public Korisnik() {
+    	
+    }
 	
 	public Korisnik(Long id, String korisnickoIme, String lozinka, String ime, String prezime, String telefon) {
 		super();

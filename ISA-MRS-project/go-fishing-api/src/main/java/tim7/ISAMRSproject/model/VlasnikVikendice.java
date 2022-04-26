@@ -14,6 +14,8 @@ import javax.persistence.OneToMany;
 public class VlasnikVikendice extends Korisnik {
 
 
+	
+	
 	@OneToMany(mappedBy = "vlasnikVikendice", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Set<Vikendica> vikendice = new HashSet<Vikendica>();
 	
@@ -21,5 +23,8 @@ public class VlasnikVikendice extends Korisnik {
 		super(id, korisnickoIme, lozinka, ime, prezime, telefon);
 		// TODO Auto-generated constructor stub
 	}
-
+	
+	public VlasnikVikendice() {
+		super();
+	}
 }
