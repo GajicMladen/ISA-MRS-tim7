@@ -11,15 +11,17 @@ import javax.persistence.OneToMany;
 
 @Entity
 @DiscriminatorValue("IP")
-public class InstruktorPecanja extends Korisnik{
+public class FishingInstructor extends Userr {
 
-	@OneToMany(mappedBy = "instruktorPecanja", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private Set<Avantura> avanture = new HashSet<Avantura>();
-	
-	
-	
-	public InstruktorPecanja(Long id, String korisnickoIme, String lozinka, String ime, String prezime,
-			String telefon) {
+	@OneToMany(mappedBy = "fishingInstructor", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private Set<Adventure> adventures = new HashSet<Adventure>();
+
+
+	public FishingInstructor() {
+	}
+
+	public FishingInstructor(Long id, String korisnickoIme, String lozinka, String ime, String prezime,
+							 String telefon) {
 		super(id, korisnickoIme, lozinka, ime, prezime, telefon);
 		// TODO Auto-generated constructor stub
 	}

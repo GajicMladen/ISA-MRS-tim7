@@ -1,6 +1,6 @@
 package tim7.ISAMRSproject.model;
 
-public enum TipKorisnika {
+public enum UserType {
 
 	KLIJENT,
 	VLASNIK_BRODA,

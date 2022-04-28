@@ -21,5 +21,9 @@ export class CottageGalleryOwnerComponent implements OnInit {
     
     
   }
+  
+  ngAfterViewInit(){
+    console.log("bzv");
+  }
 
 }

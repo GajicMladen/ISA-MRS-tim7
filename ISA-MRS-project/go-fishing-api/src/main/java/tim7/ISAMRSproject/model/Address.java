@@ -8,24 +8,28 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
 @Entity
-public class Ocena {
-	
+public class Address {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private Long id;
+    
+	@Column(name= "street")
+	public String street;
+	
+	@Column(name= "houseNumber")
+	public String houseNumber;
+	
+	@Column(name = "city")
+	public String city;
+	
+	@Column(name = "country")
+	public String country;
+	
+	@OneToOne(mappedBy = "livingAddress")
+    private Userr userr;
 
-	@Column(name = "ocena",nullable = false)
-	private int ocena;
-	
-	@Column(name= "revizija" ,nullable = false)
-	private String revizija;
-	
-	@Column(name= "status",nullable = false)
-	private StatusOdobravanja status;
-
-	@OneToOne(mappedBy = "ocena")
-    private Rezervacija rezervacija;
-	
-	
+	@OneToOne(mappedBy = "address")
+    private Offer offer;
 }

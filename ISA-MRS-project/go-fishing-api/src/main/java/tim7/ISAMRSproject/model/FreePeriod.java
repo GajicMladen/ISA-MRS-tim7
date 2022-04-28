@@ -10,24 +10,23 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 
 @Entity
-public class SlobodanTermin {
+public class FreePeriod {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
 	@Column(nullable = false)
-	private LocalDateTime pocetak;
+	private LocalDateTime startDateTime;
 	
 	@Column(nullable = false)
-	private LocalDateTime kraj;
+	private LocalDateTime endDateTime;
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "usluga_id")
-	private Usluga usluga;
+	@JoinColumn(name = "offer_id")
+	private Offer offer;
 	
 	
 	

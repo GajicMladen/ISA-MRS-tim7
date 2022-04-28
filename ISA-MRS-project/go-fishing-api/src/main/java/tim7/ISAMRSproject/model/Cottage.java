@@ -6,18 +6,18 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class Vikendica extends Usluga{
+public class Cottage extends Offer {
 		
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "vlasnik_id")
-	private VlasnikVikendice vlasnikVikendice;
+	private CottageOwner cottageOwner;
 
-	public Vikendica(){
+	public Cottage(){
 
 	}
-	public Vikendica(Usluga usluga) {
-		super(usluga);
+	public Cottage(Offer offer) {
+		super(offer);
 		// TODO Auto-generated constructor stub
 	}
 	

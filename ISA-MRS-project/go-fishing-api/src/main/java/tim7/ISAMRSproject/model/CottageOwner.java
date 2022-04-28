@@ -10,16 +10,21 @@ import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 
 @Entity
-@DiscriminatorValue("VB")
-public class VlasnikBroda extends Korisnik{
+@DiscriminatorValue("VV")
+public class CottageOwner extends Userr {
 
-	@OneToMany(mappedBy = "vlasnikBroda", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private Set<Brod> brodovi = new HashSet<Brod>();
+
 	
-
-
-	public VlasnikBroda(Long id, String korisnickoIme, String lozinka, String ime, String prezime, String telefon) {
+	
+	@OneToMany(mappedBy = "cottageOwner", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private Set<Cottage> cottages = new HashSet<Cottage>();
+	
+	public CottageOwner(Long id, String korisnickoIme, String lozinka, String ime, String prezime, String telefon) {
 		super(id, korisnickoIme, lozinka, ime, prezime, telefon);
 		// TODO Auto-generated constructor stub
+	}
+	
+	public CottageOwner() {
+		super();
 	}
 }

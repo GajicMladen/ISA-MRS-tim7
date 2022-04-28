@@ -7,31 +7,30 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import tim7.ISAMRSproject.dto.KorisnikDTO;
-import tim7.ISAMRSproject.model.Korisnik;
-import tim7.ISAMRSproject.service.KorisnikService;
+import tim7.ISAMRSproject.dto.UserDTO;
+import tim7.ISAMRSproject.model.Userr;
+import tim7.ISAMRSproject.service.UserService;
 
 
 @RestController
 @RequestMapping(value = "api/korisnici")
-public class KorisnikController {
+public class UserController {
 
 	@Autowired
-	private KorisnikService korisnikService;
+	private UserService userService;
 
 	@GetMapping(value = "/all")
-	public ResponseEntity<List<KorisnikDTO>> getAllKorisnici() {
+	public ResponseEntity<List<UserDTO>> getAllKorisnici() {
 
-		List<Korisnik> korisnici = korisnikService.findAll();
+		List<Userr> korisnici = userService.findAll();
 
 		// convert students to DTOs
-		List<KorisnikDTO> korisniciDTO = new ArrayList<>();
-		for (Korisnik k : korisnici) {
-			korisniciDTO.add(new KorisnikDTO(k));
+		List<UserDTO> korisniciDTO = new ArrayList<>();
+		for (Userr k : korisnici) {
+			korisniciDTO.add(new UserDTO(k));
 		}
 
 		return new ResponseEntity<>(korisniciDTO, HttpStatus.OK);
@@ -39,9 +38,9 @@ public class KorisnikController {
 
 	/*
 	@GetMapping(value = "/vikendice/{id}")
-	public ResponseEntity<Korisnik> getAllVikendice(@PathVariable int id) {
+	public ResponseEntity<Userr> getAllVikendice(@PathVariable int id) {
 
-		Korisnik korisnik = korisnikService.getKorisnikWithVikendice(id);
+		Userr korisnik = userService.getKorisnikWithVikendice(id);
 
 		// convert students to DTOs
 

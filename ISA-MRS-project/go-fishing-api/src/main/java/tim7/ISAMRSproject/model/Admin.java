@@ -5,9 +5,11 @@ import javax.persistence.Entity;
 
 @Entity
 @DiscriminatorValue("A")
-public class Admin extends Korisnik {
-	
-	
+public class Admin extends Userr {
+
+
+	public Admin() {
+	}
 
 	public Admin(Long id, String korisnickoIme, String lozinka, String ime, String prezime, String telefon) {
 		super(id, korisnickoIme, lozinka, ime, prezime, telefon);

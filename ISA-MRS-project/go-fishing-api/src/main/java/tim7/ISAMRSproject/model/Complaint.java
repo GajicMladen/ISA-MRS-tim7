@@ -2,17 +2,13 @@ package tim7.ISAMRSproject.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
-import javax.websocket.OnError;
 
 @Entity
-public class Zalba {
+public class Complaint {
 	
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -23,13 +19,14 @@ public class Zalba {
     private String text;
     
     @Column(name = "status",nullable = false)
-    private StatusOdobravanja status;
+    private ApprovalStatus status;
     
 
-	@OneToOne(mappedBy = "zalba")
-    private Rezervacija rezervacija;
-	
+	@OneToOne(mappedBy = "complaint")
+    private Reservation reservation;
+	/*
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "klijent_id")
-	private Klijent klijent;
+	private Client klijent;
+	*/
 }

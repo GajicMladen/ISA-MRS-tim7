@@ -6,6 +6,7 @@ import { CottageGalleryOwnerComponent } from './components/cottage-gallery-owner
 import { RouterModule } from '@angular/router';
 import { CottageAddNewComponent } from './components/cottage-add-new/cottage-add-new.component';
 import { CottageService } from './services/cottage.service';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { CottageService } from './services/cottage.service';
   ],
   imports: [
     CommonModule,
-    RouterModule
+    RouterModule,
+    HttpClientModule
   ],
   providers:[CottageService]
 })

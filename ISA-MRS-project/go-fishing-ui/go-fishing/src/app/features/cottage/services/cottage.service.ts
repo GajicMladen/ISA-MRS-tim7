@@ -9,7 +9,7 @@ export class CottageService {
   private cottagesUrl: string;
 
   constructor(private http: HttpClient) {
-    this.cottagesUrl  = "http://localhost:8080/api/vikendice"
+    this.cottagesUrl  = "http://localhost:8080/api/cottages";
   }
 
   public findAll():Observable<Cottage[]>{
