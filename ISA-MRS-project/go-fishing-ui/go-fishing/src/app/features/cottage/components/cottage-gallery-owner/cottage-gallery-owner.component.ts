@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Cottage } from '../../classes/cottage';
+import { CottageService } from '../../services/cottage.service';
 
 @Component({
   selector: 'app-cottage-gallery-owner',
@@ -7,9 +9,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CottageGalleryOwnerComponent implements OnInit {
 
-  constructor() { }
+  cottages:Cottage[];
+
+  constructor(private cottageService:CottageService) { }
 
   ngOnInit(): void {
+    
+      this.cottageService.findAll().subscribe(data =>{
+        this.cottages = data;
+      });
+    
+    
   }
 
 }

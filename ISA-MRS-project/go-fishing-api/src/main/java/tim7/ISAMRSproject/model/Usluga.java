@@ -23,14 +23,14 @@ import javax.persistence.SequenceGenerator;
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Usluga {
-	
+
+
 	@Id
-	@SequenceGenerator(name = "mySeqGen", sequenceName = "mySeq", initialValue = 1, allocationSize = 1)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "mySeqGen")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id", unique=true, nullable=false)
 	private Integer id;
 	
-	@Column(name = "naziv")
+	@Column(name = "naziv",unique = true)
 	private String naziv;
 
 	@Column(name = "promoOpis")
@@ -83,7 +83,16 @@ public class Usluga {
 		this.kapacitet = kapacitet;
 	}
 	
-	
+	public Usluga(Usluga usluga) {
+		super();
+		this.id = usluga.id;
+		this.naziv = usluga.naziv;
+		this.promoOpis = usluga.promoOpis;
+//		this.slike = usluga.slike;
+//		this.pravilaPonasanja = usluga.pravilaPonasanja;
+		this.cena = usluga.cena;
+		this.kapacitet = usluga.kapacitet;
+	}
 	
 	public Set<DodatnaUsluga> getDodatneUsluge() {
 		return dodatneUsluge;

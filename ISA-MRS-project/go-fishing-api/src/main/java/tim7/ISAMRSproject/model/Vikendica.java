@@ -12,6 +12,14 @@ public class Vikendica extends Usluga{
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "vlasnik_id")
 	private VlasnikVikendice vlasnikVikendice;
+
+	public Vikendica(){
+
+	}
+	public Vikendica(Usluga usluga) {
+		super(usluga);
+		// TODO Auto-generated constructor stub
+	}
 	
 	
 	

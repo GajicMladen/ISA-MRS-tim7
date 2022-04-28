@@ -10,11 +10,11 @@ INSERT INTO public.korisnik(
 
 
 INSERT INTO public.usluga(
-	id, cena, kapacitet, naziv, promo_opis, adresa_usluge)
-	VALUES (1, 39.6, 10, 'Vikendica Kosmaj', 'Prelepa vikendica na kosmaju sa pogledom na BG', null);
+	 cena, kapacitet, naziv, promo_opis, adresa_usluge)
+	VALUES ( 39.6, 10, 'Vikendica Kosmaj', 'Prelepa vikendica na kosmaju sa pogledom na BG', null);
 INSERT INTO public.usluga(
-	id, cena, kapacitet, naziv, promo_opis, adresa_usluge)
-	VALUES (2, 96.7, 25, 'Villa Djosa Vrhpolje', 'Fantasticna vikendica na drini sa pogledom na LJuboviju,odlicna za zurke', null);
+	 cena, kapacitet, naziv, promo_opis, adresa_usluge)
+	VALUES ( 96.7, 25, 'Villa Djosa Vrhpolje', 'Fantasticna vikendica na drini sa pogledom na LJuboviju,odlicna za zurke', null);
 	
 
 INSERT INTO public.vikendica(

@@ -25,6 +25,7 @@ public class VikendicaService {
 	}
 	
 	public void addNewCottage(Vikendica vikendica) {
+		
 		vikendicaRepository.save(vikendica);
 	}
 	
