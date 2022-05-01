@@ -103,7 +103,6 @@ a .material-icons {
     min-height: 32px;
     color: #3C4858;
     font-weight: 700;
-    font-family: "Roboto Slab","Times New Roman",serif;
 }
 
 .description {
@@ -243,4 +242,19 @@ img.rounded {
     justify-content: center;
 }
 
+.details{
+    display: grid;
+    grid-template-columns: 15% 35% 15% 35%;
+    justify-content: center;
+    align-items: center;
+}
 
+.details h5{
+    color: #999;
+    text-align: end;
+    padding: 10px;
+}
+.details h4 {
+    text-align: center;
+    text-decoration: bold;
+}
