@@ -1,0 +1,67 @@
+<div class="">
+    <div class="profile-content">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                   <div class="profile">
+                        <div class="display-f-center mt-3">
+                            <img src="https://i.imgur.com/LZ1Xa9r.jpeg" alt="Circle Image" class="img-raised rounded-circle  img-fluid" id="profileImage">
+                        </div>
+                        <div class="name">
+                            <h6 class="display-f-center" id="instructorName">{{instructor.name}}</h6>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="description text-center" id="Bio">
+                      <p>{{instructor.bio}}</p>
+                      <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Earum cumque neque necessitatibus deserunt, ad dolorum illo soluta? Dolorem ducimus sint soluta praesentium quidem nisi harum rem cupiditate debitis, quis veniam!</p>
+                    </div>
+                </div>
+            </div>
+    
+      <div class="tab-content tab-space">
+        <div class="tab-pane active text-center gallery" id="cottages">
+              <div class="row">
+                  
+              </div>
+          </div>
+        <div class="tab-pane text-center gallery" id="works">
+              <div class="row">
+                  
+              </div>
+          </div>
+        <div class="tab-pane text-center gallery" id="favorite">
+              <div class="row">
+                  
+              </div>
+          </div>
+      </div>
+
+    
+        </div>
+      <div class="row" id="adventureRow">
+        <div *ngFor="let a of adventures">
+          <div class="col-md-12"><app-adventure-card instructor={{a.instructor}} name="{{a.name}}" price="{{a.price}}"></app-adventure-card></div>
+        </div>
+        <div *ngIf="isInstructor">
+          <a href="">
+      
+            <div class="container mt-4 mb-4 p-3 d-flex justify-content-center">
+              <div class="cardAddNew p-4">
+                  <div class=" image d-flex flex-column justify-content-center align-items-center">
+                    
+                    <mat-icon class="icon-display">library_add</mat-icon>
+                    
+                    <div class="AddNewText">
+                      Dodaj novu avanturu
+                    </div>
+                  </div>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+</div>
+
