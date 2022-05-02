@@ -15,6 +15,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { CottageModule } from './features/cottage/cottage.module';
 import { ReservationModule } from './features/reservation/reservation.module';
 import { AdventureModule } from './features/adventure/adventure.module';
+import { HttpClientModule } from '@angular/common/http';
   
 @NgModule({
   declarations : [AppComponent],
@@ -32,7 +33,8 @@ import { AdventureModule } from './features/adventure/adventure.module';
     ReactiveFormsModule,
     CottageModule,
     ReservationModule,
-    AdventureModule
+    AdventureModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent],
