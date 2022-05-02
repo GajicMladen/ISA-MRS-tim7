@@ -42,7 +42,7 @@
         </div>
       <div class="row" id="adventureRow">
         <div *ngFor="let a of adventures">
-          <div class="col-md-12"><app-adventure-card instructor={{a.instructor}} name="{{a.name}}" price="{{a.price}}"></app-adventure-card></div>
+          <div class="col-md-12"><app-adventure-card id="{{a.id}}" instructor={{a.instructor}} name="{{a.name}}" price="{{a.price}}"></app-adventure-card></div>
         </div>
         <div *ngIf="isInstructor">
           <a href="">
