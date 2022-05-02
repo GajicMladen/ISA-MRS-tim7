@@ -48,7 +48,16 @@ public class Rezervacija {
 
 	@OneToOne
 	@JoinColumn(name = "zalba", referencedColumnName = "id",nullable = true)
-	private Ocena zalba;  
+	private Ocena zalba;
+
+	public Usluga getUsluga() {
+		return usluga;
+	}
+
+	public void setUsluga(Usluga usluga) {
+		this.usluga = usluga;
+	}  
+	
 	
 	
 	

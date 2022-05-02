@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import tim7.ISAMRSproject.model.Avantura;
 import tim7.ISAMRSproject.service.AdventureService;
+import tim7.ISAMRSproject.service.ReservationService;
 
 @RestController
 @RequestMapping(value = "adventure")
@@ -19,14 +20,20 @@ public class AdventureController {
 	@Autowired
 	private AdventureService adventureService;
 	
+	@Autowired
+	private ReservationService reservationService;
+	
 	@CrossOrigin(origins="http://localhost:4200/")
 	@DeleteMapping(value = "/{id}")
 	public ResponseEntity<Void> deleteAdventure(@PathVariable Integer id) {
 		Avantura adventure = adventureService.findOne(id);
 		
 		if (adventure != null) {
-			adventureService.remove(id);
-			return new ResponseEntity<Void>(HttpStatus.OK);
+			if (!reservationService.AdventureHasReservations(id)) {
+				adventureService.remove(id);
+				return new ResponseEntity<Void>(HttpStatus.OK);
+			}
+			return new ResponseEntity<Void>(HttpStatus.FORBIDDEN);
 		}
 		else {
 			return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
