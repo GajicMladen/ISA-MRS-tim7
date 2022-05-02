@@ -13,49 +13,49 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
 @Entity
-public class DodatnaUsluga {
+public class ExtraFavor {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
 	@Column(nullable = false)
-	private String naziv;
+	private String name;
 	
 	@Column
-	private String opis;
+	private String description;
 	
 	@ManyToMany
 	@JoinTable(name = "dodatneUsluge", joinColumns = @JoinColumn(name = "dodatnaUsluga_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "usluga_id", referencedColumnName = "id"))
-	private Set<Usluga> usluge = new HashSet<Usluga>();
+	private Set<Offer> offers = new HashSet<Offer>();
 	
 
 	
-	public DodatnaUsluga() {
+	public ExtraFavor() {
 		super();
 	}
 
-	public DodatnaUsluga(Integer id, String naziv, String opis) {
+	public ExtraFavor(Integer id, String name, String description) {
 		super();
 		this.id = id;
-		this.naziv = naziv;
-		this.opis = opis;
+		this.name = name;
+		this.description = description;
 	}
 
-	public String getNaziv() {
-		return naziv;
+	public String getName() {
+		return name;
 	}
 
-	public void setNaziv(String naziv) {
-		this.naziv = naziv;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public String getOpis() {
-		return opis;
+	public String getDescription() {
+		return description;
 	}
 
-	public void setOpis(String opis) {
-		this.opis = opis;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 	
 	

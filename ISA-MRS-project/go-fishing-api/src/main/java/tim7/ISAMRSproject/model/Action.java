@@ -12,27 +12,27 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class Akcija {
+public class Action {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private Long id;
 
-	@Column(name = "datumPocetka",nullable = false)
-	private LocalDateTime datumPocetka;
+	@Column(name = "startDate",nullable = false)
+	private LocalDateTime startDate;
 	
-	@Column(name = "datumKraja",nullable = false)
-	private LocalDateTime datumKraja;
+	@Column(name = "endDate",nullable = false)
+	private LocalDateTime endDate;
 
-	@Column(name ="maxOsoba",nullable = false)
-	private int maxOsoba;
+	@Column(name ="maxPerson",nullable = false)
+	private int maxPerson;
 	
 	@Column(name ="cena" , nullable = false)
 	private float cena;
 	
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "usluga_id")
-	private Usluga usluga;
+	@JoinColumn(name = "offer_id")
+	private Offer offer;
 }
