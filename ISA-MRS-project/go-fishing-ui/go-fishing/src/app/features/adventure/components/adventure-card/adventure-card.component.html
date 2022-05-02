@@ -26,11 +26,22 @@
             <div><span class="font-weight-bold">Cena: </span><span class="font-weight-bold">{{adventure.price | currency}}</span></div>
             <div *ngIf='isInstructor'>
                 <p class="instructorOptions">
-                    <a href="/addSlotAdventure"><i class="material-icons">more_time</i> <h6>Dodaj termin</h6></a>
-                    <a href="/addActionAdventure"><i class="material-icons">add_alert</i><h6>Dodaj akciju</h6></a>
-                    <a href="/editAdventure"><i class="material-icons">edit</i> <h6>Izmeni</h6></a>
-                    <a href="/deleteAdventure"><i class="material-icons">delete</i><h6>Ukloni</h6></a>
-
+                    <button class="buttonDisplay" routerLink="" mat-icon-button aria-label="Example icon button with a vertical three dot icon">
+                        <mat-icon>more_time</mat-icon>
+                        <h6>Dodaj termin</h6>
+                    </button>
+                    <button class="buttonDisplay" routerLink="" mat-icon-button aria-label="Example icon button with a vertical three dot icon">
+                        <mat-icon>add_alert</mat-icon>
+                        <h6>Dodaj akciju</h6>
+                    </button>
+                    <button class="buttonDisplay" routerLink="" mat-icon-button aria-label="Example icon button with a vertical three dot icon">
+                        <mat-icon>edit</mat-icon>
+                        <h6>Izmeni</h6>
+                    </button>
+                    <button class="buttonDisplay" routerLink="" (click)="deleteAdventure()" mat-icon-button aria-label="Example icon button with a vertical three dot icon">
+                        <mat-icon>delete</mat-icon>
+                        <h6>Ukloni</h6>
+                    </button>
                 </p>
             </div>
         </div>

@@ -101,7 +101,7 @@ hr .new1 {
     display: flex;
     position: relative;
     justify-content: flex-end;
-    gap: 30px;
+    gap: 35px;
     padding-top: 10px;
     margin-top: 20px;
     text-align: center;
@@ -109,4 +109,12 @@ hr .new1 {
 
 .instructorOptions a {
     text-decoration: none;
+}
+
+.instructorOptions button:hover {
+    transform: scale(1.2);
+}
+
+button {
+    transition: all 0.3s;
 }

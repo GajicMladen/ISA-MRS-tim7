@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { AnyForUntypedForms } from '@angular/forms';
+import { AdventureService } from '../../adventure.service';
 
 @Component({
   selector: 'app-adventure-card',
@@ -17,15 +17,20 @@ export class AdventureCardComponent implements OnInit {
 
   @Input('price')
   price!: string;
+
+  @Input('id')
+  id!: string;
  
   isInstructor: boolean = true;
   
+  deleteSuccess!: string;
 
 
-  constructor() { }
+  constructor(private adventureService: AdventureService) { }
 
   ngOnInit(): void {
     this.adventure = {
+      id: this.id,
       instructor: this.instructorName,
       name: this.name,
       price: this.price,
@@ -40,7 +45,11 @@ export class AdventureCardComponent implements OnInit {
       equipment: ["Stapovi za pecanje", "Mreže", "Svi tipovi mamaca i varalica", "Kombinezoni"],
       information: "Avantura se održava dva puta dnevno. Prvi termin je u 9h, a drugi u 15h. Mesto okupljanja je gradska plaža. Avantura traje dva sata.",
       cancellation: "U slučaju otkazivanja instruktor zadržava 30% uplaćene sume.",
-    }
+    };
+  }
+
+  deleteAdventure() {
+    this.adventureService.deleteAdventure(this.adventure.id).subscribe(data => console.log(data));
   }
 
 }
