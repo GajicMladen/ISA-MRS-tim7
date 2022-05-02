@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { StartpageRegisterService } from './startpage-register.service';
 
 @Component({
   selector: 'app-startpage-register',
@@ -11,7 +12,7 @@ export class StartpageRegisterComponent implements OnInit {
 
   activatePassMatchError = false;
 
-  constructor() {}
+  constructor(private registrationService: StartpageRegisterService) {}
 
   ngOnInit(): void {
     this.form.get('password')?.valueChanges.subscribe(() => {
@@ -44,13 +45,13 @@ export class StartpageRegisterComponent implements OnInit {
       country: new FormControl(''),
       cityTown: new FormControl(''),
       address: new FormControl(''),
-      phoneNumber: new FormControl('', Validators.pattern('^[+][0-9]{8,10}$')),
+      phoneNumber: new FormControl('', Validators.pattern('^[+][0-9]{10,12}$')),
     });
   }
 
-  // TODO: Pozvati metodu iz servisa za slanje POST zahteva
-  saveRequest() {
+  saveRequest(): void {
     if (this.form.invalid || this.activatePassMatchError) return;
-    else console.log(this.form.getRawValue);
+    else
+      this.registrationService.sendRegistrationRequest(this.form.getRawValue());
   }
 }
