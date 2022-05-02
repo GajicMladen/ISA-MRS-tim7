@@ -9,6 +9,7 @@ import { AdventureProfilpageComponent } from './features/adventure/components/ad
 import { AdventureReservationComponent } from './features/adventure/components/adventure-reservation/adventure-reservation.component';
 import { AdventureCardComponent } from './features/adventure/components/adventure-card/adventure-card.component';
 import { CottageOwnerpageComponent } from './features/cottage/components/cottage-ownerpage/cottage-ownerpage.component';
+import { AdventureInstructorpageComponent } from './features/adventure/components/adventure-instructorpage/adventure-instructorpage.component';
 import { EditProfileComponent } from './shared/components/edit-profile/edit-profile.component';
 import { CottageAddNewComponent } from './features/cottage/components/cottage-add-new/cottage-add-new.component';
 
@@ -22,6 +23,7 @@ const routes: Routes = [
   { path: 'adventureReservation', component: AdventureReservationComponent },
   { path: 'adventureCard', component: AdventureCardComponent},
   { path: 'cottageOwner/:id' , component: CottageOwnerpageComponent },
+  { path: 'instructorProfile', component: AdventureInstructorpageComponent },
   { path: 'editProfile',component: EditProfileComponent},
   { path: 'addNewCottage', component: CottageAddNewComponent},
   //Ubaciti komponentu za not found

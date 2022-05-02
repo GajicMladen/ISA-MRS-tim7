@@ -5,6 +5,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { AdventureReservationComponent } from './components/adventure-reservation/adventure-reservation.component';
 import { AdventureCardComponent } from './components/adventure-card/adventure-card.component';
+import { AdventureInstructorpageComponent } from './components/adventure-instructorpage/adventure-instructorpage.component';
 
 
 
@@ -12,7 +13,8 @@ import { AdventureCardComponent } from './components/adventure-card/adventure-ca
   declarations: [
     AdventureProfilpageComponent,
     AdventureReservationComponent,
-    AdventureCardComponent
+    AdventureCardComponent,
+    AdventureInstructorpageComponent
   ],
   imports: [
     CommonModule,
