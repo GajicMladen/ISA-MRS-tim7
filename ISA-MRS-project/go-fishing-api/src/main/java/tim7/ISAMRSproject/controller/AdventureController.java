@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import tim7.ISAMRSproject.model.Avantura;
+import tim7.ISAMRSproject.model.Adventure;
 import tim7.ISAMRSproject.service.AdventureService;
 import tim7.ISAMRSproject.service.ReservationService;
 
@@ -26,7 +26,7 @@ public class AdventureController {
 	@CrossOrigin(origins="http://localhost:4200/")
 	@DeleteMapping(value = "/{id}")
 	public ResponseEntity<Void> deleteAdventure(@PathVariable Integer id) {
-		Avantura adventure = adventureService.findOne(id);
+		Adventure adventure = adventureService.findOne(id);
 		
 		if (adventure != null) {
 			if (!reservationService.AdventureHasReservations(id)) {
