@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Cottage } from '../../classes/cottage';
 import { CottageService } from '../../services/cottage.service';
 
@@ -9,21 +9,19 @@ import { CottageService } from '../../services/cottage.service';
 })
 export class CottageGalleryOwnerComponent implements OnInit {
 
+  @Input() ownerId:number;
+
   cottages:Cottage[];
 
   constructor(private cottageService:CottageService) { }
 
   ngOnInit(): void {
     
-      this.cottageService.findAll().subscribe(data =>{
+      this.cottageService.findCottagesByOwner(this.ownerId).subscribe(data =>{
         this.cottages = data;
       });
     
     
   }
   
-  ngAfterViewInit(){
-    console.log("bzv");
-  }
-
 }

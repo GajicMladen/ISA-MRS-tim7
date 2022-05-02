@@ -16,4 +16,11 @@ export class CottageService {
     return this.http.get<Cottage[]>(this.cottagesUrl+"/all");
   }
 
+  public findCottageById(cottageId:number):Observable<Cottage>{
+    return this.http.get<Cottage>(this.cottagesUrl+"/getCottage/"+cottageId);
+  }
+
+  public findCottagesByOwner(ownerId:number):Observable<Cottage[]>{
+    return this.http.get<Cottage[]>(this.cottagesUrl+"/owner/"+ownerId);
+  }
 }

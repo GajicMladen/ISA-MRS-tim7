@@ -1,7 +1,8 @@
 export class Cottage {
     id: number;
     name: string;
-    promoDescriprion: string;
+    promoDescription: string;
     price: number;
     capacity: number;
+    ownerId:number
 }

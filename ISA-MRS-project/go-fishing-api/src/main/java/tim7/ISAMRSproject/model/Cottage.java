@@ -10,17 +10,15 @@ public class Cottage extends Offer {
 		
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "vlasnik_id")
+	@JoinColumn(name = "owner_id")
 	private CottageOwner cottageOwner;
 
 	public Cottage(){
 
 	}
-	public Cottage(Offer offer) {
-		super(offer);
-		// TODO Auto-generated constructor stub
+	
+	public int getCottageOwnerId(){
+		return cottageOwner.getId() != null ? cottageOwner.getId() : 1;
 	}
-	
-	
 	
 }

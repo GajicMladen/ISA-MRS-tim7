@@ -2,6 +2,7 @@ package tim7.ISAMRSproject.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,7 +24,7 @@ public class CottageController {
 	@GetMapping(value = "/all")
 	public ResponseEntity<List<CottageDTO>> getAllCottages(){
 		
-		List<Cottage> cottages = cottageService.getVikendiceAll();
+		List<Cottage> cottages = cottageService.getAllCottages();
 		List<CottageDTO> cottageDTOS = new ArrayList<CottageDTO>();
 	
 		for (Cottage cottage : cottages) {
@@ -31,12 +32,21 @@ public class CottageController {
 		}
 		
 		return new ResponseEntity<>(cottageDTOS,HttpStatus.OK);
-	} 
-	
+	}
+
+	@GetMapping(value = "/getCottage/{id}")
+	public ResponseEntity<CottageDTO> getCottageById(@PathVariable Integer id){
+
+		Optional<Cottage> cottage =  cottageService.getCottageById(id);
+		if(cottage.isPresent())
+			return new ResponseEntity<>(new CottageDTO(cottage.get()), HttpStatus.OK);
+		return new ResponseEntity<>(null,HttpStatus.NO_CONTENT);
+	}
+
 	@GetMapping(value = "/owner/{id}")
-	public ResponseEntity<List<CottageDTO>> getOwnerCottages(@PathVariable Long id){
+	public ResponseEntity<List<CottageDTO>> getOwnerCottages(@PathVariable int id){
 		
-		List<Cottage> cottages = cottageService.getVikendiceByVlasnik(id);
+		List<Cottage> cottages = cottageService.getCottagesByOwnerId(id);
 		List<CottageDTO> cottageDTOS = new ArrayList<CottageDTO>();
 	
 		for (Cottage cottage : cottages) {

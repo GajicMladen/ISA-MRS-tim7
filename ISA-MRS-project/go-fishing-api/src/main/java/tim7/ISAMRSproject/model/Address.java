@@ -28,7 +28,7 @@ public class Address {
 	public String country;
 	
 	@OneToOne(mappedBy = "livingAddress")
-    private Userr userr;
+    private User user;
 
 	@OneToOne(mappedBy = "address")
     private Offer offer;

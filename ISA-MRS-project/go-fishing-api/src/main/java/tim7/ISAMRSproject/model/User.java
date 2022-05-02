@@ -2,33 +2,27 @@ package tim7.ISAMRSproject.model;
 
 import static javax.persistence.DiscriminatorType.STRING;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.DiscriminatorColumn;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
 @Entity
+@Table(name = "users")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name="type", discriminatorType=STRING)
-public class Userr {
+public class User {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private Integer id;
 	
 	@Column(name= "username",unique = true,nullable = false)
 	private String username;
 	
 	@Column(name = "password",nullable = false)
 	private String password;
-	
+
+	@Column(name="email",nullable = false)
+	private String email;
+
 	@Column(name ="name",nullable = false)
 	private String name;
 	
@@ -51,27 +45,29 @@ public class Userr {
     @Column(name = "userType")
     private UserType userType;
     
-    public Userr() {
+    public User() {
     	
     }
 	
-	public Userr(Long id, String username, String password, String name, String lastName, String phone) {
+	public User(Integer id, String username, String password, String email, String name, String lastName, String phone) {
 		super();
 		this.id = id;
 		this.username = username;
 		this.password = password;
+		this.email = email;
 		this.name = name;
 		this.lastName = lastName;
 		this.phone = phone;
 		this.active = false;
 		this.deleted = false;
+
 	}
 
-	public Long getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -91,6 +87,13 @@ public class Userr {
 		this.password = password;
 	}
 
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String password) {
+		this.email = email;
+	}
 	public String getName() {
 		return name;
 	}

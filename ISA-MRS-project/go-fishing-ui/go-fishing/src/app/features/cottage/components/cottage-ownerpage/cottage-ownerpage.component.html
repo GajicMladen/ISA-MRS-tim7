@@ -1,4 +1,5 @@
-<div class="">
+
+<div class="" *ngIf="owner != null;else elseBlock">
     <div class="profile-content">
         <div class="container">
             <div class="row">
@@ -8,12 +9,12 @@
                             <img src="https://i.imgur.com/N2fYgvD.png" alt="Circle Image" class="img-raised rounded-circle img-fluid">
                         </div>
                         <div class="name">
-                            <h3 class="title display-f-center">Agencija izdavanje NS </h3>
+                            <h3 class="title display-f-center">{{owner.username}}</h3>
                             <div class="details">
-                                <h5>Ime:</h5><h4>Mladen</h4>
-                                <h5>Prezime:</h5><h4>Gajić</h4>
-                                <h5>E-mail:</h5><h4>mladengajic00@gmail.com</h4>
-                                <h5>Telefon:</h5><h4>+361 64 4281080</h4>
+                                <h5>Ime:</h5><h4>{{owner.name}}</h4>
+                                <h5>Prezime:</h5><h4>{{owner.lastName}}</h4>
+                                <h5>E-mail:</h5><h4>{{owner.email}}</h4>
+                                <h5>Telefon:</h5><h4>{{owner.phone}}</h4>
                             </div>
                             <h6 class="display-f-center">Vlasnik vikendice</h6>
                         </div>
@@ -58,11 +59,10 @@
     
       <div class="tab-content tab-space">
         <div class="tab-pane active text-center gallery" id="cottages">
-              <div class="row">
-                  
-                  <app-cottage-gallery-owner></app-cottage-gallery-owner>
+              
+                  <app-cottage-gallery-owner [ownerId]="ownerId"></app-cottage-gallery-owner>
                 
-              </div>
+              
           </div>
         <div class="tab-pane text-center gallery" id="works">
               <div class="row">
@@ -80,3 +80,6 @@
         </div>
     </div>
 </div>
+<ng-template #elseBlock>
+    <h2>Nepostojeći vlasnik vikendice.</h2>
+</ng-template>

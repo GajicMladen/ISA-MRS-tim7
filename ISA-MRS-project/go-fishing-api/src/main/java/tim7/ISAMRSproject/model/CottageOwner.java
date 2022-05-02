@@ -11,20 +11,19 @@ import javax.persistence.OneToMany;
 
 @Entity
 @DiscriminatorValue("VV")
-public class CottageOwner extends Userr {
+public class CottageOwner extends User {
 
 
 	
 	
-	@OneToMany(mappedBy = "cottageOwner", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "cottageOwner", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private Set<Cottage> cottages = new HashSet<Cottage>();
-	
-	public CottageOwner(Long id, String korisnickoIme, String lozinka, String ime, String prezime, String telefon) {
-		super(id, korisnickoIme, lozinka, ime, prezime, telefon);
+
+	public CottageOwner(Integer id, String username, String password, String email,String name, String lastName, String phone) {
+		super(id, username,email, password, name, lastName, phone);
 		// TODO Auto-generated constructor stub
 	}
 	
 	public CottageOwner() {
-		super();
 	}
 }

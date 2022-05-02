@@ -9,6 +9,10 @@ public class CottageDTO {
 	private String promoDescription;
 	private float price;
 	private int capacity;
+
+	private Integer ownerId;
+
+
 	
 	public CottageDTO() {
 		
@@ -22,6 +26,7 @@ public class CottageDTO {
 		promoDescription = cottage.getPromoDescription();
 		price = cottage.getPrice();
 		capacity = cottage.getCapacity();
+		ownerId = cottage.getCottageOwnerId();
 	}
 	
 	public Integer getId() {
@@ -30,6 +35,15 @@ public class CottageDTO {
 	public void setId(Integer idI) {
 		this.id = idI;
 	}
+
+
+	public Integer getOwnerId() {
+		return  ownerId;
+	}
+	public void setOwnerId(Integer idI) {
+		this.ownerId = idI;
+	}
+
 	public String getName() {
 		return name;
 	}

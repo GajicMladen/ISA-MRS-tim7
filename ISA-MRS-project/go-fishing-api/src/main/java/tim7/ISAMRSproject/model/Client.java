@@ -12,7 +12,7 @@ import javax.persistence.OneToMany;
 
 @Entity
 @DiscriminatorValue("K")
-public class Client extends Userr {
+public class Client extends User {
 	
 	@Column(name="penalCount")
 	private int penalCount;
@@ -21,7 +21,7 @@ public class Client extends Userr {
 	private boolean suspended;
 	
 
-	@OneToMany(mappedBy = "client", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "client", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private Set<Reservation> reservations = new HashSet<Reservation>();
 	
 
@@ -33,8 +33,8 @@ public class Client extends Userr {
 	public Client() {
 	}
 
-	public Client(Long id, String korisnickoIme, String lozinka, String ime, String prezime, String telefon) {
-		super(id, korisnickoIme, lozinka, ime, prezime, telefon);
+	public Client(Integer id, String username, String password, String email,String name, String lastName, String phone) {
+		super(id, username,email, password, name, lastName, phone);
 		// TODO Auto-generated constructor stub
 	}
 

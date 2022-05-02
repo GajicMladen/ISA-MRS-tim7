@@ -2,21 +2,23 @@ package tim7.ISAMRSproject.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import tim7.ISAMRSproject.dto.UserDTO;
-import tim7.ISAMRSproject.model.Userr;
+import tim7.ISAMRSproject.model.User;
 import tim7.ISAMRSproject.service.UserService;
 
 
 @RestController
-@RequestMapping(value = "api/korisnici")
+@RequestMapping(value = "api/users")
 public class UserController {
 
 	@Autowired
@@ -25,26 +27,25 @@ public class UserController {
 	@GetMapping(value = "/all")
 	public ResponseEntity<List<UserDTO>> getAllKorisnici() {
 
-		List<Userr> korisnici = userService.findAll();
+		List<User> users = userService.findAll();
 
-		// convert students to DTOs
-		List<UserDTO> korisniciDTO = new ArrayList<>();
-		for (Userr k : korisnici) {
-			korisniciDTO.add(new UserDTO(k));
+		List<UserDTO> userDTOS = new ArrayList<>();
+		for (User u : users) {
+			userDTOS.add(new UserDTO(u));
 		}
 
-		return new ResponseEntity<>(korisniciDTO, HttpStatus.OK);
+		return new ResponseEntity<>(userDTOS, HttpStatus.OK);
 	}
 
-	/*
-	@GetMapping(value = "/vikendice/{id}")
-	public ResponseEntity<Userr> getAllVikendice(@PathVariable int id) {
+	@GetMapping(value = "/getUser/{id}")
+	public ResponseEntity<UserDTO> getUserById(@PathVariable int id){
 
-		Userr korisnik = userService.getKorisnikWithVikendice(id);
+		Optional<User> user = userService.findById(id);
 
-		// convert students to DTOs
+		if(user.isPresent())
+			return new ResponseEntity<>(new UserDTO(user.get()),HttpStatus.OK);
 
-		return new ResponseEntity<>(korisnik, HttpStatus.OK);
+		return new ResponseEntity<>(null,HttpStatus.NO_CONTENT);
 	}
-	*/
+
 }
