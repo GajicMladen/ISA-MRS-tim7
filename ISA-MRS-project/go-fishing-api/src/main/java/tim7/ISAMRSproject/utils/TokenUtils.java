@@ -12,18 +12,14 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import tim7.ISAMRSproject.model.User;
 
-// Utility klasa za rad sa JSON Web Tokenima
 @Component
 public class TokenUtils {
 
-	// Izdavac tokena
-	@Value("spring-security-example")
+	@Value("go-fishing")
 	private String APP_NAME;
 
-	// Tajna koju samo backend aplikacija treba da zna kako bi mogla da generise i proveri JWT https://jwt.io/
-	@Value("somesecret")
+	@Value("go-fishing-secret")
 	public String SECRET;
 
 	// Period vazenja tokena - 30 minuta
@@ -33,13 +29,6 @@ public class TokenUtils {
 	// Naziv headera kroz koji ce se prosledjivati JWT u komunikaciji server-klijent
 	@Value("Authorization")
 	private String AUTH_HEADER;
-	
-	// Moguce je generisati JWT za razlicite klijente (npr. web i mobilni klijenti nece imati isto trajanje JWT, 
-	// JWT za mobilne klijente ce trajati duze jer se mozda aplikacija redje koristi na taj nacin)
-	// Radi jednostavnosti primera, necemo voditi racuna o uređaju sa kojeg zahtev stiže.
-	//	private static final String AUDIENCE_UNKNOWN = "unknown";
-	//	private static final String AUDIENCE_MOBILE = "mobile";
-	//	private static final String AUDIENCE_TABLET = "tablet";
 	
 	private static final String AUDIENCE_WEB = "web";
 
@@ -251,6 +240,8 @@ public class TokenUtils {
 	 * @param lastPasswordReset Datum poslednje izmene lozinke.
 	 * @return Informacija da li je token kreiran pre poslednje izmene lozinke ili ne.
 	 */
+	
+	@SuppressWarnings("unused")
 	private Boolean isCreatedBeforeLastPasswordReset(Date created, Date lastPasswordReset) {
 		return (lastPasswordReset != null && created.before(lastPasswordReset));
 	}

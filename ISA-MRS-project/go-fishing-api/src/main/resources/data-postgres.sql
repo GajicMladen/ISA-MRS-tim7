@@ -31,10 +31,17 @@
 --INSERT INTO public.Cottage(
 --	id, owner_id)
 --	VALUES (3, 3);
-	
+
+INSERT INTO public.address(city, country, street) VALUES
+						('Novi Sad', 'Serbia', 'Tihomira Ostojica 2');
+
+INSERT INTO public.users(active, deleted, email, lastname, name, password, phone, address_id) VALUES
+					(true, false, 'p3r5kul45@gmail.com', 'Tomic', 'Jovan', '$2a$10$XeS1WZloSVVq2Z2dJd3L7ePADJy51sWu/oLqcy.Qcmppr6VcUtcr6', '+381607229290', 1);
+
 INSERT INTO ROLE (name) VALUES ('ROLE_USER');
 INSERT INTO ROLE (name) VALUES ('ROLE_ADMIN');
 
+INSERT INTO USER_ROLE(user_id, role_id) VALUES (1, 2);
 --INSERT INTO USER_ROLE (user_id, role_id) VALUES (1, 2); -- user-u dodeljujemo rolu USER
 --INSERT INTO USER_ROLE (user_id, role_id) VALUES (2, 2); -- admin-u dodeljujemo rolu USER
 --INSERT INTO USER_ROLE (user_id, role_id) VALUES (3, 2); -- user-u dodeljujemo rolu ADMIN

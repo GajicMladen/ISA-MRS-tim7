@@ -4,13 +4,12 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class ConfigService {
-  private _api_url = 'http://localhost:8080/api';
-  private _reg_url = 'http://localhost:8080/reg';
+  private _server_address = 'http://localhost:8080';
 
-  private _signup_url = this._reg_url + '/signup';
-  private _login_url = this._reg_url + '/login';
+  private _signup_url = this._server_address + '/reg/signup';
+  private _login_url = this._server_address + '/login';
 
-  get login_url(): string {
+  get loginUrl(): string {
     return this._login_url;
   }
 

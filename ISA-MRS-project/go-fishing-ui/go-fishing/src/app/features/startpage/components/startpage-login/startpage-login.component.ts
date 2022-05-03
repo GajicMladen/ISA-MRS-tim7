@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import {
   MessageService,
   MessageType,
 } from 'src/app/shared/services/message-service/message.service';
+import { StartpageLoginService } from './startpage-login.service';
 
 @Component({
   selector: 'app-startpage-login',
@@ -11,9 +13,12 @@ import {
   styleUrls: ['./startpage-login.component.css'],
 })
 export class StartpageLoginComponent implements OnInit {
+  form: FormGroup = this.createLoginForm();
+
   constructor(
     private route: ActivatedRoute,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private loginService: StartpageLoginService
   ) {}
 
   ngOnInit(): void {
@@ -42,5 +47,30 @@ export class StartpageLoginComponent implements OnInit {
         break;
       }
     }
+  }
+
+  createLoginForm(): FormGroup {
+    return new FormGroup({
+      username: new FormControl(''),
+      password: new FormControl(''),
+    });
+  }
+
+  loginRequest(): void {
+    this.loginService
+      .sendLoginRequest(this.form.getRawValue())
+      .pipe()
+      .subscribe(
+        (res) => {
+          //TODO: Redirect na homepage.
+          this.messageService.showMessage(
+            'Login successful!',
+            MessageType.SUCCESS
+          );
+        },
+        (error) => {
+          this.messageService.showMessage(error, MessageType.ERROR);
+        }
+      );
   }
 }
