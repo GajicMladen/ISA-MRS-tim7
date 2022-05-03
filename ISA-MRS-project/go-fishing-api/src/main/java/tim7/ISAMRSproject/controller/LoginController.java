@@ -48,7 +48,10 @@ public class LoginController {
 		
 		String jwt = tokenUtils.generateToken(user.getUsername());
 		int expiresIn = tokenUtils.getExpiredIn();
-
-		return ResponseEntity.ok(new UserTokenState(jwt, expiresIn));		
+		
+		if(user.isActive())
+			return ResponseEntity.ok(new UserTokenState(jwt, expiresIn));
+		else
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Account is not verified!");
 	}
 }
