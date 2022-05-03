@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Cottage } from '../classes/cottage';
@@ -22,5 +22,14 @@ export class CottageService {
 
   public findCottagesByOwner(ownerId:number):Observable<Cottage[]>{
     return this.http.get<Cottage[]>(this.cottagesUrl+"/owner/"+ownerId);
+  }
+
+  public deleteCottage(cottageId:number){
+    return this.http.delete<Boolean>(this.cottagesUrl+"/deleteCottage/"+cottageId);
+  }
+
+  public addNewCottage(cottage:Cottage):Observable<string>{
+    console.log(JSON.stringify(cottage));
+    return this.http.post(this.cottagesUrl+"/newCottage",JSON.stringify(cottage),{headers : new HttpHeaders({ 'Content-Type': 'application/json' }),responseType:'text'});
   }
 }

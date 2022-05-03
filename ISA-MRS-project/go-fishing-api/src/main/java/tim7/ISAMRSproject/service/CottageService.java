@@ -7,7 +7,10 @@ import org.omg.CORBA.INTERNAL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import tim7.ISAMRSproject.dto.CottageDTO;
 import tim7.ISAMRSproject.model.Cottage;
+import tim7.ISAMRSproject.model.CottageOwner;
+import tim7.ISAMRSproject.model.User;
 import tim7.ISAMRSproject.repository.CottageRepository;
 
 @Service
@@ -29,10 +32,23 @@ public class CottageService {
 		return cottageRepository.findByOwnerId(ownerId);
 	}
 	
-	public void addNewCottage(Cottage cottage) {
-		
-		cottageRepository.save(cottage);
+	public Cottage addNewCottage(CottageDTO cottageDTO, User user) {
 
+		Cottage cottage = new Cottage(cottageDTO);
+		cottage.setCottageOwner((CottageOwner) user);
+		return cottageRepository.save(cottage);
+
+	}
+
+	public boolean deleteCottage(Integer id){
+		try{
+			cottageRepository.deleteById(id);
+			return true;
+		}
+		catch (Exception e){
+			System.out.println(e.getMessage());
+			return false;
+		}
 	}
 	
 }

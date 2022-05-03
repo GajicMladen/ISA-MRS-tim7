@@ -16,7 +16,7 @@ public class CottageOwner extends User {
 
 	
 	
-	@OneToMany(mappedBy = "cottageOwner", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "cottageOwner", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Set<Cottage> cottages = new HashSet<Cottage>();
 
 	public CottageOwner(Integer id, String username, String password, String email,String name, String lastName, String phone) {

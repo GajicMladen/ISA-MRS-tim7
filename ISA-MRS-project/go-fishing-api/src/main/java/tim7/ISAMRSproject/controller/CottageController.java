@@ -12,7 +12,12 @@ import org.springframework.web.bind.annotation.*;
 
 import tim7.ISAMRSproject.dto.CottageDTO;
 import tim7.ISAMRSproject.model.Cottage;
+import tim7.ISAMRSproject.model.User;
+import tim7.ISAMRSproject.model.UserType;
 import tim7.ISAMRSproject.service.CottageService;
+import tim7.ISAMRSproject.service.UserService;
+
+import javax.jws.soap.SOAPBinding;
 
 @RestController
 @RequestMapping(value = "api/cottages")
@@ -20,6 +25,9 @@ public class CottageController {
 
 	@Autowired
 	private CottageService cottageService;
+
+	@Autowired
+	private UserService userService;
 	
 	@GetMapping(value = "/all")
 	public ResponseEntity<List<CottageDTO>> getAllCottages(){
@@ -59,8 +67,17 @@ public class CottageController {
 	@PostMapping(
 			value = "/newCottage",
 			consumes = MediaType.APPLICATION_JSON_VALUE)
-	public void addNewCottage(@RequestBody Cottage newOne) {
+	public CottageDTO addNewCottage(@RequestBody CottageDTO newOne) {
+		Optional<User> user = userService.findById(newOne.getOwnerId());
+		if(user.isPresent() && user.get().getUserType() == UserType.VLASNIK_VIKENDICE)
+			return new CottageDTO(cottageService.addNewCottage(newOne,user.get()));
+		return null;
+	}
 
-		cottageService.addNewCottage(newOne);
+	@DeleteMapping(value = "/deleteCottage/{id}")
+	public boolean deleteCottage(@PathVariable Integer id){
+
+		return cottageService.deleteCottage(id);
+
 	}
 }

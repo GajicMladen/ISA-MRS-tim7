@@ -7,6 +7,7 @@ import { RouterModule } from '@angular/router';
 import { CottageAddNewComponent } from './components/cottage-add-new/cottage-add-new.component';
 import { CottageService } from './services/cottage.service';
 import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { HttpClientModule } from '@angular/common/http';
   imports: [
     CommonModule,
     RouterModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers:[CottageService]
 })
