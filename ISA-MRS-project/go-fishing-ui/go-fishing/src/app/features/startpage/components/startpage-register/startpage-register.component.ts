@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  MessageService,
+  MessageType,
+} from 'src/app/shared/services/message-service/message.service';
 import { StartpageRegisterService } from './startpage-register.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-startpage-register',
@@ -12,7 +17,11 @@ export class StartpageRegisterComponent implements OnInit {
 
   activatePassMatchError = false;
 
-  constructor(private registrationService: StartpageRegisterService) {}
+  constructor(
+    private registrationService: StartpageRegisterService,
+    private messageService: MessageService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.form.get('password')?.valueChanges.subscribe(() => {
@@ -41,17 +50,36 @@ export class StartpageRegisterComponent implements OnInit {
       ),
       confirmPassword: new FormControl(''),
       name: new FormControl(''),
-      surname: new FormControl(''),
+      lastName: new FormControl(''),
       country: new FormControl(''),
-      cityTown: new FormControl(''),
+      town: new FormControl(''),
       address: new FormControl(''),
       phoneNumber: new FormControl('', Validators.pattern('^[+][0-9]{10,12}$')),
     });
   }
 
   saveRequest(): void {
-    if (this.form.invalid || this.activatePassMatchError) return;
-    else
-      this.registrationService.sendRegistrationRequest(this.form.getRawValue());
+    if (this.form.invalid || this.activatePassMatchError) {
+      this.messageService.showMessage(
+        'Please fill out the form correctly!',
+        MessageType.WARNING
+      );
+    } else {
+      this.registrationService
+        .sendRegistrationRequest(this.form.getRawValue())
+        .pipe()
+        .subscribe(
+          (res) => {
+            this.messageService.showMessage(
+              'Success! A confirmation e-mail has been sent!',
+              MessageType.SUCCESS
+            );
+            this.router.navigate(['/login']);
+          },
+          (error) => {
+            this.messageService.showMessage(error, MessageType.ERROR);
+          }
+        );
+    }
   }
 }
