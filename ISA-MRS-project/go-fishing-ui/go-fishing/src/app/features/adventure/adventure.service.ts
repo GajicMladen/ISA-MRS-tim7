@@ -13,4 +13,8 @@ export class AdventureService {
     console.log(id);
     return this.http.delete<string>("http://localhost:8080/adventure/" + id);
   }
+
+  addAdventure(adventure: any) {
+    return this.http.post<any>("http://localhost:8080/adventure", adventure);
+  }
 }

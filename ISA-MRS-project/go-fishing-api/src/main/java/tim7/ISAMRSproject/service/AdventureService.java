@@ -14,9 +14,13 @@ public class AdventureService {
 	
 	public Adventure findOne(Integer id) {
 		return adventureRepository.findById(id).orElse(null);
-	}
 	
 	public void remove(Integer id) {
-		adventureRepository.deleteById(id);
+		this.adventureRepository.deleteById(id);
+	}
+
+	public void addAdventure(Avantura a) {
+		this.adventureRepository.save(a);
+		
 	}
 }
