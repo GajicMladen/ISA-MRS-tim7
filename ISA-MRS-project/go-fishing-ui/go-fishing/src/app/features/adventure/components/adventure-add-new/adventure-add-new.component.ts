@@ -30,19 +30,27 @@ export class AdventureAddNewComponent implements OnInit {
     info: ""
   }
 
-  form: FormGroup;
+  form: FormGroup = this.generateForm();
 
-  formControl = new FormControl('', [Validators.required]);
+  errorMatcher: boolean = false;
 
-  matcher = new MyErrorStateMatcher();
+  name = new FormControl('', [Validators.required]);
 
   constructor(private adventureService: AdventureService) 
   {
-    this.form = this.generateForm();
+    
   }
 
   ngOnInit(): void {
-  
+    
+  }
+
+  getErrorMessage() {
+    if (this.name.hasError('required')) {
+      return 'Ovo je obavezno polje!';
+    }
+
+    return '';
   }
 
   generateForm(): FormGroup {
