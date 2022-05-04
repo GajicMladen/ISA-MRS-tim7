@@ -50,5 +50,10 @@ public class CottageService {
 			return false;
 		}
 	}
+
+	public void editCottage(CottageDTO cottageDTO){
+		cottageRepository.updateCottage(cottageDTO.getId(), cottageDTO.getName(),
+				cottageDTO.getPromoDescription(), cottageDTO.getPrice(),cottageDTO.getCapacity());
+	}
 	
 }

@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Cottage } from '../../classes/cottage';
 import { CottageService } from '../../services/cottage.service';
 
@@ -18,7 +19,7 @@ export class CottageAddNewComponent implements OnInit {
   promoDescription : string;
   bedCount:number;
 
-  constructor(private cottageService:CottageService) { }
+  constructor(private cottageService:CottageService,private router: Router) { }
 
   ngOnInit(): void {
     this.ownerId = history.state.ownerId;
@@ -37,5 +38,7 @@ export class CottageAddNewComponent implements OnInit {
     this.cottageService.addNewCottage(this.newCottage).subscribe(data =>{
       console.log(data);
     });
+
+    this.router.navigate(["/cottageOwner/"+this.ownerId]);
   }
 }

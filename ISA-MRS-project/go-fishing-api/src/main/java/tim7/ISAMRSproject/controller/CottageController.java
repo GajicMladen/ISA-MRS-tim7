@@ -80,4 +80,9 @@ public class CottageController {
 		return cottageService.deleteCottage(id);
 
 	}
+
+	@PutMapping(value = "/updateCottage",consumes = MediaType.APPLICATION_JSON_VALUE)
+	public void updateCottage(CottageDTO cottage){
+		cottageService.editCottage(cottage);
+	}
 }

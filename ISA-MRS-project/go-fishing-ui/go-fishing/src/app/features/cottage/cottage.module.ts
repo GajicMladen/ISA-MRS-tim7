@@ -8,6 +8,7 @@ import { CottageAddNewComponent } from './components/cottage-add-new/cottage-add
 import { CottageService } from './services/cottage.service';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { CottageEditComponent } from './components/cottage-edit/cottage-edit.component';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { FormsModule } from '@angular/forms';
     CottageOwnerpageComponent,
     CottageGalleryOwnerComponent,
     CottageAddNewComponent,
+    CottageEditComponent,
   ],
   imports: [
     CommonModule,
