@@ -23,25 +23,25 @@ public class Korisnik {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(name= "korisnickoIme",unique = true,nullable = false)
-	private String korisnickoIme;
+	@Column(name= "email", unique = true, nullable = false)
+	private String email;
 	
-	@Column(name = "lozinka",nullable = false)
+	@Column(name = "lozinka", nullable = false)
 	private String lozinka;
 	
-	@Column(name ="ime",nullable = false)
+	@Column(name ="ime", nullable = false)
 	private String ime;
 	
-	@Column(name = "prezime",nullable = false)
+	@Column(name = "prezime", nullable = false)
 	private String prezime;
 	
-	@Column(name = "telefon",nullable = false)
+	@Column(name = "telefon", nullable = false)
 	private String telefon;
 
-	@Column(name = "obrisan",nullable = false)
+	@Column(name = "obrisan", nullable = false)
 	private boolean obrisan;
 	
-	@Column(name = "aktivan",nullable = false)
+	@Column(name = "aktivan", nullable = false)
 	private boolean aktivan;
 
     @OneToOne(cascade = CascadeType.ALL)
@@ -53,16 +53,20 @@ public class Korisnik {
     
     
 	
-	public Korisnik(Long id, String korisnickoIme, String lozinka, String ime, String prezime, String telefon) {
+	public Korisnik(Long id, String email, String lozinka, String ime, String prezime, String telefon) {
 		super();
 		this.id = id;
-		this.korisnickoIme = korisnickoIme;
+		this.email = email;
 		this.lozinka = lozinka;
 		this.ime = ime;
 		this.prezime = prezime;
 		this.telefon = telefon;
 		this.aktivan = false;
 		this.obrisan = false;
+	}
+
+	public Korisnik() {
+		super();
 	}
 
 	public Long getId() {
@@ -73,12 +77,12 @@ public class Korisnik {
 		this.id = id;
 	}
 
-	public String getKorisnickoIme() {
-		return korisnickoIme;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setKorisnickoIme(String korisnickoIme) {
-		this.korisnickoIme = korisnickoIme;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public String getLozinka() {
