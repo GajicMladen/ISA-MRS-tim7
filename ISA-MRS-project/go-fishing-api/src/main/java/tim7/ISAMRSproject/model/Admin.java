@@ -5,14 +5,12 @@ import javax.persistence.Entity;
 
 @Entity
 @DiscriminatorValue("A")
-public class Admin extends User {
+public class Admin extends Korisnik {
+	
+	
 
-
-	public Admin() {
-	}
-
-	public Admin(Integer id, String username, String password, String email,String name, String lastName, String phone) {
-		super(id, username,email, password, name, lastName, phone);
+	public Admin(Long id, String korisnickoIme, String lozinka, String ime, String prezime, String telefon) {
+		super(id, korisnickoIme, lozinka, ime, prezime, telefon);
 		// TODO Auto-generated constructor stub
 	}
 

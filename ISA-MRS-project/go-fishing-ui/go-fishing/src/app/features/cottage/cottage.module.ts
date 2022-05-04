@@ -4,22 +4,17 @@ import { CottageProfilepageComponent } from './components/cottage-profilepage/co
 import { CottageOwnerpageComponent } from './components/cottage-ownerpage/cottage-ownerpage.component';
 import { CottageGalleryOwnerComponent } from './components/cottage-gallery-owner/cottage-gallery-owner.component';
 import { RouterModule } from '@angular/router';
-import { CottageAddNewComponent } from './components/cottage-add-new/cottage-add-new.component';
-import { CottageService } from './services/cottage.service';
-import { HttpClientModule } from '@angular/common/http';
+
 
 @NgModule({
   declarations: [
     CottageProfilepageComponent,
     CottageOwnerpageComponent,
-    CottageGalleryOwnerComponent,
-    CottageAddNewComponent,
+    CottageGalleryOwnerComponent
   ],
   imports: [
     CommonModule,
-    RouterModule,
-    HttpClientModule
-  ],
-  providers:[CottageService]
+    RouterModule
+  ]
 })
 export class CottageModule { }
