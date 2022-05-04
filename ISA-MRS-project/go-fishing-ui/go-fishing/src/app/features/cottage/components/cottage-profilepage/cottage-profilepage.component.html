@@ -1,4 +1,4 @@
-<div class="container-fluid mt-2 mb-3">
+<div class="container-fluid mt-2 mb-3" *ngIf="cottage != null; else elseBlock">
     <div class="row no-gutters">
         <div class="col-md-5 pr-2">
             <div class="card">
@@ -84,9 +84,9 @@
                     <div class="p-ratings"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> </div> <span class="ml-1">5.0</span>
                 </div>
                 <div class="about"> 
-                    <h1 class="font  font-weight-bold">Vikendica Kosmaj sa bazenom</h1>
+                    <h1 class="font  font-weight-bold">{{cottage.name}}</h1>
                     <div>
-                        <span class="text-muted">Cena po danu:</span> <h2 class="font-weight-bold">$100</h2>
+                        <span class="text-muted">Cena po danu:</span> <h2 class="font-weight-bold">${{cottage.price}}</h2>
                     </div>
                 </div>
                 <div class="buttons">
@@ -103,15 +103,7 @@
                     <hr >
                     <div class="mt-2"> <span class="font-weight-bold">Opis:</span>
                         <p>
-                            Kosmaj je predivna pitoma planina, prekrivena bujnom vegetacijom i čini jednu pravu vazdušnu banju. 
-                            <br />
-                            <br />
-                            Unutrašnjost vikendice je lepo stilski uređena i pravo je uživanje boraviti u istoj. Kvadratura objekta je 120m2. 
-                            Kuća se sastoji od dnevne sobe u prizemlju i wc-a, a na spratu su tri spavaće sobe i toalet sa fenom i peškirima. Dve spavaće sobe imaju francuski ležaj, u trećoj spavaćoj je jedan single ležaj. U dnevnoj sobi su dva krevata na razvlačenje i postoji mogućnost ubacivanja dodatnog ležaja. Maksimalan kapacitet za spavanje je 10 osoba, a za boravak preko dana može biti i do 15 osoba. 
-                            <br />
-                            Najlepši deo kuće je dnevna soba, koja ima kvadraturu 70m2 i koja ima kamin, cela je u staklu i iz nje se pruža predivan pogled. Vikendica poseduje klimu i Wi-fi. Vila ima i klavir. 
-                            <br /><br />
-                            Oko Vikendice se nalazi prostrano dvorište čiji pogled ništa ne zaklanja tako da možete uživati u predivnom širokom pogledu za koji se ne zna da li je lepši preko dana ili noću. 
+                            {{cottage.promoDescription}}    
                         </p>
                         <hr >       
                         <div class="bullets">
@@ -127,7 +119,7 @@
                     <hr >
                     <div class="mt-2"> <span class="font-weight-bold">Izdavač</span> </div>
                     <div class="d-flex flex-row align-items-center">
-                        <a href="/cottageOwner">
+                        <a routerLink="/cottageOwner/{{cottage.ownerId}}">
                             <img src="https://i.imgur.com/N2fYgvD.png" class="rounded-circle store-image">
                         </a>
                         <a href="/cottageOwner">
@@ -212,3 +204,6 @@
         </div>
     </div>
 </div>
+<ng-template #elseBlock>
+    <h2>Nepostojeca vikendica.</h2>
+</ng-template>
