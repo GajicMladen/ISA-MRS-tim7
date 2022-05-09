@@ -4,5 +4,7 @@ export class Cottage {
     promoDescription: string;
     price: number;
     capacity: number;
-    ownerId:number
+    ownerId:number;
+    bedCount:number;
+    roomCount:number;
 }

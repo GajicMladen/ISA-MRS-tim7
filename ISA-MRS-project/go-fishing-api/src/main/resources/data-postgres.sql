@@ -23,11 +23,11 @@ INSERT INTO public.offer(
 
 
 INSERT INTO public.Cottage(
-	id, owner_id)
-	VALUES (1, 1);
+	id, owner_id,room_count,bed_count)
+	VALUES (1, 1,2,2);
 INSERT INTO public.Cottage(
-	id, owner_id)
-	VALUES (2, 3);
+	id, owner_id,room_count,bed_count)
+	VALUES (2, 3,5,7);
 INSERT INTO public.Cottage(
-	id, owner_id)
-	VALUES (3, 3);
+	id, owner_id,room_count,bed_count)
+	VALUES (3, 3,6,9);
