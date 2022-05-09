@@ -13,7 +13,10 @@ import tim7.ISAMRSproject.model.CottageOwner;
 import tim7.ISAMRSproject.model.User;
 import tim7.ISAMRSproject.repository.CottageRepository;
 
+import javax.transaction.Transactional;
+
 @Service
+@Transactional
 public class CottageService {
 
 	@Autowired
@@ -55,5 +58,6 @@ public class CottageService {
 		cottageRepository.updateCottage(cottageDTO.getId(), cottageDTO.getName(),
 				cottageDTO.getPromoDescription(), cottageDTO.getPrice(),cottageDTO.getCapacity());
 	}
+
 	
 }

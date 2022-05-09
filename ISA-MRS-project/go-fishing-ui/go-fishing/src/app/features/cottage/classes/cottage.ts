@@ -5,5 +5,6 @@ export class Cottage {
     price: number;
     capacity: number;
     ownerId:number;
-    bedCount:number
+    bedCount:number;
+    roomCount:number;
 }

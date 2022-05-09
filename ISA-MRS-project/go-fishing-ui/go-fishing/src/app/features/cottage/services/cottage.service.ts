@@ -33,7 +33,8 @@ export class CottageService {
     return this.http.post(this.cottagesUrl+"/newCottage",JSON.stringify(cottage),{headers : new HttpHeaders({ 'Content-Type': 'application/json' }),responseType:'text'});
   }
 
-  public editCottage(cottageId:number,cottage:Cottage){
-    this.http.put(this.cottagesUrl+"/updateCottage/"+cottageId , JSON.stringify(cottage));
+  public editCottage(cottage:Cottage){
+    console.log(cottage);
+    return this.http.put(this.cottagesUrl+"/updateCottage", cottage,{headers: new HttpHeaders({'dataType':'json'})});
   }
 }

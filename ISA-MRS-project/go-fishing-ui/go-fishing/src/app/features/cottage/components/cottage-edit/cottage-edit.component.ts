@@ -19,6 +19,7 @@ export class CottageEditComponent implements OnInit {
   capacity:number;
   promoDescription : string;
   bedCount:number;
+  roomCount:number;
 
   constructor(private cottageService:CottageService,private route: ActivatedRoute) { }
 
@@ -26,6 +27,13 @@ export class CottageEditComponent implements OnInit {
     this.cottageId = Number(this.route.snapshot.paramMap.get('id'));
     this.cottageService.findCottageById(this.cottageId).subscribe(data=>{
       this.currentCottage = data;
+      console.log(this.currentCottage);
+      this.name = this.currentCottage.name;
+      this.price = this.currentCottage.price;
+      this.capacity = this.currentCottage.capacity;
+      this.promoDescription = this.currentCottage.promoDescription;
+      this.bedCount = this.currentCottage.bedCount;
+      this.roomCount = this.currentCottage.roomCount;
     })
   }
 
@@ -35,9 +43,13 @@ export class CottageEditComponent implements OnInit {
     this.newCottage.capacity = this.capacity;
     this.newCottage.promoDescription = this.promoDescription;
     this.newCottage.bedCount = this.bedCount;
+    this.newCottage.id = this.cottageId;
+    this.newCottage.roomCount = this.roomCount;
 
-    console.log(this.newCottage);
+    //console.log(this.newCottage);
     
-    this.cottageService.editCottage(this.cottageId,this.newCottage);
+    this.cottageService.editCottage(this.newCottage).subscribe(response => {console.log(response)} );
+
+    window.location.href = "http://localhost:4200/cottageProfile/"+this.cottageId;
   }
 }
