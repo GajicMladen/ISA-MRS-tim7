@@ -14,16 +14,16 @@
                     <mat-form-field class="inputField" appearance="fill"> 
                         <mat-label>Promotivni opis</mat-label>
                         <textarea matInput #input placeholder="Opis" formControlName="promo" value="{{adventure.promo}}"></textarea>
-                        <mat-error *ngIf="form.controls.promo.hasError('required')">
+                       <!-- <mat-error *ngIf="form.controls.promo.hasError('required')">
                             Ovo polje je obavezno
-                        </mat-error>
+                        </mat-error>-->
                     </mat-form-field>
                     <mat-form-field class="inputField" appearance="fill">
                         <mat-label>Maksimalan broj osoba</mat-label>
                         <input matInput type="number" placeholder="Maksimalan broj" value="{{adventure.maxNum}}" formControl="maxNum">
-                        <mat-error *ngIf="form.controls.maxNum.hasError('required')">
+                        <!--<mat-error *ngIf="form.controls.maxNum.hasError('required')">
                             Ovo polje je obavezno
-                        </mat-error>
+                        </mat-error>-->
                     </mat-form-field>
                     <mat-form-field class="inputField" appearance="fill">
                         <mat-label>Pravila ponašanja</mat-label>
@@ -39,23 +39,23 @@
                     <mat-form-field class="inputField" appearance="fill">
                         <mat-label>Adresa održavanja avanture</mat-label>
                         <input matInput placeholder="Adresa" value="{{adventure.address}}" formControl="address">
-                        <mat-error *ngIf="form.controls.address.hasError('required')">
+                        <!--<mat-error *ngIf="form.controls.address.hasError('required')">
                             Ovo polje je obavezno
-                        </mat-error>
+                        </mat-error>-->
                     </mat-form-field>
                     <mat-form-field class="inputField" appearance="fill">
                         <mat-label>Kratka biografija instruktora</mat-label>
                         <textarea matInput value="{{adventure.bio}}" placeholder="Kratka biografija" formControl="bio"></textarea>
-                        <mat-error *ngIf="form.controls.bio.hasError('required')">
+                        <!--<mat-error *ngIf="form.controls.bio.hasError('required')">
                             Ovo polje je obavezno
-                        </mat-error>
+                        </mat-error>-->
                     </mat-form-field>
                     <mat-form-field class="inputField" appearance="fill" floatLabel="always">
                         <mat-label>Cena avanture po osobi</mat-label>
                         <input matInput type="number" value="{{adventure.price}}" placeholder="Cena" value="" formControl="price" required>
-                        <mat-error *ngIf="form.controls.price.hasError('required')">
+                        <!--<mat-error *ngIf="form.controls.price.hasError('required')">
                             Ovo polje je obavezno
-                        </mat-error>
+                        </mat-error>-->
                         <span matPrefix>$&nbsp;</span>
                     </mat-form-field>
                     <mat-form-field class="inputField" appearance="fill">
