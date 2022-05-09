@@ -8,6 +8,7 @@ import { AdventureCardComponent } from './components/adventure-card/adventure-ca
 import { AdventureInstructorpageComponent } from './components/adventure-instructorpage/adventure-instructorpage.component';
 import { AdventureService } from './adventure.service';
 import { AdventureAddNewComponent } from './components/adventure-add-new/adventure-add-new.component';
+import { FormsModule } from '@angular/forms';
 
 
 
@@ -22,7 +23,8 @@ import { AdventureAddNewComponent } from './components/adventure-add-new/adventu
   imports: [
     CommonModule,
     SharedModule,
-    BrowserModule
+    BrowserModule,
+    FormsModule
   ],
   providers: [AdventureService]
 })

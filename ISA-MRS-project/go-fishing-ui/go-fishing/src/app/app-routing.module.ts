@@ -12,6 +12,7 @@ import { AdventureInstructorpageComponent } from './features/adventure/component
 import { EditProfileComponent } from './shared/components/edit-profile/edit-profile.component';
 import { CottageAddNewComponent } from './features/cottage/components/cottage-add-new/cottage-add-new.component';
 import { AdventureAddNewComponent } from './features/adventure/components/adventure-add-new/adventure-add-new.component';
+import { AdventureCardComponent } from './features/adventure/components/adventure-card/adventure-card.component';
 
 const routes: Routes = [
   { path: '', component: StartpagePreviewListComponent },

@@ -42,13 +42,13 @@ public class Boat extends Offer {
 
 	public Boat(Integer id, String naziv, String promoOpis, List<String> slike, List<String> pravilaPonasanja, float cena,
 				int kapacitet) {
-		super(id, naziv, promoOpis, slike, pravilaPonasanja, cena, kapacitet);
+		super(id, naziv, promoOpis, cena, kapacitet);
 	}
 
 	public Boat(Integer id, String naziv, String promoOpis, List<String> slike, List<String> pravilaPonasanja, float cena,
 				int kapacitet, String type, float length, int motorsCount, float motorPower, float maxSpeed,
 				String cancelConditions) {
-		super(id, naziv, promoOpis, slike, pravilaPonasanja, cena, kapacitet);
+		super(id, naziv, promoOpis, cena, kapacitet);
 		this.type = type;
 		this.length = length;
 		this.motorsCount = motorsCount;

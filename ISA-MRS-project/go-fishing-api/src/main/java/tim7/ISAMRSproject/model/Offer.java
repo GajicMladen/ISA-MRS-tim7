@@ -58,8 +58,7 @@ public class Offer {
 		super();
 	}
 
-	public Offer(Integer id, String name, String promoDescription, List<String> slike, List<String> pravilaPonasanja,
-				 float price, int capacity) {
+	public Offer(Integer id, String name, String promoDescription, float price, int capacity) {
 		super();
 		this.id = id;
 		this.name = name;

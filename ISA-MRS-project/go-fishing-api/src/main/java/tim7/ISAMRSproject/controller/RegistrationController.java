@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import tim7.ISAMRSproject.dto.UserRegisterDTO;
-import tim7.ISAMRSproject.model.Korisnik;
+import tim7.ISAMRSproject.model.User;
 
 /*
  * Ova klasa predstavlja kontroler za registraciju korisnika.
@@ -23,7 +23,8 @@ public class RegistrationController {
 	 * Endpoint za registraciju novog korisnika
 	 * */
 	@PostMapping("/signup")
-	public ResponseEntity<Korisnik> addUser(@RequestBody UserRegisterDTO userRegisterDTO, UriComponentsBuilder ucBuilder){
+	public ResponseEntity<User> addUser(@RequestBody UserRegisterDTO userRegisterDTO, UriComponentsBuilder ucBuilder){
+		return null;
 		
 	}
 	
