@@ -1,0 +1,83 @@
+<mat-card class="mainCard">
+    <mat-card-title>
+        <h1>Dodavanje nove avanture</h1>
+    </mat-card-title>
+    <mat-card-content>
+        <form class="form" formGroup="form">
+            <div class="row">
+                <div class="col-md-6">
+                    <mat-form-field class="inputField" appearance="fill">
+                        <mat-label>Naziv avanture</mat-label>
+                        <input matInput formControlName="name" placeholder="Naziv" value="{{adventure.name}}" required> 
+                        <mat-error *ngIf="name.invalid">{{getErrorMessage()}}</mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="inputField" appearance="fill"> 
+                        <mat-label>Promotivni opis</mat-label>
+                        <textarea matInput #input placeholder="Opis" formControlName="promo" value="{{adventure.promo}}"></textarea>
+                        <mat-error *ngIf="form.controls.promo.hasError('required')">
+                            Ovo polje je obavezno
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="inputField" appearance="fill">
+                        <mat-label>Maksimalan broj osoba</mat-label>
+                        <input matInput type="number" placeholder="Maksimalan broj" value="{{adventure.maxNum}}" formControl="maxNum">
+                        <mat-error *ngIf="form.controls.maxNum.hasError('required')">
+                            Ovo polje je obavezno
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="inputField" appearance="fill">
+                        <mat-label>Pravila ponašanja</mat-label>
+                        <textarea matInput placeholder="Pravila" value="{{adventure.conductRules}}"></textarea>
+                        <mat-hint>Pravila navoditi jedno ispod drugog</mat-hint>
+                    </mat-form-field>
+                    <mat-form-field class="inputField" appearance="fill">
+                        <mat-label>Uslovi otkaza rezervacije</mat-label>
+                        <textarea matInput placeholder="Uslovi otkaza" value="{{adventure.cancelationRules}}"></textarea>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-6">
+                    <mat-form-field class="inputField" appearance="fill">
+                        <mat-label>Adresa održavanja avanture</mat-label>
+                        <input matInput placeholder="Adresa" value="{{adventure.address}}" formControl="address">
+                        <mat-error *ngIf="form.controls.address.hasError('required')">
+                            Ovo polje je obavezno
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="inputField" appearance="fill">
+                        <mat-label>Kratka biografija instruktora</mat-label>
+                        <textarea matInput value="{{adventure.bio}}" placeholder="Kratka biografija" formControl="bio"></textarea>
+                        <mat-error *ngIf="form.controls.bio.hasError('required')">
+                            Ovo polje je obavezno
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="inputField" appearance="fill" floatLabel="always">
+                        <mat-label>Cena avanture po osobi</mat-label>
+                        <input matInput type="number" value="{{adventure.price}}" placeholder="Cena" value="" formControl="price" required>
+                        <mat-error *ngIf="form.controls.price.hasError('required')">
+                            Ovo polje je obavezno
+                        </mat-error>
+                        <span matPrefix>$&nbsp;</span>
+                    </mat-form-field>
+                    <mat-form-field class="inputField" appearance="fill">
+                        <mat-label>Dostupna oprema</mat-label>
+                        <textarea matInput value="{{adventure.equipment}}" placeholder="Oprema"></textarea>
+                        <mat-hint>Opremu navoditi jednu ispod druge</mat-hint>
+                    </mat-form-field>
+                    <mat-form-field class="inputField" appearance="fill">
+                        <mat-label>Dodatne informacije</mat-label>
+                        <textarea matInput value="{{adventure.info}}" placeholder="informacije"></textarea>
+                    </mat-form-field>
+                    
+                </div>
+            </div>
+        </form>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="buttons">
+                    <span class="buttons" id="return"><a href="/instructorProfile"><button mat-raised-button color="warn" formnovalidate>Poništi</button></a></span>
+                    <span class="buttons" id="confirm"><button mat-raised-button routerLink="" (click)="addAdventure()" color="primary">Dodaj</button></span>
+                </div>
+            </div>
+        </div>
+    </mat-card-content>
+</mat-card>

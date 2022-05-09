@@ -60,7 +60,7 @@
                 <input matInput formControlName="phoneNumber" placeholder="Phone Number" name="phoneNumber" required>
             </mat-form-field>
             <small class="text-danger" *ngIf="form.get('phoneNumber')!.hasError('pattern')">
-                Phone number format should be '+' followed by 8-10 digits inclusive
+                Phone number format should be '+' followed by 10-12 digits inclusive
             </small>
 
             <button mat-raised-button color="primary" type="button" (click)="saveRequest()">Register</button>

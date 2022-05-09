@@ -6,6 +6,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AdventureReservationComponent } from './components/adventure-reservation/adventure-reservation.component';
 import { AdventureCardComponent } from './components/adventure-card/adventure-card.component';
 import { AdventureInstructorpageComponent } from './components/adventure-instructorpage/adventure-instructorpage.component';
+import { AdventureService } from './adventure.service';
+import { AdventureAddNewComponent } from './components/adventure-add-new/adventure-add-new.component';
 
 
 
@@ -14,12 +16,14 @@ import { AdventureInstructorpageComponent } from './components/adventure-instruc
     AdventureProfilpageComponent,
     AdventureReservationComponent,
     AdventureCardComponent,
-    AdventureInstructorpageComponent
+    AdventureInstructorpageComponent,
+    AdventureAddNewComponent
   ],
   imports: [
     CommonModule,
     SharedModule,
     BrowserModule
-  ]
+  ],
+  providers: [AdventureService]
 })
 export class AdventureModule { }
