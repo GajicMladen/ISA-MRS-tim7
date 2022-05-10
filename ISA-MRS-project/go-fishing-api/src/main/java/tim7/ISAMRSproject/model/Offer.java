@@ -80,6 +80,17 @@ public class Offer {
 		this.capacity = offer.capacity;
 	}
 	
+	public Offer(Integer id, String name, String promoDescription, Object slike, Object pravilaPonasanja, float price, int capacity) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.promoDescription = promoDescription;
+//		this.slike = slike;
+//		this.pravilaPonasanja = pravilaPonasanja;
+		this.price = price;
+		this.capacity = capacity;
+	}
+
 	public Set<ExtraFavor> getExtraFavors() {
 		return extraFavors;
 	}

@@ -27,7 +27,7 @@ public class AdventureService {
 	}
 
 	public void addAdventure(AdventureDTO a) {
-		Adventure adventure = new Adventure(a, userService.findById(a.getInstructorId()));
+		Adventure adventure = new Adventure(a, userService.findById(a.getInstructorId()).get());
 		this.adventureRepository.save(adventure);
 	}
 }

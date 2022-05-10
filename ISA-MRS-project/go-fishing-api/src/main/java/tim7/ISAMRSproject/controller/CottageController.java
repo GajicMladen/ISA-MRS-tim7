@@ -17,7 +17,7 @@ import tim7.ISAMRSproject.model.UserType;
 import tim7.ISAMRSproject.service.CottageService;
 import tim7.ISAMRSproject.service.UserService;
 
-import javax.jws.soap.SOAPBinding;
+//import javax.jws.soap.SOAPBinding;
 
 @RestController
 @RequestMapping(value = "api/cottages")

@@ -15,8 +15,8 @@ public class UserService {
 	@Autowired
 	private UserRepository userRepository;
 	
-	public User findById(int id) {
-		return userRepository.findById(id).orElse(null);
+	public Optional<User> findById(int id) {
+		return userRepository.findById(id);
 	}
 	
 	public List<User> findAll(){
