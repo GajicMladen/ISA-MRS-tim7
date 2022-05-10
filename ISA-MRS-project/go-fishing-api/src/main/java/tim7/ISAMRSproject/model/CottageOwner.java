@@ -15,7 +15,7 @@ public class CottageOwner extends User {
 
 	private static final long serialVersionUID = 1L;
 	
-	@OneToMany(mappedBy = "cottageOwner", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "cottageOwner", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Set<Cottage> cottages = new HashSet<Cottage>();
 
 	public CottageOwner(Integer id, String password, String email,String name, String lastName, String phone) {

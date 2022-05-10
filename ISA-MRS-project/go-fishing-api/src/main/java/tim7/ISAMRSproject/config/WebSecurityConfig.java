@@ -23,7 +23,6 @@ import tim7.ISAMRSproject.utils.TokenUtils;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	
-	
 	// Koristi se za hash lozinke koristeci BCrypt algoritam
 	@Autowired
 	public PasswordEncoder passwordEncoder;
@@ -70,6 +69,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		.cors().and()
 		.addFilterBefore(new TokenAuthenticationFilter(tokenUtils, userService), BasicAuthenticationFilter.class);
 		
+		http.csrf().disable().authorizeRequests().antMatchers("/adventure/**").permitAll();
 		http.csrf().disable();
 	}
 	
@@ -83,3 +83,4 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				"/**/*.css", "/**/*.js");
 	}
 }
+

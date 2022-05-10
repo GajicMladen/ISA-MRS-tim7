@@ -7,11 +7,13 @@ import { CottageProfilepageComponent } from './features/cottage/components/cotta
 import { ReservationStartpageComponent } from './features/reservation/components/reservation-startpage/reservation-startpage.component';
 import { AdventureProfilpageComponent } from './features/adventure/components/adventure-profilpage/adventure-profilpage.component';
 import { AdventureReservationComponent } from './features/adventure/components/adventure-reservation/adventure-reservation.component';
-import { AdventureCardComponent } from './features/adventure/components/adventure-card/adventure-card.component';
 import { CottageOwnerpageComponent } from './features/cottage/components/cottage-ownerpage/cottage-ownerpage.component';
 import { AdventureInstructorpageComponent } from './features/adventure/components/adventure-instructorpage/adventure-instructorpage.component';
 import { EditProfileComponent } from './shared/components/edit-profile/edit-profile.component';
 import { CottageAddNewComponent } from './features/cottage/components/cottage-add-new/cottage-add-new.component';
+import { CottageEditComponent } from './features/cottage/components/cottage-edit/cottage-edit.component';
+import { AdventureAddNewComponent } from './features/adventure/components/adventure-add-new/adventure-add-new.component';
+import { AdventureCardComponent } from './features/adventure/components/adventure-card/adventure-card.component';
 
 const routes: Routes = [
   { path: '', component: StartpagePreviewListComponent },
@@ -22,11 +24,15 @@ const routes: Routes = [
   { path: 'reservationStart', component: ReservationStartpageComponent },
   { path: 'adventureProfile', component: AdventureProfilpageComponent },
   { path: 'adventureReservation', component: AdventureReservationComponent },
+
   { path: 'adventureCard', component: AdventureCardComponent },
   { path: 'cottageOwner/:id', component: CottageOwnerpageComponent },
+  { path: 'adventureAddNew', component: AdventureAddNewComponent },
   { path: 'instructorProfile', component: AdventureInstructorpageComponent },
   { path: 'editProfile', component: EditProfileComponent },
   { path: 'addNewCottage', component: CottageAddNewComponent },
+  { path: 'editCottage/:id', component: CottageEditComponent },
+
   //Ubaciti komponentu za not found
   { path: '**', component: StartpagePreviewListComponent },
 ];

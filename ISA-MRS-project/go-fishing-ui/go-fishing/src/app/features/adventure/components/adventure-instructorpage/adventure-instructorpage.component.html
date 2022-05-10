@@ -42,10 +42,10 @@
         </div>
       <div class="row" id="adventureRow">
         <div *ngFor="let a of adventures">
-          <div class="col-md-12"><app-adventure-card id="{{a.id}}" instructor={{a.instructor}} name="{{a.name}}" price="{{a.price}}"></app-adventure-card></div>
+          <div id="{{a.id}}" class="col-md-12"><app-adventure-card (OnAdventureDeleted)="OnAdventureDeleted($event)" id="{{a.id}}" instructor={{a.instructor}} name="{{a.name}}" price="{{a.price}}"></app-adventure-card></div>
         </div>
         <div *ngIf="isInstructor">
-          <a href="">
+          <a href="adventureAddNew">
       
             <div class="container mt-4 mb-4 p-3 d-flex justify-content-center">
               <div class="cardAddNew p-4">

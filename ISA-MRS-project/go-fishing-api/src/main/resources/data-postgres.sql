@@ -45,6 +45,44 @@ INSERT INTO ROLE (name) VALUES ('ROLE_BOAT_OWNER');
 INSERT INTO ROLE (name) VALUES ('ROLE_INSTRUCTOR');
 
 INSERT INTO USER_ROLE(user_id, role_id) VALUES (1, 2);
---INSERT INTO USER_ROLE (user_id, role_id) VALUES (1, 2); -- user-u dodeljujemo rolu USER
---INSERT INTO USER_ROLE (user_id, role_id) VALUES (2, 2); -- admin-u dodeljujemo rolu USER
---INSERT INTO USER_ROLE (user_id, role_id) VALUES (3, 2); -- user-u dodeljujemo rolu ADMIN
+
+--INSERT INTO public.offer(
+--	 price, capacity, name, promo_description , address)
+--	VALUES ( 99.9, 10, 'Pecanje na Zvorničkom jezeru', 'Nezaboravno iskustvo na Drini! Iskusite sve čari drinskog ribolova. Neopisiva lepota jedne od najbržih evropskih reka će vas ostavitit bez daha. Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde natus, sunt sed maxime ut accusamus dignissimos veniam inventore debitis consequatur temporibus odio facere nobis, tenetur deserunt aut fugit distinctio recusandae.', null);
+--INSERT INTO public.offer(
+--	 price, capacity, name, promo_description , address)
+--	VALUES ( 99.9, 10, 'Rafting na Drini', 'Nezaboravno iskustvo na Drini! Iskusite sve čari drinskog ribolova. Neopisiva lepota jedne od najbržih evropskih reka će vas ostavitit bez daha. Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde natus, sunt sed maxime ut accusamus dignissimos veniam inventore debitis consequatur temporibus odio facere nobis, tenetur deserunt aut fugit distinctio recusandae.', null);
+--INSERT INTO public.offer(
+--	 price, capacity, name, promo_description , address)
+--	VALUES ( 99.9, 10, 'Na Drini rafting', 'Nezaboravno iskustvo na Drini! Iskusite sve čari drinskog ribolova. Neopisiva lepota jedne od najbržih evropskih reka će vas ostavitit bez daha. Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde natus, sunt sed maxime ut accusamus dignissimos veniam inventore debitis consequatur temporibus odio facere nobis, tenetur deserunt aut fugit distinctio recusandae.', null);
+--INSERT INTO public.offer(
+--	 price, capacity, name, promo_description , address)
+--	VALUES ( 99.9, 10, 'Pecanja casovi', 'Nezaboravno iskustvo na Drini! Iskusite sve čari drinskog ribolova. Neopisiva lepota jedne od najbržih evropskih reka će vas ostavitit bez daha. Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde natus, sunt sed maxime ut accusamus dignissimos veniam inventore debitis consequatur temporibus odio facere nobis, tenetur deserunt aut fugit distinctio recusandae.', null);
+--INSERT INTO public.offer(
+--	 price, capacity, name, promo_description , address)
+--	VALUES ( 99.9, 10, 'Casovi pecanja', 'Nezaboravno iskustvo na Drini! Iskusite sve čari drinskog ribolova. Neopisiva lepota jedne od najbržih evropskih reka će vas ostavitit bez daha. Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde natus, sunt sed maxime ut accusamus dignissimos veniam inventore debitis consequatur temporibus odio facere nobis, tenetur deserunt aut fugit distinctio recusandae.', null);
+
+	
+	
+--INSERT INTO public.Cottage(
+--	id, owner_id,room_count,bed_count)
+--	VALUES (1, 1,2,2);
+--INSERT INTO public.Cottage(
+--	id, owner_id,room_count,bed_count)
+--	VALUES (2, 3,5,7);
+--INSERT INTO public.Cottage(
+--	id, owner_id,room_count,bed_count)
+--	VALUES (3, 3,6,9);
+--
+--INSERT INTO public.Adventure(
+--	id, instruktor_id, instructor_biography)
+--	VALUES (4, 4, 'Mika Mikić je iskusni ribolovac, gnjurac i plivač. Diplomirao je na fakultetu za sport i rekreaciju na Palama sa prosekom 9,56. Ovim poslom se bavi već 10 godina.');
+--INSERT INTO public.Adventure(
+--	id, instruktor_id, instructor_biography)
+--	VALUES (5, 4, 'Mika Mikić je iskusni ribolovac, gnjurac i plivač. Diplomirao je na fakultetu za sport i rekreaciju na Palama sa prosekom 9,56. Ovim poslom se bavi već 10 godina.');
+--INSERT INTO public.Adventure(
+--	id, instruktor_id, instructor_biography)
+--	VALUES (6, 4, 'Mika Mikić je iskusni ribolovac, gnjurac i plivač. Diplomirao je na fakultetu za sport i rekreaciju na Palama sa prosekom 9,56. Ovim poslom se bavi već 10 godina.');
+--INSERT INTO public.Adventure(
+--	id, instruktor_id, instructor_biography)
+--	VALUES (7, 4, 'Mika Mikić je iskusni ribolovac, gnjurac i plivač. Diplomirao je na fakultetu za sport i rekreaciju na Palama sa prosekom 9,56. Ovim poslom se bavi već 10 godina.');

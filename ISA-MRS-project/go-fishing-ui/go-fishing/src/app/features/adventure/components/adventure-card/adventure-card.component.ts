@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { AdventureService } from '../../adventure.service';
 
 @Component({
@@ -25,6 +25,7 @@ export class AdventureCardComponent implements OnInit {
   
   deleteSuccess!: string;
 
+  @Output() OnAdventureDeleted: EventEmitter<string> = new EventEmitter();
 
   constructor(private adventureService: AdventureService) { }
 
@@ -49,7 +50,13 @@ export class AdventureCardComponent implements OnInit {
   }
 
   deleteAdventure() {
-    this.adventureService.deleteAdventure(this.adventure.id).subscribe(data => console.log(data));
+    this.adventureService.deleteAdventure(this.adventure.id).subscribe(adventure =>
+      {
+        console.log(adventure);
+        alert("Avantura uspešno obrisana!")
+        //window. location. reload()
+        this.OnAdventureDeleted.emit(this.adventure.id);
+      });
   }
 
 }

@@ -11,11 +11,13 @@
   <div class="row">
          
     <div *ngFor="let cottage of cottages" class="col-12 col-sm-6 col-lg-4">
-      <a routerLink="/cottageProfile/{{cottage.id}}">
         <div class="single_advisor_profile wow fadeInUp" data-wow-delay="0.2s" style="visibility: visible; animation-delay: 0.2s; animation-name: fadeInUp;">
-          <div class="advisor_thumb"><img src="https://i.ibb.co/BwyHmPf/2784-xl-0v-Fwu-F.jpg" alt="">
-            
-          </div>
+          
+          <a routerLink="/cottageProfile/{{cottage.id}}">
+            <div class="advisor_thumb">
+              <img src="https://i.ibb.co/BwyHmPf/2784-xl-0v-Fwu-F.jpg" alt=""> 
+            </div> 
+          </a>
           <p class="cottage-location">
             Vrhpolje, Ljubovija <i class="material-icons">location_on</i>
           </p>
@@ -27,27 +29,26 @@
                 6 <i class="material-icons">bed</i>
             </p>
             <div style="display: flex;">
-              <a routerLink="/cottageCalendar"><span class="material-icons">today</span></a>
+              <a routerLink="/cottageCalendar/{{cottage.id}}"><span class="material-icons">today</span></a>
               <h6>Kalendar zauzetosti</h6>
             </div>
             <div>
               <p class="owner-options-tag"></p>
               <p class="owner-options" >
-                <a routerLink="/addTerminCottage"><i class="material-icons">more_time</i> <h6>Dodaj slobodan termin</h6></a>
-                <a routerLink="/addActionCottage"><i class="material-icons">add_alert</i><h6>Dodaj akciju</h6></a>
-                <a routerLink="/editCottage"><i class="material-icons">edit</i> <h6>Izmeni</h6></a>
-                <a routerLink="/deleteCottage"><i class="material-icons">delete</i><h6>Ukloni</h6></a>
+                <a routerLink="/addTerminCottage/{{cottage.id}}"><i class="material-icons">more_time</i> <h6>Dodaj slobodan termin</h6></a>
+                <a routerLink="/addActionCottage/{{cottage.id}}"><i class="material-icons">add_alert</i><h6>Dodaj akciju</h6></a>
+                <a routerLink="/editCottage/{{cottage.id}}"><i class="material-icons">edit</i> <h6>Izmeni</h6></a>
+                <a routerLink="/cottageOwner/{{ownerId}}" (click)="deleteCottage(cottage.id)"><i class="material-icons">delete</i><h6>Ukloni</h6></a>
               </p>
             </div>
           </div>
         </div>
-      </a>
     </div>
           
           <!-- Single Advisor-->
     <div class="col-12 col-sm-6 col-lg-4">
         
-      <a routerLink="/addNewCottage">
+      <a (click)="addNewCottage()">
         <div class="single_advisor_profile wow fadeInUp" data-wow-delay="0.4s" style="visibility: visible; animation-delay: 0.4s; animation-name: fadeInUp;">
           <div class="advisor_thumb">
             <i class="material-icons" style="color: whitesmoke; font-size: 7em;padding-bottom: 60px;">add_business</i>                <!-- Social Info-->
