@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AdventureService } from '../../adventure.service';
+import { Instructor } from '../../classes/instructor';
 
 @Component({
   selector: 'app-adventure-instructor-edit',
@@ -30,7 +32,7 @@ export class AdventureInstructorEditComponent implements OnInit {
   password = '';
   confirmPassword = '';
 
-  constructor() {}
+  constructor(private adventureService: AdventureService) {}
 
   ngOnInit(): void {
 
@@ -38,7 +40,19 @@ export class AdventureInstructorEditComponent implements OnInit {
 
   UpdateData() {
     if (!this.CheckForErrors()) {
-
+      var i = new Instructor({
+        id: this.instructor.id,
+        name: this.instructor.name,
+        surname: this.instructor.surname,
+        address: this.instructor.address,
+        city: this.instructor.city,
+        country: this.instructor.country,
+        phone: this.instructor.phone,
+        password: this.password
+      });
+      this.adventureService.updateInstructorData(i).subscribe(data => {
+        alert("Podaci uspešno izmenjeni");
+      });
     }
   }
 

@@ -9,11 +9,13 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import tim7.ISAMRSproject.dto.AdventureDTO;
+import tim7.ISAMRSproject.dto.InstructorDTO;
 import tim7.ISAMRSproject.model.Adventure;
 import tim7.ISAMRSproject.service.AdventureService;
 import tim7.ISAMRSproject.service.ReservationService;
@@ -46,11 +48,16 @@ public class AdventureController {
 		}
 	}
 	
-	//TODO: Koristiti Data Transfer Object u komunikaciji sa klijentom
 	@CrossOrigin(origins="http://localhost:4200/")
 	@PostMapping()
 	public ResponseEntity<Void> addAdventure(@RequestBody AdventureDTO a) {
 		this.adventureService.addAdventure(a);
+		return new ResponseEntity<Void>(HttpStatus.OK);
+	}
+	
+	@PutMapping(value = "/instructor")
+	public ResponseEntity<Void> uppdateInstructorData(@RequestBody InstructorDTO i) {
+		this.adventureService.updateInstructorData(i);
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 	
