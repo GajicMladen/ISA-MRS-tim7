@@ -16,7 +16,7 @@ export class AdventureInstructorpageComponent implements OnInit {
   };
 
   adventures = [{
-    id: "1",
+    id: "4",
     instructor: "Mika Mikic",
     name: "Pecanje na Zvorničkom jezeru",
     price: 59.99,
@@ -33,7 +33,7 @@ export class AdventureInstructorpageComponent implements OnInit {
     cancellation: "U slučaju otkazivanja instruktor zadržava 30% uplaćene sume."
   },
   {
-    id: "2",
+    id: "5",
     instructor: "Mika Mikic",
     name: "Rafting na Drini",
     price: 39.99,
@@ -50,7 +50,7 @@ export class AdventureInstructorpageComponent implements OnInit {
     cancellation: "U slučaju otkazivanja instruktor zadržava 30% uplaćene sume."
   },
   {
-    id: "3",
+    id: "6",
     instructor: "Mika Mikic",
     name: "Na Drini rafting",
     price: 39.99,
@@ -67,7 +67,7 @@ export class AdventureInstructorpageComponent implements OnInit {
     cancellation: "U slučaju otkazivanja instruktor zadržava 30% uplaćene sume."
   },
   {
-    id: "4",
+    id: "7",
     instructor: "Mika Mikic",
     name: "Pecanja casovi",
     price: 39.99,
@@ -84,7 +84,7 @@ export class AdventureInstructorpageComponent implements OnInit {
     cancellation: "U slučaju otkazivanja instruktor zadržava 30% uplaćene sume."
   },
   {
-    id: "5",
+    id: "8",
     instructor: "Mika Mikic",
     name: "Casovi pecanja",
     price: 39.99,
@@ -105,6 +105,11 @@ export class AdventureInstructorpageComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  OnAdventureDeleted(id: string) {
+    console.log("Parent " + id);
+    document.getElementById(id)?.remove();
   }
 
 }

@@ -13,6 +13,7 @@ import { EditProfileComponent } from './shared/components/edit-profile/edit-prof
 import { CottageAddNewComponent } from './features/cottage/components/cottage-add-new/cottage-add-new.component';
 import { CottageEditComponent } from './features/cottage/components/cottage-edit/cottage-edit.component';
 import { AdventureAddNewComponent } from './features/adventure/components/adventure-add-new/adventure-add-new.component';
+import { AdventureCardComponent } from './features/adventure/components/adventure-card/adventure-card.component';
 
 
 const routes: Routes = [
