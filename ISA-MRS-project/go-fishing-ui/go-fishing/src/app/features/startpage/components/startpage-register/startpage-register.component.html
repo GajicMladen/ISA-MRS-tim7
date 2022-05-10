@@ -37,7 +37,7 @@
 
             <!-- Surname -->
             <mat-form-field>
-                <input matInput formControlName="surname" placeholder="Surname" name="surname" required>
+                <input matInput formControlName="lastName" placeholder="Surname" name="lastName" required>
             </mat-form-field>
 
             <!-- Country -->
@@ -47,7 +47,7 @@
 
             <!-- City/Town -->
             <mat-form-field>
-                <input matInput formControlName="cityTown" placeholder="City/Town" name="cityTown" required>
+                <input matInput formControlName="town" placeholder="City/Town" name="town" required>
             </mat-form-field>
 
             <!-- Address -->
@@ -62,6 +62,24 @@
             <small class="text-danger" *ngIf="form.get('phoneNumber')!.hasError('pattern')">
                 Phone number format should be '+' followed by 10-12 digits inclusive
             </small>
+
+            <!-- Role -->
+            <label id="role-radio-group">Please select your role: </label>
+            <mat-radio-group class="role-radio-group" formControlName="role">
+                <mat-radio-button class="role-radio-button" value="ROLE_USER"  checked>
+                    Client
+                </mat-radio-button>
+                <mat-radio-button class="role-radio-button" value="ROLE_COTTAGE_OWNER">
+                    Cottage Owner
+                </mat-radio-button>
+                <mat-radio-button class="role-radio-button" value="ROLE_BOAT_OWNER">
+                    Boat Owner
+                </mat-radio-button>
+                <mat-radio-button class="role-radio-button" value="ROLE_INSTRUCTOR">
+                    Adventure Instructor
+                </mat-radio-button>
+            </mat-radio-group>
+
 
             <button mat-raised-button color="primary" type="button" (click)="saveRequest()">Register</button>
             <h3 class="top-spacing">Already have an account? <a routerLink="/login" routerLinkActive="active">Log In!</a></h3>

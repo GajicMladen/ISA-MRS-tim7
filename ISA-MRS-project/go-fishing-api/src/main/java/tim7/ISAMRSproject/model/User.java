@@ -1,22 +1,42 @@
 package tim7.ISAMRSproject.model;
 
-import static javax.persistence.DiscriminatorType.STRING;
 
-import javax.persistence.*;
+import java.util.Collection;
+import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 @Entity
 @Table(name = "users")
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name="type", discriminatorType=STRING)
-public class User {
+@Inheritance(strategy = InheritanceType.JOINED)
+public class User implements UserDetails {
+
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
-	@Column(name= "username",unique = true,nullable = false)
-	private String username;
-	
+	@JsonIgnore
 	@Column(name = "password",nullable = false)
 	private String password;
 
@@ -37,22 +57,25 @@ public class User {
 	
 	@Column(name = "active",nullable = false)
 	private boolean active;
-
+	
+	@JsonIgnore
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id", referencedColumnName = "id")
 	private Address livingAddress;
 	
-    @Column(name = "userType")
-    private UserType userType;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "user_role",
+            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+    private List<Role> roles;
     
     public User() {
     	
     }
 	
-	public User(Integer id, String username, String password, String email, String name, String lastName, String phone) {
+	public User(Integer id, String password, String email, String name, String lastName, String phone) {
 		super();
 		this.id = id;
-		this.username = username;
 		this.password = password;
 		this.email = email;
 		this.name = name;
@@ -61,6 +84,18 @@ public class User {
 		this.active = false;
 		this.deleted = false;
 
+	}
+	
+	public User(User user) {
+		super();
+		this.id = user.id;
+		this.password = user.password;
+		this.email = user.email;
+		this.name = user.name;
+		this.lastName = user.name;
+		this.phone = user.name;
+		this.active = user.active;
+		this.deleted = user.deleted;
 	}
 
 	public Integer getId() {
@@ -71,14 +106,7 @@ public class User {
 		this.id = id;
 	}
 
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
+	@JsonIgnore
 	public String getPassword() {
 		return password;
 	}
@@ -91,7 +119,7 @@ public class User {
 		return email;
 	}
 
-	public void setEmail(String password) {
+	public void setEmail(String email) {
 		this.email = email;
 	}
 	public String getName() {
@@ -134,11 +162,56 @@ public class User {
 		this.active = active;
 	}
 	
-	/*
-	 * private UserType userType;
-	 * private LojalniStatus lojalniStatus;
-	 * 
-	 * */
+	@JsonIgnore
+	public Address getAddress() {
+		return livingAddress;
+	}
 	
+	public void setAddress(Address address) {
+		this.livingAddress = address;
+	}
+	
+    public List<Role> getRoles() {
+        return roles;
+     }
+    
+    public void setRoles(List<Role> roles) {
+    	this.roles = roles;
+    }
+
+	@JsonIgnore
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+	    return this.roles;
+	}
+
+	@JsonIgnore
+	@Override
+	public boolean isAccountNonExpired() {
+		return true;
+	}
+
+	@JsonIgnore
+	@Override
+	public boolean isAccountNonLocked() {
+		return true;
+	}
+
+	@JsonIgnore
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return true;
+	}
+
+	@JsonIgnore
+	@Override
+	public boolean isEnabled() {
+		return true;
+	}
+
+	@Override
+	public String getUsername() {
+		return email;
+	}
 	
 }

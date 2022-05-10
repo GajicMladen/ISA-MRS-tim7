@@ -5,15 +5,15 @@ import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 
 @Entity
-@DiscriminatorValue("K")
 public class Client extends User {
 	
+	private static final long serialVersionUID = 1L;
+
 	@Column(name="penalCount")
 	private int penalCount;
 	
@@ -33,9 +33,9 @@ public class Client extends User {
 	public Client() {
 	}
 
-	public Client(Integer id, String username, String password, String email,String name, String lastName, String phone) {
-		super(id, username,email, password, name, lastName, phone);
-		// TODO Auto-generated constructor stub
+	public Client(Integer id, String password, String email,String name, String lastName, String phone) {
+		super(id, email, password, name, lastName, phone);
+		
 	}
 
 }
