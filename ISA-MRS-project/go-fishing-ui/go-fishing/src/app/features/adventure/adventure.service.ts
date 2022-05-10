@@ -18,4 +18,8 @@ export class AdventureService {
   addAdventure(adventure: Adventure) {
     return this.http.post<Adventure>("http://localhost:8080/adventure", adventure);
   }
+
+  updateInstructorData() {
+    
+  }
 }

@@ -6,25 +6,25 @@
         <form class="form">
             <div class="row">
                 <div class="col-md-6">
-                    <mat-form-field class="inputField" appearance="fill">
+                    <mat-form-field class="inputField" appearance="fill" (click)="nameError=false">
                         <mat-label>Naziv avanture</mat-label>
-                        <input matInput id="name" placeholder="Naziv" [(ngModel)]="adventure.name" (click)="nameError=false"> 
+                        <input matInput id="name" placeholder="Naziv" [(ngModel)]="adventure.name"> 
                         <div class="text-danger" *ngIf="nameError">
                             Ovo polje je obavezno!
                         </div>
                     </mat-form-field>
                     
-                    <mat-form-field class="inputField" appearance="fill"> 
+                    <mat-form-field class="inputField" appearance="fill" (click)="promoError=false"> 
                         <mat-label>Promotivni opis</mat-label>
-                        <textarea matInput id="promo" placeholder="Opis" [(ngModel)]="adventure.promo" (click)="promoError=false"></textarea>
+                        <textarea matInput id="promo" placeholder="Opis" [(ngModel)]="adventure.promo"></textarea>
                         <div class="text-danger" *ngIf="promoError">
                             Ovo polje je obavezno!
                         </div>
                     </mat-form-field>
                     
-                    <mat-form-field class="inputField" appearance="fill">
+                    <mat-form-field class="inputField" appearance="fill" (click)="maxNumError=false">
                         <mat-label>Maksimalan broj osoba</mat-label>
-                        <input matInput id="maxNum" type="number" placeholder="Maksimalan broj" [(ngModel)]="adventure.maxNum" (click)="maxNumError=false">
+                        <input matInput id="maxNum" type="number" placeholder="Maksimalan broj" [(ngModel)]="adventure.maxNum">
                         <div class="text-danger" *ngIf="maxNumError">
                             Ovo polje je obavezno!
                         </div>
@@ -41,25 +41,25 @@
                     </mat-form-field>
                 </div>
                 <div class="col-md-6">
-                    <mat-form-field class="inputField" appearance="fill">
+                    <mat-form-field class="inputField" appearance="fill" (click)="addressError=false">
                         <mat-label>Adresa održavanja avanture</mat-label>
-                        <input matInput id="address" placeholder="Adresa" [(ngModel)]="adventure.address" (click)="addressError=false">
+                        <input matInput id="address" placeholder="Adresa" [(ngModel)]="adventure.address">
                         <div class="text-danger" *ngIf="addressError">
                             Ovo polje je obavezno!
                         </div>
                     </mat-form-field>
     
-                    <mat-form-field class="inputField" appearance="fill">
+                    <mat-form-field class="inputField" appearance="fill" (click)="bioError=false">
                         <mat-label>Kratka biografija instruktora</mat-label>
-                        <textarea matInput id="bio" [(ngModel)]="adventure.bio" placeholder="Kratka biografija" (click)="bioError=false"></textarea>
+                        <textarea matInput id="bio" [(ngModel)]="adventure.bio" placeholder="Kratka biografija"></textarea>
                         <div class="text-danger" *ngIf="bioError">
                             Ovo polje je obavezno!
                         </div>
                     </mat-form-field>
                     
-                    <mat-form-field class="inputField" appearance="fill" floatLabel="always">
+                    <mat-form-field class="inputField" appearance="fill" floatLabel="always" (click)="priceError=false">
                         <mat-label>Cena avanture po osobi</mat-label>
-                        <input matInput id="price" type="number" [(ngModel)]="adventure.price" placeholder="Cena" (click)="priceError=false">
+                        <input matInput id="price" type="number" [(ngModel)]="adventure.price" placeholder="Cena">
                         <span matPrefix>$&nbsp;</span>
                         <div class="text-danger" *ngIf="priceError">
                             Ovo polje je obavezno!
