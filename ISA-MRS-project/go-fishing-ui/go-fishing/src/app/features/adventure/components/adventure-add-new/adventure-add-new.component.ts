@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, FormGroupDirective, NgForm, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { AdventureService } from '../../adventure.service';
+import { Adventure } from '../../classes/adventure';
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
@@ -17,6 +18,13 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 })
 export class AdventureAddNewComponent implements OnInit {
 
+  nameError: boolean = false;
+  promoError: boolean = false;
+  maxNumError: boolean = false;
+  addressError: boolean = false;
+  bioError: boolean = false;
+  priceError: boolean = false;
+
   adventure = {
     name: "",
     promo: "",
@@ -30,12 +38,6 @@ export class AdventureAddNewComponent implements OnInit {
     info: ""
   }
 
-  form: FormGroup = this.generateForm();
-
-  errorMatcher: boolean = false;
-
-  name = new FormControl('', [Validators.required]);
-
   constructor(private adventureService: AdventureService) 
   {
     
@@ -45,27 +47,80 @@ export class AdventureAddNewComponent implements OnInit {
     
   }
 
-  getErrorMessage() {
-    if (this.name.hasError('required')) {
-      return 'Ovo je obavezno polje!';
-    }
-
-    return '';
-  }
-
-  generateForm(): FormGroup {
-    return new FormGroup({
-      name: new FormControl('', Validators.required),
-      address: new FormControl('', Validators.required),
-      promo: new FormControl('', Validators.required),
-      bio: new FormControl('', Validators.required),
-      maxNum: new FormControl('', Validators.required),
-      price: new FormControl('', Validators.required)
-    });
-  }
-
   addAdventure() {
-    this.adventureService.addAdventure(this.adventure).subscribe(data => console.log(data));
+    if (!this.checkForErrors()) {
+      var newAdventure = new Adventure({
+        name: this.adventure.name,
+        promoDescription: this.adventure.promo,
+        price: this.adventure.price,
+        capacity: this.adventure.maxNum,
+        instructorId: 4,
+        instructorBiography: this.adventure.bio
+      });
+      console.log(newAdventure);
+      this.adventureService.addAdventure(newAdventure).subscribe(data => {
+        alert("Nova avantura uspešno dodata!");
+        console.log(data);
+      });
+    }
   }
 
+  checkForErrors(): boolean {
+    var nameErr = this.nameHasError();
+    var promoErr = this.promoHasError();
+    var capacityErr = this.maxNumHasError();
+    var addressErr = this.addressHasError();
+    var bioErr = this.bioHasError();
+    var priceErr = this.priceHasError();
+
+    if (nameErr || promoErr || capacityErr || addressErr || bioErr || priceErr) {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
+  priceHasError(): boolean {
+    if (this.adventure.price === 0) {
+      this.priceError = true;
+      return true;
+    }
+    return false;
+  }
+  bioHasError(): boolean {
+    if (this.adventure.bio === '') {
+      this.bioError = true;
+      return true;
+    }
+    return false;
+  }
+  addressHasError(): boolean {
+    if (this.adventure.address === '') {
+      this.addressError = true;
+      return true;
+    }
+    return false;
+  }
+  maxNumHasError(): boolean {
+    if (this.adventure.maxNum === 0) {
+      this.maxNumError = true;
+      return true;
+    }
+    return false;
+  }
+  promoHasError(): boolean {
+    if (this.adventure.promo === '') {
+      this.promoError = true;
+      return true;
+    }
+    return false;
+  }
+
+  nameHasError(): boolean {
+    if (this.adventure.name === '') {
+      this.nameError = true;
+      return true;
+    }
+    return false;
+  }
 }

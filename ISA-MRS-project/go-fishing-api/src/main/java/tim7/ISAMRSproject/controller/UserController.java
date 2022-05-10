@@ -42,7 +42,7 @@ public class UserController {
 
 		Optional<User> user = userService.findById(id);
 
-		if(user.isPresent())
+		if(user != null)
 			return new ResponseEntity<>(new UserDTO(user.get()),HttpStatus.OK);
 
 		return new ResponseEntity<>(null,HttpStatus.NO_CONTENT);

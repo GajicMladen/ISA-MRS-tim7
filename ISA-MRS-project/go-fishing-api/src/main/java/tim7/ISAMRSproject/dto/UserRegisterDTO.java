@@ -1,5 +1,9 @@
 package tim7.ISAMRSproject.dto;
 
+import java.util.Arrays;
+
+import org.springframework.util.StringUtils;
+
 // DTO koji preuzima podatke iz registracione forme
 public class UserRegisterDTO {
 	
@@ -8,11 +12,12 @@ public class UserRegisterDTO {
 	private String password;
 	private String confirmPassword;
 	private String name;
-	private String surname;
+	private String lastName;
 	private String country;
 	private String town;
 	private String address;
 	private String phoneNumber;
+	private String role;
 	
 	public Long getId() {
 		return id;
@@ -44,11 +49,11 @@ public class UserRegisterDTO {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getSurname() {
-		return surname;
+	public String getLastName() {
+		return lastName;
 	}
-	public void setSurname(String surname) {
-		this.surname = surname;
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
 	public String getCountry() {
 		return country;
@@ -75,6 +80,38 @@ public class UserRegisterDTO {
 		this.phoneNumber = phoneNumber;
 	}
 	
+	public String getRole() {
+		return this.role;
+	}
 	
+	public void setRole(String role) {
+		this.role = role;
+	}
+	
+	public boolean validate() {
+		String[] validRoles = {"ROLE_USER", "ROLE_COTTAGE_OWNER", "ROLE_BOAT_OWNER", "ROLE_INSTRUCTOR"};
+		
+		return email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$") &&
+			   password.length() >= 8 && password.length() <= 30 &&
+			   password.equals(confirmPassword) &&
+			   phoneNumber.matches("^[+][0-9]{10,12}$") &&
+			   Arrays.asList(validRoles).contains(role);
+	}
+	
+	public void casify() {
+		this.name = toTitleCase(this.name);
+		this.lastName = toTitleCase(this.lastName);
+		this.country = toTitleCase(this.country);
+		this.town = toTitleCase(this.town);
+		this.address = toTitleCase(this.address);
+	}
+	
+	public String toTitleCase(String str) {
+		String[] tokens = str.split(" ");
+		String res = "";
+		for(String token: tokens)
+			res += StringUtils.capitalize(token.toLowerCase()) + " ";
+		return res.trim();
+	}
 
 }

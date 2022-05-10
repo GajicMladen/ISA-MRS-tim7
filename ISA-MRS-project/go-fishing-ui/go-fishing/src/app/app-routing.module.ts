@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { StartpageLoginComponent } from './features/startpage/components/startpage-login/startpage-login.component';
 import { StartpagePreviewListComponent } from './features/startpage/components/startpage-preview-list/startpage-preview-list.component';
 import { StartpageRegisterComponent } from './features/startpage/components/startpage-register/startpage-register.component';
-import { CottageProfilepageComponent} from './features/cottage/components/cottage-profilepage/cottage-profilepage.component'
+import { CottageProfilepageComponent } from './features/cottage/components/cottage-profilepage/cottage-profilepage.component';
 import { ReservationStartpageComponent } from './features/reservation/components/reservation-startpage/reservation-startpage.component';
 import { AdventureProfilpageComponent } from './features/adventure/components/adventure-profilpage/adventure-profilpage.component';
 import { AdventureReservationComponent } from './features/adventure/components/adventure-reservation/adventure-reservation.component';
@@ -20,19 +20,22 @@ import { BoatProfilepageComponent } from './features/boat/components/boat-profil
 const routes: Routes = [
   { path: '', component: StartpagePreviewListComponent },
   { path: 'login', component: StartpageLoginComponent },
+  { path: 'login/:status', component: StartpageLoginComponent },
   { path: 'register', component: StartpageRegisterComponent },
   { path: 'cottageProfile/:id', component: CottageProfilepageComponent },
   { path: 'reservationStart', component: ReservationStartpageComponent },
   { path: 'adventureProfile', component: AdventureProfilpageComponent },
   { path: 'adventureReservation', component: AdventureReservationComponent },
-  { path: 'adventureCard', component: AdventureCardComponent},
-  { path: 'cottageOwner/:id' , component: CottageOwnerpageComponent },
-  { path: 'adventureAddNew', component: AdventureAddNewComponent},
+
+  { path: 'adventureCard', component: AdventureCardComponent },
+  { path: 'cottageOwner/:id', component: CottageOwnerpageComponent },
+  { path: 'adventureAddNew', component: AdventureAddNewComponent },
   { path: 'instructorProfile', component: AdventureInstructorpageComponent },
   { path: 'editProfile',component: EditProfileComponent},
   { path: 'addNewCottage', component: CottageAddNewComponent},
   { path: 'editCottage/:id' ,component: CottageEditComponent },
   { path: 'boatProfile/:id' , component:BoatProfilepageComponent },
+
   //Ubaciti komponentu za not found
   { path: '**', component: StartpagePreviewListComponent },
 ];

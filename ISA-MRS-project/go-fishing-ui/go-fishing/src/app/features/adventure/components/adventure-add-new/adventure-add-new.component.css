@@ -40,3 +40,8 @@
 #return {
     margin-right: 20px;
 }
+
+.text-danger {
+    font-size: smaller;
+    margin-top: 5px;
+}

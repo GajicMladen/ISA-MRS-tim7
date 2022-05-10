@@ -31,14 +31,17 @@ export class StartpagePreviewListComponent implements OnInit {
         this.cottageList = this.getCottagePreviewList();
         this.adventureList = this.getAdventurePreviewList();
       } else {
-        this.boatList = this.boatList.filter((item) =>
-          item['name'].toLowerCase().includes(searchControl.value)
+        this.boatList = this.previewListService.filterArrayByParam(
+          this.boatList,
+          searchControl.value
         );
-        this.cottageList = this.cottageList.filter((item) =>
-          item['name'].toLowerCase().includes(searchControl.value)
+        this.cottageList = this.previewListService.filterArrayByParam(
+          this.cottageList,
+          searchControl.value
         );
-        this.adventureList = this.adventureList.filter((item) =>
-          item['name'].toLowerCase().includes(searchControl.value)
+        this.adventureList = this.previewListService.filterArrayByParam(
+          this.adventureList,
+          searchControl.value
         );
       }
     });
