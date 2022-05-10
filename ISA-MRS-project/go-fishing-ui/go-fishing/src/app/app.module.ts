@@ -15,6 +15,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { CottageModule } from './features/cottage/cottage.module';
 import { ReservationModule } from './features/reservation/reservation.module';
 import { AdventureModule } from './features/adventure/adventure.module';
+import { BoatModule } from './features/boat/boat.module';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './shared/interceptor/TokenInterceptor';
 
@@ -36,6 +37,7 @@ import { TokenInterceptor } from './shared/interceptor/TokenInterceptor';
     ReservationModule,
     AdventureModule,
     HttpClientModule,
+    BoatModule
   ],
   providers: [
     {

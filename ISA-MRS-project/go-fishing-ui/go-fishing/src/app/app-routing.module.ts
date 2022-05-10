@@ -14,6 +14,8 @@ import { CottageAddNewComponent } from './features/cottage/components/cottage-ad
 import { CottageEditComponent } from './features/cottage/components/cottage-edit/cottage-edit.component';
 import { AdventureAddNewComponent } from './features/adventure/components/adventure-add-new/adventure-add-new.component';
 import { AdventureCardComponent } from './features/adventure/components/adventure-card/adventure-card.component';
+import { BoatProfilepageComponent } from './features/boat/components/boat-profilepage/boat-profilepage.component';
+
 
 const routes: Routes = [
   { path: '', component: StartpagePreviewListComponent },
@@ -29,9 +31,10 @@ const routes: Routes = [
   { path: 'cottageOwner/:id', component: CottageOwnerpageComponent },
   { path: 'adventureAddNew', component: AdventureAddNewComponent },
   { path: 'instructorProfile', component: AdventureInstructorpageComponent },
-  { path: 'editProfile', component: EditProfileComponent },
-  { path: 'addNewCottage', component: CottageAddNewComponent },
-  { path: 'editCottage/:id', component: CottageEditComponent },
+  { path: 'editProfile',component: EditProfileComponent},
+  { path: 'addNewCottage', component: CottageAddNewComponent},
+  { path: 'editCottage/:id' ,component: CottageEditComponent },
+  { path: 'boatProfile/:id' , component:BoatProfilepageComponent },
 
   //Ubaciti komponentu za not found
   { path: '**', component: StartpagePreviewListComponent },
