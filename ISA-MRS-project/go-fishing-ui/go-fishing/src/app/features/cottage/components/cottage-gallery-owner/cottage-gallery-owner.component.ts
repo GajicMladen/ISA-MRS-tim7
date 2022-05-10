@@ -33,7 +33,8 @@ export class CottageGalleryOwnerComponent implements OnInit {
         deleted =>{
           if(deleted){
             alert("Izbrisali ste je!"); 
-            window.location.reload();
+          
+            this.cottages.splice(this.cottages.findIndex(cottage => cottage.id === cottageId),1);
           }
           else
             alert("Nismo uspeli da izbrisemo vikendicu.")
@@ -45,7 +46,7 @@ export class CottageGalleryOwnerComponent implements OnInit {
   
 
   addNewCottage(){
-    this.router.navigateByUrl("/addNewCottage",{state:{ownerId: this.ownerId}});
+    this.router.navigateByUrl("/addNewCottage",{state:{ownerId: this.ownerId,cottages:this.cottages}});
   }
 
   

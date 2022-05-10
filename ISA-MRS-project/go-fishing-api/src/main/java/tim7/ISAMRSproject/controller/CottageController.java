@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.*;
 import tim7.ISAMRSproject.dto.CottageDTO;
 import tim7.ISAMRSproject.model.Cottage;
 import tim7.ISAMRSproject.model.User;
-import tim7.ISAMRSproject.model.UserType;
 import tim7.ISAMRSproject.service.CottageService;
+import tim7.ISAMRSproject.service.RoleService;
 import tim7.ISAMRSproject.service.UserService;
 
 //import javax.jws.soap.SOAPBinding;
@@ -69,7 +69,7 @@ public class CottageController {
 			consumes = MediaType.APPLICATION_JSON_VALUE)
 	public CottageDTO addNewCottage(@RequestBody CottageDTO newOne) {
 		Optional<User> user = userService.findById(newOne.getOwnerId());
-		if(user.isPresent() && user.get().getUserType() == UserType.VLASNIK_VIKENDICE)
+		if(user.isPresent() && user.get().hasRole("ROLE_COTTAGE_OWNER"))
 			return new CottageDTO(cottageService.addNewCottage(newOne,user.get()));
 		return null;
 	}

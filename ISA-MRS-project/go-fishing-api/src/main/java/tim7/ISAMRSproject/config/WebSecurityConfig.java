@@ -65,11 +65,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		.exceptionHandling().authenticationEntryPoint(restAuthenticationEntryPoint).and()
 		.authorizeRequests().antMatchers("/reg/**").permitAll()
 		.antMatchers("/login/**").permitAll()
+		.antMatchers("/api/users/**").permitAll()
+		.antMatchers("/**").permitAll()
 		.anyRequest().authenticated().and()
 		.cors().and()
 		.addFilterBefore(new TokenAuthenticationFilter(tokenUtils, userService), BasicAuthenticationFilter.class);
 		
-		http.csrf().disable().authorizeRequests().antMatchers("/adventure/**").permitAll();
+		//http.csrf().disable().authorizeRequests().antMatchers("/adventure/**").permitAll();
 		http.csrf().disable();
 	}
 	

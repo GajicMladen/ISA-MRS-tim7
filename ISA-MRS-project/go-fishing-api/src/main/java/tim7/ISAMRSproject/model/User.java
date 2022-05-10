@@ -213,4 +213,12 @@ public class User implements UserDetails {
 	public String getUsername() {
 		return email;
 	}
+
+	public boolean hasRole(String roleName){
+		for (Role role: roles) {
+			if(role.getName().equals(roleName))
+				return true;
+		}
+		return false;
+	}
 }
