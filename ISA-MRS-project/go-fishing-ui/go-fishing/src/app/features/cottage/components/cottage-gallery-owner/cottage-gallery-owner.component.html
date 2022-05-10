@@ -19,14 +19,14 @@
             </div> 
           </a>
           <p class="cottage-location">
-            Vrhpolje, Ljubovija <i class="material-icons">location_on</i>
+            Lokacija , Grad <i class="material-icons">location_on</i>
           </p>
           <div class="single_advisor_details_info">
             <h2>{{cottage.name}}</h2>
             <p class="designation">
-                20 <i class="material-icons">people</i>
+                {{cottage.capacity}} <i class="material-icons">people</i>
                 <br />
-                6 <i class="material-icons">bed</i>
+                {{cottage.bedCount}} <i class="material-icons">bed</i>
             </p>
             <div style="display: flex;">
               <a routerLink="/cottageCalendar/{{cottage.id}}"><span class="material-icons">today</span></a>
