@@ -40,6 +40,9 @@ INSERT INTO public.users(active, deleted, email, lastname, name, password, phone
 
 INSERT INTO ROLE (name) VALUES ('ROLE_USER');
 INSERT INTO ROLE (name) VALUES ('ROLE_ADMIN');
+INSERT INTO ROLE (name) VALUES ('ROLE_COTTAGE_OWNER');
+INSERT INTO ROLE (name) VALUES ('ROLE_BOAT_OWNER');
+INSERT INTO ROLE (name) VALUES ('ROLE_INSTRUCTOR');
 
 INSERT INTO USER_ROLE(user_id, role_id) VALUES (1, 2);
 --INSERT INTO USER_ROLE (user_id, role_id) VALUES (1, 2); -- user-u dodeljujemo rolu USER

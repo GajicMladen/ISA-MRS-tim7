@@ -1,5 +1,6 @@
 package tim7.ISAMRSproject.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,8 +14,14 @@ import org.springframework.stereotype.Service;
 
 import tim7.ISAMRSproject.dto.UserRegisterDTO;
 import tim7.ISAMRSproject.model.Address;
+import tim7.ISAMRSproject.model.BoatOwner;
+import tim7.ISAMRSproject.model.CottageOwner;
+import tim7.ISAMRSproject.model.FishingInstructor;
 import tim7.ISAMRSproject.model.Role;
 import tim7.ISAMRSproject.model.User;
+import tim7.ISAMRSproject.repository.BoatOwnerRepository;
+import tim7.ISAMRSproject.repository.CottageOwnerRepository;
+import tim7.ISAMRSproject.repository.InstructorRepository;
 import tim7.ISAMRSproject.repository.UserRepository;
 
 @Service
@@ -22,7 +29,16 @@ public class UserService implements UserDetailsService {
 
 	@Autowired
 	private UserRepository userRepository;
+	
+	@Autowired
+	private BoatOwnerRepository boatOwnerRepository;
 
+	@Autowired
+	private CottageOwnerRepository cottageOwnerRepository;
+	
+	@Autowired
+	private InstructorRepository instructorRepository;
+	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 	
@@ -70,11 +86,24 @@ public class UserService implements UserDetailsService {
 		newUser.setAddress(address);
 		newUser.setDeleted(false);
 		newUser.setActive(false);
-		
-		List<Role> roles = roleService.findByName("ROLE_USER");
+		List<Role> roles = new ArrayList<Role>();
+		roles.add(roleService.findByName("ROLE_USER"));
+		if (!userRegisterDTO.getRole().equals("ROLE_USER"))
+			roles.add(roleService.findByName(userRegisterDTO.getRole()));
 		newUser.setRoles(roles);
 		
-		return this.userRepository.save(newUser);
+		switch(userRegisterDTO.getRole()) {
+			case("ROLE_USER"):
+				return (User)(this.userRepository.save(newUser));
+			case("ROLE_BOAT_OWNER"):
+				return (User)(this.boatOwnerRepository.save(new BoatOwner(newUser)));
+			case("ROLE_COTTAGE_OWNER"):
+				return (User)(this.cottageOwnerRepository.save(new CottageOwner(newUser)));
+			case("ROLE_INSTRUCTOR"):
+				return (User)(this.instructorRepository.save(new FishingInstructor(newUser)));
+		}
+		return null;
+		
 	}
 	
 	public User save(User user) {

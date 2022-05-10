@@ -25,4 +25,7 @@ public class FishingInstructor extends User {
 		super(id, email, password, name, lastName, phone);
 	}
 
+	public FishingInstructor(User user) {
+		super(user);
+	}
 }

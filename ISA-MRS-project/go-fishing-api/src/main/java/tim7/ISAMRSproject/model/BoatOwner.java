@@ -23,5 +23,9 @@ public class BoatOwner extends User {
 	public BoatOwner(Integer id, String password, String email,String name, String lastName, String phone) {
 		super(id, email, password, name, lastName, phone);
 	}
+	
+	public BoatOwner(User user) {
+		super(user);
+	}
 
 }

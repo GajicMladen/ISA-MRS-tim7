@@ -85,6 +85,18 @@ public class User implements UserDetails {
 		this.deleted = false;
 
 	}
+	
+	public User(User user) {
+		super();
+		this.id = user.id;
+		this.password = user.password;
+		this.email = user.email;
+		this.name = user.name;
+		this.lastName = user.name;
+		this.phone = user.name;
+		this.active = user.active;
+		this.deleted = user.deleted;
+	}
 
 	public Integer getId() {
 		return id;

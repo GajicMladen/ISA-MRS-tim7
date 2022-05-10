@@ -24,4 +24,8 @@ public class CottageOwner extends User {
 	
 	public CottageOwner() {
 	}
+	
+	public CottageOwner(User user) {
+		super(user);
+	}
 }

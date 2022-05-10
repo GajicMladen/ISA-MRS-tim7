@@ -89,7 +89,7 @@ public class UserRegisterDTO {
 	}
 	
 	public boolean validate() {
-		String[] validRoles = {"client", "cottage-owner", "boat-owner", "adventure-instructor"};
+		String[] validRoles = {"ROLE_USER", "ROLE_COTTAGE_OWNER", "ROLE_BOAT_OWNER", "ROLE_INSTRUCTOR"};
 		
 		return email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$") &&
 			   password.length() >= 8 && password.length() <= 30 &&
