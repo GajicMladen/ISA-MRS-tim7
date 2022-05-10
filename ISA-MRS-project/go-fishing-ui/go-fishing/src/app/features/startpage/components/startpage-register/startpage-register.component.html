@@ -63,6 +63,24 @@
                 Phone number format should be '+' followed by 10-12 digits inclusive
             </small>
 
+            <!-- Role -->
+            <label id="role-radio-group">Please select your role: </label>
+            <mat-radio-group class="role-radio-group" formControlName="role">
+                <mat-radio-button class="role-radio-button" value="client"  checked>
+                    Client
+                </mat-radio-button>
+                <mat-radio-button class="role-radio-button" value="cottage-owner">
+                    Cottage Owner
+                </mat-radio-button>
+                <mat-radio-button class="role-radio-button" value="boat-owner">
+                    Boat Owner
+                </mat-radio-button>
+                <mat-radio-button class="role-radio-button" value="adventure-instructor">
+                    Adventure Instructor
+                </mat-radio-button>
+            </mat-radio-group>
+
+
             <button mat-raised-button color="primary" type="button" (click)="saveRequest()">Register</button>
             <h3 class="top-spacing">Already have an account? <a routerLink="/login" routerLinkActive="active">Log In!</a></h3>
 

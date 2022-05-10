@@ -1,5 +1,7 @@
 package tim7.ISAMRSproject.dto;
 
+import java.util.Arrays;
+
 import org.springframework.util.StringUtils;
 
 // DTO koji preuzima podatke iz registracione forme
@@ -15,6 +17,7 @@ public class UserRegisterDTO {
 	private String town;
 	private String address;
 	private String phoneNumber;
+	private String role;
 	
 	public Long getId() {
 		return id;
@@ -77,11 +80,22 @@ public class UserRegisterDTO {
 		this.phoneNumber = phoneNumber;
 	}
 	
+	public String getRole() {
+		return this.role;
+	}
+	
+	public void setRole(String role) {
+		this.role = role;
+	}
+	
 	public boolean validate() {
+		String[] validRoles = {"client", "cottage-owner", "boat-owner", "adventure-instructor"};
+		
 		return email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$") &&
 			   password.length() >= 8 && password.length() <= 30 &&
 			   password.equals(confirmPassword) &&
-			   phoneNumber.matches("^[+][0-9]{10,12}$");
+			   phoneNumber.matches("^[+][0-9]{10,12}$") &&
+			   Arrays.asList(validRoles).contains(role);
 	}
 	
 	public void casify() {
