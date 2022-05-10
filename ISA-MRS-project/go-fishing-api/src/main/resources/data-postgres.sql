@@ -43,14 +43,15 @@ INSERT INTO public.offer(
 	
 	
 INSERT INTO public.Cottage(
-	id, owner_id)
-	VALUES (1, 1);
+	id, owner_id,room_count,bed_count)
+	VALUES (1, 1,2,2);
 INSERT INTO public.Cottage(
-	id, owner_id)
-	VALUES (2, 3);
+	id, owner_id,room_count,bed_count)
+	VALUES (2, 3,5,7);
 INSERT INTO public.Cottage(
-	id, owner_id)
-	VALUES (3, 3);
+	id, owner_id,room_count,bed_count)
+	VALUES (3, 3,6,9);
+
 INSERT INTO public.Adventure(
 	id, instruktor_id, instructor_biography)
 	VALUES (4, 4, 'Mika Mikić je iskusni ribolovac, gnjurac i plivač. Diplomirao je na fakultetu za sport i rekreaciju na Palama sa prosekom 9,56. Ovim poslom se bavi već 10 godina.');
@@ -63,3 +64,4 @@ INSERT INTO public.Adventure(
 INSERT INTO public.Adventure(
 	id, instruktor_id, instructor_biography)
 	VALUES (7, 4, 'Mika Mikić je iskusni ribolovac, gnjurac i plivač. Diplomirao je na fakultetu za sport i rekreaciju na Palama sa prosekom 9,56. Ovim poslom se bavi već 10 godina.');
+

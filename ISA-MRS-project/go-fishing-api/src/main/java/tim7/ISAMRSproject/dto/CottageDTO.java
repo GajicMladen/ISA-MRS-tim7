@@ -10,6 +10,9 @@ public class CottageDTO {
 	private float price;
 	private int capacity;
 
+	private int bedCount;
+	private int roomCount;
+
 	private Integer ownerId;
 
 
@@ -27,6 +30,8 @@ public class CottageDTO {
 		price = cottage.getPrice();
 		capacity = cottage.getCapacity();
 		ownerId = cottage.getCottageOwnerId();
+		roomCount = cottage.getRoomCount();
+		bedCount = cottage.getBedCount();
 	}
 	
 	public Integer getId() {
@@ -36,6 +41,21 @@ public class CottageDTO {
 		this.id = idI;
 	}
 
+	public int getBedCount() {
+		return bedCount;
+	}
+
+	public void setBedCount(int bedCount) {
+		this.bedCount = bedCount;
+	}
+
+	public int getRoomCount() {
+		return roomCount;
+	}
+
+	public void setRoomCount(int roomCount) {
+		this.roomCount = roomCount;
+	}
 
 	public Integer getOwnerId() {
 		return  ownerId;

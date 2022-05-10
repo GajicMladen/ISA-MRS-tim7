@@ -7,6 +7,8 @@ import { RouterModule } from '@angular/router';
 import { CottageAddNewComponent } from './components/cottage-add-new/cottage-add-new.component';
 import { CottageService } from './services/cottage.service';
 import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
+import { CottageEditComponent } from './components/cottage-edit/cottage-edit.component';
 
 @NgModule({
   declarations: [
@@ -14,11 +16,13 @@ import { HttpClientModule } from '@angular/common/http';
     CottageOwnerpageComponent,
     CottageGalleryOwnerComponent,
     CottageAddNewComponent,
+    CottageEditComponent,
   ],
   imports: [
     CommonModule,
     RouterModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers:[CottageService]
 })

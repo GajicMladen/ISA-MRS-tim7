@@ -133,12 +133,12 @@ public class User {
 	public void setActive(boolean active) {
 		this.active = active;
 	}
-	
-	/*
-	 * private UserType userType;
-	 * private LojalniStatus lojalniStatus;
-	 * 
-	 * */
-	
-	
+
+	public UserType getUserType() {
+		return userType;
+	}
+
+	public void setUserType(UserType userType) {
+		this.userType = userType;
+	}
 }

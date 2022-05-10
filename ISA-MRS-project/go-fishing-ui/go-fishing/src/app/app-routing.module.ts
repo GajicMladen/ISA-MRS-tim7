@@ -11,8 +11,10 @@ import { CottageOwnerpageComponent } from './features/cottage/components/cottage
 import { AdventureInstructorpageComponent } from './features/adventure/components/adventure-instructorpage/adventure-instructorpage.component';
 import { EditProfileComponent } from './shared/components/edit-profile/edit-profile.component';
 import { CottageAddNewComponent } from './features/cottage/components/cottage-add-new/cottage-add-new.component';
+import { CottageEditComponent } from './features/cottage/components/cottage-edit/cottage-edit.component';
 import { AdventureAddNewComponent } from './features/adventure/components/adventure-add-new/adventure-add-new.component';
 import { AdventureCardComponent } from './features/adventure/components/adventure-card/adventure-card.component';
+
 
 const routes: Routes = [
   { path: '', component: StartpagePreviewListComponent },
@@ -28,6 +30,7 @@ const routes: Routes = [
   { path: 'instructorProfile', component: AdventureInstructorpageComponent },
   { path: 'editProfile',component: EditProfileComponent},
   { path: 'addNewCottage', component: CottageAddNewComponent},
+  { path: 'editCottage/:id' ,component: CottageEditComponent },
   //Ubaciti komponentu za not found
   { path: '**', component: StartpagePreviewListComponent },
 ];
