@@ -20,6 +20,19 @@ html *{
     margin-top: 80px;
 }
 
+#features {
+    text-align: center;
+}
+
+#edit {
+    display: block;
+    text-align: center;
+}
+
+#options-row {
+    margin: 20px;
+}
+
 .cardAddNew {
     width: 350px;
     height: 250px;

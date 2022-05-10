@@ -8,7 +8,9 @@ import { AdventureCardComponent } from './components/adventure-card/adventure-ca
 import { AdventureInstructorpageComponent } from './components/adventure-instructorpage/adventure-instructorpage.component';
 import { AdventureService } from './adventure.service';
 import { AdventureAddNewComponent } from './components/adventure-add-new/adventure-add-new.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AdventureInstructorEditComponent } from './components/adventure-instructor-edit/adventure-instructor-edit.component';
+import { RouterModule } from '@angular/router';
 
 
 
@@ -18,13 +20,16 @@ import { FormsModule } from '@angular/forms';
     AdventureReservationComponent,
     AdventureCardComponent,
     AdventureInstructorpageComponent,
-    AdventureAddNewComponent
+    AdventureAddNewComponent,
+    AdventureInstructorEditComponent
   ],
   imports: [
     CommonModule,
     SharedModule,
     BrowserModule,
-    FormsModule
+    FormsModule,
+    RouterModule,
+    ReactiveFormsModule
   ],
   providers: [AdventureService]
 })
