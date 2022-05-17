@@ -18,6 +18,7 @@ import { AdventureModule } from './features/adventure/adventure.module';
 import { BoatModule } from './features/boat/boat.module';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './shared/interceptor/TokenInterceptor';
+import { HomepageModule } from './features/homepage/homepage.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -37,7 +38,8 @@ import { TokenInterceptor } from './shared/interceptor/TokenInterceptor';
     ReservationModule,
     AdventureModule,
     HttpClientModule,
-    BoatModule
+    BoatModule,
+    HomepageModule,
   ],
   providers: [
     {

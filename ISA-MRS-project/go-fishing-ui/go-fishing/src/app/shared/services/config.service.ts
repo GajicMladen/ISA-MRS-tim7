@@ -8,6 +8,7 @@ export class ConfigService {
 
   private _signup_url = this._server_address + '/reg/signup';
   private _login_url = this._server_address + '/login';
+  private _user_controller_url = this._server_address + '/api/users';
 
   get loginUrl(): string {
     return this._login_url;
@@ -15,5 +16,9 @@ export class ConfigService {
 
   get registrationUrl(): string {
     return this._signup_url;
+  }
+
+  get userByEmailUrl(): string {
+    return this._user_controller_url + '/getUserByEmail/';
   }
 }

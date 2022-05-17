@@ -17,6 +17,10 @@ export class StartpageLoginService {
     private router: Router
   ) {}
 
+  get user() {
+    return this.currentUser;
+  }
+
   sendLoginRequest(value: any) {
     let loginUrl = this.config.loginUrl;
 
@@ -27,11 +31,13 @@ export class StartpageLoginService {
       .pipe(
         map((res: any) => {
           this.accessToken = res.accessToken;
+          this.currentUser = res.user;
           localStorage.setItem('jwt', res.accessToken);
         }),
         catchError(this.handleError)
       );
   }
+
   private handleError(error: HttpErrorResponse) {
     return throwError(() => new Error(error.error));
   }

@@ -47,5 +47,17 @@ public class UserController {
 
 		return new ResponseEntity<>(null,HttpStatus.NO_CONTENT);
 	}
+	
+	
+	@GetMapping(value = "/getUserByEmail/{email}")
+	public ResponseEntity<UserDTO> getUserByEmail(@PathVariable String email){
+
+		Optional<User> user = Optional.ofNullable(userService.findByEmail(email));
+
+		if(user != null)
+			return new ResponseEntity<>(new UserDTO(user.get()),HttpStatus.OK);
+
+		return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+	}
 
 }
