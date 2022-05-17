@@ -48,7 +48,7 @@ export class AdventureAddNewComponent implements OnInit {
   }
 
   addAdventure() {
-    if (!this.checkForErrors()) {
+    if (!this.CheckForErrors()) {
       var newAdventure = new Adventure({
         name: this.adventure.name,
         promoDescription: this.adventure.promo,
@@ -65,7 +65,7 @@ export class AdventureAddNewComponent implements OnInit {
     }
   }
 
-  checkForErrors(): boolean {
+  CheckForErrors(): boolean {
     var nameErr = this.nameHasError();
     var promoErr = this.promoHasError();
     var capacityErr = this.maxNumHasError();

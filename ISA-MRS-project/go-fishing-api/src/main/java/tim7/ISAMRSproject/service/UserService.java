@@ -103,7 +103,6 @@ public class UserService implements UserDetailsService {
 				return (User)(this.instructorRepository.save(new FishingInstructor(newUser)));
 		}
 		return null;
-		
 	}
 	
 	public User save(User user) {
