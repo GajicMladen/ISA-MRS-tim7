@@ -17,7 +17,7 @@ import {
   styleUrls: ['./sidebar.component.css'],
 })
 export class SidebarComponent implements OnInit {
-  @Input() user: any;
+  @Input() userName: string;
   userProfileIcon = faUser;
   cottageIcon = faHouse;
   boatIcon = faSailboat;

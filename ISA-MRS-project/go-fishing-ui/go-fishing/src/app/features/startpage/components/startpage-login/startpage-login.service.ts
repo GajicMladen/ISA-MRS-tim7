@@ -17,8 +17,8 @@ export class StartpageLoginService {
     private router: Router
   ) {}
 
-  get user() {
-    return this.currentUser;
+  get userName() {
+    return localStorage.getItem('user-name');
   }
 
   sendLoginRequest(value: any) {
@@ -33,6 +33,7 @@ export class StartpageLoginService {
           this.accessToken = res.accessToken;
           this.currentUser = res.user;
           localStorage.setItem('jwt', res.accessToken);
+          localStorage.setItem('user-name', res.user.name);
         }),
         catchError(this.handleError)
       );
@@ -45,6 +46,7 @@ export class StartpageLoginService {
   logout() {
     this.currentUser = null;
     this.accessToken = null;
+    localStorage.clear();
     this.router.navigate(['/login']);
   }
 
