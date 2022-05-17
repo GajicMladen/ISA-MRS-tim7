@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Offer } from '../../classes/offer';
+import { FreePeriodService } from '../../services/free-period-service/free-period.service';
 
 @Component({
   selector: 'app-new-free-period',
@@ -7,9 +10,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NewFreePeriodComponent implements OnInit {
 
-  constructor() { }
+  offerId : number;
+  offer: Offer;
+  startDate: string;
+  constructor(private freePeriodService: FreePeriodService,private route : ActivatedRoute,private router: Router) { }
 
   ngOnInit(): void {
+    this.offerId = Number(this.route.snapshot.paramMap.get('id'));
+
   }
+
 
 }

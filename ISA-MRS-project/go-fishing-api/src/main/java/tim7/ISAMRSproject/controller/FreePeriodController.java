@@ -11,7 +11,7 @@ import tim7.ISAMRSproject.dto.FreePeriodDTO;
 import tim7.ISAMRSproject.service.FreePeriodService;
 
 @RestController
-@RequestMapping(value = "api/freePeriod")
+@RequestMapping(value = "api/freePeriods")
 public class FreePeriodController {
 
     @Autowired
