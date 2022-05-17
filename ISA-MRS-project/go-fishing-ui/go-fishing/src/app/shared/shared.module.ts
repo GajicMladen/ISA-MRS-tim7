@@ -6,9 +6,10 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { RouterModule } from '@angular/router';
 import { EditProfileComponent } from './components/edit-profile/edit-profile.component';
 import { MessageComponent } from './services/message-service/message.service';
+import { NewFreePeriodComponent } from './components/new-free-period/new-free-period.component';
 
 @NgModule({
-  declarations: [NavbarComponent, EditProfileComponent, MessageComponent],
+  declarations: [NavbarComponent, EditProfileComponent, MessageComponent, NewFreePeriodComponent],
   imports: [CommonModule, RouterModule, MaterialModule, FontAwesomeModule],
   exports: [NavbarComponent, MaterialModule, EditProfileComponent],
 })

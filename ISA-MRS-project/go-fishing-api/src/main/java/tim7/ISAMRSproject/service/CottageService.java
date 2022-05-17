@@ -1,5 +1,6 @@
 package tim7.ISAMRSproject.service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -7,10 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import tim7.ISAMRSproject.dto.CottageDTO;
-import tim7.ISAMRSproject.model.Cottage;
-import tim7.ISAMRSproject.model.CottageOwner;
-import tim7.ISAMRSproject.model.User;
+import tim7.ISAMRSproject.dto.FreePeriodDTO;
+import tim7.ISAMRSproject.model.*;
 import tim7.ISAMRSproject.repository.CottageRepository;
+import tim7.ISAMRSproject.repository.FreePeriodRepository;
 
 import javax.transaction.Transactional;
 
@@ -20,6 +21,10 @@ public class CottageService {
 
 	@Autowired
 	private CottageRepository cottageRepository;
+
+	@Autowired
+	private FreePeriodRepository freePeriodRepository;
+
 	
 	public List<Cottage> getAllCottages(){
 		
@@ -58,5 +63,5 @@ public class CottageService {
 				cottageDTO.getPromoDescription(), cottageDTO.getPrice(),cottageDTO.getCapacity());
 	}
 
-	
+
 }

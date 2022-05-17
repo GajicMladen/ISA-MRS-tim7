@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import tim7.ISAMRSproject.dto.CottageDTO;
+import tim7.ISAMRSproject.dto.FreePeriodDTO;
 import tim7.ISAMRSproject.model.Cottage;
 import tim7.ISAMRSproject.model.User;
 import tim7.ISAMRSproject.service.CottageService;
@@ -83,8 +84,7 @@ public class CottageController {
 
 	@PutMapping(value = "/updateCottage",consumes = MediaType.APPLICATION_JSON_VALUE)
 	public void updateCottage(@RequestBody CottageDTO cottage){
-		System.out.println(cottage.getName());
-		System.out.println("================");
 		cottageService.editCottage(cottage);
 	}
+
 }
