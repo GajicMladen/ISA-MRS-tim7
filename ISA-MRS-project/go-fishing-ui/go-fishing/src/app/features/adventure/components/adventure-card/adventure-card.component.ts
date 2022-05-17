@@ -1,5 +1,6 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { AdventureService } from '../../adventure.service';
+import { Adventure } from '../../classes/adventure';
 
 @Component({
   selector: 'app-adventure-card',
@@ -8,18 +9,10 @@ import { AdventureService } from '../../adventure.service';
 })
 export class AdventureCardComponent implements OnInit {
 
-  adventure: any;
-  @Input('instructor')
-  instructorName!: string;
-
-  @Input('name')
-  name!: string;
-
-  @Input('price')
-  price!: string;
-
-  @Input('id')
-  id!: string;
+  adventure: Adventure;
+  
+  @Input('adventureId')
+  adventureId!: string;
  
   isInstructor: boolean = true;
   
@@ -27,10 +20,17 @@ export class AdventureCardComponent implements OnInit {
 
   @Output() OnAdventureDeleted: EventEmitter<string> = new EventEmitter();
 
+  images =  ["https://i.imgur.com/JJjNarK.jpeg", "https://i.imgur.com/4Kcv4Ha.jpeg", "https://i.imgur.com/AM3wZt7.jpeg", "https://i.imgur.com/yGw6TI2.jpeg"]
+
   constructor(private adventureService: AdventureService) { }
 
   ngOnInit(): void {
-    this.adventure = {
+    this.adventureService.getAdventureById(Number(this.adventureId)).subscribe(adventure => {
+      this.adventure = adventure;
+      console.log(adventure);
+    })
+
+    /*var adventure1 = {
       id: this.id,
       instructor: this.instructorName,
       name: this.name,
@@ -46,7 +46,7 @@ export class AdventureCardComponent implements OnInit {
       equipment: ["Stapovi za pecanje", "Mreže", "Svi tipovi mamaca i varalica", "Kombinezoni"],
       information: "Avantura se održava dva puta dnevno. Prvi termin je u 9h, a drugi u 15h. Mesto okupljanja je gradska plaža. Avantura traje dva sata.",
       cancellation: "U slučaju otkazivanja instruktor zadržava 30% uplaćene sume.",
-    };
+    };*/
   }
 
   deleteAdventure() {
@@ -55,7 +55,7 @@ export class AdventureCardComponent implements OnInit {
         console.log(adventure);
         alert("Avantura uspešno obrisana!")
         //window. location. reload()
-        this.OnAdventureDeleted.emit(this.adventure.id);
+        this.OnAdventureDeleted.emit(this.adventureId);
       });
   }
 

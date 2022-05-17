@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { User } from 'src/app/shared/classes/user';
+import { UserService } from 'src/app/shared/services/users-services/user.service';
+import { AdventureService } from '../../adventure.service';
+import { Adventure } from '../../classes/adventure';
 
 @Component({
   selector: 'app-adventure-instructorpage',
@@ -9,13 +14,12 @@ export class AdventureInstructorpageComponent implements OnInit {
 
   isInstructor: boolean = true;
 
+  instructor1 = {
+    name: 'Mika Mikic',
+    bio: 'loremaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'
+  }
 
-  instructor = {
-    name: "Mika Mikic",
-    bio: "Mika Mikić je iskusni ribolovac, gnjurac i plivač. Diplomirao je na fakultetu za sport i rekreaciju na Palama sa prosekom 9,56. Ovim poslom se bavi već 10 godina. Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde natus, sunt sed maxime ut accusamus dignissimos veniam inventore debitis consequatur temporibus odio facere nobis, tenetur deserunt aut fugit distinctio recusandae."
-  };
-
-  adventures = [{
+  adventures1 = [{
     id: "4",
     instructor: "Mika Mikic",
     name: "Pecanje na Zvorničkom jezeru",
@@ -102,9 +106,26 @@ export class AdventureInstructorpageComponent implements OnInit {
   }
   ];
 
-  constructor() { }
+  instructorId: number;
+  instructor: User;
+  adventures: Adventure[];
+
+  constructor(private route: ActivatedRoute, private userService: UserService, private adventureService: AdventureService) { }
 
   ngOnInit(): void {
+    this.instructorId = Number(this.route.snapshot.paramMap.get('id'));
+    
+    if(!isNaN(this.instructorId)){
+      this.userService.findById(this.instructorId).subscribe(user => {
+        this.instructor = user;
+        console.log(this.instructor1);
+
+      this.adventureService.getAdventuresOfInstructor(this.instructorId).subscribe(adventures => {
+        this.adventures = adventures;
+        console.log(adventures);
+      })
+      })
+    }
   }
 
   OnAdventureDeleted(id: string) {

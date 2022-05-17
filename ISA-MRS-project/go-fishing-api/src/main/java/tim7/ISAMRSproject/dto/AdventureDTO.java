@@ -1,6 +1,8 @@
 package tim7.ISAMRSproject.dto;
 
+import tim7.ISAMRSproject.model.Address;
 import tim7.ISAMRSproject.model.Adventure;
+import tim7.ISAMRSproject.model.FishingInstructor;
 
 public class AdventureDTO {
 	
@@ -9,10 +11,54 @@ public class AdventureDTO {
 	private String promoDescription;
 	private float price;
 	private int capacity;
-
+	private String equipment;
+	private String rulesOfConduct;
+	private String rulesOfCancelation;
+	private String moreInfo;
+	private String street;
+	private String city;
+	private String country;
+	private String latitude;
+	private String longitude;
+	private String instructorName;
+	private String instructorSurname;
 	private Integer instructorId;
 	private String instructorBiography;
 	
+	
+
+	public String getEquipment() {
+		return equipment;
+	}
+
+	public void setEquipment(String equipment) {
+		this.equipment = equipment;
+	}
+
+	public String getRulesOfConduct() {
+		return rulesOfConduct;
+	}
+
+	public void setRulesOfConduct(String rulesOfConduct) {
+		this.rulesOfConduct = rulesOfConduct;
+	}
+
+	public String getRulesOfCancelation() {
+		return rulesOfCancelation;
+	}
+
+	public void setRulesOfCancelation(String rulesOfCancelation) {
+		this.rulesOfCancelation = rulesOfCancelation;
+	}
+
+	public String getMoreInfo() {
+		return moreInfo;
+	}
+
+	public void setMoreInfo(String moreInfo) {
+		this.moreInfo = moreInfo;
+	}
+
 	public AdventureDTO() {
 	
 	}
@@ -25,6 +71,19 @@ public class AdventureDTO {
 		this.capacity = adventure.getCapacity();
 		this.instructorId = adventure.getInstructorId();
 		this.instructorBiography = adventure.getInstructorBiography();
+		this.equipment = adventure.getEquipment();
+		this.moreInfo = adventure.getMoreInfo();
+		this.rulesOfCancelation = adventure.getRulesOfCancelation();
+		this.rulesOfConduct = adventure.getRulesOfConduct();
+		this.street = adventure.getAddress().getStreet();
+		this.city = adventure.getAddress().getCity();
+		this.country = adventure.getAddress().getCountry();
+		this.latitude = adventure.getAddress().getLatitude();
+		this.longitude = adventure.getAddress().getLongitude();
+		this.instructorName = adventure.getFishingInstructor().getName();
+		this.instructorSurname = adventure.getFishingInstructor().getLastName();
+		this.instructorId = adventure.getFishingInstructor().getId();
+		
 	}
 
 	public Integer getId() {
@@ -82,6 +141,64 @@ public class AdventureDTO {
 	public void setInstructorBiography(String instructorBiography) {
 		this.instructorBiography = instructorBiography;
 	}
+
+	public String getStreet() {
+		return street;
+	}
+
+	public void setStreet(String street) {
+		this.street = street;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getCountry() {
+		return country;
+	}
+
+	public void setCountry(String country) {
+		this.country = country;
+	}
+
+	public String getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(String latitude) {
+		this.latitude = latitude;
+	}
+
+	public String getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(String longitude) {
+		this.longitude = longitude;
+	}
+
+	public String getInstructorName() {
+		return instructorName;
+	}
+
+	public void setInstructorName(String instructorName) {
+		this.instructorName = instructorName;
+	}
+
+	public String getInstructorSurname() {
+		return instructorSurname;
+	}
+
+	public void setInstructorSurname(String instructorSurname) {
+		this.instructorSurname = instructorSurname;
+	}
+	
+	
 	
 	
 }

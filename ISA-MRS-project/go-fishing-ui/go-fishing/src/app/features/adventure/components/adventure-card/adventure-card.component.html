@@ -1,7 +1,7 @@
 <div class="container mt-4 mb-4 p-3 d-flex justify-content-center">
     <div class="card p-4">
         <div class=" image d-flex flex-column justify-content-center align-items-center">
-            <img src="{{adventure.images[0]}}" height="100" width="100" />
+            <img src="{{images[0]}}" height="100" width="100" />
             <br />
             <span class="name mt-3">{{adventure.name}}</span>
             <div class="d-flex flex-row justify-content-center align-items-center gap-2">
@@ -19,8 +19,8 @@
             </div>
             <br />
             
-            <div><span class="font-weight-bold">Instruktor: </span><span>{{adventure.instructor}}</span></div>
-            <div><span class="font-weight-bold">Adresa: </span><span>{{adventure.address}}</span></div>
+            <div><span class="font-weight-bold">Instruktor: </span><span>{{adventure.instructorName + " " + adventure.instructorSurname}}</span></div>
+            <div><span class="font-weight-bold">Adresa: </span><span>{{adventure.city + ", " + adventure.country}}</span></div>
             <br />
             <br />
             <div><span class="font-weight-bold">Cena: </span><span class="font-weight-bold">{{adventure.price | currency}}</span></div>

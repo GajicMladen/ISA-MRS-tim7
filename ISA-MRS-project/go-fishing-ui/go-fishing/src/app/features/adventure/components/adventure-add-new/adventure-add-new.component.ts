@@ -55,7 +55,18 @@ export class AdventureAddNewComponent implements OnInit {
         price: this.adventure.price,
         capacity: this.adventure.maxNum,
         instructorId: 4,
-        instructorBiography: this.adventure.bio
+        instructorBiography: this.adventure.bio,
+        rulesOfCancelation: 'nothing',
+        rulesOfConduct: 'nothung',
+        equipment:'nothing',
+        moreInfo: 'nothing',
+        instructorName: '',
+        instructorSurname: '',
+        street: '',
+        city: '',
+        country: '',
+        latitude: '',
+        longitude: ''
       });
       console.log(newAdventure);
       this.adventureService.addAdventure(newAdventure).subscribe(data => {

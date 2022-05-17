@@ -8,7 +8,7 @@
                 <div class="col-md-6">
                     <mat-form-field class="inputField" appearance="fill" (click)="nameError=false">
                         <mat-label>Naziv avanture</mat-label>
-                        <input matInput id="name" placeholder="Naziv" [(ngModel)]="adventure.name"> 
+                        <input matInput id="name" placeholder="Naziv" [(ngModel)]="adventure.name" name="name"> 
                         <div class="text-danger" *ngIf="nameError">
                             Ovo polje je obavezno!
                         </div>
@@ -16,7 +16,7 @@
                     
                     <mat-form-field class="inputField" appearance="fill" (click)="promoError=false"> 
                         <mat-label>Promotivni opis</mat-label>
-                        <textarea matInput id="promo" placeholder="Opis" [(ngModel)]="adventure.promo"></textarea>
+                        <textarea matInput id="promo" placeholder="Opis" [(ngModel)]="adventure.promo" name="promo"></textarea>
                         <div class="text-danger" *ngIf="promoError">
                             Ovo polje je obavezno!
                         </div>
@@ -24,7 +24,7 @@
                     
                     <mat-form-field class="inputField" appearance="fill" (click)="maxNumError=false">
                         <mat-label>Maksimalan broj osoba</mat-label>
-                        <input matInput id="maxNum" type="number" placeholder="Maksimalan broj" [(ngModel)]="adventure.maxNum">
+                        <input matInput id="maxNum" type="number" placeholder="Maksimalan broj" name="capacity" [(ngModel)]="adventure.maxNum">
                         <div class="text-danger" *ngIf="maxNumError">
                             Ovo polje je obavezno!
                         </div>
@@ -32,18 +32,18 @@
                     
                     <mat-form-field class="inputField" appearance="fill">
                         <mat-label>Pravila ponašanja</mat-label>
-                        <textarea matInput placeholder="Pravila" [(ngModel)]="adventure.conductRules"></textarea>
+                        <textarea matInput placeholder="Pravila" [(ngModel)]="adventure.conductRules" name="conduct"></textarea>
                         <mat-hint>Pravila navoditi jedno ispod drugog</mat-hint>
                     </mat-form-field>
                     <mat-form-field class="inputField" appearance="fill">
                         <mat-label>Uslovi otkaza rezervacije</mat-label>
-                        <textarea matInput placeholder="Uslovi otkaza" [(ngModel)]="adventure.cancelationRules"></textarea>
+                        <textarea matInput placeholder="Uslovi otkaza" [(ngModel)]="adventure.cancelationRules" name="cancelation"></textarea>
                     </mat-form-field>
                 </div>
                 <div class="col-md-6">
                     <mat-form-field class="inputField" appearance="fill" (click)="addressError=false">
                         <mat-label>Adresa održavanja avanture</mat-label>
-                        <input matInput id="address" placeholder="Adresa" [(ngModel)]="adventure.address">
+                        <input matInput id="address" placeholder="Adresa" [(ngModel)]="adventure.address" name="address">
                         <div class="text-danger" *ngIf="addressError">
                             Ovo polje je obavezno!
                         </div>
@@ -51,7 +51,7 @@
     
                     <mat-form-field class="inputField" appearance="fill" (click)="bioError=false">
                         <mat-label>Kratka biografija instruktora</mat-label>
-                        <textarea matInput id="bio" [(ngModel)]="adventure.bio" placeholder="Kratka biografija"></textarea>
+                        <textarea matInput id="bio" [(ngModel)]="adventure.bio" name="bio" placeholder="Kratka biografija"></textarea>
                         <div class="text-danger" *ngIf="bioError">
                             Ovo polje je obavezno!
                         </div>
@@ -59,7 +59,7 @@
                     
                     <mat-form-field class="inputField" appearance="fill" floatLabel="always" (click)="priceError=false">
                         <mat-label>Cena avanture po osobi</mat-label>
-                        <input matInput id="price" type="number" [(ngModel)]="adventure.price" placeholder="Cena">
+                        <input matInput id="price" type="number" [(ngModel)]="adventure.price" name="price" placeholder="Cena">
                         <span matPrefix>$&nbsp;</span>
                         <div class="text-danger" *ngIf="priceError">
                             Ovo polje je obavezno!
@@ -68,12 +68,12 @@
                     
                     <mat-form-field class="inputField" appearance="fill">
                         <mat-label>Dostupna oprema</mat-label>
-                        <textarea matInput [(ngModel)]="adventure.equipment" placeholder="Oprema"></textarea>
+                        <textarea matInput [(ngModel)]="adventure.equipment" name="equipment" placeholder="Oprema"></textarea>
                         <mat-hint>Opremu navoditi jednu ispod druge</mat-hint>
                     </mat-form-field>
                     <mat-form-field class="inputField" appearance="fill">
                         <mat-label>Dodatne informacije</mat-label>
-                        <textarea matInput [(ngModel)]="adventure.info" placeholder="informacije"></textarea>
+                        <textarea matInput [(ngModel)]="adventure.info" name="info" placeholder="informacije"></textarea>
                     </mat-form-field>
                     
                 </div>
@@ -83,7 +83,7 @@
             <div class="col-md-12">
                 <div class="buttons">
                     <span class="buttons" id="return"><a href="/instructorProfile"><button mat-raised-button color="warn" formnovalidate>Nazad</button></a></span>
-                    <span class="buttons" id="confirm"><button mat-raised-button routerLink="" (click)="addAdventure()" color="primary">Dodaj</button></span>
+                    <span class="buttons" id="confirm"><button mat-raised-button (click)="addAdventure()" color="primary">Dodaj</button></span>
                 </div>
             </div>
         </div>

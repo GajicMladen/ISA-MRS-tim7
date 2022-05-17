@@ -1,3 +1,5 @@
+
+
 export interface IAdventure {
 	id?: number;
 	name: string;
@@ -5,8 +7,21 @@ export interface IAdventure {
 	price: number;
 	capacity: number;
 
+	equipment: string;
+	rulesOfConduct: string;
+	rulesOfCancelation: string;
+	moreInfo: string;
+
+	street: string;
+	city: string;
+	country: string;
+	latitude: string;
+	longitude: string;
+
 	instructorId: number;
 	instructorBiography: string;
+	instructorName: string;
+	instructorSurname: string;
 }
 
 export class Adventure {
@@ -16,8 +31,21 @@ export class Adventure {
 	price: number;
 	capacity: number;
 
+	equipment: string;
+	rulesOfConduct: string;
+	rulesOfCancelation: string;
+	moreInfo: string;
+
+	street: string;
+	city: string;
+	country: string;
+	latitude: string;
+	longitude: string;
+
 	instructorId: number;
 	instructorBiography: string;
+	instructorName: string;
+	instructorSurname: string;
 
 	constructor(object: IAdventure) {
 		this.name = object.name;
@@ -26,5 +54,16 @@ export class Adventure {
 		this.capacity = object.capacity;
 		this.instructorId = object.instructorId;
 		this.instructorBiography = object.instructorBiography;
+		this.equipment = object.equipment;
+		this.rulesOfCancelation = object.rulesOfCancelation;
+		this.rulesOfConduct = object.rulesOfConduct;
+		this.moreInfo = object.moreInfo;
+		this.street = object.street;
+		this.city = object.city;
+		this.country = object.country;
+		this.latitude = object.latitude;
+		this.longitude = object.longitude;
+		this.instructorName = object.instructorName;
+		this.instructorSurname = object.instructorSurname
 	}
 }

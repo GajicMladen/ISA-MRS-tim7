@@ -1,5 +1,6 @@
 package tim7.ISAMRSproject.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,5 +43,9 @@ public class AdventureService {
 			i.setPhone(instructor.getPhone());
 			userService.save(i);
 		}
+	}
+
+	public List<Adventure> getAdventuresByInstructorId(int id) {
+		return adventureRepository.findByInstructorId(id);
 	}
 }

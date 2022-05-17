@@ -8,13 +8,12 @@
                             <img src="https://i.imgur.com/LZ1Xa9r.jpeg" alt="Circle Image" class="img-raised rounded-circle  img-fluid" id="profileImage">
                         </div>
                         <div class="name">
-                            <h6 class="display-f-center" id="instructorName">{{instructor.name}}</h6>
+                            <h6 class="display-f-center" id="instructorName">{{instructor.name + " " + instructor.lastName}}</h6>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-8">
                     <div class="description text-center" id="Bio">
-                      <p>{{instructor.bio}}</p>
                       <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Earum cumque neque necessitatibus deserunt, ad dolorum illo soluta? Dolorem ducimus sint soluta praesentium quidem nisi harum rem cupiditate debitis, quis veniam!</p>
                     </div>
                 </div>
@@ -32,7 +31,7 @@
         </div>
       <div class="row" id="adventureRow">
         <div *ngFor="let a of adventures">
-          <div id="{{a.id}}" class="col-md-12"><app-adventure-card (OnAdventureDeleted)="OnAdventureDeleted($event)" id="{{a.id}}" instructor={{a.instructor}} name="{{a.name}}" price="{{a.price}}"></app-adventure-card></div>
+          <div id="{{a.id}}" class="col-md-12"><app-adventure-card (OnAdventureDeleted)="OnAdventureDeleted($event)" adventureId="{{a.id}}"></app-adventure-card></div>
         </div>
         <div *ngIf="isInstructor">
           <a href="adventureAddNew">
