@@ -1,0 +1,33 @@
+.profile-card {
+    max-width: 400px;
+    max-height: 100%;
+}
+
+.title{
+    font-size: 1.5em;
+    font-weight: bold;
+    display: block;
+}
+
+mat-form-field {
+    display: block;
+}
+
+.left-spacing {
+    margin-left: 5px;
+}
+
+.top-spacing {
+    margin-top: 15px;
+}
+
+.text-danger {
+    color: red;
+    margin-bottom: 5px;
+}
+
+.main-div {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+}

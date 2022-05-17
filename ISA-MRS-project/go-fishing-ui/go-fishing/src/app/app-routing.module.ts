@@ -17,6 +17,7 @@ import { AdventureCardComponent } from './features/adventure/components/adventur
 import { AdventureInstructorEditComponent } from './features/adventure/components/adventure-instructor-edit/adventure-instructor-edit.component';
 import { BoatProfilepageComponent } from './features/boat/components/boat-profilepage/boat-profilepage.component';
 import { HomepageComponent } from './features/homepage/components/homepage/homepage.component';
+import { UserprofileComponent } from './features/homepage/components/userprofile/userprofile.component';
 
 const routes: Routes = [
   { path: '', component: StartpagePreviewListComponent },
@@ -38,9 +39,16 @@ const routes: Routes = [
   { path: 'editProfile', component: EditProfileComponent },
   { path: 'addNewCottage', component: CottageAddNewComponent },
   { path: 'editCottage/:id', component: CottageEditComponent },
-  { path: 'home', component: HomepageComponent },
+  {
+    path: 'home',
+    component: HomepageComponent,
+    children: [
+      { path: 'userProfile', component: UserprofileComponent },
+      { path: '', redirectTo: 'userProfile', pathMatch: 'full' },
+    ],
+  },
   //Ubaciti komponentu za not found
-  { path: '**', component: StartpagePreviewListComponent },
+  { path: '**', redirectTo: '', pathMatch: 'full' },
 ];
 
 @NgModule({

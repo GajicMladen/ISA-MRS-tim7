@@ -18,7 +18,7 @@ export class ConfigService {
     return this._signup_url;
   }
 
-  get userByEmailUrl(): string {
-    return this._user_controller_url + '/getUserByEmail/';
+  get userData(): string {
+    return this._user_controller_url + '/getUserData';
   }
 }
