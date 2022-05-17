@@ -15,10 +15,12 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { CottageModule } from './features/cottage/cottage.module';
 import { ReservationModule } from './features/reservation/reservation.module';
 import { AdventureModule } from './features/adventure/adventure.module';
-import { HttpClientModule } from '@angular/common/http';
-  
+import { BoatModule } from './features/boat/boat.module';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { TokenInterceptor } from './shared/interceptor/TokenInterceptor';
+
 @NgModule({
-  declarations : [AppComponent],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     RouterModule,
@@ -34,9 +36,16 @@ import { HttpClientModule } from '@angular/common/http';
     CottageModule,
     ReservationModule,
     AdventureModule,
-    HttpClientModule
+    HttpClientModule,
+    BoatModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

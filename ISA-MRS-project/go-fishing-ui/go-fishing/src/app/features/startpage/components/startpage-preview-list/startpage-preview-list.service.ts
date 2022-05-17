@@ -261,4 +261,25 @@ export class StartpagePreviewListService {
     );
     return adventureArray;
   }
+
+  filterArrayByParam(array: any, param: string): any {
+    let ret: any = [];
+    for (let i of array) {
+      if (
+        this.getObjectValuesString(i)
+          .toLowerCase()
+          .includes(param.toLowerCase())
+      )
+        ret.push(i);
+    }
+    return ret;
+  }
+
+  getObjectValuesString(object: any): string {
+    let ret: string = '';
+    for (let i in object) {
+      ret += object[i] + ' ';
+    }
+    return ret;
+  }
 }

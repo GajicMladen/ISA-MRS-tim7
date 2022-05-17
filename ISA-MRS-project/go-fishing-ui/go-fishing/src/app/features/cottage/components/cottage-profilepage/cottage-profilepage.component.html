@@ -91,15 +91,15 @@
                 </div>
                 <div class="buttons">
                     <a href="../reservationStart">
-                        <button class="btn btn-outline-warning btn-long cart">Rezerviši</button>
+                        <button class="btn btn-outline-warning btn-long cart mr-2">Rezerviši</button>
                     </a>
-                        <button class="btn btn-warning btn-long buy"><i class="fa fa-calendar-check-o"></i> Proveri dostupnost </button> <button class="btn btn-light wishlist"> <i class="fa fa-heart"></i> </button> </div>
+                        <button class="btn btn-warning btn-long buy mr-1"><i class="fa fa-calendar-check-o"></i> Proveri dostupnost </button> <button class="btn btn-light wishlist"> <i class="fa fa-heart"></i> </button> </div>
                 <hr>
                 <div class="product-description">
-                    <div><span class="font-weight-bold">Broj soba:</span><span> 2</span></div>
-                    <div><span class="font-weight-bold">Broj kreveta:</span><span> 4</span></div>
+                    <div><span class="font-weight-bold">Broj soba:</span><span> {{cottage.roomCount}}</span></div>
+                    <div><span class="font-weight-bold">Broj kreveta:</span><span> {{cottage.bedCount}}</span></div>
                     <br />
-                    <div><span class="font-weight-bold">Kapcitet ljudi:</span><span> 17</span></div>
+                    <div><span class="font-weight-bold">Kapcitet ljudi:</span><span> {{cottage.capacity}}</span></div>
                     <hr >
                     <div class="mt-2"> <span class="font-weight-bold">Opis:</span>
                         <p>
