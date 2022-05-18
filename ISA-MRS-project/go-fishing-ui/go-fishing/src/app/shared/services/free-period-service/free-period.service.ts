@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Offer } from '../../classes/offer';
+import { FreePeriodDTO } from '../../classes/freePeriod';
 
 @Injectable({
   providedIn: 'root'
@@ -14,8 +14,8 @@ export class FreePeriodService {
     this.freePeriodsUrl = "http://localhost:8080/api/freePeriods";
   }
 
-  public addNewFreePeriod(offer:Offer):Observable<string>{
-
-    return this.http.post(this.freePeriodsUrl+"/addFreePeriod",JSON.stringify(offer),{headers : new HttpHeaders({ 'Content-Type': 'application/json' }),responseType:'text'});
+  public addNewFreePeriod(freePeriod:FreePeriodDTO):Observable<string>{
+    
+    return this.http.post(this.freePeriodsUrl+"/addFreePeriod",JSON.stringify(freePeriod),{headers : new HttpHeaders({ 'Content-Type': 'application/json' }),responseType:'text'});
   }
 }

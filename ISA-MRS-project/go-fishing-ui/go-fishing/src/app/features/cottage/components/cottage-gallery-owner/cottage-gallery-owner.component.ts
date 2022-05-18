@@ -2,7 +2,6 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Cottage } from '../../classes/cottage';
 import { CottageService } from '../../services/cottage.service';
-import { ModalComponent } from 'src/app/shared/components/modal-free-period/modal-free-period.component';
 
 @Component({
   selector: 'app-cottage-gallery-owner',
