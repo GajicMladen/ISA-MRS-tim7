@@ -20,7 +20,11 @@ export class NewFreePeriodComponent implements OnInit {
   fromDate: NgbDate | null;
   toDate: NgbDate | null;
 
-  constructor(private route:ActivatedRoute,private calendar: NgbCalendar, public formatter: NgbDateParserFormatter,private freePeriodService:FreePeriodService) {
+  constructor(private route:ActivatedRoute,
+              private router:Router,
+               private calendar: NgbCalendar,
+               public formatter: NgbDateParserFormatter,
+               private freePeriodService:FreePeriodService) {
     this.fromDate = calendar.getToday();
     this.toDate = calendar.getNext(calendar.getToday(), 'd', 10);
     
@@ -69,15 +73,17 @@ export class NewFreePeriodComponent implements OnInit {
     
     console.log(this.freePeriod);
     console.log(JSON.stringify(this.freePeriod));
-    //this.freePeriodService.addNewFreePeriod(this.freePeriod);
+    this.freePeriodService.addNewFreePeriod(this.freePeriod).subscribe(response =>{
+      this.router.navigate(["/cottageProfile/"+this.offerId]);
+    });
   }
 
   format(date: NgbDate | null): string {
     let stringDate: string = ""; 
     if(date != null) {
       stringDate += date.year+"-";
-      stringDate += date.month ? date.month + "-" : "01-";
-      stringDate += date.day ? date.day : "01";
+      stringDate += date.month ? date.month<10 ? "0"+date.month +"-": date.month + "-" : "01-";
+      stringDate += date.day ? date.day < 10 ? "0"+date.day : date.day : "01";
       stringDate += "T00:00:01"
     }
     return stringDate;
