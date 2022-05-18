@@ -17,6 +17,7 @@ import { AdventureCardComponent } from './features/adventure/components/adventur
 import { AdventureInstructorEditComponent } from './features/adventure/components/adventure-instructor-edit/adventure-instructor-edit.component';
 import { BoatProfilepageComponent } from './features/boat/components/boat-profilepage/boat-profilepage.component';
 import { NewFreePeriodComponent } from './shared/components/new-free-period/new-free-period.component';
+import { CalendarComponent } from './shared/components/calendar/calendar.component';
 
 
 const routes: Routes = [
@@ -37,6 +38,7 @@ const routes: Routes = [
   { path: 'addNewCottage', component: CottageAddNewComponent},
   { path: 'editCottage/:id' ,component: CottageEditComponent },
   { path: 'newFreePeriod/:id' ,component: NewFreePeriodComponent },
+  { path: 'calendar/:id' ,component: CalendarComponent },
   {path: 'editInstructor', component: AdventureInstructorEditComponent},
   { path: 'boatProfile/:id' , component:BoatProfilepageComponent },
   //Ubaciti komponentu za not found

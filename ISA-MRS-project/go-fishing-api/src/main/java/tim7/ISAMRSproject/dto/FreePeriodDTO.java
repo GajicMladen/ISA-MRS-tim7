@@ -1,5 +1,8 @@
 package tim7.ISAMRSproject.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import tim7.ISAMRSproject.model.FreePeriod;
+
 import java.time.LocalDateTime;
 
 public class FreePeriodDTO {
@@ -8,6 +11,14 @@ public class FreePeriodDTO {
     private LocalDateTime endDate;
     private Integer offerId;
 
+    public FreePeriodDTO() {
+
+    }
+    public FreePeriodDTO(FreePeriod x){
+        this.startDate = x.getStartDateTime();
+        this.endDate =x.getEndDateTime();
+        this.offerId = x.getOffer().getId();
+    }
 
     public LocalDateTime getStartDate() {
         return startDate;

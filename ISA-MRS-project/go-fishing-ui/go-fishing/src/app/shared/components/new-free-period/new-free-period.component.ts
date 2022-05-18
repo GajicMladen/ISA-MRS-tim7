@@ -74,7 +74,7 @@ export class NewFreePeriodComponent implements OnInit {
     console.log(this.freePeriod);
     console.log(JSON.stringify(this.freePeriod));
     this.freePeriodService.addNewFreePeriod(this.freePeriod).subscribe(response =>{
-      this.router.navigate(["/cottageProfile/"+this.offerId]);
+      this.router.navigate(["/calendar/"+this.offerId]);
     });
   }
 

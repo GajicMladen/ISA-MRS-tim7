@@ -11,6 +11,7 @@ import tim7.ISAMRSproject.repository.FreePeriodRepository;
 import tim7.ISAMRSproject.repository.InstructorRepository;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -24,6 +25,9 @@ public class FreePeriodService {
     private CottageRepository cottageRepository;
 
 
+    public List<FreePeriod> getFreePeriodByOfferId(int id){
+        return freePeriodRepository.findByOffer_Id(id);
+    }
 
     public void addFreePeriod(FreePeriodDTO freePeriodDTO){
 

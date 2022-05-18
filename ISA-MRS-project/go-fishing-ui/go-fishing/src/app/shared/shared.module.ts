@@ -8,9 +8,10 @@ import { EditProfileComponent } from './components/edit-profile/edit-profile.com
 import { MessageComponent } from './services/message-service/message.service';
 import { NewFreePeriodComponent } from './components/new-free-period/new-free-period.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { CalendarComponent } from './components/calendar/calendar.component';
 
 @NgModule({
-  declarations: [NavbarComponent, EditProfileComponent, MessageComponent, NewFreePeriodComponent],
+  declarations: [NavbarComponent, EditProfileComponent, MessageComponent, NewFreePeriodComponent, CalendarComponent],
   imports: [CommonModule, RouterModule, MaterialModule, FontAwesomeModule,NgbModule],
   exports: [NavbarComponent, MaterialModule, EditProfileComponent],
 })

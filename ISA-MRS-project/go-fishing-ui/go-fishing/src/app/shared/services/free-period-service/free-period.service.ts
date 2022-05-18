@@ -18,4 +18,8 @@ export class FreePeriodService {
     
     return this.http.post(this.freePeriodsUrl+"/addFreePeriod",JSON.stringify(freePeriod),{headers : new HttpHeaders({ 'Content-Type': 'application/json' }),responseType:'text'});
   }
+
+  public getFreePeriodsForOffer(offerId:number):Observable<FreePeriodDTO[]>{
+    return this.http.get<FreePeriodDTO[]>(this.freePeriodsUrl+"/getFreePeriods/"+offerId);
+  }
 }

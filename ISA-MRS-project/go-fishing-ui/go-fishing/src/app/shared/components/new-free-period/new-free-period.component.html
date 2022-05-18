@@ -1,5 +1,5 @@
-
-<form class="row row-cols-sm-auto">
+<div style="display: flex;justify-content:center;">
+<form class="row row-cols-sm-auto" style="display: grid;grid-template-columns: 30% 30% 30%">
     <div class="col-12">
       <div class="dp-hidden position-absolute">
         <div class="input-group">
@@ -45,11 +45,12 @@
                (input)="toDate = validateInput(toDate, dpToDate.value)">
       </div>
     </div>
-  </form>
+</form>
   
-  <hr/>
-<a (click)="addNewFreePeriod()">
+  
+<a (click)="addNewFreePeriod()" style="border: 1px solid black;padding:10px;">
 Dodaj novi sloban termin : 
 <span>{{fromDate?.day}}.{{fromDate?.month}}.{{fromDate?.year}}</span> - 
 <span>{{toDate?.day}}.{{toDate?.month}}.{{toDate?.year}}</span>
 </a>
+</div>
