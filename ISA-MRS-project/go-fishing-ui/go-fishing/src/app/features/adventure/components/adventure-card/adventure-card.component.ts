@@ -1,4 +1,5 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { MessageService, MessageType } from 'src/app/shared/services/message-service/message.service';
 import { AdventureService } from '../../adventure.service';
 import { Adventure } from '../../classes/adventure';
 
@@ -9,7 +10,30 @@ import { Adventure } from '../../classes/adventure';
 })
 export class AdventureCardComponent implements OnInit {
 
-  adventure: Adventure;
+  adventure = new Adventure({
+    id: 0,
+	  name: '',
+	  promoDescription: '',
+	  price: 0,
+	  capacity: 0,
+
+	  equipment: '',
+	  rulesOfConduct: '',
+	  rulesOfCancelation: '',
+	  moreInfo: '',
+
+	  street: '',
+	  city: '',
+	  country: '',
+	  latitude: '',
+	  longitude: '',
+
+	  instructorId: 0,
+	  instructorBiography: '',
+	  instructorName: '',
+	  instructorSurname: '',
+    deleted: false
+  });
   
   @Input('adventureId')
   adventureId!: string;
@@ -22,7 +46,7 @@ export class AdventureCardComponent implements OnInit {
 
   images =  ["https://i.imgur.com/JJjNarK.jpeg", "https://i.imgur.com/4Kcv4Ha.jpeg", "https://i.imgur.com/AM3wZt7.jpeg", "https://i.imgur.com/yGw6TI2.jpeg"]
 
-  constructor(private adventureService: AdventureService) { }
+  constructor(private adventureService: AdventureService, private messageService: MessageService) { }
 
   ngOnInit(): void {
     this.adventureService.getAdventureById(Number(this.adventureId)).subscribe(adventure => {
@@ -53,7 +77,7 @@ export class AdventureCardComponent implements OnInit {
     this.adventureService.deleteAdventure(this.adventure.id).subscribe(adventure =>
       {
         console.log(adventure);
-        alert("Avantura uspešno obrisana!")
+        this.messageService.showMessage("Avantura uspešno obrisana!", MessageType.SUCCESS);        
         //window. location. reload()
         this.OnAdventureDeleted.emit(this.adventureId);
       });

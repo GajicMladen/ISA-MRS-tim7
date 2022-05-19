@@ -14,6 +14,9 @@ import tim7.ISAMRSproject.dto.AdventureDTO;
 @Entity
 public class Adventure extends Offer {
 
+	@Column(nullable = false)
+	private boolean deleted;
+	
 	@Column(nullable =  false, columnDefinition = "TEXT")
 	private String instructorBiography;
 	
@@ -41,7 +44,6 @@ public class Adventure extends Offer {
 	@JoinColumn(name = "instruktor_id")
 	private FishingInstructor fishingInstructor;
 	
-	
 	public Adventure() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -62,6 +64,15 @@ public class Adventure extends Offer {
 		this.instructorBiography = dto.getInstructorBiography();
 	}
 	
+	
+	
+	public boolean isDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
+	}
 
 	public String getRulesOfConduct() {
 		return rulesOfConduct;

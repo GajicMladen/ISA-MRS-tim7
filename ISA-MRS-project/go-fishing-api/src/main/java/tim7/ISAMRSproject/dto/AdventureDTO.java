@@ -24,8 +24,17 @@ public class AdventureDTO {
 	private String instructorSurname;
 	private Integer instructorId;
 	private String instructorBiography;
+	private boolean deleted;
 	
 	
+
+	public boolean isDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
+	}
 
 	public String getEquipment() {
 		return equipment;
@@ -83,6 +92,7 @@ public class AdventureDTO {
 		this.instructorName = adventure.getFishingInstructor().getName();
 		this.instructorSurname = adventure.getFishingInstructor().getLastName();
 		this.instructorId = adventure.getFishingInstructor().getId();
+		this.deleted = adventure.isDeleted();
 		
 	}
 

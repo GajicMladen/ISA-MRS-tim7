@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import tim7.ISAMRSproject.dto.AdventureDTO;
 import tim7.ISAMRSproject.dto.CottageDTO;
 import tim7.ISAMRSproject.dto.InstructorDTO;
+import tim7.ISAMRSproject.dto.UserDTO;
 import tim7.ISAMRSproject.model.Adventure;
 import tim7.ISAMRSproject.model.Cottage;
 import tim7.ISAMRSproject.service.AdventureService;
@@ -85,7 +86,7 @@ public class AdventureController {
 	}
 	
 	@PutMapping(value = "/instructor")
-	public ResponseEntity<Void> uppdateInstructorData(@RequestBody InstructorDTO i) {
+	public ResponseEntity<Void> updateInstructorData(@RequestBody UserDTO i) {
 		this.adventureService.updateInstructorData(i);
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}

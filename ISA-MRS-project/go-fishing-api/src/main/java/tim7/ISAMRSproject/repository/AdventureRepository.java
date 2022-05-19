@@ -10,4 +10,5 @@ import tim7.ISAMRSproject.model.Adventure;
 public interface AdventureRepository extends JpaRepository<Adventure, Integer> {
 	@Query("select v from Adventure v where v.fishingInstructor.id = ?1")
 	public List<Adventure> findByInstructorId(Integer id);
+	
 }

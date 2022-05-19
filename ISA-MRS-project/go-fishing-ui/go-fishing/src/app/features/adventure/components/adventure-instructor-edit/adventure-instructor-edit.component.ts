@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+import { Loader } from '@googlemaps/js-api-loader';
+import { User } from 'src/app/shared/classes/user';
+import { MessageService, MessageType } from 'src/app/shared/services/message-service/message.service';
+import { UserService } from 'src/app/shared/services/users-services/user.service';
 import { AdventureService } from '../../adventure.service';
 import { Instructor } from '../../classes/instructor';
 
@@ -12,46 +17,71 @@ export class AdventureInstructorEditComponent implements OnInit {
 
   nameError: boolean = false;
   surnameError: boolean = false;
-  addressError: boolean = false;
+  streetError: boolean = false;
   cityError: boolean = false;
   countryError: boolean = false;
   phoneError: boolean = false;
   passwordError: boolean = false;
   confirmPasswordError: boolean = false;
-
-  instructor = {
-    id: 4,
-    name: 'Mika',
-    surname: 'Mikic',
-    address: 'Ribarska 5',
-    city: 'Mali Zvornik',
-    country: 'Srbija',
-    phone: '0642298111'
-  }
+  locationError: boolean = false;
 
   password = '';
   confirmPassword = '';
+  longitude = '';
+  latitude = '';
 
-  constructor(private adventureService: AdventureService) {}
+  instructorId: number;
+  instructor: User = new User();
+  instructorOld: User = new User();
+
+  constructor(private adventureService: AdventureService,
+              private route: ActivatedRoute,
+              private userService: UserService,
+              private messageService: MessageService) {}
 
   ngOnInit(): void {
+    this.instructorId = Number(this.route.snapshot.paramMap.get('id'));
 
+    if(!isNaN(this.instructorId)){
+      this.userService.findById(this.instructorId).subscribe(user => {
+        this.instructor = user;
+        this.instructorOld = JSON.parse(JSON.stringify(user));
+        console.log(this.instructor)
+      })
+    }
+
+    let loader = new Loader({
+      apiKey: "AIzaSyAPNK7vqFqOCb5Lu1B0j--zFj4ws4czwGQ"
+    })
+
+    loader.load().then(() => {
+      const map = document.getElementById("map") as HTMLElement;
+      const googleMap = new google.maps.Map(map, {
+        center: {lat: Number(this.instructor.latitude), lng: Number(this.instructor.longitude)},
+        zoom: 16
+      });
+      const marker = new google.maps.Marker({
+        position: {lat: Number(this.instructor.latitude), lng: Number(this.instructor.longitude)},
+        map: googleMap,
+      });
+      // Configure the click listener.
+      googleMap.addListener("click", (mapsMouseEvent: { latLng: any; }) => {
+        console.log(JSON.stringify(mapsMouseEvent.latLng).slice(2, -1).split(","));
+        this.locationError = false;
+        this.latitude = JSON.stringify(mapsMouseEvent.latLng).slice(2, -1).split(",")[0].split(":")[1];
+        this.longitude = JSON.stringify(mapsMouseEvent.latLng).slice(2, -1).split(",")[1].split(":")[1];
+        marker.setPosition(new google.maps.LatLng(Number(this.latitude), Number(this.longitude)));
+      });
+
+    })
   }
+
+  
 
   UpdateData() {
     if (!this.CheckForErrors()) {
-      var i = new Instructor({
-        id: this.instructor.id,
-        name: this.instructor.name,
-        surname: this.instructor.surname,
-        address: this.instructor.address,
-        city: this.instructor.city,
-        country: this.instructor.country,
-        phone: this.instructor.phone,
-        password: this.password
-      });
-      this.adventureService.updateInstructorData(i).subscribe(data => {
-        alert("Podaci uspešno izmenjeni");
+      this.adventureService.updateInstructorData(this.instructor).subscribe(data => {
+        this.messageService.showMessage("Podaci uspešno izmenjeni", MessageType.SUCCESS);
       });
     }
   }
@@ -59,18 +89,39 @@ export class AdventureInstructorEditComponent implements OnInit {
   CheckForErrors(): boolean {
     var nameErr = this.nameHasError();
     var surnameErr = this.surnameHasError();
-    var addressErr = this.addressHasError();
+    var streetErr = this.streetHasError();
     var cityErr = this.cityHasError();
     var countryErr = this.countryHasError();
     var phoneErr = this.phoneHasError();
     var passwordErr = this.passwordHasError();
     var confirmPasswordErr = this.confirmPasswordHasError();
-    if (nameErr || surnameErr || cityErr || addressErr || countryErr || phoneErr || passwordErr || confirmPasswordErr) {
+    var locationErr = this.locationHasError();
+    if (nameErr || surnameErr || cityErr || streetErr || countryErr || phoneErr || passwordErr || confirmPasswordErr || locationErr) {
       return true;
     }
     else {
       return false;
     }
+  }
+
+  locationHasError(): boolean {
+    console.log(this.instructor);
+    console.log(this.instructorOld);
+    if (this.instructor.street == this.instructorOld.street && this.instructor.city == this.instructorOld.city && this.instructor.country == this.instructorOld.country) {
+      if (this.latitude != '' || this.longitude != '') {
+        this.locationError = true;
+        this.messageService.showMessage("Lokacije nisu sinhronizovane!", MessageType.ERROR);
+        return true;
+      }      
+    } else {
+      if (this.latitude == '' && this.longitude == '') {
+        this.locationError = true;
+        this.messageService.showMessage("Lokacije nisu sinhronizovane!", MessageType.ERROR);
+        return true;
+      }
+    }
+
+    return false;
   }
   nameHasError(): boolean {
     if (this.instructor.name === '') {
@@ -80,15 +131,15 @@ export class AdventureInstructorEditComponent implements OnInit {
     return false;
   }
   surnameHasError(): boolean {
-    if (this.instructor.surname === '') {
+    if (this.instructor.lastName === '') {
       this.surnameError = true;
       return true;
     }
     return false;
   }
-  addressHasError(): boolean {
-    if (this.instructor.address === '') {
-      this.addressError = true;
+  streetHasError(): boolean {
+    if (this.instructor.street === '') {
+      this.streetError = true;
       return true;
     }
     return false;
@@ -111,7 +162,7 @@ export class AdventureInstructorEditComponent implements OnInit {
     if (this.instructor.phone === '') {
       this.phoneError = true;
       return true;
-    } else if (this.instructor.phone.length < 10 || this.instructor.phone.length > 12) {
+    } else if (this.instructor.phone.slice(1).length < 10 || this.instructor.phone.slice(1).length > 12) {
       this.phoneError = true;
       return true;
     } 

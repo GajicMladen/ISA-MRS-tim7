@@ -22,6 +22,7 @@ export interface IAdventure {
 	instructorBiography: string;
 	instructorName: string;
 	instructorSurname: string;
+	deleted: boolean;
 }
 
 export class Adventure {
@@ -46,8 +47,10 @@ export class Adventure {
 	instructorBiography: string;
 	instructorName: string;
 	instructorSurname: string;
+	deleted: boolean;
 
 	constructor(object: IAdventure) {
+		this.id = object.id;
 		this.name = object.name;
 		this.promoDescription = object.promoDescription;
 		this.price = object.price;
@@ -64,6 +67,7 @@ export class Adventure {
 		this.latitude = object.latitude;
 		this.longitude = object.longitude;
 		this.instructorName = object.instructorName;
-		this.instructorSurname = object.instructorSurname
+		this.instructorSurname = object.instructorSurname;
+		this.deleted = object.deleted;
 	}
 }

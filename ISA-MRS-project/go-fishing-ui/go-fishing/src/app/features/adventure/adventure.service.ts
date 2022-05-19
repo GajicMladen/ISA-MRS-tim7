@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { User } from 'src/app/shared/classes/user';
 import { Adventure } from './classes/adventure';
 import { Instructor } from './classes/instructor';
 
@@ -20,8 +21,8 @@ export class AdventureService {
     return this.http.post<Adventure>("http://localhost:8080/adventure", adventure);
   }
 
-  public updateInstructorData(instructor: Instructor) {
-    return this.http.put<Instructor>("http://localhost:8080/adventure/instructor", instructor);
+  public updateInstructorData(instructor: User) {
+    return this.http.put<User>("http://localhost:8080/adventure/instructor", instructor);
   }
 
   public getAdventureById(adventureId: number): Observable<Adventure>{

@@ -85,27 +85,27 @@ INSERT INTO public.Cottage(
 	VALUES (3, 2,6,9);
 
 INSERT INTO public.Adventure(
-	id, instruktor_id, instructor_biography, equipment, more_info, rules_of_conduct, rules_of_cancelation)
+	id, instruktor_id, instructor_biography, equipment, more_info, rules_of_conduct, rules_of_cancelation, deleted)
 	VALUES (4, 3, 'Mika Mikić je iskusni ribolovac, gnjurac i plivač. Diplomirao je na fakultetu za sport i rekreaciju na Palama sa prosekom 9,56. Ovim poslom se bavi već 10 godina. Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores ullam quos, sit placeat labore voluptatem dignissimos officiis incidunt, perferendis eos porro nobis autem modi ab aliquam maiores. Dolorem, numquam quod.',
 			'Mamci|Mreza za pecanje|Stapovi|Varalice|Prsluci za spasavanje|Cizme|Dodatni camci|Kombinezoni', 'Avantura se održava dva puta dnevno. Prvi termin je u 9h, a drugi u 15h. Mesto okupljanja je gradska plaža. Avantura traje dva sata.', 'Zabranjeno bacanje smenja|Zabranjeno skakanje u vodu bez dozvole|Zabranjeno donosenje alkohola|Zabranjeno donosenje hrane|Zabranjeno pusenje',
-			'U slučaju otkazivanja instruktor zadržava 30% uplaćene sume.');
+			'U slučaju otkazivanja instruktor zadržava 30% uplaćene sume.', false);
 INSERT INTO public.Adventure(
-	id, instruktor_id, instructor_biography, equipment, more_info, rules_of_conduct, rules_of_cancelation)
+	id, instruktor_id, instructor_biography, equipment, more_info, rules_of_conduct, rules_of_cancelation, deleted)
 	VALUES (5, 4, 'Pera Peric je iskusni ribolovac, gnjurac i plivač. Diplomirao je na fakultetu za sport i rekreaciju na Palama sa prosekom 9,56. Ovim poslom se bavi već 10 godina. Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores ullam quos, sit placeat labore voluptatem dignissimos officiis incidunt, perferendis eos porro nobis autem modi ab aliquam maiores. Dolorem, numquam quod.',
 			'Mamci|Mreza za pecanje|Stapovi|Varalice|Prsluci za spasavanje|Cizme|Dodatni camci|Kombinezoni', 'Avantura se održava dva puta dnevno. Prvi termin je u 9h, a drugi u 15h. Mesto okupljanja je gradska plaža. Avantura traje dva sata.', 'Zabranjeno bacanje smenja|Zabranjeno skakanje u vodu bez dozvole|Zabranjeno donosenje alkohola|Zabranjeno donosenje hrane|Zabranjeno pusenje',
-			'U slučaju otkazivanja instruktor zadržava 30% uplaćene sume.');
+			'U slučaju otkazivanja instruktor zadržava 30% uplaćene sume.', false);
 INSERT INTO public.Adventure(
-	id, instruktor_id, instructor_biography, equipment, more_info, rules_of_conduct, rules_of_cancelation)
+	id, instruktor_id, instructor_biography, equipment, more_info, rules_of_conduct, rules_of_cancelation, deleted)
 	VALUES (6, 4, 'Pera Peric je iskusni ribolovac, gnjurac i plivač. Diplomirao je na fakultetu za sport i rekreaciju na Palama sa prosekom 9,56. Ovim poslom se bavi već 10 godina. Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores ullam quos, sit placeat labore voluptatem dignissimos officiis incidunt, perferendis eos porro nobis autem modi ab aliquam maiores. Dolorem, numquam quod.',
 			'Mamci|Mreza za pecanje|Stapovi|Varalice|Prsluci za spasavanje|Cizme|Dodatni camci|Kombinezoni', 'Avantura se održava dva puta dnevno. Prvi termin je u 9h, a drugi u 15h. Mesto okupljanja je gradska plaža. Avantura traje dva sata.', 'Zabranjeno bacanje smenja|Zabranjeno skakanje u vodu bez dozvole|Zabranjeno donosenje alkohola|Zabranjeno donosenje hrane|Zabranjeno pusenje',
-			'U slučaju otkazivanja instruktor zadržava 30% uplaćene sume.');
+			'U slučaju otkazivanja instruktor zadržava 30% uplaćene sume.', false);
 INSERT INTO public.Adventure(
-	id, instruktor_id, instructor_biography, equipment, more_info, rules_of_conduct, rules_of_cancelation)
+	id, instruktor_id, instructor_biography, equipment, more_info, rules_of_conduct, rules_of_cancelation, deleted)
 	VALUES (7, 3, 'Mika Mikić je iskusni ribolovac, gnjurac i plivač. Diplomirao je na fakultetu za sport i rekreaciju na Palama sa prosekom 9,56. Ovim poslom se bavi već 10 godina. Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores ullam quos, sit placeat labore voluptatem dignissimos officiis incidunt, perferendis eos porro nobis autem modi ab aliquam maiores. Dolorem, numquam quod.',
 			'Mamci|Mreza za pecanje|Stapovi|Varalice|Prsluci za spasavanje|Cizme|Dodatni camci|Kombinezoni', 'Avantura se održava dva puta dnevno. Prvi termin je u 9h, a drugi u 15h. Mesto okupljanja je gradska plaža. Avantura traje dva sata.', 'Zabranjeno bacanje smenja|Zabranjeno skakanje u vodu bez dozvole|Zabranjeno donosenje alkohola|Zabranjeno donosenje hrane|Zabranjeno pusenje',
-			'U slučaju otkazivanja instruktor zadržava 30% uplaćene sume.');
+			'U slučaju otkazivanja instruktor zadržava 30% uplaćene sume.', false);
 INSERT INTO public.Adventure(
-	id, instruktor_id, instructor_biography, equipment, more_info, rules_of_conduct, rules_of_cancelation)
+	id, instruktor_id, instructor_biography, equipment, more_info, rules_of_conduct, rules_of_cancelation, deleted)
 	VALUES (8, 3, 'Mika Mikić je iskusni ribolovac, gnjurac i plivač. Diplomirao je na fakultetu za sport i rekreaciju na Palama sa prosekom 9,56. Ovim poslom se bavi već 10 godina. Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores ullam quos, sit placeat labore voluptatem dignissimos officiis incidunt, perferendis eos porro nobis autem modi ab aliquam maiores. Dolorem, numquam quod.',
 			'Mamci|Mreza za pecanje|Stapovi|Varalice|Prsluci za spasavanje|Cizme|Dodatni camci|Kombinezoni', 'Avantura se održava dva puta dnevno. Prvi termin je u 9h, a drugi u 15h. Mesto okupljanja je gradska plaža. Avantura traje dva sata.', 'Zabranjeno bacanje smenja|Zabranjeno skakanje u vodu bez dozvole|Zabranjeno donosenje alkohola|Zabranjeno donosenje hrane|Zabranjeno pusenje',
-			'U slučaju otkazivanja instruktor zadržava 30% uplaćene sume.');
+			'U slučaju otkazivanja instruktor zadržava 30% uplaćene sume.', false);

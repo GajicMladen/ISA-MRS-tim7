@@ -30,12 +30,12 @@ const routes: Routes = [
 
   { path: 'adventureCard', component: AdventureCardComponent },
   { path: 'cottageOwner/:id', component: CottageOwnerpageComponent },
-  { path: 'adventureAddNew', component: AdventureAddNewComponent },
+  { path: 'adventureAddNew/:id', component: AdventureAddNewComponent },
   { path: 'instructorProfile/:id', component: AdventureInstructorpageComponent },
   { path: 'editProfile',component: EditProfileComponent},
   { path: 'addNewCottage', component: CottageAddNewComponent},
   { path: 'editCottage/:id' ,component: CottageEditComponent },
-  { path: 'editInstructor', component: AdventureInstructorEditComponent},
+  { path: 'editInstructor/:id', component: AdventureInstructorEditComponent},
   { path: 'boatProfile/:id' , component:BoatProfilepageComponent },
   //Ubaciti komponentu za not found
   { path: '**', component: StartpagePreviewListComponent },

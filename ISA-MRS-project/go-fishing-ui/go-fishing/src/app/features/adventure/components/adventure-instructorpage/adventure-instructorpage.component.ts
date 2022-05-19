@@ -107,7 +107,7 @@ export class AdventureInstructorpageComponent implements OnInit {
   ];
 
   instructorId: number;
-  instructor: User;
+  instructor: User = new User();
   adventures: Adventure[];
 
   constructor(private route: ActivatedRoute, private userService: UserService, private adventureService: AdventureService) { }
@@ -118,7 +118,6 @@ export class AdventureInstructorpageComponent implements OnInit {
     if(!isNaN(this.instructorId)){
       this.userService.findById(this.instructorId).subscribe(user => {
         this.instructor = user;
-        console.log(this.instructor1);
 
       this.adventureService.getAdventuresOfInstructor(this.instructorId).subscribe(adventures => {
         this.adventures = adventures;
@@ -129,7 +128,6 @@ export class AdventureInstructorpageComponent implements OnInit {
   }
 
   OnAdventureDeleted(id: string) {
-    console.log("Parent " + id);
     document.getElementById(id)?.remove();
   }
 

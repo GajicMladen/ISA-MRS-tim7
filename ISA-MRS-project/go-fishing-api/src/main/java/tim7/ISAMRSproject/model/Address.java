@@ -30,12 +30,14 @@ public class Address {
 	@Column(name = "latitude", nullable = false)
 	private String latitude;
 	
+	/*
 	@OneToOne(mappedBy = "livingAddress", optional = false)
     private User user;
-
+	*/
+	/*
 	@OneToOne(mappedBy = "address", optional = true)
     private Offer offer;
-	
+	*/
 	public Address() {
 		
 	}
@@ -87,7 +89,7 @@ public class Address {
 	public void setCountry(String country) {
 		this.country = country;
 	}
-
+	/*
 	public User getUser() {
 		return user;
 	}
@@ -103,4 +105,5 @@ public class Address {
 	public void setOffer(Offer offer) {
 		this.offer = offer;
 	}
+	*/
 }

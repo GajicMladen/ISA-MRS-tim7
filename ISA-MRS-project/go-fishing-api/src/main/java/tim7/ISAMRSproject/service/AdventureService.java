@@ -8,7 +8,10 @@ import org.springframework.stereotype.Service;
 
 import tim7.ISAMRSproject.dto.AdventureDTO;
 import tim7.ISAMRSproject.dto.InstructorDTO;
+import tim7.ISAMRSproject.dto.UserDTO;
+import tim7.ISAMRSproject.model.Address;
 import tim7.ISAMRSproject.model.Adventure;
+import tim7.ISAMRSproject.model.FishingInstructor;
 import tim7.ISAMRSproject.model.User;
 import tim7.ISAMRSproject.repository.AdventureRepository;
 
@@ -21,26 +24,74 @@ public class AdventureService {
 	@Autowired
 	private UserService userService;
 	
+	@Autowired
+	private AddressService addressService;
+	
 	public Optional<Adventure> findById(Integer id) {
-		return adventureRepository.findById(id);
+		return this.adventureRepository.findById(id);
 	}
 	
 	public void remove(Integer id) {
-		this.adventureRepository.deleteById(id);
+		try{
+			Optional<Adventure> a =  this.adventureRepository.findById(id);
+			if (a.isPresent()) {
+				Adventure adventure = a.get();
+				adventure.setDeleted(true);
+				this.adventureRepository.save(adventure);
+				
+			}
+		}
+		catch (Exception e){
+			System.out.println(e.getMessage());
+		}
 	}
 
 	public void addAdventure(AdventureDTO a) {
-		Adventure adventure = new Adventure(a, userService.findById(a.getInstructorId()).get());
+		Adventure adventure = new Adventure();
+		Address address = new Address();
+		address.setStreet(a.getStreet());
+		address.setCity(a.getCity());
+		address.setCountry(a.getCountry());
+		address.setLatitude(a.getLatitude());
+		address.setLongitude(a.getLongitude());
+		adventure.setAddress(address);
+		adventure.setCapacity(a.getCapacity());
+		adventure.setDeleted(false);
+		adventure.setEquipment(a.getEquipment());
+		adventure.setFishingInstructor((FishingInstructor)userService.findById(a.getInstructorId()).get());
+		adventure.setInstructorBiography(a.getInstructorBiography());
+		adventure.setMoreInfo(a.getMoreInfo());
+		adventure.setName(a.getName());
+		adventure.setPrice(a.getPrice());
+		adventure.setPromoDescription(a.getPromoDescription());
+		adventure.setRulesOfCancelation(a.getRulesOfCancelation());
+		adventure.setRulesOfConduct(a.getRulesOfConduct());
 		this.adventureRepository.save(adventure);
 	}
 	
-	public void updateInstructorData(InstructorDTO instructor) {
+	public void updateInstructorData(UserDTO instructor) {
 		Optional<User> user = userService.findById(instructor.getId());
 		if (user.isPresent()) {
 			User i = user.get();
 			i.setName(instructor.getName());
-			i.setLastName(instructor.getSurname());
+			i.setLastName(instructor.getLastName());
 			i.setPhone(instructor.getPhone());
+			/*Optional<Address> address = addressService.findById(i.getAddress().getId());
+			if (address.isPresent()) {
+				Address a = address.get();
+				a.setStreet(instructor.getStreet());
+				a.setCity(instructor.getCity());
+				a.setCountry(instructor.getCountry());
+				a.setLongitude(instructor.getLongitude());
+				a.setLatitude(instructor.getLatitude());
+				addressService.save(a);
+			}*/
+			i.getAddress().setStreet(instructor.getStreet());
+			i.getAddress().setCity(instructor.getCity());
+			i.getAddress().setCountry(instructor.getCountry());
+			i.getAddress().setLatitude(instructor.getLatitude());
+			i.getAddress().setLongitude(instructor.getLongitude());
+			
 			userService.save(i);
 		}
 	}

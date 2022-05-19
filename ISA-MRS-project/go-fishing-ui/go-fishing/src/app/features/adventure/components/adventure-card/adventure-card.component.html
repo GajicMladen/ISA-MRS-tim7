@@ -10,7 +10,7 @@
                 <span class="number">12 <span class="follow">Pratilaca</span></span> 
             </div>
             <div class=" d-flex mt-2"> 
-                <a href="adventureProfile">
+                <a routerLink="/adventureProfile/{{adventure.id}}" routerLinkActive="active">
                     <button mat-raised-button color="primary" id="visitBtn">Poseti</button>
                 </a>
             </div>
@@ -38,7 +38,7 @@
                         <mat-icon>edit</mat-icon>
                         <h6>Izmeni</h6>
                     </button>
-                    <button class="buttonDisplay" routerLink="" (click)="deleteAdventure()" mat-icon-button aria-label="Example icon button with a vertical three dot icon">
+                    <button class="buttonDisplay" (click)="deleteAdventure()" mat-icon-button aria-label="Example icon button with a vertical three dot icon">
                         <mat-icon>delete</mat-icon>
                         <h6>Ukloni</h6>
                     </button>
