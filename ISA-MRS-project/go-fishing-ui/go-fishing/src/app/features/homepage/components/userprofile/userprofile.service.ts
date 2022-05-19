@@ -2,13 +2,18 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { catchError, map, Observable, throwError } from 'rxjs';
+import { StartpageLoginService } from 'src/app/features/startpage/components/startpage-login/startpage-login.service';
 import { ConfigService } from 'src/app/shared/services/config.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserprofileService {
-  constructor(private configService: ConfigService, private http: HttpClient) {}
+  constructor(
+    private configService: ConfigService,
+    private http: HttpClient,
+    private userService: StartpageLoginService
+  ) {}
 
   public getUserData() {
     return this.http.get(this.configService.userData);
@@ -21,8 +26,7 @@ export class UserprofileService {
       })
       .pipe(
         map((res: any) => {
-          localStorage.removeItem('user-name');
-          localStorage.setItem('user-name', res.name);
+          this.userService.userName = res.name;
           return res;
         }),
         catchError(this.handleError)

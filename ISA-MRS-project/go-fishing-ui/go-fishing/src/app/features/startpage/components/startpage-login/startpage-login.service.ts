@@ -21,6 +21,11 @@ export class StartpageLoginService {
     return localStorage.getItem('user-name');
   }
 
+  set userName(val: string | null) {
+    localStorage.removeItem('user-name');
+    localStorage.setItem('user-name', val!);
+  }
+
   get accessTokenStorage() {
     return localStorage.getItem('jwt');
   }

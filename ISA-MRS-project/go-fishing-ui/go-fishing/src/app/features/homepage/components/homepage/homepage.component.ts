@@ -7,11 +7,11 @@ import { StartpageLoginService } from 'src/app/features/startpage/components/sta
   styleUrls: ['./homepage.component.css'],
 })
 export class HomepageComponent implements OnInit {
-  userName: any;
-
   constructor(private userService: StartpageLoginService) {}
 
-  ngOnInit(): void {
-    this.userName = this.userService.userName;
+  ngOnInit(): void {}
+
+  get userName() {
+    return this.userService.userName;
   }
 }
