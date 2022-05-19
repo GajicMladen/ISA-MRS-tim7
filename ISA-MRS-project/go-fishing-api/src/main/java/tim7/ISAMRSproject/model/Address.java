@@ -24,7 +24,7 @@ public class Address {
 	@Column(name = "country", nullable = false)
 	private String country;
 	
-	@OneToOne(mappedBy = "livingAddress", optional = false)
+	@OneToOne(mappedBy = "livingAddress", optional = true)
     private User user;
 
 	@OneToOne(mappedBy = "address", optional = true)
@@ -81,4 +81,22 @@ public class Address {
 	public void setOffer(Offer offer) {
 		this.offer = offer;
 	}
+	
+	@Override
+    public boolean equals(Object o) {
+ 
+        if (o == this) {
+            return true;
+        }
+ 
+        if (!(o instanceof Address)) {
+            return false;
+        }
+         
+        Address a = (Address) o;
+         
+        return (a.getCity().equals(this.getCity()) && 
+        		a.getCountry().equals(this.getCountry()) && 
+        		a.getStreet().equals(this.getStreet()));
+    }
 }

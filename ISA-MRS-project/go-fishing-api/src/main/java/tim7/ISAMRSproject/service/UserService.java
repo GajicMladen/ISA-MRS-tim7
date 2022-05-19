@@ -105,6 +105,28 @@ public class UserService implements UserDetailsService {
 		return null;
 	}
 	
+	public void updateUser(User user, UserRegisterDTO dto) {
+		if (!(user.getName().equals(dto.getName())))
+			user.setName(dto.getName());
+		if (!(user.getLastName().equals(dto.getLastName())))
+			user.setLastName(dto.getLastName());
+		if (!(user.getPhone().equals(dto.getPhoneNumber())))
+			user.setPhone(dto.getPhoneNumber());
+		
+		Address dtoAddress = new Address();
+		dtoAddress.setCity(dto.getTown());
+		dtoAddress.setCountry(dto.getCountry());
+		dtoAddress.setStreet(dto.getAddress());
+		
+		if (!(user.getAddress().equals(dtoAddress))) {
+			dtoAddress.setUser(user);
+			user.setAddress(dtoAddress);			
+		}
+		
+		this.userRepository.save(user);
+		
+	}
+	
 	public User save(User user) {
 		return this.userRepository.save(user);
 	}

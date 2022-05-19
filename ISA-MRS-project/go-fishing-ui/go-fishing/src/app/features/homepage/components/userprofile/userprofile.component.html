@@ -1,8 +1,6 @@
 <div class="main-div">
     <mat-card class="profile-card">
-        <mat-card-header>
-            <h1 class="title">User Profile</h1>
-        </mat-card-header>
+        <h1 class="title">User Profile</h1>
         <mat-card-content class="reg-card">
             <form [formGroup]="form">
 
@@ -44,7 +42,7 @@
             </form>
         </mat-card-content>
         <mat-card-actions style="text-align: center;">
-            <button mat-button>UPDATE PROFILE</button>
+            <button mat-button (click)="updateProfileInfo()">UPDATE PROFILE</button>
             <button mat-button>CHANGE PASSWORD</button>
             <button mat-button style="color:red">SEND DELETION REQUEST</button>
         </mat-card-actions>

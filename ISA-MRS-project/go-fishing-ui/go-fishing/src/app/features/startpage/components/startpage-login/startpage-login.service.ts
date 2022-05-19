@@ -21,6 +21,10 @@ export class StartpageLoginService {
     return localStorage.getItem('user-name');
   }
 
+  get accessTokenStorage() {
+    return localStorage.getItem('jwt');
+  }
+
   sendLoginRequest(value: any) {
     let loginUrl = this.config.loginUrl;
 
@@ -51,10 +55,12 @@ export class StartpageLoginService {
   }
 
   tokenIsPresent() {
-    return this.accessToken != undefined && this.accessToken != null;
+    return (
+      this.accessTokenStorage != undefined && this.accessTokenStorage != null
+    );
   }
 
   public getToken(): string | null {
-    return this.accessToken;
+    return this.accessTokenStorage;
   }
 }

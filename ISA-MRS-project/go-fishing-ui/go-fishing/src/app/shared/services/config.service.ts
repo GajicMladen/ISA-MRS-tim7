@@ -21,4 +21,12 @@ export class ConfigService {
   get userData(): string {
     return this._user_controller_url + '/getUserData';
   }
+
+  get dummyUrl(): string {
+    return this._user_controller_url + '/dummy';
+  }
+
+  get updateProfileUrl(): string {
+    return this._user_controller_url + '/updateProfile';
+  }
 }
