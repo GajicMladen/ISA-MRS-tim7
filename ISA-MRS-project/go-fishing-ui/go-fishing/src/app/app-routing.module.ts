@@ -16,6 +16,7 @@ import { AdventureAddNewComponent } from './features/adventure/components/advent
 import { AdventureCardComponent } from './features/adventure/components/adventure-card/adventure-card.component';
 import { AdventureInstructorEditComponent } from './features/adventure/components/adventure-instructor-edit/adventure-instructor-edit.component';
 import { BoatProfilepageComponent } from './features/boat/components/boat-profilepage/boat-profilepage.component';
+import { AdventureEditComponent } from './features/adventure/components/adventure-edit/adventure-edit.component';
 
 
 const routes: Routes = [
@@ -25,18 +26,19 @@ const routes: Routes = [
   { path: 'register', component: StartpageRegisterComponent },
   { path: 'cottageProfile/:id', component: CottageProfilepageComponent },
   { path: 'reservationStart', component: ReservationStartpageComponent },
-  { path: 'adventureProfile', component: AdventureProfilpageComponent },
+  { path: 'adventureProfile/:id', component: AdventureProfilpageComponent },
   { path: 'adventureReservation', component: AdventureReservationComponent },
 
   { path: 'adventureCard', component: AdventureCardComponent },
   { path: 'cottageOwner/:id', component: CottageOwnerpageComponent },
-  { path: 'adventureAddNew', component: AdventureAddNewComponent },
-  { path: 'instructorProfile', component: AdventureInstructorpageComponent },
+  { path: 'adventureAddNew/:id', component: AdventureAddNewComponent },
+  { path: 'instructorProfile/:id', component: AdventureInstructorpageComponent },
   { path: 'editProfile',component: EditProfileComponent},
   { path: 'addNewCottage', component: CottageAddNewComponent},
   { path: 'editCottage/:id' ,component: CottageEditComponent },
-  {path: 'editInstructor', component: AdventureInstructorEditComponent},
+  { path: 'editInstructor/:id', component: AdventureInstructorEditComponent},
   { path: 'boatProfile/:id' , component:BoatProfilepageComponent },
+  { path: 'editAdventure/:id', component:AdventureEditComponent },
   //Ubaciti komponentu za not found
   { path: '**', component: StartpagePreviewListComponent },
 ];

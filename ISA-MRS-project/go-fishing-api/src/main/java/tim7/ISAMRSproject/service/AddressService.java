@@ -1,5 +1,7 @@
 package tim7.ISAMRSproject.service;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +15,10 @@ public class AddressService {
 	AddressRepository addressRepository;
 	
 	public Address save(Address address){
-		return addressRepository.save(address);
+		return this.addressRepository.save(address);
+	}
+	
+	public Optional<Address> findById(Long id) {
+		return this.addressRepository.findById(id);
 	}
 }

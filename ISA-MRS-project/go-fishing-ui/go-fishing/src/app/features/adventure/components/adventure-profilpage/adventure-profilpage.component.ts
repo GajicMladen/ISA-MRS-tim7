@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Loader } from '@googlemaps/js-api-loader';
+import { AdventureService } from '../../adventure.service';
+import { Adventure } from '../../classes/adventure';
 
 @Component({
   selector: 'app-adventure-profilpage',
@@ -7,7 +11,34 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdventureProfilpageComponent implements OnInit {
 
-  adventure = {
+  adventureId: number;
+  instructorId: number;
+  instructorName: string;
+  adventure = new Adventure({
+    id: 0,
+	  name: '',
+	  promoDescription: '',
+	  price: 0,
+	  capacity: 0,
+
+	  equipment: '',
+	  rulesOfConduct: '',
+	  rulesOfCancelation: '',
+	  moreInfo: '',
+
+	  street: '',
+	  city: '',
+	  country: '',
+	  latitude: '',
+	  longitude: '',
+
+	  instructorId: 0,
+	  instructorBiography: '',
+	  instructorName: '',
+	  instructorSurname: '',
+    deleted: false
+  });
+  adventure1 = {
     instructor: "Mika Mikic",
     name: "Pecanje na Zvorničkom jezeru",
     price: 59.99,
@@ -24,13 +55,38 @@ export class AdventureProfilpageComponent implements OnInit {
     cancellation: "U slučaju otkazivanja instruktor zadržava 30% uplaćene sume."
   }
 
-  constructor() { }
+  constructor(private route: ActivatedRoute, private adventureService: AdventureService) { }
 
   ngOnInit(): void {
+    this.adventureId = Number(this.route.snapshot.paramMap.get('id'));
+
+    if(!isNaN(this.adventureId)){
+      this.adventureService.getAdventureById(this.adventureId).subscribe(adventure =>{
+        this.adventure = adventure;
+        console.log(adventure);
+      })
+    }
+
+    let loader = new Loader({
+      apiKey: "AIzaSyAPNK7vqFqOCb5Lu1B0j--zFj4ws4czwGQ"
+    });
+
+    loader.load().then(() => {
+      const map = document.getElementById("map") as HTMLElement;
+      const googleMap = new google.maps.Map(map, {
+        center: {lat: Number(this.adventure.latitude), lng: Number(this.adventure.longitude)},
+        zoom: 16
+      });
+      const marker = new google.maps.Marker({
+        position: {lat: Number(this.adventure.latitude), lng: Number(this.adventure.longitude)},
+        map: googleMap,
+      });
+    });
+    
   }
 
   onImageClick(i: number): void {
-    document.getElementById("mainImage")?.setAttribute("src", this.adventure.images[i]);
+    document.getElementById("mainImage")?.setAttribute("src", this.adventure1.images[i]);
   }
 
 }

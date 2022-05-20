@@ -76,7 +76,6 @@ public class UserService implements UserDetailsService {
 		address.setCountry(userRegisterDTO.getCountry());
 		address.setCity(userRegisterDTO.getTown());
 		address.setStreet(userRegisterDTO.getAddress());
-		address.setUser(newUser);
 		
 		newUser.setEmail(userRegisterDTO.getEmail());
 		newUser.setName(userRegisterDTO.getName());
