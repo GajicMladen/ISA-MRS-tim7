@@ -91,4 +91,16 @@ public class AdventureController {
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 	
+	@PutMapping(value = "/edit")
+	public ResponseEntity<Void> editAdventure(@RequestBody AdventureDTO a) {
+		try {
+			this.adventureService.editAdventure(a);
+			return new ResponseEntity<Void>(HttpStatus.OK);
+		}
+		catch (Exception e) {
+			System.out.println(e);
+			return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
+		}
+	}
+	
 }

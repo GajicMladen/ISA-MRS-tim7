@@ -70,6 +70,8 @@ export class AdventureInstructorEditComponent implements OnInit {
         this.locationError = false;
         this.latitude = JSON.stringify(mapsMouseEvent.latLng).slice(2, -1).split(",")[0].split(":")[1];
         this.longitude = JSON.stringify(mapsMouseEvent.latLng).slice(2, -1).split(",")[1].split(":")[1];
+        this.instructor.latitude = this.latitude;
+        this.instructor.longitude = this.longitude;
         marker.setPosition(new google.maps.LatLng(Number(this.latitude), Number(this.longitude)));
       });
 

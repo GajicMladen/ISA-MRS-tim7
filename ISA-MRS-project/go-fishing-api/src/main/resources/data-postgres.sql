@@ -7,7 +7,7 @@ INSERT INTO public.address(city, country, street, latitude, longitude) VALUES
 INSERT INTO public.address(city, country, street, latitude, longitude) VALUES
 						('Ljubovija', 'Srbija', 'Karađorđeva 10', '44.188216', '19.377376');
 INSERT INTO public.address(city, country, street, latitude, longitude) VALUES
-						('Mali Zvornik', 'Srbija', 'Nikole Tesle 7', '44.361090', '19.121489');
+						('Mali Zvornik', 'Srbija', 'Sakar 28', '44.361090', '19.121489');
 INSERT INTO public.address(city, country, street, latitude, longitude) VALUES
 						('Ljubovija', 'Srbija', 'Vrhpolje 007', '44.131978', '19.447603');
 

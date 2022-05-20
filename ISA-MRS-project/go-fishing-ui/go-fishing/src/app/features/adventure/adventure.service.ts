@@ -32,4 +32,8 @@ export class AdventureService {
   public getAdventuresOfInstructor(instructorId: number): Observable<Adventure[]>{
     return this.http.get<Adventure[]>("http://localhost:8080/adventure/instructor/adventures/" + instructorId);
   }
+
+  public editAdventure(adventure: Adventure) {
+    return this.http.put<User>("http://localhost:8080/adventure/edit", adventure);
+  }
 }

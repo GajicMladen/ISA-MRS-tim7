@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Loader } from '@googlemaps/js-api-loader';
+import { MessageService, MessageType } from 'src/app/shared/services/message-service/message.service';
 import { AdventureService } from '../../adventure.service';
 import { Adventure } from '../../classes/adventure';
 
@@ -49,7 +50,11 @@ export class AdventureEditComponent implements OnInit {
     deleted: false
   });
 
-  constructor(private route: ActivatedRoute, private adventureService: AdventureService) { }
+  longitude = '';
+  latitude = '';
+  adventureOld: any;
+
+  constructor(private route: ActivatedRoute, private adventureService: AdventureService, private messageService: MessageService) { }
 
   ngOnInit(): void {
     this.adventureId = Number(this.route.snapshot.paramMap.get('id'));
@@ -57,6 +62,7 @@ export class AdventureEditComponent implements OnInit {
     if(!isNaN(this.adventureId)){
       this.adventureService.getAdventureById(this.adventureId).subscribe(adventure =>{
         this.adventure = adventure;
+        this.adventureOld = JSON.parse(JSON.stringify(adventure));
         this.adventure.equipment = this.adventure.equipment.split("|").join("\r\n");
         this.adventure.rulesOfConduct = this.adventure.rulesOfConduct.split("|").join("\r\n");
         console.log(adventure);
@@ -82,6 +88,8 @@ export class AdventureEditComponent implements OnInit {
         console.log(JSON.stringify(mapsMouseEvent.latLng).slice(2, -1).split(","));
         this.adventure.latitude = JSON.stringify(mapsMouseEvent.latLng).slice(2, -1).split(",")[0].split(":")[1];
         this.adventure.longitude = JSON.stringify(mapsMouseEvent.latLng).slice(2, -1).split(",")[1].split(":")[1];
+        this.latitude = this.adventure.latitude;
+        this.longitude = this.adventure.longitude;
         marker.setPosition(new google.maps.LatLng(Number(this.adventure.latitude), Number(this.adventure.longitude)));
       });
   });
@@ -105,6 +113,33 @@ export class AdventureEditComponent implements OnInit {
   }
 
   editAdventure(){
+    var locationErr = this.locationHasError();
+    if (this.form.invalid || locationErr) {
+      this.messageService.showMessage('Forma nije ispravno popunjena!', MessageType.WARNING);
+    } else {
+      this.adventure.equipment = this.adventure.equipment.split(/\r?\n/).join("|");
+      this.adventure.rulesOfConduct = this.adventure.rulesOfConduct.split(/\r?\n/).join("|");
+      this.adventureService.editAdventure(this.adventure).subscribe(data => {
+        this.messageService.showMessage("Podaci avanture su uspešno izmenjeni!", MessageType.SUCCESS);
+        this.adventure.equipment = this.adventure.equipment.split("|").join("\r\n");
+        this.adventure.rulesOfConduct = this.adventure.rulesOfConduct.split("|").join("\r\n");
+      });
+    }
+  }
 
+  locationHasError(): boolean {
+    if (this.adventure.street == this.adventureOld.street && this.adventure.city == this.adventureOld.city && this.adventure.country == this.adventureOld.country) {
+      if (this.latitude != '' || this.longitude != '') {
+        this.messageService.showMessage("Lokacije nisu sinhronizovane!", MessageType.ERROR);
+        return true;
+      }      
+    } else {
+      if (this.latitude == '' && this.longitude == '') {
+        this.messageService.showMessage("Lokacije nisu sinhronizovane!", MessageType.ERROR);
+        return true;
+      }
+    }
+
+    return false;
   }
 }

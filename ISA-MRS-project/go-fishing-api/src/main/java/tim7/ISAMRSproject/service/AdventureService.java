@@ -99,4 +99,28 @@ public class AdventureService {
 	public List<Adventure> getAdventuresByInstructorId(int id) {
 		return adventureRepository.findByInstructorId(id);
 	}
+	
+	public void editAdventure(AdventureDTO adventureDTO) {
+		Optional<Adventure> a = adventureRepository.findById(adventureDTO.getId());
+		if (a.isPresent()) {
+			Adventure adventure = a.get();
+			adventure.setName(adventureDTO.getName());
+			adventure.getAddress().setStreet(adventureDTO.getStreet());
+			adventure.getAddress().setCity(adventureDTO.getCity());
+			adventure.getAddress().setCountry(adventureDTO.getCountry());
+			adventure.getAddress().setLatitude(adventureDTO.getLatitude());
+			adventure.getAddress().setLongitude(adventureDTO.getLongitude());
+			adventure.setCapacity(adventureDTO.getCapacity());
+			adventure.setDeleted(false);
+			adventure.setEquipment(adventureDTO.getEquipment());
+			adventure.setInstructorBiography(adventureDTO.getInstructorBiography());
+			adventure.setMoreInfo(adventureDTO.getMoreInfo());
+			adventure.setPrice(adventureDTO.getPrice());
+			adventure.setPromoDescription(adventureDTO.getPromoDescription());
+			adventure.setRulesOfCancelation(adventureDTO.getRulesOfCancelation());
+			adventure.setRulesOfConduct(adventureDTO.getRulesOfConduct());
+			
+			adventureRepository.save(adventure);
+		}
+	}
 }
