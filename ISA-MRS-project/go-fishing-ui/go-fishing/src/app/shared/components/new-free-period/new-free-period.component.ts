@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import {NgbDate, NgbCalendar, NgbDateParserFormatter} from '@ng-bootstrap/ng-bootstrap';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FreePeriodDTO } from '../../classes/freePeriod';
+import { FreePeriodDTO,FreePeriodSendDTO } from '../../classes/freePeriod';
 import { FreePeriodService } from '../../services/free-period-service/free-period.service';
 
 @Component({
@@ -66,14 +66,14 @@ export class NewFreePeriodComponent implements OnInit {
   addNewFreePeriod(){
 
     console.log("mama");
-    this.freePeriod = new FreePeriodDTO();
-    this.freePeriod.startDate = this.format(this.fromDate);
-    this.freePeriod.endDate = this.format(this.toDate);
-    this.freePeriod.offerId = this.offerId;
+    let freePeriod = new FreePeriodSendDTO();
+    freePeriod.startDate = this.format(this.fromDate);
+    freePeriod.endDate = this.format(this.toDate);
+    freePeriod.offerId = this.offerId;
     
     console.log(this.freePeriod);
     console.log(JSON.stringify(this.freePeriod));
-    this.freePeriodService.addNewFreePeriod(this.freePeriod).subscribe(response =>{
+    this.freePeriodService.addNewFreePeriod(freePeriod).subscribe(response =>{
       this.router.navigate(["/calendar/"+this.offerId]);
     });
   }

@@ -11,6 +11,7 @@ import { CottageService } from '../../services/cottage.service';
 export class CottageAddNewComponent implements OnInit {
 
   @Input() ownerId:number;
+  @Input() cottages:Cottage[];
 
   newCottage: Cottage = new Cottage;
   name :string;
@@ -38,7 +39,8 @@ export class CottageAddNewComponent implements OnInit {
     this.cottageService.addNewCottage(this.newCottage).subscribe(data =>{
       console.log(data);
     });
-
+    this.cottages.push(this.newCottage);
     this.router.navigate(["/cottageOwner/"+this.ownerId]);
+
   }
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
 import { FreePeriodDTO } from '../../classes/freePeriod';
 import { FreePeriodService } from '../../services/free-period-service/free-period.service';
 
@@ -18,10 +19,11 @@ export class CalendarComponent implements OnInit {
     
     this.offerId = Number(this.route.snapshot.paramMap.get('id'));
     this.freePeriodService.getFreePeriodsForOffer(this.offerId).subscribe(data =>{
+      console.log(data);
       this.freePeriods = data;
-      console.log(this.freePeriods);
     });
     
   }
+
 
 }

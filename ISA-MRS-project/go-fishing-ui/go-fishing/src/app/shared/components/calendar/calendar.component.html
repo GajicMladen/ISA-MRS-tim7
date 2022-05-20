@@ -2,9 +2,15 @@
 </h2>
 
 <div *ngFor="let freePeriod of freePeriods" >
+    <!--
     <span>{{freePeriod.startDate[2]}}.{{freePeriod.startDate[1]}}.{{freePeriod.startDate[0]}}</span> - 
     <span>{{freePeriod.endDate[2]}}.{{freePeriod.endDate[1]}}.{{freePeriod.endDate[0]}}</span>
-    
+    -->
+    <span>{{freePeriod.startDate.day}}.{{freePeriod.startDate.month}}.{{freePeriod.startDate.year}}</span> - 
+    <span>{{freePeriod.endDate.day}}.{{freePeriod.endDate.month}}.{{freePeriod.endDate.year}}</span>
 </div>
 
 <a routerLink="/newFreePeriod/{{offerId}}">Novi slobodni termin za ponudu</a>
+
+<mwl-demo-component [freePeriods]="freePeriods">Loading...</mwl-demo-component>
+  

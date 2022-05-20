@@ -18,6 +18,8 @@ import { AdventureModule } from './features/adventure/adventure.module';
 import { BoatModule } from './features/boat/boat.module';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './shared/interceptor/TokenInterceptor';
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 
 @NgModule({
   declarations: [AppComponent],
@@ -37,7 +39,12 @@ import { TokenInterceptor } from './shared/interceptor/TokenInterceptor';
     ReservationModule,
     AdventureModule,
     HttpClientModule,
-    BoatModule
+    BoatModule,
+    BrowserAnimationsModule,
+    CalendarModule.forRoot({
+      provide: DateAdapter,
+      useFactory: adapterFactory,
+    })
   ],
   providers: [
     {

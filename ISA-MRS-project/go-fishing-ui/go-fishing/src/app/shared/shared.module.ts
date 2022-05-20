@@ -9,10 +9,12 @@ import { MessageComponent } from './services/message-service/message.service';
 import { NewFreePeriodComponent } from './components/new-free-period/new-free-period.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CalendarComponent } from './components/calendar/calendar.component';
+import { DemoModule } from './components/MyCalendar/demo/module';
+import { DemoComponent } from './components/MyCalendar/demo/component';
 
 @NgModule({
   declarations: [NavbarComponent, EditProfileComponent, MessageComponent, NewFreePeriodComponent, CalendarComponent],
-  imports: [CommonModule, RouterModule, MaterialModule, FontAwesomeModule,NgbModule],
-  exports: [NavbarComponent, MaterialModule, EditProfileComponent],
+  imports: [CommonModule, RouterModule, MaterialModule, FontAwesomeModule,NgbModule,DemoModule],
+  exports: [NavbarComponent, MaterialModule, EditProfileComponent,DemoComponent],
 })
 export class SharedModule {}
