@@ -8,7 +8,7 @@ import { EditProfileComponent } from './components/edit-profile/edit-profile.com
 import { MessageComponent } from './services/message-service/message.service';
 import { NewFreePeriodComponent } from './components/new-free-period/new-free-period.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { CalendarComponent } from './components/calendar/calendar.component';
+import { CalendarComponent } from './components/calendarPage/calendar.component';
 import { DemoModule } from './components/MyCalendar/demo/module';
 import { DemoComponent } from './components/MyCalendar/demo/component';
 

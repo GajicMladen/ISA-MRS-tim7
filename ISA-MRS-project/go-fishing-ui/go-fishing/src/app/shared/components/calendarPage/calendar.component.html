@@ -12,5 +12,5 @@
 
 <a routerLink="/newFreePeriod/{{offerId}}">Novi slobodni termin za ponudu</a>
 
-<mwl-demo-component [freePeriods]="freePeriods">Loading...</mwl-demo-component>
+<mwl-demo-component [freePeriods]="freePeriods" *ngIf="freePeriods.length > 0" >Loading...</mwl-demo-component>
   

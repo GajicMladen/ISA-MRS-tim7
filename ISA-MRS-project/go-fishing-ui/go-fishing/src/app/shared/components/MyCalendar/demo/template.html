@@ -1,7 +1,6 @@
 
 <mwl-demo-utils-calendar-header [(view)]="view" [(viewDate)]="viewDate">
 </mwl-demo-utils-calendar-header>
-<button (click)="refreshView()">Refresh</button>
 <div [ngSwitch]="view">
   <mwl-calendar-month-view
     *ngSwitchCase="'month'"

@@ -17,7 +17,7 @@ import { AdventureCardComponent } from './features/adventure/components/adventur
 import { AdventureInstructorEditComponent } from './features/adventure/components/adventure-instructor-edit/adventure-instructor-edit.component';
 import { BoatProfilepageComponent } from './features/boat/components/boat-profilepage/boat-profilepage.component';
 import { NewFreePeriodComponent } from './shared/components/new-free-period/new-free-period.component';
-import { CalendarComponent } from './shared/components/calendar/calendar.component';
+import { CalendarComponent } from './shared/components/calendarPage/calendar.component';
 
 
 const routes: Routes = [
