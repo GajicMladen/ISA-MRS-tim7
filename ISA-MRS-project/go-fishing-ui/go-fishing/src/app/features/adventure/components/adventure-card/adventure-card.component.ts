@@ -78,7 +78,6 @@ export class AdventureCardComponent implements OnInit {
       {
         console.log(adventure);
         this.messageService.showMessage("Avantura uspešno obrisana!", MessageType.SUCCESS);        
-        //window. location. reload()
         this.OnAdventureDeleted.emit(this.adventureId);
       });
   }
