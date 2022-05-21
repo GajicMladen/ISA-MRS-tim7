@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import {
   MessageService,
   MessageType,
 } from 'src/app/shared/services/message-service/message.service';
+import { PasswordChangeDialog } from './changePasswordDialog/password-change-dialog.component';
 import { UserprofileService } from './userprofile.service';
 
 @Component({
@@ -13,9 +15,11 @@ import { UserprofileService } from './userprofile.service';
 })
 export class UserprofileComponent implements OnInit {
   form: FormGroup = this.createProfileForm();
+  updatePasswordForm: FormGroup = this.createUpdatePasswordForm();
   constructor(
     private profileService: UserprofileService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -44,6 +48,13 @@ export class UserprofileComponent implements OnInit {
     });
   }
 
+  createUpdatePasswordForm(): FormGroup {
+    return new FormGroup({
+      newPassword: new FormControl({ value: '' }, Validators.required),
+      confirmNewPassword: new FormControl({ value: '' }, Validators.required),
+    });
+  }
+
   getUserData() {
     return this.profileService.getUserData();
   }
@@ -67,5 +78,13 @@ export class UserprofileComponent implements OnInit {
           );
         });
     }
+  }
+
+  changePasswordDialog() {
+    this.updatePasswordForm.get('newPassword')?.setValue('');
+    this.updatePasswordForm.get('confirmNewPassword')?.setValue('');
+    this.dialog.open(PasswordChangeDialog, {
+      data: this.updatePasswordForm,
+    });
   }
 }

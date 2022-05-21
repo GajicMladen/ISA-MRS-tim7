@@ -5,9 +5,10 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { UserprofileComponent } from './components/userprofile/userprofile.component';
+import { PasswordChangeDialog } from './components/userprofile/changePasswordDialog/password-change-dialog.component';
 
 @NgModule({
-  declarations: [HomepageComponent, UserprofileComponent],
+  declarations: [HomepageComponent, UserprofileComponent, PasswordChangeDialog],
   imports: [CommonModule, SharedModule, RouterModule, ReactiveFormsModule],
 })
 export class HomepageModule {}

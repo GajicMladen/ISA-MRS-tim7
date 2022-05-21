@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import tim7.ISAMRSproject.dto.ChangePasswordDTO;
 import tim7.ISAMRSproject.dto.UserRegisterDTO;
 import tim7.ISAMRSproject.model.Address;
 import tim7.ISAMRSproject.model.BoatOwner;
@@ -125,6 +126,11 @@ public class UserService implements UserDetailsService {
 		
 		this.userRepository.save(user);
 		
+	}
+	
+	public void changeUserPassword(User user, ChangePasswordDTO changePasswordDTO) {
+		user.setPassword(passwordEncoder.encode(changePasswordDTO.getNewPassword()));
+		this.userRepository.save(user);
 	}
 	
 	public User save(User user) {

@@ -19,6 +19,17 @@ export class UserprofileService {
     return this.http.get(this.configService.userData);
   }
 
+  public validateNewUserData(data: any): string {
+    if (data.name.length === 0) return 'Invalid name!';
+    else if (data.lastName.length === 0) return 'Invalid surname!';
+    else if (data.country.length === 0) return 'Invalid country!';
+    else if (data.town.length === 0) return 'Invalid city/town!';
+    else if (data.address.length === 0) return 'Invalid address!';
+    else if (!new RegExp('^[+][0-9]{10,12}$').test(data.phoneNumber))
+      return 'Invalid phone number!';
+    return 'OK';
+  }
+
   updateProfileInfo(data: FormGroup) {
     return this.http
       .post(this.configService.updateProfileUrl, data, {
@@ -33,15 +44,27 @@ export class UserprofileService {
       );
   }
 
-  public validateNewUserData(data: any): string {
-    if (data.name.length === 0) return 'Invalid name!';
-    else if (data.lastName.length === 0) return 'Invalid surname!';
-    else if (data.country.length === 0) return 'Invalid country!';
-    else if (data.town.length === 0) return 'Invalid city/town!';
-    else if (data.address.length === 0) return 'Invalid address!';
-    else if (!new RegExp('^[+][0-9]{10,12}$').test(data.phoneNumber))
-      return 'Invalid phone number!';
-    return 'OK';
+  public validateNewPassword(data: any) {
+    if (data.newPassword === '' || data.confirmNewPassword === '')
+      return 'Both fields must be filled!';
+    else if (data.newPassword.length < 8 || data.newPassword.length > 30)
+      return 'Invalid password length!';
+    else if (data.newPassword !== data.confirmNewPassword)
+      return 'Passwords do not match!';
+    else return 'OK';
+  }
+
+  public changePassword(data: FormGroup) {
+    return this.http
+      .post(this.configService.changePasswordUrl, data, {
+        headers: { 'Content-Type': 'application/json' },
+      })
+      .pipe(
+        map((res: any) => {
+          return res;
+        }),
+        catchError(this.handleError)
+      );
   }
 
   private handleError(error: HttpErrorResponse) {

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import tim7.ISAMRSproject.dto.ChangePasswordDTO;
 import tim7.ISAMRSproject.dto.UserDTO;
 import tim7.ISAMRSproject.dto.UserRegisterDTO;
 import tim7.ISAMRSproject.model.User;
@@ -73,5 +74,16 @@ public class UserController {
 		userService.updateUser(existingUser, userRegisterDTO);
 		
 		return ResponseEntity.status(HttpStatus.CREATED).body(existingUser);
+	}
+	
+	@PostMapping(value = "/changePassword")
+	public ResponseEntity<?> changePassword(@RequestBody ChangePasswordDTO changePasswordDTO, UriComponentsBuilder ucBuilder, Principal user){
+		
+		if(!changePasswordDTO.validate())
+			return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body("Invalid data!");
+		
+		User changedUser = userService.findByEmail(user.getName());
+		userService.changeUserPassword(changedUser, changePasswordDTO);		
+		return ResponseEntity.status(HttpStatus.ACCEPTED).body(changedUser);
 	}
 }

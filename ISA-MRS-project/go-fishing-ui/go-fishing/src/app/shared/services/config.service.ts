@@ -29,4 +29,8 @@ export class ConfigService {
   get updateProfileUrl(): string {
     return this._user_controller_url + '/updateProfile';
   }
+
+  get changePasswordUrl(): string {
+    return this._user_controller_url + '/changePassword';
+  }
 }
