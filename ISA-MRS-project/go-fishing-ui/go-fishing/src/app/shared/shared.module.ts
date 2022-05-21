@@ -11,10 +11,11 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CalendarComponent } from './components/calendarPage/calendar.component';
 import { DemoModule } from './components/MyCalendar/demo/module';
 import { DemoComponent } from './components/MyCalendar/demo/component';
+import { OfferInfoComponent } from './components/offer-info/offer-info.component';
 
 @NgModule({
-  declarations: [NavbarComponent, EditProfileComponent, MessageComponent, NewFreePeriodComponent, CalendarComponent],
+  declarations: [NavbarComponent, EditProfileComponent, MessageComponent, NewFreePeriodComponent, CalendarComponent, OfferInfoComponent],
   imports: [CommonModule, RouterModule, MaterialModule, FontAwesomeModule,NgbModule,DemoModule],
-  exports: [NavbarComponent, MaterialModule, EditProfileComponent,DemoComponent],
+  exports: [NavbarComponent, MaterialModule, EditProfileComponent,DemoComponent,OfferInfoComponent],
 })
 export class SharedModule {}

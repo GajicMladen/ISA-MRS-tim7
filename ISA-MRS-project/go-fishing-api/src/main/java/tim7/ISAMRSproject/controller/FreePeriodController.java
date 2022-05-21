@@ -36,4 +36,9 @@ public class FreePeriodController {
         freePeriodService.addFreePeriod(freePeriodDTO);
     }
 
+    @DeleteMapping(value = "/delete/{id}")
+    public void deleteFreePeriod(@PathVariable int id){
+        freePeriodService.deleteFreePeriod(id);
+    }
+
 }

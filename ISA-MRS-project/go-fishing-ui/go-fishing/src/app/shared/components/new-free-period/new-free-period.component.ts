@@ -1,8 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output } from '@angular/core';
 import {NgbDate, NgbCalendar, NgbDateParserFormatter} from '@ng-bootstrap/ng-bootstrap';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FreePeriodDTO,FreePeriodSendDTO } from '../../classes/freePeriod';
+import { FreePeriodDTO,FreePeriodSendDTO } from '../../../../models/freePeriod';
 import { FreePeriodService } from '../../services/free-period-service/free-period.service';
+import { EventEmitter } from 'stream';
+
 
 @Component({
   selector: 'app-new-free-period',
@@ -20,6 +22,10 @@ export class NewFreePeriodComponent implements OnInit {
   fromDate: NgbDate | null;
   toDate: NgbDate | null;
 
+  today: NgbDate ;
+  offer : Object;
+  offerType: string;
+
   constructor(private route:ActivatedRoute,
               private router:Router,
                private calendar: NgbCalendar,
@@ -27,13 +33,15 @@ export class NewFreePeriodComponent implements OnInit {
                private freePeriodService:FreePeriodService) {
     this.fromDate = calendar.getToday();
     this.toDate = calendar.getNext(calendar.getToday(), 'd', 10);
-    
+    this.today = calendar.getToday();
   }
 
   ngOnInit(): void {
     
     this.offerId = Number(this.route.snapshot.paramMap.get('id'));
+    
   }
+
 
   onDateSelection(date: NgbDate) {
     if (!this.fromDate && !this.toDate) {
@@ -66,17 +74,26 @@ export class NewFreePeriodComponent implements OnInit {
   addNewFreePeriod(){
 
     console.log("mama");
-    let freePeriod = new FreePeriodSendDTO();
-    freePeriod.startDate = this.format(this.fromDate);
-    freePeriod.endDate = this.format(this.toDate);
-    freePeriod.offerId = this.offerId;
-    
-    console.log(this.freePeriod);
-    console.log(JSON.stringify(this.freePeriod));
-    this.freePeriodService.addNewFreePeriod(freePeriod).subscribe(response =>{
-      this.router.navigate(["/calendar/"+this.offerId]);
-    });
+    if(this.fromDate != undefined && this.toDate !=undefined){
+      
+      let freePeriod = new FreePeriodSendDTO();
+      freePeriod.startDate = this.format(this.fromDate);
+      freePeriod.endDate = this.format(this.toDate);
+      freePeriod.offerId = this.offerId;
+      
+      //console.log(this.freePeriod);
+      //console.log(JSON.stringify(this.freePeriod));
+
+      this.freePeriodService.addNewFreePeriod(freePeriod).subscribe(response =>{
+        this.router.navigate(["/calendar/"+this.offerId]);
+        this._pData.callParentMethod();
+      });
+    }
+    else{
+      console.log("lepo odaberi datume");
+    }
   }
+  @Input() _pData !: any;
 
   format(date: NgbDate | null): string {
     let stringDate: string = ""; 

@@ -1,3 +1,4 @@
+
 <div style="display: flex;justify-content:center;">
 <form class="row row-cols-sm-auto" style="display: grid;grid-template-columns: 30% 30% 30%">
     <div class="col-12">
@@ -13,6 +14,7 @@
                  [dayTemplate]="t"
                  outsideDays="hidden"
                  [startDate]="fromDate!"
+                 [minDate]="today"
                  tabindex="-1">
           <ng-template #t let-date let-focused="focused">
             <span class="custom-day"

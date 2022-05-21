@@ -23,7 +23,7 @@ public class Cottage extends Offer {
 	}
 
 	public Cottage(CottageDTO cottageDTO){
-		super(cottageDTO.getId(), cottageDTO.getName(), cottageDTO.getPromoDescription(), null,null, cottageDTO.getPrice(), cottageDTO.getCapacity());
+		super(cottageDTO.getId(), cottageDTO.getName(), cottageDTO.getDescription(), null,null, cottageDTO.getPrice(), cottageDTO.getCapacity());
 		roomCount = cottageDTO.getRoomCount();
 		bedCount = cottageDTO.getBedCount();
 	}

@@ -11,6 +11,7 @@ public class FreePeriodDTO {
     private LocalDateTime endDate;
     private Integer offerId;
 
+    private Integer id;
     public FreePeriodDTO() {
 
     }
@@ -18,6 +19,7 @@ public class FreePeriodDTO {
         this.startDate = x.getStartDateTime();
         this.endDate =x.getEndDateTime();
         this.offerId = x.getOffer().getId();
+        this.id = x.getId();
     }
 
     public LocalDateTime getStartDate() {
@@ -42,5 +44,13 @@ public class FreePeriodDTO {
 
     public void setOfferId(Integer offerId) {
         this.offerId = offerId;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 }

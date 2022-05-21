@@ -12,7 +12,7 @@ import {
 } from 'angular-calendar';
 import { MonthViewDay } from 'calendar-utils';
 import { Subject } from 'rxjs';
-import { FreePeriodDTO } from 'src/app/shared/classes/freePeriod';
+import { FreePeriodDTO } from 'src/models/freePeriod';
 
 @Component({
   selector: 'mwl-demo-component',
@@ -44,9 +44,6 @@ export class DemoComponent {
     console.log(this.freePeriods.length);
     renderEvent.body.forEach((day) => {
       const dayOfMonth = day.date.getDate();
-      //console.log(day);
-      //console.log(dayOfMonth);
-      //console.log("essda");
       if ( this.freePeriods.length > 0 && this.isDayInFreePeriods(day)) {
         day.cssClass = 'bg-pink';
         console.log("ovde");

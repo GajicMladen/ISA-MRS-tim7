@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Cottage } from '../../classes/cottage';
+import { Cottage } from 'src/models/cottage';
 import { CottageService } from '../../services/cottage.service';
 
 @Component({

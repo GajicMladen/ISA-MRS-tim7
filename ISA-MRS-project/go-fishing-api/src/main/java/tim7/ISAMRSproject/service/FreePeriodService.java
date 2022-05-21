@@ -50,4 +50,8 @@ public class FreePeriodService {
 
     }
 
+    public void deleteFreePeriod(int id){
+
+        freePeriodRepository.deleteById(id);
+    }
 }
