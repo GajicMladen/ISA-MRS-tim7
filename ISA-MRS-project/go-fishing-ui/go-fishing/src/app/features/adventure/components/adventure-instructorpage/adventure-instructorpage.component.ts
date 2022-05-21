@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { User } from 'src/app/shared/classes/user';
 import { UserService } from 'src/app/shared/services/users-services/user.service';
@@ -109,6 +110,9 @@ export class AdventureInstructorpageComponent implements OnInit {
   instructorId: number;
   instructor: User = new User();
   adventures: Adventure[];
+  form: FormGroup = new FormGroup({
+    searchBar: new FormControl(''),
+  });
 
   constructor(private route: ActivatedRoute, private userService: UserService, private adventureService: AdventureService) { }
 
@@ -129,6 +133,10 @@ export class AdventureInstructorpageComponent implements OnInit {
 
   OnAdventureDeleted(id: string) {
     document.getElementById(id)?.remove();
+  }
+
+  ChangeList() {
+    this.adventures = this.adventures.slice(0, -1);
   }
 
 }
