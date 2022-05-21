@@ -62,6 +62,11 @@ public class User implements UserDetails {
 	private int loyaltyPoints;
 	
 	@JsonIgnore
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "deletion_request", referencedColumnName = "id")
+	private DeletionRequest deletionRequest;
+	
+	@JsonIgnore
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id", referencedColumnName = "id")
 	private Address livingAddress;
@@ -194,6 +199,15 @@ public class User implements UserDetails {
 	
 	public void setAddress(Address address) {
 		this.livingAddress = address;
+	}
+	
+	@JsonIgnore
+	public DeletionRequest getDeletionRequest() {
+		return deletionRequest;
+	}
+	
+	public void setDeletionRequest(DeletionRequest deletionRequest) {
+		this.deletionRequest = deletionRequest;
 	}
 	
     public List<Role> getRoles() {

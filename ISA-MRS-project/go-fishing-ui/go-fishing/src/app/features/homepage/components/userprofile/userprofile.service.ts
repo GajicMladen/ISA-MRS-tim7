@@ -58,9 +58,28 @@ export class UserprofileService {
     else return 'OK';
   }
 
+  public validateDeletionRequest(data: any) {
+    if (data.deletionReason.length < 10)
+      return 'Please enter at least 10 characters!';
+    else return 'OK';
+  }
+
   public changePassword(data: FormGroup) {
     return this.http
       .post(this.configService.changePasswordUrl, data, {
+        headers: { 'Content-Type': 'application/json' },
+      })
+      .pipe(
+        map((res: any) => {
+          return res;
+        }),
+        catchError(this.handleError)
+      );
+  }
+
+  public sendDeletionRequest(data: FormGroup) {
+    return this.http
+      .post(this.configService.deletionRequestUrl, data, {
         headers: { 'Content-Type': 'application/json' },
       })
       .pipe(

@@ -7,6 +7,7 @@ import {
   MessageType,
 } from 'src/app/shared/services/message-service/message.service';
 import { PasswordChangeDialog } from './change-password-dialog/password-change-dialog.component';
+import { DeletionRequestDialogComponent } from './deletion-request-dialog/deletion-request-dialog.component';
 import { LoyaltyDialogComponent } from './loyalty-dialog/loyalty-dialog.component';
 import { UserprofileService } from './userprofile.service';
 
@@ -19,6 +20,7 @@ export class UserprofileComponent implements OnInit {
   oldForm: FormGroup = this.createProfileForm();
   form: FormGroup = this.createProfileForm();
   updatePasswordForm: FormGroup = this.createUpdatePasswordForm();
+  deletionForm: FormGroup = this.createDeletionForm();
 
   currentLoyaltyPoints: number = 0;
 
@@ -67,6 +69,12 @@ export class UserprofileComponent implements OnInit {
     });
   }
 
+  createDeletionForm(): FormGroup {
+    return new FormGroup({
+      deletionReason: new FormControl({ value: '' }, Validators.required),
+    });
+  }
+
   getUserData() {
     return this.profileService.getUserData();
   }
@@ -107,6 +115,13 @@ export class UserprofileComponent implements OnInit {
 
   loyaltyDialog() {
     this.dialog.open(LoyaltyDialogComponent);
+  }
+
+  deletionRequestDialog() {
+    this.deletionForm.get('deletionReason')?.setValue('');
+    this.dialog.open(DeletionRequestDialogComponent, {
+      data: this.deletionForm,
+    });
   }
 
   get loyaltyBadge() {

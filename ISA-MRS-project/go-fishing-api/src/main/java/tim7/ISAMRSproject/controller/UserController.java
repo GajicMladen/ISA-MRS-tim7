@@ -18,8 +18,11 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import tim7.ISAMRSproject.dto.ChangePasswordDTO;
+import tim7.ISAMRSproject.dto.DeletionRequestDTO;
 import tim7.ISAMRSproject.dto.UserDTO;
 import tim7.ISAMRSproject.dto.UserRegisterDTO;
+import tim7.ISAMRSproject.model.DeletionRequest;
+import tim7.ISAMRSproject.model.DeletionRequest.DeletionRequestStatus;
 import tim7.ISAMRSproject.model.User;
 import tim7.ISAMRSproject.service.UserService;
 
@@ -91,5 +94,19 @@ public class UserController {
 	public String getLoyaltyPoints(Principal user){
 		User reqUser = this.userService.findByEmail(user.getName());
 		return "{ \"loyaltyPoints\": " + reqUser.getLoyaltyPoints() + "}";
+	}
+	
+	@PostMapping(value="/deletionRequest")
+	public ResponseEntity<?> saveDeletionRequest(@RequestBody DeletionRequestDTO deletionRequestDTO, UriComponentsBuilder ucBuilder, Principal user){
+		if (deletionRequestDTO.getDeletionReason().length() < 10) return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body("Invalid data!");
+		User requestUser = userService.findByEmail(user.getName());
+		
+		DeletionRequest deletionRequest = new DeletionRequest();
+		deletionRequest.setDeletionReason(deletionRequestDTO.getDeletionReason());
+		deletionRequest.setRequestStatus(DeletionRequestStatus.PENDING);
+		deletionRequest.setUser(requestUser);
+		requestUser.setDeletionRequest(deletionRequest);
+		userService.save(requestUser);
+		return ResponseEntity.status(HttpStatus.ACCEPTED).body(requestUser);
 	}
 }

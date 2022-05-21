@@ -44,7 +44,7 @@
         <mat-card-actions style="text-align: center;">
             <button mat-button (click)="updateProfileInfo()" [disabled]="updateButtonDisabled">UPDATE PROFILE</button>
             <button mat-button (click)="changePasswordDialog()">CHANGE PASSWORD</button>
-            <button mat-button style="color:red">SEND DELETION REQUEST</button>
+            <button mat-button (click)="deletionRequestDialog()"style="color:red">SEND DELETION REQUEST</button>
         </mat-card-actions>
     </mat-card>
     <mat-card class="profile-card">

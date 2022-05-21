@@ -17,11 +17,13 @@ import tim7.ISAMRSproject.dto.UserRegisterDTO;
 import tim7.ISAMRSproject.model.Address;
 import tim7.ISAMRSproject.model.BoatOwner;
 import tim7.ISAMRSproject.model.CottageOwner;
+import tim7.ISAMRSproject.model.DeletionRequest;
 import tim7.ISAMRSproject.model.FishingInstructor;
 import tim7.ISAMRSproject.model.Role;
 import tim7.ISAMRSproject.model.User;
 import tim7.ISAMRSproject.repository.BoatOwnerRepository;
 import tim7.ISAMRSproject.repository.CottageOwnerRepository;
+import tim7.ISAMRSproject.repository.DeletionRequestRepository;
 import tim7.ISAMRSproject.repository.InstructorRepository;
 import tim7.ISAMRSproject.repository.UserRepository;
 
@@ -39,9 +41,13 @@ public class UserService implements UserDetailsService {
 	
 	@Autowired
 	private InstructorRepository instructorRepository;
+
+	@Autowired
+	private DeletionRequestRepository deletionRequestRepository;
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+	
 	
 	@Autowired
 	private RoleService roleService;
@@ -135,6 +141,10 @@ public class UserService implements UserDetailsService {
 	
 	public User save(User user) {
 		return this.userRepository.save(user);
+	}
+	
+	public DeletionRequest saveDeletionRequest(DeletionRequest deletionRequest) {
+		return this.deletionRequestRepository.save(deletionRequest);
 	}
 	
 }

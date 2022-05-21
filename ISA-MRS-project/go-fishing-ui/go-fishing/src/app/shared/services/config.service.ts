@@ -37,4 +37,8 @@ export class ConfigService {
   get changePasswordUrl(): string {
     return this._user_controller_url + '/changePassword';
   }
+
+  get deletionRequestUrl(): string {
+    return this._user_controller_url + '/deletionRequest';
+  }
 }
