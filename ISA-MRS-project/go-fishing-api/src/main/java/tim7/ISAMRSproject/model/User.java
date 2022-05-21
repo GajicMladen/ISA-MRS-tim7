@@ -58,6 +58,9 @@ public class User implements UserDetails {
 	@Column(name = "active",nullable = false)
 	private boolean active;
 	
+	@Column(name = "loyalty_points", nullable = false)
+	private int loyaltyPoints;
+	
 	@JsonIgnore
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id", referencedColumnName = "id")
@@ -83,7 +86,20 @@ public class User implements UserDetails {
 		this.phone = phone;
 		this.active = false;
 		this.deleted = false;
-
+		this.loyaltyPoints = 0;
+	}
+	
+	public User(Integer id, String password, String email, String name, String lastName, String phone, int points) {
+		super();
+		this.id = id;
+		this.password = password;
+		this.email = email;
+		this.name = name;
+		this.lastName = lastName;
+		this.phone = phone;
+		this.active = false;
+		this.deleted = false;
+		this.loyaltyPoints = points;
 	}
 	
 	public User(User user) {
@@ -96,6 +112,7 @@ public class User implements UserDetails {
 		this.phone = user.name;
 		this.active = user.active;
 		this.deleted = user.deleted;
+		this.loyaltyPoints = user.loyaltyPoints;
 	}
 
 	public Integer getId() {
@@ -144,6 +161,14 @@ public class User implements UserDetails {
 
 	public void setPhone(String phone) {
 		this.phone = phone;
+	}
+	
+	public int getLoyaltyPoints() {
+		return this.loyaltyPoints;
+	}
+	
+	public void setLoyaltyPoints(int points) {
+		this.loyaltyPoints = points;
 	}
 
 	public boolean isDeleted() {

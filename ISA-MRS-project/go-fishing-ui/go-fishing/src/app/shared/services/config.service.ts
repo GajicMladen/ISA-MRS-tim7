@@ -18,12 +18,16 @@ export class ConfigService {
     return this._signup_url;
   }
 
-  get userData(): string {
+  get userDataUrl(): string {
     return this._user_controller_url + '/getUserData';
   }
 
   get dummyUrl(): string {
     return this._user_controller_url + '/dummy';
+  }
+
+  get loyaltyPointsUrl(): string {
+    return this._user_controller_url + '/loyaltyPoints';
   }
 
   get updateProfileUrl(): string {

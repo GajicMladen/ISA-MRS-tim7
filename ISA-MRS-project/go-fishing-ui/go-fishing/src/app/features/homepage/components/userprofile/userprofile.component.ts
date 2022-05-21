@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { ImageServiceService } from 'src/app/shared/services/image-service/image-service.service';
 import {
   MessageService,
   MessageType,
 } from 'src/app/shared/services/message-service/message.service';
-import { PasswordChangeDialog } from './changePasswordDialog/password-change-dialog.component';
+import { PasswordChangeDialog } from './change-password-dialog/password-change-dialog.component';
+import { LoyaltyDialogComponent } from './loyalty-dialog/loyalty-dialog.component';
 import { UserprofileService } from './userprofile.service';
 
 @Component({
@@ -14,17 +16,27 @@ import { UserprofileService } from './userprofile.service';
   styleUrls: ['./userprofile.component.css'],
 })
 export class UserprofileComponent implements OnInit {
+  oldForm: FormGroup = this.createProfileForm();
   form: FormGroup = this.createProfileForm();
   updatePasswordForm: FormGroup = this.createUpdatePasswordForm();
+
+  currentLoyaltyPoints: number = 0;
+
   constructor(
     private profileService: UserprofileService,
     private messageService: MessageService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private imageService: ImageServiceService
   ) {}
 
   ngOnInit(): void {
     this.getUserData().subscribe((res: any) => {
+      this.oldForm.patchValue(res);
       this.form.patchValue(res);
+    });
+
+    this.getLoyaltyPoints().subscribe((res: any) => {
+      this.currentLoyaltyPoints = res.loyaltyPoints;
     });
   }
 
@@ -59,6 +71,10 @@ export class UserprofileComponent implements OnInit {
     return this.profileService.getUserData();
   }
 
+  getLoyaltyPoints() {
+    return this.profileService.getLoyaltyPoints();
+  }
+
   updateProfileInfo() {
     let status: string = this.profileService.validateNewUserData(
       this.form.getRawValue()
@@ -68,6 +84,7 @@ export class UserprofileComponent implements OnInit {
       this.messageService.showMessage(status, MessageType.WARNING);
       return;
     } else {
+      this.oldForm.setValue(this.form.getRawValue());
       return this.profileService
         .updateProfileInfo(this.form.getRawValue())
         .pipe()
@@ -86,5 +103,20 @@ export class UserprofileComponent implements OnInit {
     this.dialog.open(PasswordChangeDialog, {
       data: this.updatePasswordForm,
     });
+  }
+
+  loyaltyDialog() {
+    this.dialog.open(LoyaltyDialogComponent);
+  }
+
+  get loyaltyBadge() {
+    return this.imageService.loyaltyBadge;
+  }
+
+  get updateButtonDisabled(): boolean {
+    return (
+      JSON.stringify(this.oldForm.getRawValue()) ===
+      JSON.stringify(this.form.getRawValue())
+    );
   }
 }

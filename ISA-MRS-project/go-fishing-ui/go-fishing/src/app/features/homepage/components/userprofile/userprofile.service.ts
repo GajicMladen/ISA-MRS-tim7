@@ -16,7 +16,11 @@ export class UserprofileService {
   ) {}
 
   public getUserData() {
-    return this.http.get(this.configService.userData);
+    return this.http.get(this.configService.userDataUrl);
+  }
+
+  public getLoyaltyPoints() {
+    return this.http.get(this.configService.loyaltyPointsUrl);
   }
 
   public validateNewUserData(data: any): string {

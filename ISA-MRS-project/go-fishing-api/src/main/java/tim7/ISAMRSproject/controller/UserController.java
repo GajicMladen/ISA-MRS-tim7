@@ -86,4 +86,10 @@ public class UserController {
 		userService.changeUserPassword(changedUser, changePasswordDTO);		
 		return ResponseEntity.status(HttpStatus.ACCEPTED).body(changedUser);
 	}
+	
+	@GetMapping(value = "/loyaltyPoints")
+	public String getLoyaltyPoints(Principal user){
+		User reqUser = this.userService.findByEmail(user.getName());
+		return "{ \"loyaltyPoints\": " + reqUser.getLoyaltyPoints() + "}";
+	}
 }

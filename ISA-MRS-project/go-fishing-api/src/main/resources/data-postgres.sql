@@ -5,11 +5,11 @@ INSERT INTO public.address(city, country, street) VALUES
 INSERT INTO public.address(city, country, street) VALUES
 						('Novi Sad', 'Serbia', 'Domovi 1');
 
-INSERT INTO public.users(active, deleted, email, lastname, name, password, phone, address_id) VALUES
-					(true, false, 'p3r5kul45@gmail.com', 'Tomic', 'Jovan', '$2a$10$XeS1WZloSVVq2Z2dJd3L7ePADJy51sWu/oLqcy.Qcmppr6VcUtcr6', '+381607229290', 1);
+INSERT INTO public.users(active, deleted, email, lastname, name, password, phone, loyalty_points, address_id) VALUES
+					(true, false, 'p3r5kul45@gmail.com', 'Tomic', 'Jovan', '$2a$10$XeS1WZloSVVq2Z2dJd3L7ePADJy51sWu/oLqcy.Qcmppr6VcUtcr6', '+381607229290', 500, 1);
 
-INSERT INTO public.users(active, deleted, email, lastname, name, password, phone, address_id) VALUES
-					(true, false, 'niko.nikic093@gmail.com', 'Gajic', 'Mladen', '$2a$10$XeS1WZloSVVq2Z2dJd3L7ePADJy51sWu/oLqcy.Qcmppr6VcUtcr6', '+381644281080', 2);
+INSERT INTO public.users(active, deleted, email, lastname, name, password, phone, loyalty_points, address_id) VALUES
+					(true, false, 'niko.nikic093@gmail.com', 'Gajic', 'Mladen', '$2a$10$XeS1WZloSVVq2Z2dJd3L7ePADJy51sWu/oLqcy.Qcmppr6VcUtcr6', '+381644281080', 1000, 2);
 
 INSERT INTO public.cottage_owners(
 	id)

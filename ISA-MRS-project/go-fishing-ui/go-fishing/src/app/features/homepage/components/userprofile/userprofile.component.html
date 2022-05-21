@@ -1,5 +1,5 @@
 <div class="main-div">
-    <mat-card class="profile-card">
+    <mat-card class="profile-card" style="margin-right: 50px">
         <h1 class="title">User Profile</h1>
         <mat-card-content class="reg-card">
             <form [formGroup]="form">
@@ -42,9 +42,19 @@
             </form>
         </mat-card-content>
         <mat-card-actions style="text-align: center;">
-            <button mat-button (click)="updateProfileInfo()">UPDATE PROFILE</button>
+            <button mat-button (click)="updateProfileInfo()" [disabled]="updateButtonDisabled">UPDATE PROFILE</button>
             <button mat-button (click)="changePasswordDialog()">CHANGE PASSWORD</button>
             <button mat-button style="color:red">SEND DELETION REQUEST</button>
+        </mat-card-actions>
+    </mat-card>
+    <mat-card class="profile-card">
+        <h1 class="title">Loyalty Status</h1>
+        <mat-card-content class="reg-card">
+            <img [src]='loyaltyBadge' alt="loyalty-badge"  class="loyalty-badge">
+            <h3>Current loyalty points: {{currentLoyaltyPoints}}</h3>
+        </mat-card-content>
+        <mat-card-actions style="text-align: center;">
+            <button mat-button (click)="loyaltyDialog()">ABOUT LOYALTY PROGRAM</button>
         </mat-card-actions>
     </mat-card>
 </div>

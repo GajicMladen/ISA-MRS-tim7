@@ -1,6 +1,7 @@
 .profile-card {
     max-width: 400px;
-    max-height: 100%;
+    max-height: 75%;
+    display: inline-block;
 }
 
 .title{
@@ -31,4 +32,12 @@ mat-form-field {
     height: 100%;
     display: flex;
     justify-content: center;
+}
+
+.loyalty-badge{
+    margin-left: 0.6em;
+}
+
+h3{
+    font-weight: bold;
 }
