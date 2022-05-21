@@ -110,6 +110,8 @@ export class AdventureInstructorpageComponent implements OnInit {
   instructorId: number;
   instructor: User = new User();
   adventures: Adventure[];
+  adventuresInitial: Adventure[];
+  adventuresFiltered: Adventure[];
   form: FormGroup = new FormGroup({
     searchBar: new FormControl(''),
   });
@@ -125,7 +127,7 @@ export class AdventureInstructorpageComponent implements OnInit {
 
       this.adventureService.getAdventuresOfInstructor(this.instructorId).subscribe(adventures => {
         this.adventures = adventures;
-        console.log(adventures);
+        this.adventuresInitial = JSON.parse(JSON.stringify(adventures));
       })
       })
     }
@@ -137,6 +139,22 @@ export class AdventureInstructorpageComponent implements OnInit {
 
   ChangeList() {
     this.adventures = this.adventures.slice(0, -1);
+  }
+
+  onKeyupEvent(event: any) {
+    this.adventuresFiltered = [];
+    this.adventures = this.adventuresInitial;
+    console.log(event.target.value);
+    if (event.target.value === '') {
+      this.adventures = this.adventuresInitial;
+    } else {
+      for (let ii = 0; ii < this.adventures.length; ii++) {
+        if (this.adventures[ii].name.toLowerCase().includes(event.target.value.toLowerCase())){
+          this.adventuresFiltered.push(this.adventures[ii]);
+        }
+      }
+      this.adventures = this.adventuresFiltered;
+    }
   }
 
 }

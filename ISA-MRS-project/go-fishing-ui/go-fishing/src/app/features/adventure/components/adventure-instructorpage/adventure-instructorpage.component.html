@@ -42,7 +42,7 @@
       <div class="text-center" id="search">
         <form [formGroup]="form">
           <mat-form-field>
-              <input matInput formControlName="searchBar" type="text" placeholder="Pretraži">
+              <input matInput formControlName="searchBar" type="text" placeholder="Pretraži" (keyup)="onKeyupEvent($event)">
               <button mat-button matPrefix mat-icon-button>
                   <mat-icon>search</mat-icon>
               </button>
