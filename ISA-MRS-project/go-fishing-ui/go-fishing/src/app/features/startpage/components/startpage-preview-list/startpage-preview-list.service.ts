@@ -15,6 +15,7 @@ export class StartpagePreviewListService {
 
     let boat1: Boat = {
       id:1,
+      ownerId:1,
       name: 'First Boat',
       description: 'This is our first ever boat.',
       images: [
@@ -34,6 +35,7 @@ export class StartpagePreviewListService {
 
     let boat2: Boat = {
       id:2,
+      ownerId:1,
       name: 'Second Boat',
       description:
         'This is our second boat. It is quite reliable and we very much recommend it!',
@@ -54,6 +56,7 @@ export class StartpagePreviewListService {
 
     let boat3: Boat = {
       id:3,
+      ownerId:1,
       name: 'Third Boat',
       description: 'This is our third ever boat. It is quite neat!',
       images: [
@@ -73,6 +76,7 @@ export class StartpagePreviewListService {
 
     let boat4: Boat = {
       id:4,
+      ownerId:1,
       name: 'Fourth Boat',
       description:
         'This is our fourth ever boat. Not very liked amongst users.',
@@ -93,6 +97,7 @@ export class StartpagePreviewListService {
 
     let boat5: Boat = {
       id:5,
+      ownerId:1,
       name: 'Fifth Boat',
       description: 'This is our fifth ever boat. Best so far',
       images: ['https://nautika-present.com/wp-content/uploads/2020/11/1.png'],
