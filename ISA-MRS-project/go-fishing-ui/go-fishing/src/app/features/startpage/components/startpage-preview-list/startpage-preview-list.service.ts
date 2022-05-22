@@ -14,6 +14,7 @@ export class StartpagePreviewListService {
     let boatArray = new Array<Boat>();
 
     let boat1: Boat = {
+      id:1,
       name: 'First Boat',
       description: 'This is our first ever boat.',
       images: [
@@ -32,6 +33,7 @@ export class StartpagePreviewListService {
     };
 
     let boat2: Boat = {
+      id:2,
       name: 'Second Boat',
       description:
         'This is our second boat. It is quite reliable and we very much recommend it!',
@@ -51,6 +53,7 @@ export class StartpagePreviewListService {
     };
 
     let boat3: Boat = {
+      id:3,
       name: 'Third Boat',
       description: 'This is our third ever boat. It is quite neat!',
       images: [
@@ -69,6 +72,7 @@ export class StartpagePreviewListService {
     };
 
     let boat4: Boat = {
+      id:4,
       name: 'Fourth Boat',
       description:
         'This is our fourth ever boat. Not very liked amongst users.',
@@ -88,6 +92,7 @@ export class StartpagePreviewListService {
     };
 
     let boat5: Boat = {
+      id:5,
       name: 'Fifth Boat',
       description: 'This is our fifth ever boat. Best so far',
       images: ['https://nautika-present.com/wp-content/uploads/2020/11/1.png'],
@@ -123,6 +128,10 @@ export class StartpagePreviewListService {
       deleted: false,
       capacity: 2,
       averageRating: 4.4,
+      roomCount: 1,
+      bedCount: 2,
+      ownerId:1,
+      id:1
     };
 
     let cottage2: Cottage = {
@@ -135,7 +144,10 @@ export class StartpagePreviewListService {
       price: 450,
       deleted: false,
       capacity: 3,
-      averageRating: 3.8,
+      averageRating: 3.8,roomCount: 1,
+      bedCount: 2,
+      ownerId:1,
+      id:1
     };
     let cottage3: Cottage = {
       name: 'Large Cottage',
@@ -147,7 +159,10 @@ export class StartpagePreviewListService {
       price: 550,
       deleted: false,
       capacity: 1,
-      averageRating: 4.2,
+      averageRating: 4.2,roomCount: 1,
+      bedCount: 2,
+      ownerId:1,
+      id:1
     };
     let cottage4: Cottage = {
       name: 'Extra Large Cottage',
@@ -160,6 +175,10 @@ export class StartpagePreviewListService {
       deleted: false,
       capacity: 5,
       averageRating: 3.1,
+      roomCount: 1,
+      bedCount: 2,
+      ownerId:1,
+      id:1
     };
     let cottage5: Cottage = {
       name: 'Small Cabin',
@@ -172,6 +191,10 @@ export class StartpagePreviewListService {
       deleted: false,
       capacity: 1,
       averageRating: 2.9,
+      roomCount: 1,
+      bedCount: 2,
+      ownerId:1,
+      id:1
     };
 
     cottageArray.push(cottage1, cottage2, cottage3, cottage4, cottage5);
@@ -183,6 +206,7 @@ export class StartpagePreviewListService {
     let adventureArray = new Array<Adventure>();
 
     let adventure1: Adventure = {
+      id:1,
       name: 'Big Game Hunting',
       description: 'Your guide will take you bear hunting',
       images: [
@@ -197,6 +221,7 @@ export class StartpagePreviewListService {
     };
 
     let adventure2: Adventure = {
+      id:1,
       name: 'Whale Fishing',
       description: 'Your guide will take you whale fishing',
       images: [
@@ -211,6 +236,7 @@ export class StartpagePreviewListService {
     };
 
     let adventure3: Adventure = {
+      id:1,
       name: 'Ski Jumping',
       description: 'Your guide will take you ski jumping',
       images: [
@@ -225,6 +251,7 @@ export class StartpagePreviewListService {
     };
 
     let adventure4: Adventure = {
+      id:1,
       name: 'Bungee Jumping',
       description: 'Your guide will take you bungee jumping',
       images: [
@@ -239,6 +266,7 @@ export class StartpagePreviewListService {
     };
 
     let adventure5: Adventure = {
+      id:1,
       name: 'Boating',
       description: 'Your guide will take you boating',
       images: [

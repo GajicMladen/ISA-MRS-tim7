@@ -27,7 +27,45 @@ public class FreePeriod {
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "offer_id")
 	private Offer offer;
-	
-	
-	
+
+	public FreePeriod() {
+	}
+
+	public FreePeriod(LocalDateTime startDateTime, LocalDateTime endDateTime, Offer offer) {
+		this.startDateTime = startDateTime;
+		this.endDateTime = endDateTime;
+		this.offer = offer;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public LocalDateTime getStartDateTime() {
+		return startDateTime;
+	}
+
+	public void setStartDateTime(LocalDateTime startDateTime) {
+		this.startDateTime = startDateTime;
+	}
+
+	public LocalDateTime getEndDateTime() {
+		return endDateTime;
+	}
+
+	public void setEndDateTime(LocalDateTime endDateTime) {
+		this.endDateTime = endDateTime;
+	}
+
+	public Offer getOffer() {
+		return offer;
+	}
+
+	public void setOffer(Offer offer) {
+		this.offer = offer;
+	}
 }

@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Cottage } from '../../classes/cottage';
+import { Cottage } from 'src/models/cottage';
 import { CottageService } from '../../services/cottage.service';
 
 @Component({
@@ -13,7 +13,7 @@ export class CottageEditComponent implements OnInit {
   cottageId:number;
   currentCottage:Cottage;
 
-  newCottage: Cottage = new Cottage;
+  newCottage: Cottage;
   name :string;
   price:number;
   capacity:number;
@@ -31,7 +31,7 @@ export class CottageEditComponent implements OnInit {
       this.name = this.currentCottage.name;
       this.price = this.currentCottage.price;
       this.capacity = this.currentCottage.capacity;
-      this.promoDescription = this.currentCottage.promoDescription;
+      this.promoDescription = this.currentCottage.description;
       this.bedCount = this.currentCottage.bedCount;
       this.roomCount = this.currentCottage.roomCount;
     })
@@ -41,7 +41,7 @@ export class CottageEditComponent implements OnInit {
     this.newCottage.name = this.name;
     this.newCottage.price = this.price;
     this.newCottage.capacity = this.capacity;
-    this.newCottage.promoDescription = this.promoDescription;
+    this.newCottage.description = this.promoDescription;
     this.newCottage.bedCount = this.bedCount;
     this.newCottage.id = this.cottageId;
     this.newCottage.roomCount = this.roomCount;

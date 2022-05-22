@@ -93,7 +93,7 @@
                     <a href="../reservationStart">
                         <button class="btn btn-outline-warning btn-long cart mr-2">Rezerviši</button>
                     </a>
-                        <button class="btn btn-warning btn-long buy mr-1"><i class="fa fa-calendar-check-o"></i> Proveri dostupnost </button> <button class="btn btn-light wishlist"> <i class="fa fa-heart"></i> </button> </div>
+                        <button class="btn btn-warning btn-long buy mr-1" routerLink="/calendar/{{cottageId}}"><i class="fa fa-calendar-check-o"></i> Proveri dostupnost </button> <button class="btn btn-light wishlist"> <i class="fa fa-heart"></i> </button> </div>
                 <hr>
                 <div class="product-description">
                     <div><span class="font-weight-bold">Broj soba:</span><span> {{cottage.roomCount}}</span></div>
@@ -103,7 +103,7 @@
                     <hr >
                     <div class="mt-2"> <span class="font-weight-bold">Opis:</span>
                         <p>
-                            {{cottage.promoDescription}}    
+                            {{cottage.description}}    
                         </p>
                         <hr >       
                         <div class="bullets">

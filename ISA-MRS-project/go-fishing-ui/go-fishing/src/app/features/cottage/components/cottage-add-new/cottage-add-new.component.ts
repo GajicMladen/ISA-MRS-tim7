@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Cottage } from '../../classes/cottage';
+import { Cottage } from 'src/models/cottage';
 import { CottageService } from '../../services/cottage.service';
 
 @Component({
@@ -11,8 +11,9 @@ import { CottageService } from '../../services/cottage.service';
 export class CottageAddNewComponent implements OnInit {
 
   @Input() ownerId:number;
+  @Input() cottages:Cottage[];
 
-  newCottage: Cottage = new Cottage;
+  newCottage: Cottage ;
   name :string;
   price:number;
   capacity:number;
@@ -29,7 +30,7 @@ export class CottageAddNewComponent implements OnInit {
     this.newCottage.name = this.name;
     this.newCottage.price = this.price;
     this.newCottage.capacity = this.capacity;
-    this.newCottage.promoDescription = this.promoDescription;
+    this.newCottage.description = this.promoDescription;
     this.newCottage.bedCount = this.bedCount;
     this.newCottage.ownerId = this.ownerId;
 
@@ -38,7 +39,8 @@ export class CottageAddNewComponent implements OnInit {
     this.cottageService.addNewCottage(this.newCottage).subscribe(data =>{
       console.log(data);
     });
-
+    this.cottages.push(this.newCottage);
     this.router.navigate(["/cottageOwner/"+this.ownerId]);
+
   }
 }

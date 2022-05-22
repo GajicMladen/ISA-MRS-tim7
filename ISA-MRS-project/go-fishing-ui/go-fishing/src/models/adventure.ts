@@ -1,5 +1,5 @@
-import { Service } from './service';
+import { Offer } from './offer';
 
-export interface Adventure extends Service {
+export interface Adventure extends Offer {
   biography: string;
 }
