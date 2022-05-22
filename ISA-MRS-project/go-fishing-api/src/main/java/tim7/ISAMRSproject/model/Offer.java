@@ -91,6 +91,14 @@ public class Offer {
 		this.capacity = capacity;
 	}
 
+	public Address getAddress() {
+		return address;
+	}
+
+	public void setAddress(Address address) {
+		this.address = address;
+	}
+	
 	public Set<ExtraFavor> getExtraFavors() {
 		return extraFavors;
 	}

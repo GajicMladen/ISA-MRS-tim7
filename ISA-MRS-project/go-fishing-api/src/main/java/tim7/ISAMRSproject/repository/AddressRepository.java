@@ -7,5 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import tim7.ISAMRSproject.model.Address;
 
 public interface AddressRepository extends JpaRepository<Address, Integer> {
-    Optional<Address> findById(Integer id);
+    Optional<Address> findById(Long id);
 }

@@ -241,3 +241,8 @@ label.radio input:checked+span::before {
 .card-body {
     padding: 0.3rem 0.3rem 0.2rem
 }
+
+.full {
+    height: 350px;
+    width: 700px;
+}

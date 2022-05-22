@@ -11,6 +11,7 @@ import { AdventureAddNewComponent } from './components/adventure-add-new/adventu
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AdventureInstructorEditComponent } from './components/adventure-instructor-edit/adventure-instructor-edit.component';
 import { RouterModule } from '@angular/router';
+import { AdventureEditComponent } from './components/adventure-edit/adventure-edit.component';
 
 
 
@@ -21,7 +22,8 @@ import { RouterModule } from '@angular/router';
     AdventureCardComponent,
     AdventureInstructorpageComponent,
     AdventureAddNewComponent,
-    AdventureInstructorEditComponent
+    AdventureInstructorEditComponent,
+    AdventureEditComponent
   ],
   imports: [
     CommonModule,
@@ -30,6 +32,7 @@ import { RouterModule } from '@angular/router';
     FormsModule,
     RouterModule,
     ReactiveFormsModule
+    //ReactiveFormsModule.withConfig({warnOnNgModelWithFormControl: 'never'})
   ],
   providers: [AdventureService]
 })
