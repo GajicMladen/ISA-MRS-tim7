@@ -12,15 +12,18 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import tim7.ISAMRSproject.dto.ChangePasswordDTO;
 import tim7.ISAMRSproject.dto.UserRegisterDTO;
 import tim7.ISAMRSproject.model.Address;
 import tim7.ISAMRSproject.model.BoatOwner;
 import tim7.ISAMRSproject.model.CottageOwner;
+import tim7.ISAMRSproject.model.DeletionRequest;
 import tim7.ISAMRSproject.model.FishingInstructor;
 import tim7.ISAMRSproject.model.Role;
 import tim7.ISAMRSproject.model.User;
 import tim7.ISAMRSproject.repository.BoatOwnerRepository;
 import tim7.ISAMRSproject.repository.CottageOwnerRepository;
+import tim7.ISAMRSproject.repository.DeletionRequestRepository;
 import tim7.ISAMRSproject.repository.InstructorRepository;
 import tim7.ISAMRSproject.repository.UserRepository;
 
@@ -38,9 +41,13 @@ public class UserService implements UserDetailsService {
 	
 	@Autowired
 	private InstructorRepository instructorRepository;
+
+	@Autowired
+	private DeletionRequestRepository deletionRequestRepository;
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+	
 	
 	@Autowired
 	private RoleService roleService;
@@ -104,8 +111,39 @@ public class UserService implements UserDetailsService {
 		return null;
 	}
 	
+	public void updateUser(User user, UserRegisterDTO dto) {
+		if (!(user.getName().equals(dto.getName())))
+			user.setName(dto.getName());
+		if (!(user.getLastName().equals(dto.getLastName())))
+			user.setLastName(dto.getLastName());
+		if (!(user.getPhone().equals(dto.getPhoneNumber())))
+			user.setPhone(dto.getPhoneNumber());
+		
+		Address dtoAddress = new Address();
+		dtoAddress.setCity(dto.getTown());
+		dtoAddress.setCountry(dto.getCountry());
+		dtoAddress.setStreet(dto.getAddress());
+		
+		if (!(user.getAddress().equals(dtoAddress))) {
+			dtoAddress.setUser(user);
+			user.setAddress(dtoAddress);			
+		}
+		
+		this.userRepository.save(user);
+		
+	}
+	
+	public void changeUserPassword(User user, ChangePasswordDTO changePasswordDTO) {
+		user.setPassword(passwordEncoder.encode(changePasswordDTO.getNewPassword()));
+		this.userRepository.save(user);
+	}
+	
 	public User save(User user) {
 		return this.userRepository.save(user);
+	}
+	
+	public DeletionRequest saveDeletionRequest(DeletionRequest deletionRequest) {
+		return this.deletionRequestRepository.save(deletionRequest);
 	}
 	
 }

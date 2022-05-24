@@ -50,7 +50,7 @@ public class LoginController {
 		int expiresIn = tokenUtils.getExpiredIn();
 		
 		if(user.isActive())
-			return ResponseEntity.ok(new UserTokenState(jwt, expiresIn));
+			return ResponseEntity.ok(new UserTokenState(jwt, expiresIn, user));
 		else
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Account is not verified!");
 	}

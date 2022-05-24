@@ -55,7 +55,7 @@ export class StartpageRegisterComponent implements OnInit {
       town: new FormControl(''),
       address: new FormControl(''),
       phoneNumber: new FormControl('', Validators.pattern('^[+][0-9]{10,12}$')),
-      role: new FormControl('client'),
+      role: new FormControl('ROLE_USER'),
     });
   }
 

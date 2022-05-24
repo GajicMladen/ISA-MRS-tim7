@@ -30,14 +30,12 @@ public class Address {
 	@Column(name = "latitude", nullable = false)
 	private String latitude;
 	
-	/*
 	@OneToOne(mappedBy = "livingAddress", optional = false)
     private User user;
-	*/
-	/*
+  
 	@OneToOne(mappedBy = "address", optional = true)
     private Offer offer;
-	*/
+
 	public Address() {
 		
 	}
@@ -89,7 +87,7 @@ public class Address {
 	public void setCountry(String country) {
 		this.country = country;
 	}
-	/*
+	
 	public User getUser() {
 		return user;
 	}
@@ -105,5 +103,22 @@ public class Address {
 	public void setOffer(Offer offer) {
 		this.offer = offer;
 	}
-	*/
+  
+	@Override
+    public boolean equals(Object o) {
+ 
+        if (o == this) {
+            return true;
+        }
+ 
+        if (!(o instanceof Address)) {
+            return false;
+        }
+         
+        Address a = (Address) o;
+         
+        return (a.getCity().equals(this.getCity()) && 
+        		a.getCountry().equals(this.getCountry()) && 
+        		a.getStreet().equals(this.getStreet()));
+    }
 }

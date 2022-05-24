@@ -17,6 +17,19 @@ export class StartpageLoginService {
     private router: Router
   ) {}
 
+  get userName() {
+    return localStorage.getItem('user-name');
+  }
+
+  set userName(val: string | null) {
+    localStorage.removeItem('user-name');
+    localStorage.setItem('user-name', val!);
+  }
+
+  get accessTokenStorage() {
+    return localStorage.getItem('jwt');
+  }
+
   sendLoginRequest(value: any) {
     let loginUrl = this.config.loginUrl;
 
@@ -27,11 +40,14 @@ export class StartpageLoginService {
       .pipe(
         map((res: any) => {
           this.accessToken = res.accessToken;
+          this.currentUser = res.user;
           localStorage.setItem('jwt', res.accessToken);
+          localStorage.setItem('user-name', res.user.name);
         }),
         catchError(this.handleError)
       );
   }
+
   private handleError(error: HttpErrorResponse) {
     return throwError(() => new Error(error.error));
   }
@@ -39,14 +55,17 @@ export class StartpageLoginService {
   logout() {
     this.currentUser = null;
     this.accessToken = null;
+    localStorage.clear();
     this.router.navigate(['/login']);
   }
 
   tokenIsPresent() {
-    return this.accessToken != undefined && this.accessToken != null;
+    return (
+      this.accessTokenStorage != undefined && this.accessTokenStorage != null
+    );
   }
 
   public getToken(): string | null {
-    return this.accessToken;
+    return this.accessTokenStorage;
   }
 }
