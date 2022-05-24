@@ -1,78 +1,92 @@
 <div class="">
-    <div class="profile-content">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4">
-                   <div class="profile">
-                        <div class="display-f-center mt-3">
-                            <img src="https://i.imgur.com/LZ1Xa9r.jpeg" alt="Circle Image" class="img-raised rounded-circle  img-fluid" id="profileImage">
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-8">
-                  <div class="name">
-                    <h3 class="title display-f-center"></h3>
-                    <div class="details">
-                        <h5>Instruktor:</h5><h4>{{instructor.name + " " + instructor.lastName}}</h4>
-                        <h5>E-mail:</h5><h4>{{instructor.email}}</h4>
-                        <h5>Telefon:</h5><h4>{{instructor.phone}}</h4>
-                        <h5>Adresa:</h5><h4>{{instructor.street + ", " + instructor.city + ", " + instructor.country }}</h4>
-                    </div>
-                  </div>
-                    <div class="description text-center" id="Bio">
-                      <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Earum cumque neque necessitatibus deserunt, ad dolorum illo soluta? Dolorem ducimus sint soluta praesentium quidem nisi harum rem cupiditate debitis, quis veniam!</p>
-                    </div>
-                </div>
-            </div>
-    
-      <div class="container">
-        <div class="col-md-12  text-center" id="options">
-          <!--<a routerLink="/editInstructor/{{instructor.id}}" routerLinkActive="active">
-            <button mat-raised-button color="primary">Izmena podataka</button>
-          </a>
-          <button mat-raised-button (click)="ChangeList()" color="primary">Nova lista</button>-->
-          <mat-button-toggle-group name="favoriteColor" aria-label="Favorite Color">
-            <mat-button-toggle routerLink="/editInstructor/{{instructor.id}}" routerLinkActive="active">Izmena podataka</mat-button-toggle>
-            <mat-button-toggle value="green">Rezervacije</mat-button-toggle>
-            <mat-button-toggle value="blue">Obrisi profil</mat-button-toggle>
-          </mat-button-toggle-group>
-        </div>
-      </div>
-    </div>
-      <div class="text-center" id="search">
-        <form [formGroup]="form">
-          <mat-form-field>
-              <input matInput formControlName="searchBar" type="text" placeholder="Pretraži" (keyup)="onKeyupEvent($event)">
-              <button mat-button matPrefix mat-icon-button>
-                  <mat-icon>search</mat-icon>
-              </button>
-          </mat-form-field>
-      </form>
-      </div>
-      <div class="row" id="adventureRow">
-        <div *ngFor="let a of adventures">
-          <div *ngIf="!a.deleted">
-            <div id="{{a.id}}" class="col-md-12"><app-adventure-card (OnAdventureDeleted)="OnAdventureDeleted($event)" adventureId="{{a.id}}"></app-adventure-card></div>
-          </div>          
-        </div>
-        <div *ngIf="isInstructor">
-          <a routerLink="/adventureAddNew/{{instructorId}}" routerLinkActive="active">
-      
-            <div class="container mt-4 mb-4 p-3 d-flex justify-content-center">
-              <div class="cardAddNew p-4">
-                  <div class=" image d-flex flex-column justify-content-center align-items-center">
-                    
-                    <mat-icon class="icon-display">library_add</mat-icon>
-                    
-                    <div class="AddNewText">
-                      Dodaj novu avanturu
-                    </div>
-                  </div>
+  <div class="profile-content">
+     <div class="container">
+        <div class="row">
+           <div class="col-md-4">
+              <div class="profile">
+                 <div class="display-f-center mt-3">
+                    <img src="https://i.imgur.com/LZ1Xa9r.jpeg" alt="Circle Image" class="img-raised rounded-circle  img-fluid" id="profileImage">
+                 </div>
               </div>
-            </div>
-          </a>
+           </div>
+           <div class="col-md-8">
+              <div class="name">
+                 <h3 class="title display-f-center"></h3>
+                 <div class="details">
+                    <h5>Instruktor:</h5>
+                    <h4>{{instructor.name + " " + instructor.lastName}}</h4>
+                    <h5>E-mail:</h5>
+                    <h4>{{instructor.email}}</h4>
+                    <h5>Telefon:</h5>
+                    <h4>{{instructor.phone}}</h4>
+                    <h5>Adresa:</h5>
+                    <h4>{{instructor.street + ", " + instructor.city + ", " + instructor.country }}</h4>
+                 </div>
+              </div>
+              <div class="description text-center" id="Bio">
+                 <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Earum cumque neque necessitatibus deserunt, ad dolorum illo soluta? Dolorem ducimus sint soluta praesentium quidem nisi harum rem cupiditate debitis, quis veniam!</p>
+              </div>
+           </div>
+        </div>
+        <div class="row">
+           <div class="col-md-12  text-center" id="options">
+              <!--<a routerLink="/editInstructor/{{instructor.id}}" routerLinkActive="active">
+                 <button mat-raised-button color="primary">Izmena podataka</button>
+                 </a>
+                 <button mat-raised-button (click)="ChangeList()" color="primary">Nova lista</button>-->
+              <mat-button-toggle-group name="favoriteColor" aria-label="Favorite Color">
+                 <mat-button-toggle routerLink="/editInstructor/{{instructor.id}}" routerLinkActive="active">
+                    <mat-icon>edit</mat-icon>
+                    Izmena podataka
+                 </mat-button-toggle>
+                 <mat-button-toggle routerLink="/instructorCalendar/{{instructor.id}}" routerLinkActive="active">
+                    <mat-icon>calendar_today</mat-icon>
+                    Kalendar
+                 </mat-button-toggle>
+                 <mat-button-toggle>
+                    <mat-icon>book</mat-icon>
+                    Rezervacije
+                 </mat-button-toggle>
+                 <mat-button-toggle>
+                    <mat-icon>delete</mat-icon>
+                    Obrisi profil
+                 </mat-button-toggle>
+              </mat-button-toggle-group>
+           </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 text-center" id="search">
+              <form [formGroup]="form">
+                <mat-form-field>
+                    <input matInput formControlName="searchBar" type="text" placeholder="Pretraži" (keyup)="onKeyupEvent($event)">
+                    <button mat-button matPrefix mat-icon-button>
+                      <mat-icon>search</mat-icon>
+                    </button>
+                </mat-form-field>
+              </form>
+          </div>
+        </div>
+     <div class="row" id="adventureRow">
+       <div class="col-md-12">
+        <div *ngFor="let a of adventures" style="display: inline-block;">
+           <div *ngIf="!a.deleted" id="{{a.id}}">
+              <app-adventure-card (OnAdventureDeleted)="OnAdventureDeleted($event)" adventureId="{{a.id}}"></app-adventure-card>
+           </div>
+        </div>
+        <div *ngIf="isInstructor" style="display: inline-block; ">
+           <a routerLink="/adventureAddNew/{{instructorId}}" routerLinkActive="active">
+                 <div class="cardAddNew p-4">
+                    <div class="image d-flex flex-column justify-content-center align-items-center">
+                       <mat-icon class="icon-display">library_add</mat-icon>
+                       <div class="AddNewText">
+                          Dodaj novu avanturu
+                       </div>
+                    </div>
+                 </div>
+           </a>
         </div>
       </div>
-    </div>
+     </div>
+  </div>
 </div>
-
+</div>

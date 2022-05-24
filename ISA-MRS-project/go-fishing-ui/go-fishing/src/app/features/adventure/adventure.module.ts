@@ -12,8 +12,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AdventureInstructorEditComponent } from './components/adventure-instructor-edit/adventure-instructor-edit.component';
 import { RouterModule } from '@angular/router';
 import { AdventureEditComponent } from './components/adventure-edit/adventure-edit.component';
+import { InstructorCalendarComponent } from './components/instructor-calendar/instructor-calendar.component';
 
-
+import { FlatpickrModule } from 'angularx-flatpickr';
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -23,7 +27,8 @@ import { AdventureEditComponent } from './components/adventure-edit/adventure-ed
     AdventureInstructorpageComponent,
     AdventureAddNewComponent,
     AdventureInstructorEditComponent,
-    AdventureEditComponent
+    AdventureEditComponent,
+    InstructorCalendarComponent
   ],
   imports: [
     CommonModule,
@@ -31,8 +36,11 @@ import { AdventureEditComponent } from './components/adventure-edit/adventure-ed
     BrowserModule,
     FormsModule,
     RouterModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
     //ReactiveFormsModule.withConfig({warnOnNgModelWithFormControl: 'never'})
+    NgbModalModule,
+    FlatpickrModule.forRoot(),
+    CalendarModule.forRoot({provide: DateAdapter, useFactory: adapterFactory,})
   ],
   providers: [AdventureService]
 })

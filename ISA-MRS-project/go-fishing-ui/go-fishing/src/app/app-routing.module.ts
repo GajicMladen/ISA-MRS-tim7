@@ -21,6 +21,7 @@ import { NewFreePeriodComponent } from './shared/components/new-free-period/new-
 import { CalendarComponent } from './shared/components/calendarPage/calendar.component';
 
 import { AdventureEditComponent } from './features/adventure/components/adventure-edit/adventure-edit.component';
+import { InstructorCalendarComponent } from './features/adventure/components/instructor-calendar/instructor-calendar.component';
 
 
 
@@ -44,9 +45,9 @@ const routes: Routes = [
 
   { path: 'newFreePeriod/:id' ,component: NewFreePeriodComponent },
   { path: 'calendar/:id' ,component: CalendarComponent },
-  {path: 'editInstructor', component: AdventureInstructorEditComponent},
 
-  { path: 'editInstructor/:id', component: AdventureInstructorEditComponent},
+  { path: 'editInstructor/:id', component: AdventureInstructorEditComponent },
+  { path: 'instructorCalendar/:id', component: InstructorCalendarComponent },
 
   { path: 'boatProfile/:id' , component:BoatProfilepageComponent },
   { path: 'editAdventure/:id', component:AdventureEditComponent },

@@ -3,7 +3,11 @@ html *{
 }
 
 #adventureRow {
-    margin-left: 185px;
+    margin-left: 85px;
+}
+
+.adventure-component {
+    float: left;
 }
 
 #profileImage {
