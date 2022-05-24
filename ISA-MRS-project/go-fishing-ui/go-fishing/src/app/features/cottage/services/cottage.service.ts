@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Cottage } from '../classes/cottage';
+import { Cottage } from 'src/models/cottage';
 
 @Injectable()
 export class CottageService {

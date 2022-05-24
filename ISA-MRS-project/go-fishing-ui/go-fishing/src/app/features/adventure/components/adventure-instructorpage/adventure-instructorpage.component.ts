@@ -1,4 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+import { User } from 'src/app/shared/classes/user';
+import { UserService } from 'src/app/shared/services/users-services/user.service';
+import { AdventureService } from '../../adventure.service';
+import { Adventure } from '../../classes/adventure';
 
 @Component({
   selector: 'app-adventure-instructorpage',
@@ -9,13 +15,12 @@ export class AdventureInstructorpageComponent implements OnInit {
 
   isInstructor: boolean = true;
 
+  instructor1 = {
+    name: 'Mika Mikic',
+    bio: 'loremaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'
+  }
 
-  instructor = {
-    name: "Mika Mikic",
-    bio: "Mika Mikić je iskusni ribolovac, gnjurac i plivač. Diplomirao je na fakultetu za sport i rekreaciju na Palama sa prosekom 9,56. Ovim poslom se bavi već 10 godina. Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde natus, sunt sed maxime ut accusamus dignissimos veniam inventore debitis consequatur temporibus odio facere nobis, tenetur deserunt aut fugit distinctio recusandae."
-  };
-
-  adventures = [{
+  adventures1 = [{
     id: "4",
     instructor: "Mika Mikic",
     name: "Pecanje na Zvorničkom jezeru",
@@ -102,14 +107,54 @@ export class AdventureInstructorpageComponent implements OnInit {
   }
   ];
 
-  constructor() { }
+  instructorId: number;
+  instructor: User = new User();
+  adventures: Adventure[];
+  adventuresInitial: Adventure[];
+  adventuresFiltered: Adventure[];
+  form: FormGroup = new FormGroup({
+    searchBar: new FormControl(''),
+  });
+
+  constructor(private route: ActivatedRoute, private userService: UserService, private adventureService: AdventureService) { }
 
   ngOnInit(): void {
+    this.instructorId = Number(this.route.snapshot.paramMap.get('id'));
+    
+    if(!isNaN(this.instructorId)){
+      this.userService.findById(this.instructorId).subscribe(user => {
+        this.instructor = user;
+
+      this.adventureService.getAdventuresOfInstructor(this.instructorId).subscribe(adventures => {
+        this.adventures = adventures;
+        this.adventuresInitial = JSON.parse(JSON.stringify(adventures));
+      })
+      })
+    }
   }
 
   OnAdventureDeleted(id: string) {
-    console.log("Parent " + id);
     document.getElementById(id)?.remove();
+  }
+
+  ChangeList() {
+    this.adventures = this.adventures.slice(0, -1);
+  }
+
+  onKeyupEvent(event: any) {
+    this.adventuresFiltered = [];
+    this.adventures = this.adventuresInitial;
+    console.log(event.target.value);
+    if (event.target.value === '') {
+      this.adventures = this.adventuresInitial;
+    } else {
+      for (let ii = 0; ii < this.adventures.length; ii++) {
+        if (this.adventures[ii].name.toLowerCase().includes(event.target.value.toLowerCase())){
+          this.adventuresFiltered.push(this.adventures[ii]);
+        }
+      }
+      this.adventures = this.adventuresFiltered;
+    }
   }
 
 }

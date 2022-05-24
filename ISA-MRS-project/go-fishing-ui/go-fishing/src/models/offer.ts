@@ -1,4 +1,5 @@
-export interface Service {
+export interface Offer {
+  id:number;
   name: string;
   description: string;
   images?: Array<string>;

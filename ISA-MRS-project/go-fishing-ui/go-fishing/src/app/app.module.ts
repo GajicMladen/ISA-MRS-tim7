@@ -19,6 +19,8 @@ import { BoatModule } from './features/boat/boat.module';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './shared/interceptor/TokenInterceptor';
 import { HomepageModule } from './features/homepage/homepage.module';
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 
 @NgModule({
   declarations: [AppComponent],
@@ -40,6 +42,11 @@ import { HomepageModule } from './features/homepage/homepage.module';
     HttpClientModule,
     BoatModule,
     HomepageModule,
+    BrowserAnimationsModule,
+    CalendarModule.forRoot({
+      provide: DateAdapter,
+      useFactory: adapterFactory,
+    })
   ],
   providers: [
     {

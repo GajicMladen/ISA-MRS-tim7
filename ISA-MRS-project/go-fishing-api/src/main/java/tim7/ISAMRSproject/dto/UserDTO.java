@@ -10,14 +10,24 @@ public class UserDTO {
 	private String username;
 	private String email;
 	private String phone;
+	private String street;
+	private String city;
+	private String country;
+	private String longitude;
+	private String latitude;
 
+	public UserDTO() {
+		
+	}
 	
 	public UserDTO(User user) {
 		
-		this(user.getId(), user.getName(), user.getLastName(), user.getUsername(),user.getEmail(),user.getPhone());
+		this(user.getId(), user.getName(), user.getLastName(), user.getUsername(),user.getEmail(),user.getPhone(), user.getAddress().getStreet(),
+			 user.getAddress().getCity(), user.getAddress().getCountry(), user.getAddress().getLongitude(), user.getAddress().getLatitude());
 	}
 	
-	public UserDTO(Integer id, String name, String lastName, String username,String email,String phone) {
+	public UserDTO(Integer id, String name, String lastName, String username,String email,String phone, String street, String city, String country,
+			       String longitude, String latitude) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -25,6 +35,11 @@ public class UserDTO {
 		this.username = username;
 		this.email = email;
 		this.phone = phone;
+		this.street = street;
+		this.city = city;
+		this.country = country;
+		this.longitude = longitude;
+		this.latitude = latitude;
 	}
 
 	public Integer getId() {
@@ -74,6 +89,47 @@ public class UserDTO {
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
+
+	public String getStreet() {
+		return street;
+	}
+
+	public void setStreet(String street) {
+		this.street = street;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getCountry() {
+		return country;
+	}
+
+	public void setCountry(String country) {
+		this.country = country;
+	}
+
+	public String getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(String longitude) {
+		this.longitude = longitude;
+	}
+
+	public String getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(String latitude) {
+		this.latitude = latitude;
+	}
+	
 	
 	
 	

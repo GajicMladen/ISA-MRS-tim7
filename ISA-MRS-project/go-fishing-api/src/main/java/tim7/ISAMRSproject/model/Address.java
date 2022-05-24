@@ -24,12 +24,18 @@ public class Address {
 	@Column(name = "country", nullable = false)
 	private String country;
 	
-	@OneToOne(mappedBy = "livingAddress", optional = true)
+	@Column(name = "longitude", nullable = false)
+	private String longitude;
+	
+	@Column(name = "latitude", nullable = false)
+	private String latitude;
+	
+	@OneToOne(mappedBy = "livingAddress", optional = false)
     private User user;
-
+  
 	@OneToOne(mappedBy = "address", optional = true)
     private Offer offer;
-	
+
 	public Address() {
 		
 	}
@@ -62,10 +68,26 @@ public class Address {
 		return country;
 	}
 
+	public String getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(String longitude) {
+		this.longitude = longitude;
+	}
+
+	public String getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(String latitude) {
+		this.latitude = latitude;
+	}
+
 	public void setCountry(String country) {
 		this.country = country;
 	}
-
+	
 	public User getUser() {
 		return user;
 	}
@@ -81,7 +103,7 @@ public class Address {
 	public void setOffer(Offer offer) {
 		this.offer = offer;
 	}
-	
+  
 	@Override
     public boolean equals(Object o) {
  

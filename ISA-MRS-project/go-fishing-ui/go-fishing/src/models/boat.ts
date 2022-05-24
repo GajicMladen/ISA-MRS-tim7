@@ -1,6 +1,6 @@
-import { Service } from './service';
+import { Offer } from './offer';
 
-export interface Boat extends Service {
+export interface Boat extends Offer {
   boatType: string;
   length: number;
   numOfEngines: number;

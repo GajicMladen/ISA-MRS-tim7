@@ -1,5 +1,7 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { MessageService, MessageType } from 'src/app/shared/services/message-service/message.service';
 import { AdventureService } from '../../adventure.service';
+import { Adventure } from '../../classes/adventure';
 
 @Component({
   selector: 'app-adventure-card',
@@ -8,18 +10,33 @@ import { AdventureService } from '../../adventure.service';
 })
 export class AdventureCardComponent implements OnInit {
 
-  adventure: any;
-  @Input('instructor')
-  instructorName!: string;
+  adventure = new Adventure({
+    id: 0,
+	  name: '',
+	  promoDescription: '',
+	  price: 0,
+	  capacity: 0,
 
-  @Input('name')
-  name!: string;
+	  equipment: '',
+	  rulesOfConduct: '',
+	  rulesOfCancelation: '',
+	  moreInfo: '',
 
-  @Input('price')
-  price!: string;
+	  street: '',
+	  city: '',
+	  country: '',
+	  latitude: '',
+	  longitude: '',
 
-  @Input('id')
-  id!: string;
+	  instructorId: 0,
+	  instructorBiography: '',
+	  instructorName: '',
+	  instructorSurname: '',
+    deleted: false
+  });
+  
+  @Input('adventureId')
+  adventureId!: string;
  
   isInstructor: boolean = true;
   
@@ -27,10 +44,17 @@ export class AdventureCardComponent implements OnInit {
 
   @Output() OnAdventureDeleted: EventEmitter<string> = new EventEmitter();
 
-  constructor(private adventureService: AdventureService) { }
+  images =  ["https://i.imgur.com/JJjNarK.jpeg", "https://i.imgur.com/4Kcv4Ha.jpeg", "https://i.imgur.com/AM3wZt7.jpeg", "https://i.imgur.com/yGw6TI2.jpeg"]
+
+  constructor(private adventureService: AdventureService, private messageService: MessageService) { }
 
   ngOnInit(): void {
-    this.adventure = {
+    this.adventureService.getAdventureById(Number(this.adventureId)).subscribe(adventure => {
+      this.adventure = adventure;
+      console.log(adventure);
+    })
+
+    /*var adventure1 = {
       id: this.id,
       instructor: this.instructorName,
       name: this.name,
@@ -46,16 +70,15 @@ export class AdventureCardComponent implements OnInit {
       equipment: ["Stapovi za pecanje", "Mreže", "Svi tipovi mamaca i varalica", "Kombinezoni"],
       information: "Avantura se održava dva puta dnevno. Prvi termin je u 9h, a drugi u 15h. Mesto okupljanja je gradska plaža. Avantura traje dva sata.",
       cancellation: "U slučaju otkazivanja instruktor zadržava 30% uplaćene sume.",
-    };
+    };*/
   }
 
   deleteAdventure() {
     this.adventureService.deleteAdventure(this.adventure.id).subscribe(adventure =>
       {
         console.log(adventure);
-        alert("Avantura uspešno obrisana!")
-        //window. location. reload()
-        this.OnAdventureDeleted.emit(this.adventure.id);
+        this.messageService.showMessage("Avantura uspešno obrisana!", MessageType.SUCCESS);        
+        this.OnAdventureDeleted.emit(this.adventureId);
       });
   }
 

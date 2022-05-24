@@ -13,16 +13,25 @@
 
             <!-- Surname -->
             <mat-form-field (click)="surnameError=false">
-                <input matInput placeholder="Prezime" name="surname" [(ngModel)]="instructor.surname">
+                <input matInput placeholder="Prezime" name="surname" [(ngModel)]="instructor.lastName">
                 <div class="text-danger" *ngIf="surnameError">
                     Ovo polje je obavezno!
                 </div>
             </mat-form-field>
 
+            <!-- Phone Number -->
+            <mat-form-field (click)="phoneError=false">
+                <input matInput placeholder="Broj telefona" name="phoneNumber" [(ngModel)]="instructor.phone">
+                <div class="text-danger" *ngIf="phoneError">
+                    Broj telefona se sastoji od 10-12 brojeva!
+                </div>
+            </mat-form-field>
+            <br />
+
             <!-- Address -->
-            <mat-form-field (click)="addressError=false">
-                <input matInput placeholder="Adresa" name="address" [(ngModel)]="instructor.address">
-                <div class="text-danger" *ngIf="addressError">
+            <mat-form-field (click)="streetError=false">
+                <input matInput placeholder="Ulica" name="street" [(ngModel)]="instructor.street">
+                <div class="text-danger" *ngIf="streetError">
                     Ovo polje je obavezno!
                 </div>
             </mat-form-field>
@@ -37,20 +46,18 @@
 
             <!-- Country -->
             <mat-form-field (click)="countryError=false">
-                <input matInput placeholder="Zemlja" name="country" [(ngModel)]="instructor.country">
+                <input matInput placeholder="Država" name="country" [(ngModel)]="instructor.country">
                 <div class="text-danger" *ngIf="countryError">
                     Ovo polje je obavezno!
                 </div>
             </mat-form-field>
+
+            <div class="full" id="map">
+
+            </div>
+            <br/>
+
             
-            <!-- Phone Number -->
-            <mat-form-field (click)="phoneError=false">
-                <input matInput placeholder="Broj telefona" name="phoneNumber" [(ngModel)]="instructor.phone">
-                <div class="text-danger" *ngIf="phoneError">
-                    Broj telefona se sastoji od 10-12 brojeva!
-                </div>
-            </mat-form-field>
-            <br />
             <!-- Password -->
             <mat-form-field (click)="passwordError=false">
                 <input matInput type="password" placeholder="Lozinka" name="password" [(ngModel)]="password">
@@ -68,7 +75,7 @@
             </mat-form-field>
             <br />
             <div class="buttons">
-                <a routerLink="/instructorProfile" routerLinkActive="active"><button mat-raised-button class="" color="warn" type="button">Nazad</button></a>
+                <a routerLink="/instructorProfile/{{instructor.id}}" routerLinkActive="active"><button mat-raised-button class="" color="warn" type="button">Nazad</button></a>
                 <button mat-raised-button color="primary" type="button" (click)="UpdateData()">Izmeni</button>
             </div>
         </form>

@@ -8,4 +8,9 @@ export class User {
     active:boolean;
     deleted:boolean;
     userType : string;
+    street: string;
+	city: string;
+	country: string;
+	longitude: string;
+	latitude: string;
 }

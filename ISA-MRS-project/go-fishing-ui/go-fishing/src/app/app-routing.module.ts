@@ -20,6 +20,10 @@ import { HomepageComponent } from './features/homepage/components/homepage/homep
 import { UserprofileComponent } from './features/homepage/components/userprofile/userprofile.component';
 import { EntityListComponent } from './features/homepage/components/entity-list/entity-list.component';
 
+import { NewFreePeriodComponent } from './shared/components/new-free-period/new-free-period.component';
+import { CalendarComponent } from './shared/components/calendarPage/calendar.component';
+
+import { AdventureEditComponent } from './features/adventure/components/adventure-edit/adventure-edit.component';
 const routes: Routes = [
   { path: '', component: StartpagePreviewListComponent },
   { path: 'login', component: StartpageLoginComponent },
@@ -27,7 +31,7 @@ const routes: Routes = [
   { path: 'register', component: StartpageRegisterComponent },
   { path: 'cottageProfile/:id', component: CottageProfilepageComponent },
   { path: 'reservationStart', component: ReservationStartpageComponent },
-  { path: 'adventureProfile', component: AdventureProfilpageComponent },
+  { path: 'adventureProfile/:id', component: AdventureProfilpageComponent },
   { path: 'adventureReservation', component: AdventureReservationComponent },
 
   { path: 'adventureCard', component: AdventureCardComponent },
@@ -49,6 +53,16 @@ const routes: Routes = [
       { path: '', redirectTo: 'userProfile', pathMatch: 'full' },
     ],
   },
+  { path: 'adventureAddNew/:id', component: AdventureAddNewComponent },
+  { path: 'instructorProfile/:id', component: AdventureInstructorpageComponent },
+
+  { path: 'newFreePeriod/:id' ,component: NewFreePeriodComponent },
+  { path: 'calendar/:id' ,component: CalendarComponent },
+
+  { path: 'editInstructor/:id', component: AdventureInstructorEditComponent},
+
+  { path: 'boatProfile/:id' , component:BoatProfilepageComponent },
+  { path: 'editAdventure/:id', component:AdventureEditComponent },
   //Ubaciti komponentu za not found
   { path: '**', redirectTo: '', pathMatch: 'full' },
 ];

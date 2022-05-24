@@ -6,7 +6,7 @@ public class CottageDTO {
 
 	private Integer id;
 	private String name;
-	private String promoDescription;
+	private String description;
 	private float price;
 	private int capacity;
 
@@ -26,7 +26,7 @@ public class CottageDTO {
 		
 		id = cottage.getId();
 		name = cottage.getName();
-		promoDescription = cottage.getPromoDescription();
+		description = cottage.getPromoDescription();
 		price = cottage.getPrice();
 		capacity = cottage.getCapacity();
 		ownerId = cottage.getCottageOwnerId();
@@ -70,11 +70,11 @@ public class CottageDTO {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getPromoDescription() {
-		return promoDescription;
+	public String getDescription() {
+		return description;
 	}
-	public void setPromoDescription(String promoDescription) {
-		this.promoDescription = promoDescription;
+	public void setDescription(String promoDescription) {
+		this.description = promoDescription;
 	}
 	public float getPrice() {
 		return price;
