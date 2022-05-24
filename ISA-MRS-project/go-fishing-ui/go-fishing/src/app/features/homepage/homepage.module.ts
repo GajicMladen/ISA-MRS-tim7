@@ -8,6 +8,7 @@ import { UserprofileComponent } from './components/userprofile/userprofile.compo
 import { PasswordChangeDialog } from './components/userprofile/change-password-dialog/password-change-dialog.component';
 import { LoyaltyDialogComponent } from './components/userprofile/loyalty-dialog/loyalty-dialog.component';
 import { DeletionRequestDialogComponent } from './components/userprofile/deletion-request-dialog/deletion-request-dialog.component';
+import { EntityListComponent } from './components/entity-list/entity-list.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { DeletionRequestDialogComponent } from './components/userprofile/deletio
     PasswordChangeDialog,
     LoyaltyDialogComponent,
     DeletionRequestDialogComponent,
+    EntityListComponent,
   ],
   imports: [CommonModule, SharedModule, RouterModule, ReactiveFormsModule],
 })

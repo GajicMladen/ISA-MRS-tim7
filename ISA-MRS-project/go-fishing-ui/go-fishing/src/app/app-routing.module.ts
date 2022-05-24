@@ -18,6 +18,7 @@ import { AdventureInstructorEditComponent } from './features/adventure/component
 import { BoatProfilepageComponent } from './features/boat/components/boat-profilepage/boat-profilepage.component';
 import { HomepageComponent } from './features/homepage/components/homepage/homepage.component';
 import { UserprofileComponent } from './features/homepage/components/userprofile/userprofile.component';
+import { EntityListComponent } from './features/homepage/components/entity-list/entity-list.component';
 
 const routes: Routes = [
   { path: '', component: StartpagePreviewListComponent },
@@ -44,6 +45,7 @@ const routes: Routes = [
     component: HomepageComponent,
     children: [
       { path: 'userProfile', component: UserprofileComponent },
+      { path: 'entityList', component: EntityListComponent },
       { path: '', redirectTo: 'userProfile', pathMatch: 'full' },
     ],
   },
