@@ -16,10 +16,6 @@ html *{
     margin-top: 25px;
 }
 
-#Bio {
-    margin-top: 80px;
-}
-
 #features {
     text-align: center;
 }
@@ -306,4 +302,52 @@ img.rounded {
     justify-content: center;
 }
 
+#options {
+    margin-top: 25px;
+}
 
+#search {
+    margin-top: 25px;
+}
+
+.title {
+    margin-top: 30px;
+    margin-bottom: 25px;
+    min-height: 32px;
+    color: #3C4858;
+    font-weight: 700;
+}
+
+.mat-button-toggle{
+    background-color: #3F51B5;
+    color: #ffffff;
+}
+
+.mat-button-toggle:hover {
+    background-color: transparent;
+    transition: 0.5s;
+    opacity: 0.6;
+    color: #3F51B5 !important;    
+}
+
+.mat-button-toggle-checked {
+    background-color: #ec2c4c;
+    color: #67ec79 !important;
+}
+
+.details{
+    display: grid;
+    grid-template-columns: 15% 35% 15% 35%;
+    justify-content: center;
+    align-items: center;
+}
+
+.details h5{
+    text-align: end;
+    padding: 10px;
+}
+.details h4 {
+    color: #999;
+    text-align: center;
+    text-decoration: bold;
+}

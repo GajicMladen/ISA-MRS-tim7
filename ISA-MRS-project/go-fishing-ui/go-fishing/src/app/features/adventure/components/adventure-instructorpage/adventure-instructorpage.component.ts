@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { User } from 'src/app/shared/classes/user';
 import { UserService } from 'src/app/shared/services/users-services/user.service';
@@ -109,6 +110,11 @@ export class AdventureInstructorpageComponent implements OnInit {
   instructorId: number;
   instructor: User = new User();
   adventures: Adventure[];
+  adventuresInitial: Adventure[];
+  adventuresFiltered: Adventure[];
+  form: FormGroup = new FormGroup({
+    searchBar: new FormControl(''),
+  });
 
   constructor(private route: ActivatedRoute, private userService: UserService, private adventureService: AdventureService) { }
 
@@ -121,7 +127,7 @@ export class AdventureInstructorpageComponent implements OnInit {
 
       this.adventureService.getAdventuresOfInstructor(this.instructorId).subscribe(adventures => {
         this.adventures = adventures;
-        console.log(adventures);
+        this.adventuresInitial = JSON.parse(JSON.stringify(adventures));
       })
       })
     }
@@ -129,6 +135,26 @@ export class AdventureInstructorpageComponent implements OnInit {
 
   OnAdventureDeleted(id: string) {
     document.getElementById(id)?.remove();
+  }
+
+  ChangeList() {
+    this.adventures = this.adventures.slice(0, -1);
+  }
+
+  onKeyupEvent(event: any) {
+    this.adventuresFiltered = [];
+    this.adventures = this.adventuresInitial;
+    console.log(event.target.value);
+    if (event.target.value === '') {
+      this.adventures = this.adventuresInitial;
+    } else {
+      for (let ii = 0; ii < this.adventures.length; ii++) {
+        if (this.adventures[ii].name.toLowerCase().includes(event.target.value.toLowerCase())){
+          this.adventuresFiltered.push(this.adventures[ii]);
+        }
+      }
+      this.adventures = this.adventuresFiltered;
+    }
   }
 
 }
