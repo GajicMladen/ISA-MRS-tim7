@@ -13,6 +13,8 @@ import tim7.ISAMRSproject.model.Boat;
 import tim7.ISAMRSproject.model.Cottage;
 import tim7.ISAMRSproject.service.BoatService;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -29,5 +31,18 @@ public class BoatController {
         if(boat.isPresent())
             return new ResponseEntity<>(new BoatDTO(boat.get()), HttpStatus.OK);
         return new ResponseEntity<>(null,HttpStatus.NO_CONTENT);
+    }
+
+    @GetMapping(value = "/owner/{id}")
+    public ResponseEntity<List<BoatDTO>> getOwnerCottages(@PathVariable int id){
+
+        List<Boat> boats = boatService.getBoatsByOwnerId(id);
+        List<BoatDTO> boatsDTOS = new ArrayList<BoatDTO>();
+
+        for (Boat boat : boats) {
+            boatsDTOS.add(new BoatDTO(boat));
+        }
+
+        return new ResponseEntity<>(boatsDTOS,HttpStatus.OK);
     }
 }
