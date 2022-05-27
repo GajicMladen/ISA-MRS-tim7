@@ -20,6 +20,10 @@ export class FreePeriodService {
     return this.http.post(this.freePeriodsUrl+"/addFreePeriod",JSON.stringify(freePeriod),{headers : new HttpHeaders({ 'Content-Type': 'application/json' }),responseType:'text'});
   }
 
+  public addFreePeriodAdventure(freePeriod: FreePeriodSendDTO) {
+    return this.http.post(this.freePeriodsUrl + "/addPeriodAdventure", JSON.stringify(freePeriod), {headers: new HttpHeaders({ 'Content-Type': 'application/json' }), responseType:'text'});
+  }
+
   public getFreePeriodsForOffer(offerId:number):Observable<FreePeriodDTO[]>{
     let data = this.http.get<FreePeriodReciveDTO[]>(this.freePeriodsUrl+"/getFreePeriods/"+offerId);
     let res: FreePeriodDTO[] = [];

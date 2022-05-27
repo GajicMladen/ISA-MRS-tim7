@@ -4,8 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tim7.ISAMRSproject.dto.FreePeriodDTO;
+import tim7.ISAMRSproject.model.Adventure;
 import tim7.ISAMRSproject.model.Cottage;
 import tim7.ISAMRSproject.model.FreePeriod;
+import tim7.ISAMRSproject.repository.AdventureRepository;
 import tim7.ISAMRSproject.repository.CottageRepository;
 import tim7.ISAMRSproject.repository.FreePeriodRepository;
 import tim7.ISAMRSproject.repository.InstructorRepository;
@@ -23,6 +25,9 @@ public class FreePeriodService {
 
     @Autowired
     private CottageRepository cottageRepository;
+    
+    @Autowired
+    private AdventureRepository adventureRepository;
 
 
     public List<FreePeriod> getFreePeriodByOfferId(int id){
@@ -54,4 +59,17 @@ public class FreePeriodService {
 
         freePeriodRepository.deleteById(id);
     }
+
+	public boolean addFreePeriodAdventure(FreePeriodDTO freePeriodDTO) {
+		
+		LocalDateTime startDate = freePeriodDTO.getStartDate();
+        LocalDateTime endDate = freePeriodDTO.getEndDate();
+        Optional<Adventure> adventure = adventureRepository.findById(freePeriodDTO.getOfferId());
+        if (adventure.isPresent()) {
+        	freePeriodRepository.save(new FreePeriod(startDate, endDate, adventure.get()));
+        	return true;
+        }
+        return false;
+		
+	}
 }
