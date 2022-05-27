@@ -56,24 +56,48 @@
 
             </div>
             <br/>
-
             
-            <!-- Password -->
-            <mat-form-field (click)="passwordError=false">
-                <input matInput type="password" placeholder="Lozinka" name="password" [(ngModel)]="password">
-                <div class="text-danger" *ngIf="passwordError">
-                    Broj karaktera mora biti veći od 8 i manji od 30!
-                </div>
-            </mat-form-field>
+            <!-- Button trigger modal -->
+            <!--<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+                Promeni lozinku
+            </button>-->
+            <button mat-raised-button style="width: 150px;" data-toggle="modal" data-target="#exampleModalCenter">Promeni lozinku</button>
+  
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h2 class="modal-title text-center" id="exampleModalLongTitle">Promena lozinke</h2>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <!-- Password -->
+                            <mat-form-field (click)="passwordError=false">
+                                <input matInput type="password" placeholder="Nova lozinka" name="password" [(ngModel)]="password">
+                                <div class="text-danger" *ngIf="passwordError">
+                                    Broj karaktera mora biti veći od 8 i manji od 30!
+                                </div>
+                            </mat-form-field>
 
-            <!-- Confirm Password -->
-            <mat-form-field (click)="confirmPasswordError=false">
-                <input matInput type="password" placeholder="Potvrdi lozinku" name="confirmPassword" [(ngModel)]="confirmPassword">
-                <div class="text-danger" *ngIf="confirmPasswordError">
-                    Lozinke se ne poklapaju!
+                            <!-- Confirm Password -->
+                            <mat-form-field (click)="confirmPasswordError=false">
+                                <input matInput type="password" placeholder="Potvrdi lozinku" name="confirmPassword" [(ngModel)]="confirmPassword">
+                                <div class="text-danger" *ngIf="confirmPasswordError">
+                                    Lozinke se ne poklapaju!
+                                </div>
+                            </mat-form-field>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Nazad</button>
+                            <button type="button" class="btn btn-primary" (click)="ChangePassword()">Izmeni</button>
+                        </div>
+                    </div>
                 </div>
-            </mat-form-field>
-            <br />
+            </div>
+
             <div class="buttons">
                 <a routerLink="/instructorProfile/{{instructor.id}}" routerLinkActive="active"><button mat-raised-button class="" color="warn" type="button">Nazad</button></a>
                 <button mat-raised-button color="primary" type="button" (click)="UpdateData()">Izmeni</button>

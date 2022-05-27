@@ -88,6 +88,17 @@ export class AdventureInstructorEditComponent implements OnInit {
     }
   }
 
+  ChangePassword() {
+    var passwordErr = this.passwordHasError();
+    var confirmPasswordErr = this.confirmPasswordHasError();
+    if (!passwordErr && !confirmPasswordErr ) {
+      this.adventureService.changePassword(this.instructorId, {newPassword: this.password, confirmNewPassword: this.confirmPassword}).subscribe(data => {
+        this.messageService.showMessage("Lozinka uspešno izmenjena", MessageType.SUCCESS);
+      });
+    }
+
+  }
+
   CheckForErrors(): boolean {
     var nameErr = this.nameHasError();
     var surnameErr = this.surnameHasError();
@@ -95,10 +106,8 @@ export class AdventureInstructorEditComponent implements OnInit {
     var cityErr = this.cityHasError();
     var countryErr = this.countryHasError();
     var phoneErr = this.phoneHasError();
-    var passwordErr = this.passwordHasError();
-    var confirmPasswordErr = this.confirmPasswordHasError();
     var locationErr = this.locationHasError();
-    if (nameErr || surnameErr || cityErr || streetErr || countryErr || phoneErr || passwordErr || confirmPasswordErr || locationErr) {
+    if (nameErr || surnameErr || cityErr || streetErr || countryErr || phoneErr || locationErr) {
       return true;
     }
     else {
@@ -171,11 +180,9 @@ export class AdventureInstructorEditComponent implements OnInit {
     return false;
   }
   passwordHasError(): boolean {
-    if (this.password !== '') {
-      if (this.password.length < 8 || this.password.length > 30) {
-        this.passwordError = true;
-        return true;
-      }
+    if (this.password.length < 8 || this.password.length > 30) {
+      this.passwordError = true;
+      return true;
     }
     return false;
   }
