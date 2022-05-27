@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { User } from 'src/app/shared/classes/user';
+import { MessageService, MessageType } from 'src/app/shared/services/message-service/message.service';
 import { UserService } from 'src/app/shared/services/users-services/user.service';
 import { AdventureService } from '../../adventure.service';
 import { Adventure } from '../../classes/adventure';
@@ -115,8 +116,12 @@ export class AdventureInstructorpageComponent implements OnInit {
   form: FormGroup = new FormGroup({
     searchBar: new FormControl(''),
   });
+  deletionForm: FormGroup = this.createDeletionForm();
 
-  constructor(private route: ActivatedRoute, private userService: UserService, private adventureService: AdventureService) { }
+  constructor(private route: ActivatedRoute,
+              private userService: UserService,
+              private adventureService: AdventureService,
+              private messageService: MessageService) { }
 
   ngOnInit(): void {
     this.instructorId = Number(this.route.snapshot.paramMap.get('id'));
@@ -131,6 +136,24 @@ export class AdventureInstructorpageComponent implements OnInit {
       })
       })
     }
+  }
+
+  DeleteProfile() {
+    if (this.deletionForm.getRawValue().deletionReason.length < 10){
+      this.messageService.showMessage('Unesite bar 10 karaktera!', MessageType.WARNING);
+      return;
+    }
+    else {
+      this.adventureService.sendDeletionRequest(this.instructorId, this.deletionForm.getRawValue()).subscribe(data => {
+          this.messageService.showMessage('Zahtev uspešno poslat!', MessageType.SUCCESS);
+        });
+    }
+  }
+
+  createDeletionForm(): FormGroup {
+    return new FormGroup({
+      deletionReason: new FormControl('', Validators.required),
+    });
   }
 
   OnAdventureDeleted(id: string) {

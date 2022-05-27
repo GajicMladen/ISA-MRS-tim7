@@ -46,14 +46,16 @@ export class AdventureInstructorEditComponent implements OnInit {
       this.userService.findById(this.instructorId).subscribe(user => {
         this.instructor = user;
         this.instructorOld = JSON.parse(JSON.stringify(user));
-        console.log(this.instructor)
+        console.log(this.instructor);
+        let loader = new Loader({
+          apiKey: "AIzaSyAPNK7vqFqOCb5Lu1B0j--zFj4ws4czwGQ"
+        });
+        this.LoadMap(loader);
       })
     }
+  }
 
-    let loader = new Loader({
-      apiKey: "AIzaSyAPNK7vqFqOCb5Lu1B0j--zFj4ws4czwGQ"
-    })
-
+  LoadMap(loader: Loader) {
     loader.load().then(() => {
       const map = document.getElementById("map") as HTMLElement;
       const googleMap = new google.maps.Map(map, {
@@ -64,6 +66,8 @@ export class AdventureInstructorEditComponent implements OnInit {
         position: {lat: Number(this.instructor.latitude), lng: Number(this.instructor.longitude)},
         map: googleMap,
       });
+      console.log(this.instructor.latitude);
+      console.log(this.instructor.longitude);
       // Configure the click listener.
       googleMap.addListener("click", (mapsMouseEvent: { latLng: any; }) => {
         console.log(JSON.stringify(mapsMouseEvent.latLng).slice(2, -1).split(","));
@@ -77,8 +81,6 @@ export class AdventureInstructorEditComponent implements OnInit {
 
     })
   }
-
-  
 
   UpdateData() {
     if (!this.CheckForErrors()) {
