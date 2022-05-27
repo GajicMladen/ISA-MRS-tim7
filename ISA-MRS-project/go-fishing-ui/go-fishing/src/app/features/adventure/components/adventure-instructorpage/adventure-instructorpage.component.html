@@ -35,8 +35,37 @@
             <mat-button-toggle routerLink="/editInstructor/{{instructor.id}}" routerLinkActive="active"><mat-icon>edit</mat-icon> Izmena podataka</mat-button-toggle>
             <mat-button-toggle><mat-icon>calendar_today</mat-icon> Kalendar</mat-button-toggle>
             <mat-button-toggle><mat-icon>book</mat-icon> Rezervacije</mat-button-toggle>
-            <mat-button-toggle><mat-icon>delete</mat-icon> Obriši profil</mat-button-toggle>
+            <mat-button-toggle data-toggle="modal" data-target="#exampleModalCenter"><mat-icon>delete</mat-icon> Obriši profil</mat-button-toggle>
           </mat-button-toggle-group>
+          <!-- Modal -->
+          <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h2 class="modal-title" id="exampleModalLongTitle">Brisanje naloga</h2>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <p>Ako želite podneti zahtev za brisanje profila morate uneti razlog za brisanje.</p>
+                  <p>Vaš zahtev biće prosleđen administratoru koji će u najkraćem roku na njega odgovoriti. </p>
+                  <p>Dobićete imejl o njegovoj odluci.</p>
+                  <p style="font-weight: bold;">Molimo vas da još jednom razmislite o brisanju naloga!</p>
+                  <form [formGroup]="deletionForm">
+                    <!-- New Password -->
+                    <mat-form-field style="margin-top: 30px; width: 100%;">
+                        <textarea matInput placeholder="Vaš razlog..." formControlName="deletionReason" name="deletionReason"></textarea>
+                    </mat-form-field>
+                </form>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Nazad</button>
+                  <button type="button" class="btn btn-primary" (click)="DeleteProfile()">Obriši</button>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

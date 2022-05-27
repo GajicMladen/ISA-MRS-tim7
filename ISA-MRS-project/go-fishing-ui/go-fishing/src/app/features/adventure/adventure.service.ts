@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { User } from 'src/app/shared/classes/user';
 import { Adventure } from './classes/adventure';
@@ -44,6 +45,12 @@ export class AdventureService {
   public changePassword(instructorId: number, data: any) {
     return this.http.post(this.adventureUrl + '/instructor/passwordChange/' + instructorId, data, {
       headers: { 'Content-Type': 'application/json' },
+    });
+  }
+
+  public sendDeletionRequest(instructorId: number, data: FormGroup){
+    return this.http.post(this.adventureUrl + '/instructor/delete/' + instructorId, data, {
+      headers: {'Content-Type': 'application/json' }
     });
   }
 }

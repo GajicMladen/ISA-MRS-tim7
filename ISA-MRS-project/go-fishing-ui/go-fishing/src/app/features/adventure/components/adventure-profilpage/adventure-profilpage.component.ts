@@ -64,13 +64,16 @@ export class AdventureProfilpageComponent implements OnInit {
       this.adventureService.getAdventureById(this.adventureId).subscribe(adventure =>{
         this.adventure = adventure;
         console.log(adventure);
+        let loader = new Loader({
+          apiKey: "AIzaSyAPNK7vqFqOCb5Lu1B0j--zFj4ws4czwGQ"
+        });
+        this.LoadMap(loader);
       })
     }
+    
+  }
 
-    let loader = new Loader({
-      apiKey: "AIzaSyAPNK7vqFqOCb5Lu1B0j--zFj4ws4czwGQ"
-    });
-
+  LoadMap(loader: Loader) {
     loader.load().then(() => {
       const map = document.getElementById("map") as HTMLElement;
       const googleMap = new google.maps.Map(map, {
@@ -82,7 +85,6 @@ export class AdventureProfilpageComponent implements OnInit {
         map: googleMap,
       });
     });
-    
   }
 
   onImageClick(i: number): void {
