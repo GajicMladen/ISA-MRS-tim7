@@ -53,4 +53,8 @@ export class AdventureService {
       headers: {'Content-Type': 'application/json' }
     });
   }
+
+  public getAdventureIds(instructorId: number) {
+    return this.http.get(this.adventureUrl + '/instructor/adventuresId/' + instructorId);
+  }
 }

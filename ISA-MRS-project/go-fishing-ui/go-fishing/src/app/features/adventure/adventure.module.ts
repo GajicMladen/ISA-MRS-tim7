@@ -13,6 +13,7 @@ import { AdventureInstructorEditComponent } from './components/adventure-instruc
 import { RouterModule } from '@angular/router';
 import { AdventureEditComponent } from './components/adventure-edit/adventure-edit.component';
 import { AdventureFreePeriodComponent } from './components/adventure-free-period/adventure-free-period.component';
+import { AdventureInstructorCalendarComponent } from './components/adventure-instructor-calendar/adventure-instructor-calendar.component';
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import { AdventureFreePeriodComponent } from './components/adventure-free-period
     AdventureAddNewComponent,
     AdventureInstructorEditComponent,
     AdventureEditComponent,
-    AdventureFreePeriodComponent
+    AdventureFreePeriodComponent,
+    AdventureInstructorCalendarComponent
   ],
   imports: [
     CommonModule,

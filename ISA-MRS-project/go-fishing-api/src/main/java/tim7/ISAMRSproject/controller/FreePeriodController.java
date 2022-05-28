@@ -11,6 +11,7 @@ import tim7.ISAMRSproject.model.FreePeriod;
 import tim7.ISAMRSproject.service.FreePeriodService;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 @RestController
@@ -31,6 +32,21 @@ public class FreePeriodController {
         }
         return ret;
     }
+    
+    @GetMapping(value = "/getFreePeriodsFromIds/{ids}")
+	public List<FreePeriodDTO> getFreePeriodsFromIds(@PathVariable String ids) {
+		List<FreePeriodDTO> freePeriods = new ArrayList<FreePeriodDTO>();
+		String[] offerIds = ids.split(",");
+		for (String i : offerIds) {
+			int id = Integer.parseInt(i);
+			List<FreePeriod> fr = freePeriodService.getFreePeriodByOfferId(id);
+			for (FreePeriod f: fr) {
+				freePeriods.add(new FreePeriodDTO(f));
+			}
+		}
+		
+		return freePeriods;
+	}
 
 
     @PostMapping(value = "/addFreePeriod",consumes = MediaType.APPLICATION_JSON_VALUE)

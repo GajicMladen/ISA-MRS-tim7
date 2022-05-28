@@ -144,4 +144,18 @@ public class AdventureController {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Nepostojeći korisnik!");
 		}
 	}
+	
+	@GetMapping(value = "/instructor/adventuresId/{id}")
+	public ResponseEntity<List<Integer>> getInstructorAdventuresId(@PathVariable int id){
+		
+		List<Adventure> adventures = adventureService.getAdventuresByInstructorId(id);
+		List<Integer> adventuresId = new ArrayList<Integer>();
+		
+	
+		for (Adventure a : adventures) {
+			adventuresId.add(a.getId());
+		}
+		
+		return new ResponseEntity<>(adventuresId, HttpStatus.OK);
+	}
 }

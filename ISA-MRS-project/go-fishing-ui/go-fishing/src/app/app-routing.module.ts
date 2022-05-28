@@ -25,6 +25,7 @@ import { CalendarComponent } from './shared/components/calendarPage/calendar.com
 
 import { AdventureEditComponent } from './features/adventure/components/adventure-edit/adventure-edit.component';
 import { AdventureFreePeriodComponent } from './features/adventure/components/adventure-free-period/adventure-free-period.component';
+import { AdventureInstructorCalendarComponent } from './features/adventure/components/adventure-instructor-calendar/adventure-instructor-calendar.component';
 const routes: Routes = [
   { path: '', component: StartpagePreviewListComponent },
   { path: 'login', component: StartpageLoginComponent },
@@ -57,6 +58,7 @@ const routes: Routes = [
   { path: 'adventureAddNew/:id', component: AdventureAddNewComponent },
   { path: 'instructorProfile/:id', component: AdventureInstructorpageComponent },
   { path: 'addFreePeriod/:id', component: AdventureFreePeriodComponent },
+  { path: 'instructorCalendar/:id', component: AdventureInstructorCalendarComponent },
 
   { path: 'newFreePeriod/:id' ,component: NewFreePeriodComponent },
   { path: 'calendar/:id' ,component: CalendarComponent },
