@@ -12,10 +12,12 @@ import { CalendarComponent } from './components/calendarPage/calendar.component'
 import { DemoModule } from './components/MyCalendar/demo/module';
 import { DemoComponent } from './components/MyCalendar/demo/component';
 import { OfferInfoComponent } from './components/offer-info/offer-info.component';
+import { NewActionComponent } from './components/new-action/new-action.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
-  declarations: [NavbarComponent, EditProfileComponent, MessageComponent, NewFreePeriodComponent, CalendarComponent, OfferInfoComponent],
-  imports: [CommonModule, RouterModule, MaterialModule, FontAwesomeModule,NgbModule,DemoModule],
+  declarations: [NavbarComponent, EditProfileComponent, MessageComponent, NewFreePeriodComponent, CalendarComponent, OfferInfoComponent, NewActionComponent],
+  imports: [CommonModule, RouterModule, MaterialModule, FontAwesomeModule,NgbModule,DemoModule,FormsModule],
   exports: [NavbarComponent, MaterialModule, EditProfileComponent,DemoComponent,OfferInfoComponent],
 })
 export class SharedModule {}

@@ -6,5 +6,6 @@ public enum ReservationStatus {
 	ACTIVE,
 	IN_PROCESS,
 	ENDED,
-	CANCELED
+	CANCELED,
+	FOR_ACTION
 }

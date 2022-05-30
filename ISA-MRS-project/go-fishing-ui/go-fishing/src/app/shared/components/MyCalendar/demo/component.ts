@@ -13,6 +13,7 @@ import {
 import { MonthViewDay } from 'calendar-utils';
 import { Subject } from 'rxjs';
 import { FreePeriodDTO } from 'src/models/freePeriod';
+import { ActionDTO } from 'src/models/reservation';
 
 @Component({
   selector: 'mwl-demo-component',
@@ -39,14 +40,20 @@ export class DemoComponent {
   refresh = new Subject<void>();
 
   @Input() freePeriods: FreePeriodDTO[];
+  @Input() actions: ActionDTO[];
 
   beforeMonthViewRender(renderEvent: CalendarMonthViewBeforeRenderEvent): void {
     console.log(this.freePeriods.length);
+    console.log(">>>>>>>");
+    console.log(this.actions.length);
+    
     renderEvent.body.forEach((day) => {
       const dayOfMonth = day.date.getDate();
       if ( this.freePeriods.length > 0 && this.isDayInFreePeriods(day)) {
         day.cssClass = 'bg-pink';
-        console.log("ovde");
+      }
+      if( this.actions.length > 0 && this.isDayInActions(day)){
+        day.cssClass = 'bg-pink';
       }
     });
   }
@@ -69,14 +76,26 @@ export class DemoComponent {
       
       if( day_S >= startDate && day_S <= endDate){
         res = true;
-        console.log(day_S);
-      console.log(startDate +"-" + endDate);
-      console.log("==========");
       }
     });
     return res;
   }
 
+  isDayInActions(day:MonthViewDay<any>):boolean{
+
+    let res = false;
+    let day_S = day.date.getFullYear()+"-"+this.getFullNumber(day.date.getMonth()+1)+"-"+this.getFullNumber(day.date.getDate());
+  
+    this.actions.forEach(action => {
+      let startDate = action.startDate.year+"-"+this.getFullNumber(action.startDate.month)+"-"+this.getFullNumber(action.startDate.day);
+      let endDate = action.endDate.year+"-"+this.getFullNumber(action.endDate.month)+"-"+this.getFullNumber(action.endDate.day);
+      
+      if( day_S >= startDate && day_S <= endDate){
+        res = true;
+      }
+    });
+    return res;
+  }
   getFullNumber(x:number):string{
     if(x<10)
       return "0"+x;
