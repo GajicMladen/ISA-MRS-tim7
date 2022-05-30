@@ -1,0 +1,157 @@
+<div class="container-fluid mt-2 mb-3">
+    <div class="row no-gutters">
+        <div class="col-md-6 pr-2">
+            
+            <div class="card">
+                <div class="demo">
+                    <ul class="lightSlider">
+                        <li data-thumb=""> <img id="mainImage" style="width: 145%;" src="{{adventure1.images[0]}}" /> </li>
+                    </ul>
+                    
+                    <div class="card mt-2" style="padding: 1px; margin-left: -5px; padding-right: 5px;"> 
+                        <div class="similar-products mt-2 d-flex flex-row">
+                            
+                            <div *ngFor="let image of adventure1.images; index as i">
+                                <div (click)="onImageClick(i)" class="card border p-1" style="width: 9rem;margin-right: 3px;"> <img src="{{adventure1.images[i]}}" class="card-img-top" alt="...">
+                                    <div class="card-body">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+
+            <!--
+            <div id="demo" class="carousel slide" data-ride="carousel">
+
+                Indicators 
+                <ul class="carousel-indicators">
+                  <div *ngFor="let image of adventure.images; index as i">
+                    <div *ngIf="i === 0">
+                        <li data-target="#demo" data-slide-to="0" class="active"></li>
+                    </div>
+                    <div *ngIf="i !== 0">
+                        <li data-target="#demo" data-slide-to="i"></li>
+                    </div>
+                  </div>
+                </ul>
+                
+                The slideshow
+                <div class="carousel-inner">
+                  <div *ngFor="let image of adventure.images; index as i">
+                    <div class="carousel-item active">
+                        <img src="{{adventure.images[i]}}" alt="...">
+                    </div>
+                  </div>
+                </div>
+              
+                Left and right controls
+                <a class="carousel-control-prev" href="#demo" data-slide="prev">
+                  <span class="carousel-control-prev-icon"></span>
+                </a>
+                <a class="carousel-control-next" href="#demo" data-slide="next">
+                  <span class="carousel-control-next-icon"></span>
+                </a>
+              
+              </div>
+            -->
+
+
+            <div class="card mt-2">
+                <h6>Utisci</h6>
+                <div class="d-flex flex-row">
+                    <div class="stars"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> </div> <span class="ml-1 font-weight-bold">4.6</span>
+                </div>
+                <hr>
+                <div class="badges"> <span class="badge bg-light ">All (230)</span> <span class="badge bg-light "> <i class="fa fa-image"></i> 23 </span> <span class="badge bg-light "> <i class="fa fa-comments-o"></i> 23 </span> <span class="badge bg-warning"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <span class="ml-1">2,123</span> </span> </div>
+                <hr>
+                <div class="comment-section">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="d-flex flex-row align-items-center"> <img src="https://i.imgur.com/o5uMfKo.jpg" class="rounded-circle profile-image">
+                            <div class="d-flex flex-column ml-1 comment-profile">
+                                <div class="comment-ratings"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> </div> <span class="username">Lori Benneth</span>
+                            </div>
+                        </div>
+                        <div class="date"> <span class="text-muted">2 May</span> </div>
+                    </div>
+                    <hr>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="d-flex flex-row align-items-center"> <img src="https://i.imgur.com/tmdHXOY.jpg" class="rounded-circle profile-image">
+                            <div class="d-flex flex-column ml-1 comment-profile">
+                                <div class="comment-ratings"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> </div> <span class="username">Timona Simaung</span>
+                            </div>
+                        </div>
+                        <div class="date"> <span class="text-muted">12 May</span> </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="d-flex flex-row align-items-center">
+                    <div class="p-ratings"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> </div> <span class="ml-1">5.0</span>
+                </div>
+                <div class="about"> <h1 class="font  font-weight-bold">{{adventure.name}}</h1>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h2 class="font-weight-bold" id="price">{{adventure.price | currency}}</h2>
+                        </div>
+                        <div class="col-md-6">
+                                <div class="mt-2"> <span class="font-weight-bold">Instruktor</span> </div>
+                                <div class="d-flex flex-row align-items-center"> <img src="https://i.imgur.com/LZ1Xa9r.jpeg" class="rounded-circle store-image">
+                                    <div class="d-flex flex-column ml-1 comment-profile">
+                                        <div class="comment-ratings"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> </div> <span class="username">{{adventure.instructorName + " " + adventure.instructorSurname}}</span> <small class="followers">5 Followers</small>
+                                    </div>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="buttons">
+                    <a routerLink="/adventureReservation" routerLinkActive="active">
+                        <button class="btn btn-outline-warning btn-long cart" id="button">Rezerviši</button>
+                    </a>
+                        <button class="btn btn-warning btn-long buy" id="button"><i class="fa fa-calendar-check-o"></i> Proveri dostupnost </button> <button class="btn btn-light wishlist" id="button"> <i class="fa fa-heart"></i> </button> </div>
+                <hr>
+                <div class="product-description">
+                    <div><span class="font-weight-bold">Maksimalan broj osoba na avanturi:</span><span> {{adventure.capacity}}</span></div>
+                    <br />
+                    <div class="mt-2"> <span class="font-weight-bold">Opis</span>
+                        <p>
+                            {{adventure.promoDescription}}
+                            <br />
+                            <br />
+                            {{adventure.instructorBiography}}
+                            <br />
+                        </p>           
+                        <div class="bullets">
+                            <span class="font-weight-bold">Dostupna oprema</span>
+                            <div *ngFor="let e of adventure.equipment.split('|')">
+                                <div class="d-flex align-items-center"> <span class="dot"></span> <span class="bullet-text">{{e}}</span> </div>
+                            </div>
+                            <br />
+                            <span class="font-weight-bold">Pravila ponašanja</span>
+                            <div *ngFor="let rule of adventure.rulesOfConduct.split('|')">
+                                <div class="d-flex align-items-center"> <span class="dot"></span> <span class="bullet-text">{{rule}}</span> </div>
+                            </div> 
+                            <br />
+                            <span class="font-weight-bold">Informacije</span>
+                            <div>{{adventure.moreInfo}}</div>
+                            <br />
+                            <span class="font-weight-bold">Uslovi otkaza rezervacije</span>
+                            <div>{{adventure.rulesOfCancelation}}</div>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <span class="font-weight-bold">Lokacija</span>
+                <div>{{adventure.street}}, {{adventure.city}}, {{adventure.country}}</div>
+                <div class="full" id="map">
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>

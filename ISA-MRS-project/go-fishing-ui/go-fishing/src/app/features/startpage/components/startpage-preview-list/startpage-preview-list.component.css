@@ -1,0 +1,28 @@
+.center-align{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 20em;
+}
+
+.title{
+    text-align: center;
+    margin-top: 10px;
+}
+
+.mat-list-base.inline-list {
+    display: flex;
+}
+
+mat-list {
+    height: 550px;
+}
+
+.card-content{
+    min-width: 300px;
+    margin-top:450px;
+}
+
+img {
+    max-height: 250px;
+}
