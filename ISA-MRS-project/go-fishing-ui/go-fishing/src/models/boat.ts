@@ -1,6 +1,7 @@
 import { Offer } from './offer';
 
 export interface Boat extends Offer {
+  ownerId:number;
   boatType: string;
   length: number;
   numOfEngines: number;

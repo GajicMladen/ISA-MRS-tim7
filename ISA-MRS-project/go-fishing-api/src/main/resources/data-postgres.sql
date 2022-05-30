@@ -24,13 +24,21 @@ INSERT INTO public.users(active, deleted, email, lastname, name, password, phone
 INSERT INTO public.users(active, deleted, email, lastname, name, password, phone, loyalty_points, address_id) VALUES
 					(true, false, 'pera.peric.1912@gmail.com', 'Peric', 'Pera', '$2a$10$XeS1WZloSVVq2Z2dJd3L7ePADJy51sWu/oLqcy.Qcmppr6VcUtcr6', '+381642222111', 0, 3);
 					
-					
-INSERT INTO public.cottage_owners(
-	id)
-	VALUES (2);
+
+INSERT INTO public.users(active, deleted, email, lastname, name, password, phone, address_id) VALUES
+					(true, false, 'nb@gmail.com', 'Bajagic', 'NIkola', '$2a$10$XeS1WZloSVVq2Z2dJd3L7ePADJy51sWu/oLqcy.Qcmppr6VcUtcr6', '+38161234432', 1);
+
+INSERT INTO public.users(active, deleted, email, lastname, name, password, phone, address_id) VALUES
+					(true, false, 'mb@gmail.com', 'Bajagic', 'Marko', '$2a$10$XeS1WZloSVVq2Z2dJd3L7ePADJy51sWu/oLqcy.Qcmppr6VcUtcr6', '+381659997778', 1);
+
+INSERT INTO public.cottage_owners(id) VALUES (2);
+
 	
 INSERT INTO public.fishing_instructor (id) VALUES (3);
 INSERT INTO public.fishing_instructor (id) VALUES (4);
+
+INSERT INTO public.boat_owner(id) VALUES (5);
+INSERT INTO public.boat_owner(id) VALUES (6);
 
 INSERT INTO ROLE (name) VALUES ('ROLE_USER');
 INSERT INTO ROLE (name) VALUES ('ROLE_ADMIN');
@@ -76,6 +84,21 @@ INSERT INTO public.offer(
 	 price, capacity, name, promo_description , address)
 	VALUES ( 49.99, 10, 'Casovi pecanja', 'Nezaboravno iskustvo na Drini! Iskusite sve čari drinskog ribolova. Neopisiva lepota jedne od najbržih evropskih reka će vas ostavitit bez daha. Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde natus, sunt sed maxime ut accusamus dignissimos veniam inventore debitis consequatur temporibus odio facere nobis, tenetur deserunt aut fugit distinctio recusandae.', 3);
 
+INSERT INTO public.offer(
+	 price, capacity, name, promo_description , address)
+	VALUES ( 125, 25, 'Flash boat', 'S ovim dobro poznatim brendom možete se otisnuti na dalju, bezbednu i prijatnu putešestviju, ili jednostavno užitati u plivanju i pecanju s porodicom i prijateljima.Pametna prostorna rešenja i robustnost sinonimi su za ovaj švedski motorni kruzer. Svakog gosta dočekaće piće dobrodošlice i snekovi. Kapetanovi lokalni specijaliteti dostupni su na zahtev'
+	, null);
+
+INSERT INTO public.offer(
+	 price, capacity, name, promo_description , address)
+	VALUES ( 150, 25, 'SEA ray 275', 'Ova motorna jahta prima do 8 ljudi. Prilično brzo ćete se odvesti van grada kako biste se prepustili uživanju u divljoj prirodi Save i Dunava.Ova udobna i luksuzna jahta opremljena je toaletom, kuhinjom i poseduje 4 ležaja. Posle nekoliko sati provedenih na ovom brodu sigurno ćete poželeti da se na njemu zadržite duže.'
+	, null);
+
+INSERT INTO public.offer(
+	 price, capacity, name, promo_description , address)
+	VALUES ( 96.7, 25, 'Monstery', 'Lepota luksuz i hedonizam zajednički su imenitelji ovog kruzera. Ako odlučite da iznenadite poslovnog , životnog partnera ili samog sebe,provedite nezaboravno vreme koje ćete ovekovečiti jedinstvenim fotografijama.Ovakvi doživljaji moraju ostati zabeleženi'
+	, null);
+
 	
 INSERT INTO public.Cottage(
 	id, owner_id,room_count,bed_count)
@@ -112,3 +135,15 @@ INSERT INTO public.Adventure(
 	VALUES (8, 3, 'Mika Mikić je iskusni ribolovac, gnjurac i plivač. Diplomirao je na fakultetu za sport i rekreaciju na Palama sa prosekom 9,56. Ovim poslom se bavi već 10 godina. Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores ullam quos, sit placeat labore voluptatem dignissimos officiis incidunt, perferendis eos porro nobis autem modi ab aliquam maiores. Dolorem, numquam quod.',
 			'Mamci|Mreza za pecanje|Stapovi|Varalice|Prsluci za spasavanje|Cizme|Dodatni camci|Kombinezoni', 'Avantura se održava dva puta dnevno. Prvi termin je u 9h, a drugi u 15h. Mesto okupljanja je gradska plaža. Avantura traje dva sata.', 'Zabranjeno bacanje smenja|Zabranjeno skakanje u vodu bez dozvole|Zabranjeno donosenje alkohola|Zabranjeno donosenje hrane|Zabranjeno pusenje',
 			'U slučaju otkazivanja instruktor zadržava 30% uplaćene sume.', false);
+
+INSERT INTO public.boat(
+	cancel_conditions, length, max_speed, motor_power, motors_count, type, id, boat_owner_id)
+	VALUES ('Uzimanje pola depozita', 23.2, 60, 35, 3, 'cruser', 9, 5);
+
+INSERT INTO public.boat(
+	cancel_conditions, length, max_speed, motor_power, motors_count, type, id, boat_owner_id)
+	VALUES ('Uzimanje pola depozita', 33, 20, 75, 3, 'cruser', 10, 5);
+
+INSERT INTO public.boat(
+	cancel_conditions, length, max_speed, motor_power, motors_count, type, id, boat_owner_id)
+	VALUES ('Uzimanje pola depozita', 15.7, 80, 98, 5, 'speeder', 11, 6);
