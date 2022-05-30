@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import {
+  faArrowRightFromBracket,
   faArrowRightToBracket,
   faHouseChimney,
   faUser,
 } from '@fortawesome/free-solid-svg-icons';
 import { filter } from 'rxjs/operators';
+import { StartpageLoginService } from 'src/app/features/startpage/components/startpage-login/startpage-login.service';
 
 @Component({
   selector: 'app-navbar',
@@ -16,12 +18,16 @@ export class NavbarComponent implements OnInit {
   loginIcon = faArrowRightToBracket;
   registerIcon = faUser;
   homeIcon = faHouseChimney;
+  logoutIcon = faArrowRightFromBracket;
 
   showLoginButton = true;
   showRegisterButton = true;
   showHomeButton = true;
 
-  constructor(private router: Router) {
+  constructor(
+    private router: Router,
+    private loginService: StartpageLoginService
+  ) {
     this.router.events
       .pipe(
         filter(
@@ -43,6 +49,10 @@ export class NavbarComponent implements OnInit {
       });
   }
 
+  get showLogoutButton() {
+    return localStorage.getItem('jwt') !== null;
+  }
+
   ngOnInit(): void {
     this.showHomeButton = false;
   }
@@ -57,5 +67,9 @@ export class NavbarComponent implements OnInit {
     this.showLoginButton = true;
     this.showRegisterButton = true;
     this.showHomeButton = false;
+  }
+
+  logout() {
+    this.loginService.logout();
   }
 }

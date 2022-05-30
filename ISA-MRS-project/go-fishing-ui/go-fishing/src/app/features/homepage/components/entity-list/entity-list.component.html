@@ -1,0 +1,22 @@
+<mat-card class="main-entity-card" style="overflow-y: hidden" *ngFor="let number of pageSlice">
+    <mat-card-title-group>
+        <mat-card-title>Test entity {{number}}</mat-card-title>
+        <mat-card-subtitle>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque praesentium minus labore expedita voluptas error nobis ipsum incidunt earum tempore obcaecati blanditiis natus, enim dolore harum pariatur reprehenderit consequuntur possimus maxime? Possimus itaque ratione quae officia a fugiat sit architecto mollitia beatae illum quas earum consectetur dolor blanditiis, voluptate quaerat!</mat-card-subtitle>
+        <img class="main-entity-image" src="../../../../../assets/images/boats/b1.jpg">
+    </mat-card-title-group>
+    <mat-card-actions style="text-align: center">
+        <p class="bottom-text" style="margin-bottom: 5px !important">Rating: 4.5/5</p>
+        <p class="bottom-text">Owner: Testko Testkovic</p>
+        <p class="bottom-text">Address: TestAddress</p>
+    </mat-card-actions>
+</mat-card>
+
+<div class="footer">
+    <mat-paginator [length]="allItems.length"
+                   [pageSize]="pageSize"
+                   [pageSizeOptions]="pageSizeOptions"
+                   (page)="onPageChange($event)"
+                   >
+    
+    </mat-paginator>
+</div>

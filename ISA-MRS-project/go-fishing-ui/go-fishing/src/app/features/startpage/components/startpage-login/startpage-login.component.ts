@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import {
   MessageService,
   MessageType,
@@ -18,7 +18,8 @@ export class StartpageLoginComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private messageService: MessageService,
-    private loginService: StartpageLoginService
+    private loginService: StartpageLoginService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -62,11 +63,7 @@ export class StartpageLoginComponent implements OnInit {
       .pipe()
       .subscribe(
         (res) => {
-          //TODO: Redirect na homepage.
-          this.messageService.showMessage(
-            'Login successful!',
-            MessageType.SUCCESS
-          );
+          this.router.navigate(['home']);
         },
         (error) => {
           this.messageService.showMessage(error, MessageType.ERROR);

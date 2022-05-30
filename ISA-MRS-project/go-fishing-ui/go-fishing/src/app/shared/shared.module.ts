@@ -6,6 +6,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { RouterModule } from '@angular/router';
 import { EditProfileComponent } from './components/edit-profile/edit-profile.component';
 import { MessageComponent } from './services/message-service/message.service';
+import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { NewFreePeriodComponent } from './components/new-free-period/new-free-period.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CalendarComponent } from './components/calendarPage/calendar.component';
@@ -19,5 +20,6 @@ import { FormsModule } from '@angular/forms';
   declarations: [NavbarComponent, EditProfileComponent, MessageComponent, NewFreePeriodComponent, CalendarComponent, OfferInfoComponent, NewActionComponent],
   imports: [CommonModule, RouterModule, MaterialModule, FontAwesomeModule,NgbModule,DemoModule,FormsModule],
   exports: [NavbarComponent, MaterialModule, EditProfileComponent,DemoComponent,OfferInfoComponent],
+
 })
 export class SharedModule {}

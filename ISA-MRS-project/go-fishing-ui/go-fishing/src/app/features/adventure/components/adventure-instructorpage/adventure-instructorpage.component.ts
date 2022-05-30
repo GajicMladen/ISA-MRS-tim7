@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { User } from 'src/app/shared/classes/user';
+import { MessageService, MessageType } from 'src/app/shared/services/message-service/message.service';
 import { UserService } from 'src/app/shared/services/users-services/user.service';
 import { AdventureService } from '../../adventure.service';
 import { Adventure } from '../../classes/adventure';
@@ -109,8 +111,17 @@ export class AdventureInstructorpageComponent implements OnInit {
   instructorId: number;
   instructor: User = new User();
   adventures: Adventure[];
+  adventuresInitial: Adventure[];
+  adventuresFiltered: Adventure[];
+  form: FormGroup = new FormGroup({
+    searchBar: new FormControl(''),
+  });
+  deletionForm: FormGroup = this.createDeletionForm();
 
-  constructor(private route: ActivatedRoute, private userService: UserService, private adventureService: AdventureService) { }
+  constructor(private route: ActivatedRoute,
+              private userService: UserService,
+              private adventureService: AdventureService,
+              private messageService: MessageService) { }
 
   ngOnInit(): void {
     this.instructorId = Number(this.route.snapshot.paramMap.get('id'));
@@ -121,14 +132,52 @@ export class AdventureInstructorpageComponent implements OnInit {
 
       this.adventureService.getAdventuresOfInstructor(this.instructorId).subscribe(adventures => {
         this.adventures = adventures;
-        console.log(adventures);
+        this.adventuresInitial = JSON.parse(JSON.stringify(adventures));
       })
       })
     }
   }
 
+  DeleteProfile() {
+    if (this.deletionForm.getRawValue().deletionReason.length < 10){
+      this.messageService.showMessage('Unesite bar 10 karaktera!', MessageType.WARNING);
+      return;
+    }
+    else {
+      this.adventureService.sendDeletionRequest(this.instructorId, this.deletionForm.getRawValue()).subscribe(data => {
+          this.messageService.showMessage('Zahtev uspešno poslat!', MessageType.SUCCESS);
+        });
+    }
+  }
+
+  createDeletionForm(): FormGroup {
+    return new FormGroup({
+      deletionReason: new FormControl('', Validators.required),
+    });
+  }
+
   OnAdventureDeleted(id: string) {
     document.getElementById(id)?.remove();
+  }
+
+  ChangeList() {
+    this.adventures = this.adventures.slice(0, -1);
+  }
+
+  onKeyupEvent(event: any) {
+    this.adventuresFiltered = [];
+    this.adventures = this.adventuresInitial;
+    console.log(event.target.value);
+    if (event.target.value === '') {
+      this.adventures = this.adventuresInitial;
+    } else {
+      for (let ii = 0; ii < this.adventures.length; ii++) {
+        if (this.adventures[ii].name.toLowerCase().includes(event.target.value.toLowerCase())){
+          this.adventuresFiltered.push(this.adventures[ii]);
+        }
+      }
+      this.adventures = this.adventuresFiltered;
+    }
   }
 
 }
