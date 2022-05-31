@@ -133,20 +133,20 @@
                         <div class="">
                             <div class="actions">
                                 <span class="font-weight-bold">Akcije za vikendicu:</span>
-                                <div class="card action-card-body">
-                                    <div class="media align-items-center align-items-lg-start text-center text-lg-left flex-column flex-lg-row">
+                                <div *ngFor="let action of actions" class="card action-card-body">
+                                    <div  class="media align-items-center align-items-lg-start text-center text-lg-left flex-column flex-lg-row">
                                         <div class="action-img"> <img src="https://i.imgur.com/GwiUmQA.jpg" alt=""> </div>
                     
                                         <div class="media-body">
-                                            <h4 class="media-title font-weight-semibold"> Vikendica Kosmaj sa bazenom</h4>
+                                            <h4 class="media-title font-weight-semibold">{{cottage.name}}</h4>
                                             <div class="action-info">
-                                                <span class="text-muted">Početak:</span><span class="action-info-d">12.04.2022. 12:00</span>
-                                                <span class="text-muted">Kraj:</span><span class="action-info-d">18.04.2022. 12:00</span>
+                                                <span class="text-muted">Početak:</span><span class="action-info-d">{{action.getStartDateString()}}</span>
+                                                <span class="text-muted">Kraj:</span><span class="action-info-d">{{action.getEndDateString()}}</span>
                                                 <span class="text-muted">Broj osoba:</span ><span class="action-info-d">12</span>
                                             </div>
                                         </div>
                                         <div class="mt-3 mt-lg-0 ml-lg-3 text-center">
-                                            <h3 class="mb-0 font-weight-semibold action-price" >$459.99</h3>
+                                            <h3 class="mb-0 font-weight-semibold action-price" >${{action.totalPrice}}</h3>
                                             
                                             <a href="../reservationStart">
                                                 <button type="button" class="btn btn-primary text-white action-btn-r" >Rezerviši</button>
@@ -154,48 +154,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="card action-card-body">
-                                    <div class="media align-items-center align-items-lg-start text-center text-lg-left flex-column flex-lg-row">
-                                        <div class="action-img"> <img src="https://i.imgur.com/GwiUmQA.jpg" alt=""> </div>
-                    
-                                        <div class="media-body">
-                                            <h4 class="media-title font-weight-semibold"> Vikendica Kosmaj sa bazenom</h4>
-                                            <div class="action-info">
-                                                <span class="text-muted">Početak:</span><span class="action-info-d">18.04.2022. 12:00</span>
-                                                <span class="text-muted">Kraj:</span><span class="action-info-d">20.04.2022. 12:00</span>
-                                                <span class="text-muted">Broj osoba:</span ><span class="action-info-d">17</span>
-                                            </div>
-                                        </div>
-                                        <div class="mt-3 mt-lg-0 ml-lg-3 text-center">
-                                            <h3 class="mb-0 font-weight-semibold action-price" >$189.99</h3>
-                                            <a href="../reservationStart">
-                                               <button type="button" class="btn btn-primary text-white action-btn-r">Rezerviši</button>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card action-card-body">
-                                    <div class="media align-items-center align-items-lg-start text-center text-lg-left flex-column flex-lg-row">
-                                        <div class="action-img"> <img src="https://i.imgur.com/GwiUmQA.jpg" alt=""> </div>
-                    
-                                        <div class="media-body">
-                                            <h4 class="media-title font-weight-semibold"> Vikendica Kosmaj sa bazenom</h4>
-                                            <div class="action-info">
-                                                <span class="text-muted">Početak:</span><span class="action-info-d">12.04.2022. 12:00</span>
-                                                <span class="text-muted">Kraj:</span><span class="action-info-d">18.04.2022. 12:00</span>
-                                                <span class="text-muted">Broj osoba:</span ><span class="action-info-d">12</span>
-                                            </div>
-                                        </div>
-                                        <div class="mt-3 mt-lg-0 ml-lg-3 text-center">
-                                            <h3 class="mb-0 font-weight-semibold action-price" >$459.99</h3>
-                                            
-                                            <!--redirect-->
-                                            <a href="../reservationStart">
-                                                <button type="button" class="btn btn-primary text-white action-btn-r">Rezerviši</button>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
+                                
                             </div>
                         </div>
                 </div>
