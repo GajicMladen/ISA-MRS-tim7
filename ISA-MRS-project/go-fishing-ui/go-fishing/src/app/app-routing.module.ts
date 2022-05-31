@@ -54,7 +54,9 @@ const routes: Routes = [
     component: HomepageComponent,
     children: [
       { path: 'userProfile', component: UserprofileComponent },
-      { path: 'entityList', component: EntityListComponent },
+      { path: 'cottageList', component: EntityListComponent },
+      { path: 'boatList', component: EntityListComponent },
+      { path: 'adventureList', component: EntityListComponent },
       { path: '', redirectTo: 'userProfile', pathMatch: 'full' },
     ],
   },
@@ -63,14 +65,14 @@ const routes: Routes = [
   { path: 'addFreePeriod/:id', component: AdventureFreePeriodComponent },
   { path: 'instructorCalendar/:id', component: AdventureInstructorCalendarComponent },
 
-  { path: 'newFreePeriod/:id' ,component: NewFreePeriodComponent },
-  { path: 'calendar/:id' ,component: CalendarComponent },
+  { path: 'newFreePeriod/:id', component: NewFreePeriodComponent },
+  { path: 'calendar/:id', component: CalendarComponent },
 
-  { path: 'editInstructor/:id', component: AdventureInstructorEditComponent},
-
+  { path: 'editInstructor/:id', component: AdventureInstructorEditComponent },
   { path: 'boatProfile/:id' , component:BoatProfilepageComponent },
   { path: 'boatOwner/:id' , component: BoatOwnerpageComponent},
   { path: 'editAdventure/:id', component:AdventureEditComponent },
+    
   //Ubaciti komponentu za not found
   { path: '**', redirectTo: '', pathMatch: 'full' },
 ];

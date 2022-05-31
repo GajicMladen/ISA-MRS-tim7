@@ -11,4 +11,6 @@ public interface AdventureRepository extends JpaRepository<Adventure, Integer> {
 	@Query("select v from Adventure v where v.fishingInstructor.id = ?1")
 	public List<Adventure> findByInstructorId(Integer id);
 	
+	@Query("select COUNT(*) from Adventure")
+	public Integer getTotalAdventures();
 }

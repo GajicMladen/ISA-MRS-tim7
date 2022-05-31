@@ -18,4 +18,7 @@ public interface CottageRepository extends JpaRepository<Cottage,Integer>{
 	@Modifying
 	@Query(value = "update Cottage c set c.name = ?2 , c.promoDescription = ?3 , c.price = ?4, c.capacity = ?5 where c.id = ?1")
 	public void updateCottage(Integer cottageId,String name,String promoDescription,float price, int capacity);
+	
+	@Query("select COUNT(*) from Cottage")
+	public Integer getTotalCottages();
 }
