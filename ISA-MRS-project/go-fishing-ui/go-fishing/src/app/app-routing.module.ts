@@ -26,6 +26,9 @@ import { CalendarComponent } from './shared/components/calendarPage/calendar.com
 import { AdventureEditComponent } from './features/adventure/components/adventure-edit/adventure-edit.component';
 import { AdventureFreePeriodComponent } from './features/adventure/components/adventure-free-period/adventure-free-period.component';
 import { AdventureInstructorCalendarComponent } from './features/adventure/components/adventure-instructor-calendar/adventure-instructor-calendar.component';
+
+import { BoatOwnerpageComponent } from './features/boat/components/boat-ownerpage/boat-ownerpage.component';
+
 const routes: Routes = [
   { path: '', component: StartpagePreviewListComponent },
   { path: 'login', component: StartpageLoginComponent },
@@ -66,6 +69,7 @@ const routes: Routes = [
   { path: 'editInstructor/:id', component: AdventureInstructorEditComponent},
 
   { path: 'boatProfile/:id' , component:BoatProfilepageComponent },
+  { path: 'boatOwner/:id' , component: BoatOwnerpageComponent},
   { path: 'editAdventure/:id', component:AdventureEditComponent },
   //Ubaciti komponentu za not found
   { path: '**', redirectTo: '', pathMatch: 'full' },

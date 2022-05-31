@@ -19,7 +19,7 @@ public class Reservation {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
-    private Long id;
+    private Integer id;
     
 	@Column(name = "startDateTime",nullable = false)
 	private LocalDateTime startDateTime;
@@ -34,12 +34,12 @@ public class Reservation {
 	private ReservationStatus status;
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "client_id")
+	@JoinColumn(name = "client_id",nullable = true)
 	private Client client;
 	
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "offer_id")
+	@JoinColumn(name = "offer_id",nullable = false)
 	private Offer offer;
 	
 	@OneToOne
@@ -50,11 +50,11 @@ public class Reservation {
 	@JoinColumn(name = "complaint", referencedColumnName = "id",nullable = true)
 	private Complaint complaint;
 
-	public Long getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
