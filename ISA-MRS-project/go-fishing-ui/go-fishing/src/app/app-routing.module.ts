@@ -48,7 +48,7 @@ const routes: Routes = [
   { path: 'editInstructor', component: AdventureInstructorEditComponent },
   { path: 'boatProfile/:id', component: BoatProfilepageComponent },
 
-  { path: 'editProfile', component: EditProfileComponent },
+  { path: 'editProfile', component: UserprofileComponent },
   { path: 'addNewCottage', component: CottageAddNewComponent },
   { path: 'editCottage/:id', component: CottageEditComponent },
   
