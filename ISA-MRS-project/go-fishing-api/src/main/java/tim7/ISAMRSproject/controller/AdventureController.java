@@ -18,13 +18,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import tim7.ISAMRSproject.dto.AdventureDTO;
-import tim7.ISAMRSproject.dto.CottageDTO;
-import tim7.ISAMRSproject.dto.InstructorDTO;
+import tim7.ISAMRSproject.dto.ChangePasswordDTO;
+import tim7.ISAMRSproject.dto.DeletionRequestDTO;
 import tim7.ISAMRSproject.dto.UserDTO;
 import tim7.ISAMRSproject.model.Adventure;
-import tim7.ISAMRSproject.model.Cottage;
+import tim7.ISAMRSproject.model.DeletionRequest;
+import tim7.ISAMRSproject.model.User;
+import tim7.ISAMRSproject.model.DeletionRequest.DeletionRequestStatus;
 import tim7.ISAMRSproject.service.AdventureService;
 import tim7.ISAMRSproject.service.ReservationService;
+import tim7.ISAMRSproject.service.UserService;
 
 @RestController
 @RequestMapping(value = "adventure")
@@ -36,6 +39,9 @@ public class AdventureController {
 	
 	@Autowired
 	private ReservationService reservationService;
+	
+	@Autowired
+	private UserService userService;
 	
 	@GetMapping(value = "/get/{id}")
 	public ResponseEntity<AdventureDTO> getAdventureById(@PathVariable Integer id){
@@ -103,4 +109,53 @@ public class AdventureController {
 		}
 	}
 	
+	@PostMapping(value = "/instructor/passwordChange/{id}")
+	public ResponseEntity<?> changeInstructorPassword(@PathVariable Integer id, @RequestBody ChangePasswordDTO changePasswordDTO) {
+		if(!changePasswordDTO.validate())
+			return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body("Pogrešni podaci!");
+		
+		Optional<User> user = userService.findById(id);
+		if (user.isPresent()) {
+			User changedUser = user.get();
+			userService.changeUserPassword(changedUser, changePasswordDTO);		
+			return ResponseEntity.status(HttpStatus.ACCEPTED).body(changedUser);
+		}
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Nepostojeći korisnik!");
+		
+	}
+	
+	@PostMapping(value = "/instructor/delete/{id}")
+	public ResponseEntity<?> saveDeletionRequest(@PathVariable Integer id, @RequestBody DeletionRequestDTO deletionRequestDTO) {
+		if (deletionRequestDTO.getDeletionReason().length() < 10) {
+			return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body("Pogrešni podaci!");
+		}
+		Optional<User> user = userService.findById(id);
+		if (user.isPresent()) {
+			User deletionUser = user.get();
+			DeletionRequest deletionRequest = new DeletionRequest();
+			deletionRequest.setDeletionReason(deletionRequestDTO.getDeletionReason());
+			deletionRequest.setRequestStatus(DeletionRequestStatus.PENDING);
+			deletionRequest.setUser(deletionUser);
+			deletionUser.setDeletionRequest(deletionRequest);
+			userService.save(deletionUser);
+			return ResponseEntity.status(HttpStatus.ACCEPTED).body(deletionUser);
+		}
+		else {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Nepostojeći korisnik!");
+		}
+	}
+	
+	@GetMapping(value = "/instructor/adventuresId/{id}")
+	public ResponseEntity<List<Integer>> getInstructorAdventuresId(@PathVariable int id){
+		
+		List<Adventure> adventures = adventureService.getAdventuresByInstructorId(id);
+		List<Integer> adventuresId = new ArrayList<Integer>();
+		
+	
+		for (Adventure a : adventures) {
+			adventuresId.add(a.getId());
+		}
+		
+		return new ResponseEntity<>(adventuresId, HttpStatus.OK);
+	}
 }

@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { User } from 'src/app/shared/classes/user';
 import { ConfigService } from 'src/app/shared/services/config.service';
@@ -10,48 +11,53 @@ import { Instructor } from './classes/instructor';
   providedIn: 'root',
 })
 export class AdventureService {
-  constructor(private http: HttpClient, private config: ConfigService) {}
-
-  public deleteAdventure(id: any): Observable<Adventure> {
-    console.log(id);
-    return this.http.delete<Adventure>('http://localhost:8080/adventure/' + id);
+  private adventureUrl: string;
+  
+  constructor(private http: HttpClient, private config: ConfigService) {
+    this.adventureUrl = "http://localhost:8080/adventure";
   }
-
+  
   public addAdventure(adventure: Adventure) {
-    return this.http.post<Adventure>(
-      'http://localhost:8080/adventure',
-      adventure
-    );
+    return this.http.post<Adventure>(this.adventureUrl, adventure);
   }
-
+  
+  public deleteAdventure(id: any): Observable<Adventure>{
+    console.log(id);
+    return this.http.delete<Adventure>(this.adventureUrl + "/" + id);
+  }
+  
   public updateInstructorData(instructor: User) {
-    return this.http.put<User>(
-      'http://localhost:8080/adventure/instructor',
-      instructor
-    );
+    return this.http.put<User>(this.adventureUrl + "/instructor", instructor);
+  }
+  
+  public getAdventureById(adventureId: number): Observable<Adventure>{
+    return this.http.get<Adventure>(this.adventureUrl + "/get/" + adventureId);
   }
 
-  public getAdventureById(adventureId: number): Observable<Adventure> {
-    return this.http.get<Adventure>(
-      'http://localhost:8080/adventure/get/' + adventureId
-    );
-  }
-
-  public getAdventuresOfInstructor(
-    instructorId: number
-  ): Observable<Adventure[]> {
-    return this.http.get<Adventure[]>(
-      'http://localhost:8080/adventure/instructor/adventures/' + instructorId
-    );
+  public getAdventuresOfInstructor(instructorId: number): Observable<Adventure[]>{
+    return this.http.get<Adventure[]>(this.adventureUrl + "/instructor/adventures/" + instructorId);
   }
 
   public editAdventure(adventure: Adventure) {
-    return this.http.put<User>(
-      'http://localhost:8080/adventure/edit',
-      adventure
-    );
+    return this.http.put<User>(this.adventureUrl + "/edit", adventure);
   }
 
+  public changePassword(instructorId: number, data: any) {
+    return this.http.post(this.adventureUrl + '/instructor/passwordChange/' + instructorId, data, {
+      headers: { 'Content-Type': 'application/json' },
+    });
+  }
+
+  public sendDeletionRequest(instructorId: number, data: FormGroup){
+    return this.http.post(this.adventureUrl + '/instructor/delete/' + instructorId, data, {
+      headers: {'Content-Type': 'application/json' }
+    });
+  }
+
+  public getAdventureIds(instructorId: number) {
+    return this.http.get(this.adventureUrl + '/instructor/adventuresId/' + instructorId);
+  }
+  
   public getAdventuresCount() {
     return this.http.get(this.config.adventuresCountUrl);
   }

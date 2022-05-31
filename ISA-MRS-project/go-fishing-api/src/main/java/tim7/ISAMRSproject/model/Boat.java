@@ -39,7 +39,7 @@ public class Boat extends Offer {
 
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "vlasnik_id")
+	@JoinColumn(name = "boatOwner_id")
 	private BoatOwner boatOwner;
 	
 	
@@ -112,6 +112,12 @@ public class Boat extends Offer {
 	public void setCancelConditions(String cancelConditions) {
 		this.cancelConditions = cancelConditions;
 	}
-	
-	
+
+	public BoatOwner getBoatOwner() {
+		return boatOwner;
+	}
+
+	public void setBoatOwner(BoatOwner boatOwner) {
+		this.boatOwner = boatOwner;
+	}
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Boat } from '../../classes/boat';
+import { Boat } from 'src/models/boat';
 import { BoatService } from '../../services/boat.service';
 import { ActivatedRoute } from '@angular/router';
 
@@ -17,7 +17,9 @@ export class BoatProfilepageComponent implements OnInit {
   ngOnInit(): void {
     
     this.boatId = Number(this.route.snapshot.paramMap.get('id'));
-    this.boat = this.boatService.findBoatById(this.boatId);
+    this.boatService.findBoatById(this.boatId).subscribe(data => {
+      this.boat = data;
+    });
   }
 
 }

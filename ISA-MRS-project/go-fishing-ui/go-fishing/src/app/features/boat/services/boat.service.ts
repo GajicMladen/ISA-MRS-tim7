@@ -1,26 +1,38 @@
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Boat } from '../classes/boat';
+import { Boat } from 'src/models/boat';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BoatService {
 
-  constructor() { }
+  private boatsUrl: string;
 
-  boat:Boat = new Boat();
-
-  public findBoatById(boatId:number):Boat{
-    console.log(this.boat);
-    this.boat.name = "Brod Sara";
-    this.boat.id = 1;
-    this.boat.capacity= 15;
-    this.boat.price = 35;
-    this.boat.ownerId = 1;
-    this.boat.promoDescription="Ova, po meri pravljena jahta, duga 16 metara, može da primi do 16 ljudi (dnevna krstarenja). Dobro je opremljena pa je preporučujemo i za duža krstarenja.    Smeštajni kapaciteti za prenoćište za 4 osobe.Prostrana, sa dve palube, nudi klijentima nezavisnost i mogućnost dužeg boravka na brodu.";
-
-    return this.boat;
+  constructor(private http: HttpClient) {
+    this.boatsUrl  = "http://localhost:8080/api/boats";
+  }
+  
+  public findBoatById(boatId:number):Observable<Boat>{
+    return this.http.get<Boat>(this.boatsUrl+"/getBoat/"+boatId);
   }
 
+  public findBoatsByOwner(ownerId:number):Observable<Boat[]>{
+    return this.http.get<Boat[]>(this.boatsUrl+"/owner/"+ownerId);
+  }
+
+  public deleteBoat(BoatId:number){
+    return this.http.delete<Boolean>(this.boatsUrl+"/deleteBoat/"+BoatId);
+  }
+
+  public addNewBoat(Boat:Boat):Observable<string>{
+    console.log(JSON.stringify(Boat));
+    return this.http.post(this.boatsUrl+"/newBoat",JSON.stringify(Boat),{headers : new HttpHeaders({ 'Content-Type': 'application/json' }),responseType:'text'});
+  }
+
+  public editBoat(Boat:Boat){
+    console.log(Boat);
+    return this.http.put(this.boatsUrl+"/updateBoat", Boat,{headers: new HttpHeaders({'dataType':'json'})});
+  }
 }

@@ -46,14 +46,16 @@ export class AdventureInstructorEditComponent implements OnInit {
       this.userService.findById(this.instructorId).subscribe(user => {
         this.instructor = user;
         this.instructorOld = JSON.parse(JSON.stringify(user));
-        console.log(this.instructor)
+        console.log(this.instructor);
+        let loader = new Loader({
+          apiKey: "AIzaSyAPNK7vqFqOCb5Lu1B0j--zFj4ws4czwGQ"
+        });
+        this.LoadMap(loader);
       })
     }
+  }
 
-    let loader = new Loader({
-      apiKey: "AIzaSyAPNK7vqFqOCb5Lu1B0j--zFj4ws4czwGQ"
-    })
-
+  LoadMap(loader: Loader) {
     loader.load().then(() => {
       const map = document.getElementById("map") as HTMLElement;
       const googleMap = new google.maps.Map(map, {
@@ -64,6 +66,8 @@ export class AdventureInstructorEditComponent implements OnInit {
         position: {lat: Number(this.instructor.latitude), lng: Number(this.instructor.longitude)},
         map: googleMap,
       });
+      console.log(this.instructor.latitude);
+      console.log(this.instructor.longitude);
       // Configure the click listener.
       googleMap.addListener("click", (mapsMouseEvent: { latLng: any; }) => {
         console.log(JSON.stringify(mapsMouseEvent.latLng).slice(2, -1).split(","));
@@ -78,14 +82,23 @@ export class AdventureInstructorEditComponent implements OnInit {
     })
   }
 
-  
-
   UpdateData() {
     if (!this.CheckForErrors()) {
       this.adventureService.updateInstructorData(this.instructor).subscribe(data => {
         this.messageService.showMessage("Podaci uspešno izmenjeni", MessageType.SUCCESS);
       });
     }
+  }
+
+  ChangePassword() {
+    var passwordErr = this.passwordHasError();
+    var confirmPasswordErr = this.confirmPasswordHasError();
+    if (!passwordErr && !confirmPasswordErr ) {
+      this.adventureService.changePassword(this.instructorId, {newPassword: this.password, confirmNewPassword: this.confirmPassword}).subscribe(data => {
+        this.messageService.showMessage("Lozinka uspešno izmenjena", MessageType.SUCCESS);
+      });
+    }
+
   }
 
   CheckForErrors(): boolean {
@@ -95,10 +108,8 @@ export class AdventureInstructorEditComponent implements OnInit {
     var cityErr = this.cityHasError();
     var countryErr = this.countryHasError();
     var phoneErr = this.phoneHasError();
-    var passwordErr = this.passwordHasError();
-    var confirmPasswordErr = this.confirmPasswordHasError();
     var locationErr = this.locationHasError();
-    if (nameErr || surnameErr || cityErr || streetErr || countryErr || phoneErr || passwordErr || confirmPasswordErr || locationErr) {
+    if (nameErr || surnameErr || cityErr || streetErr || countryErr || phoneErr || locationErr) {
       return true;
     }
     else {
@@ -171,11 +182,9 @@ export class AdventureInstructorEditComponent implements OnInit {
     return false;
   }
   passwordHasError(): boolean {
-    if (this.password !== '') {
-      if (this.password.length < 8 || this.password.length > 30) {
-        this.passwordError = true;
-        return true;
-      }
+    if (this.password.length < 8 || this.password.length > 30) {
+      this.passwordError = true;
+      return true;
     }
     return false;
   }

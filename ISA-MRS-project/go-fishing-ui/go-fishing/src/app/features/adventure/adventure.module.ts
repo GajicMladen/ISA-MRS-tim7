@@ -12,7 +12,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AdventureInstructorEditComponent } from './components/adventure-instructor-edit/adventure-instructor-edit.component';
 import { RouterModule } from '@angular/router';
 import { AdventureEditComponent } from './components/adventure-edit/adventure-edit.component';
-
+import { AdventureFreePeriodComponent } from './components/adventure-free-period/adventure-free-period.component';
+import { AdventureInstructorCalendarComponent } from './components/adventure-instructor-calendar/adventure-instructor-calendar.component';
 
 
 @NgModule({
@@ -23,7 +24,9 @@ import { AdventureEditComponent } from './components/adventure-edit/adventure-ed
     AdventureInstructorpageComponent,
     AdventureAddNewComponent,
     AdventureInstructorEditComponent,
-    AdventureEditComponent
+    AdventureEditComponent,
+    AdventureFreePeriodComponent,
+    AdventureInstructorCalendarComponent
   ],
   imports: [
     CommonModule,

@@ -24,6 +24,10 @@
 
   a{
       transition: 0.3s;
+      background-color: rgb(63 81 181);
+      color: white;
+      border-radius: 5px;
+      text-align: center;
   }
   a:hover{
       background-color: greenyellow;

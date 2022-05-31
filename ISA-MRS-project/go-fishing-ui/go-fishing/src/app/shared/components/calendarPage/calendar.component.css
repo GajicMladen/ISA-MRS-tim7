@@ -9,8 +9,13 @@
     color: red;
 }
 
-.btn-edit{
+.btn-edit-freePeriods{
     position: absolute;
-    left: 50%;
+    left: 40%;
+    transform: translateX(-50%);
+}
+.btn-edit-actions{
+    position: absolute;
+    left: 60%;
     transform: translateX(-50%);
 }
