@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { ActionService } from 'src/app/shared/services/action-service/action.service';
 import { Cottage } from 'src/models/cottage';
+import { ActionDTO } from 'src/models/reservation';
 import { CottageService } from '../../services/cottage.service';
 
 @Component({
@@ -13,7 +15,10 @@ export class CottageProfilepageComponent implements OnInit {
   cottageId : number;
   cottage : Cottage;
 
-  constructor(private route : ActivatedRoute,private cottageService:CottageService ) { }
+  actions : ActionDTO[];
+
+  constructor(private route : ActivatedRoute,private cottageService:CottageService,
+    private actionService: ActionService ) { }
 
   ngOnInit(): void {
     this.cottageId = Number(this.route.snapshot.paramMap.get('id'));
@@ -26,5 +31,8 @@ export class CottageProfilepageComponent implements OnInit {
       })
     }
 
+    this.actionService.getActionsForOffer(this.cottageId).subscribe(actions =>{
+      this.actions = actions;
+    })
   }
 }

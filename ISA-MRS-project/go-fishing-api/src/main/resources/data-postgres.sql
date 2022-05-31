@@ -266,4 +266,4 @@ INSERT INTO public.Adventure(
 
 INSERT INTO public.free_period (
 	start_date_time, end_date_time, offer_id)
-	VALUES ('2022-06-10T00:00:01', '2022-05-31T00:00:01', 4);
+	VALUES ('2022-05-31T00:00:01', '2022-06-10T00:00:01', 4);

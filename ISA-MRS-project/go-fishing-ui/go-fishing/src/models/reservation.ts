@@ -26,6 +26,13 @@ export class ActionDTO{
     endDate: NgbDate;
     totalPrice: number;
     reservationStatus:ReservationStatus;
+
+    getStartDateString():string {
+        return this.startDate.day +"."+ this.startDate.month+"."+this.startDate.year;
+    }
+    getEndDateString():string {
+        return this.endDate.day +"."+ this.endDate.month+"."+this.endDate.year;
+    }
 }
 export class ActionSendDTO{
     
