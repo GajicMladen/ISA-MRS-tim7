@@ -3,6 +3,7 @@ import { MessageService, MessageType } from 'src/app/shared/services/message-ser
 import { AdventureService } from '../../adventure.service';
 import { Adventure } from '../../classes/adventure';
 
+
 @Component({
   selector: 'app-adventure-card',
   templateUrl: './adventure-card.component.html',

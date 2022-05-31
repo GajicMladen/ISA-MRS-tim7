@@ -135,6 +135,16 @@ INSERT INTO public.Adventure(
 	VALUES (8, 3, 'Mika Mikić je iskusni ribolovac, gnjurac i plivač. Diplomirao je na fakultetu za sport i rekreaciju na Palama sa prosekom 9,56. Ovim poslom se bavi već 10 godina. Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores ullam quos, sit placeat labore voluptatem dignissimos officiis incidunt, perferendis eos porro nobis autem modi ab aliquam maiores. Dolorem, numquam quod.',
 			'Mamci|Mreza za pecanje|Stapovi|Varalice|Prsluci za spasavanje|Cizme|Dodatni camci|Kombinezoni', 'Avantura se održava dva puta dnevno. Prvi termin je u 9h, a drugi u 15h. Mesto okupljanja je gradska plaža. Avantura traje dva sata.', 'Zabranjeno bacanje smenja|Zabranjeno skakanje u vodu bez dozvole|Zabranjeno donosenje alkohola|Zabranjeno donosenje hrane|Zabranjeno pusenje',
 			'U slučaju otkazivanja instruktor zadržava 30% uplaćene sume.', false);
+			
+INSERT INTO public.free_period (
+	start_date_time, end_date_time, offer_id)
+	VALUES ('29.05.2022.T14:00', '05.06.2022.T10:00', 4);
+INSERT INTO public.free_period (
+	start_date_time, end_date_time, offer_id)
+	VALUES ('07.06.2022.T14:00', '10.06.2022.T10:00', 4);
+INSERT INTO public.free_period (
+	start_date_time, end_date_time, offer_id)
+	VALUES ('14.06.2022.T14:00', '14.06.2022.T18:00', 7);
 
 INSERT INTO public.boat(
 	cancel_conditions, length, max_speed, motor_power, motors_count, type, id, boat_owner_id)
@@ -147,3 +157,4 @@ INSERT INTO public.boat(
 INSERT INTO public.boat(
 	cancel_conditions, length, max_speed, motor_power, motors_count, type, id, boat_owner_id)
 	VALUES ('Uzimanje pola depozita', 15.7, 80, 98, 5, 'speeder', 11, 6);
+
