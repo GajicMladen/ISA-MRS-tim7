@@ -17,9 +17,32 @@ import { NewActionComponent } from './components/new-action/new-action.component
 import { FormsModule } from '@angular/forms';
 
 @NgModule({
-  declarations: [NavbarComponent, EditProfileComponent, MessageComponent, NewFreePeriodComponent, CalendarComponent, OfferInfoComponent, NewActionComponent],
-  imports: [CommonModule, RouterModule, MaterialModule, FontAwesomeModule,NgbModule,DemoModule,FormsModule],
-  exports: [NavbarComponent, MaterialModule, EditProfileComponent,DemoComponent,OfferInfoComponent],
-
+  declarations: [
+    NavbarComponent,
+    EditProfileComponent,
+    MessageComponent,
+    NewFreePeriodComponent,
+    CalendarComponent,
+    OfferInfoComponent,
+    NewActionComponent,
+    SidebarComponent,
+  ],
+  imports: [
+    CommonModule,
+    RouterModule,
+    MaterialModule,
+    FontAwesomeModule,
+    NgbModule,
+    DemoModule,
+    FormsModule,
+  ],
+  exports: [
+    NavbarComponent,
+    MaterialModule,
+    EditProfileComponent,
+    DemoComponent,
+    OfferInfoComponent,
+    SidebarComponent,
+  ],
 })
 export class SharedModule {}
