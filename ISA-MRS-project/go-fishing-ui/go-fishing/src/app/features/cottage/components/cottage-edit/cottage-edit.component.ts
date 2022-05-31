@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Cottage } from 'src/models/cottage';
 import { CottageService } from '../../services/cottage.service';
 
@@ -13,7 +13,7 @@ export class CottageEditComponent implements OnInit {
   cottageId:number;
   currentCottage:Cottage;
 
-  newCottage: Cottage;
+  newCottage: Cottage= new Cottage();
   name :string;
   price:number;
   capacity:number;
@@ -21,7 +21,7 @@ export class CottageEditComponent implements OnInit {
   bedCount:number;
   roomCount:number;
 
-  constructor(private cottageService:CottageService,private route: ActivatedRoute) { }
+  constructor(private cottageService:CottageService,private route: ActivatedRoute,private router:Router) { }
 
   ngOnInit(): void {
     this.cottageId = Number(this.route.snapshot.paramMap.get('id'));
@@ -50,6 +50,6 @@ export class CottageEditComponent implements OnInit {
     
     this.cottageService.editCottage(this.newCottage).subscribe(response => {console.log(response)} );
 
-    window.location.href = "http://localhost:4200/cottageProfile/"+this.cottageId;
+    this.router.navigateByUrl("/cottageProfile/"+this.cottageId);
   }
 }

@@ -33,12 +33,12 @@ export class BoatGalleryOwnerComponent implements OnInit {
       this.boatService.deleteBoat(BoatId).subscribe(
         deleted =>{
           if(deleted){
-            alert("Izbrisali ste je!"); 
+            alert("Izbrisali ste brod!"); 
           
             this.boats.splice(this.boats.findIndex(Boat => Boat.id === BoatId),1);
           }
           else
-            alert("Nismo uspeli da izbrisemo vikendicu.")
+            alert("Nismo uspeli da izbrisemo brod.")
         
         }
       )

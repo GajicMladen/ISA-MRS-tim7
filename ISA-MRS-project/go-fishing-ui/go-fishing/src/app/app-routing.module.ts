@@ -28,6 +28,8 @@ import { AdventureFreePeriodComponent } from './features/adventure/components/ad
 import { AdventureInstructorCalendarComponent } from './features/adventure/components/adventure-instructor-calendar/adventure-instructor-calendar.component';
 
 import { BoatOwnerpageComponent } from './features/boat/components/boat-ownerpage/boat-ownerpage.component';
+import { BoatAddNewComponent } from './features/boat/components/boat-add-new/boat-add-new.component';
+import { BoatEditComponent } from './features/boat/components/boat-edit/boat-edit.component';
 
 const routes: Routes = [
   { path: '', component: StartpagePreviewListComponent },
@@ -49,6 +51,9 @@ const routes: Routes = [
   { path: 'editProfile', component: EditProfileComponent },
   { path: 'addNewCottage', component: CottageAddNewComponent },
   { path: 'editCottage/:id', component: CottageEditComponent },
+  
+  { path: 'addNewBoat', component: BoatAddNewComponent },
+  { path: 'editBoat/:id', component: BoatEditComponent },
   {
     path: 'home',
     component: HomepageComponent,
