@@ -8,7 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
 @Entity
-public class Address {
+public class Address implements Comparable<Address>{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -105,6 +105,11 @@ public class Address {
 	}
   
 	@Override
+	public String toString() {
+		return this.street + ", " + this.city + ", " + this.country;
+	}
+	
+	@Override
     public boolean equals(Object o) {
  
         if (o == this) {
@@ -121,4 +126,9 @@ public class Address {
         		a.getCountry().equals(this.getCountry()) && 
         		a.getStreet().equals(this.getStreet()));
     }
+	
+	@Override
+	public int compareTo(Address a) {
+		return this.toString().compareTo(a.toString());
+	}
 }

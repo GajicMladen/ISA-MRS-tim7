@@ -11,6 +11,14 @@ import javax.persistence.ManyToOne;
 @Entity
 public class Boat extends Offer {
 
+	public BoatOwner getBoatOwner() {
+		return boatOwner;
+	}
+
+	public void setBoatOwner(BoatOwner boatOwner) {
+		this.boatOwner = boatOwner;
+	}
+
 	@Column(name = "type",nullable = false)
 	private String type;
 	

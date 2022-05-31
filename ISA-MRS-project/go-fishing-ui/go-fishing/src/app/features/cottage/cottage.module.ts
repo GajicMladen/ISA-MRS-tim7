@@ -9,6 +9,7 @@ import { CottageService } from './services/cottage.service';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { CottageEditComponent } from './components/cottage-edit/cottage-edit.component';
+import { BoatEntityService } from './services/boat-entity.service';
 
 @NgModule({
   declarations: [
@@ -18,12 +19,7 @@ import { CottageEditComponent } from './components/cottage-edit/cottage-edit.com
     CottageAddNewComponent,
     CottageEditComponent,
   ],
-  imports: [
-    CommonModule,
-    RouterModule,
-    HttpClientModule,
-    FormsModule
-  ],
-  providers:[CottageService]
+  imports: [CommonModule, RouterModule, HttpClientModule, FormsModule],
+  providers: [CottageService, BoatEntityService],
 })
-export class CottageModule { }
+export class CottageModule {}

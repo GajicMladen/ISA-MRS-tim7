@@ -1,13 +1,14 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { ConfigService } from 'src/app/shared/services/config.service';
 import { Cottage } from 'src/models/cottage';
 
 @Injectable()
 export class CottageService {
   private cottagesUrl: string;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private config: ConfigService) {
     this.cottagesUrl = 'http://localhost:8080/api/cottages';
   }
 
@@ -47,6 +48,16 @@ export class CottageService {
     console.log(cottage);
     return this.http.put(this.cottagesUrl + '/updateCottage', cottage, {
       headers: new HttpHeaders({ dataType: 'json' }),
+    });
+  }
+
+  public getCottagesCount() {
+    return this.http.get(this.config.cottagesCountUrl);
+  }
+
+  public getCottagesPage(pageNum: number, perPageNum: number, sort: string) {
+    return this.http.get(this.config.cottagesPageUrl, {
+      params: { page: pageNum, perPage: perPageNum, sort: sort },
     });
   }
 }
