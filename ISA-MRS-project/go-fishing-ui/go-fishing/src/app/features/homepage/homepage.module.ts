@@ -9,6 +9,7 @@ import { PasswordChangeDialog } from './components/userprofile/change-password-d
 import { LoyaltyDialogComponent } from './components/userprofile/loyalty-dialog/loyalty-dialog.component';
 import { DeletionRequestDialogComponent } from './components/userprofile/deletion-request-dialog/deletion-request-dialog.component';
 import { EntityListComponent } from './components/entity-list/entity-list.component';
+import { SearchDialogComponent } from './components/entity-list/search-dialog/search-dialog.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { EntityListComponent } from './components/entity-list/entity-list.compon
     LoyaltyDialogComponent,
     DeletionRequestDialogComponent,
     EntityListComponent,
+    SearchDialogComponent,
   ],
   imports: [CommonModule, SharedModule, RouterModule, ReactiveFormsModule],
 })

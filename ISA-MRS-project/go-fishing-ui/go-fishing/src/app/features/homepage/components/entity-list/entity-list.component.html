@@ -11,6 +11,7 @@
         <mat-option value="price-desc">Price Descending</mat-option>
     </mat-select>
 </mat-form-field>
+    <button mat-raised-button color="primary" class="search-button" (click)="openSearchDialog()">Reservation Search</button>
 <mat-card class="main-entity-card" style="overflow-y: hidden" *ngFor="let item of pageSlice" (click)="redirectToEntity(item.id)">
     <mat-card-title-group>
         <mat-card-title>{{item.name}}</mat-card-title>

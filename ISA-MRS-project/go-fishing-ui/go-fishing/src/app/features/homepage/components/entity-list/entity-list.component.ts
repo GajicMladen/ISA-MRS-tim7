@@ -1,10 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { Router } from '@angular/router';
 import { AdventureService } from 'src/app/features/adventure/adventure.service';
 import { BoatEntityService } from 'src/app/features/cottage/services/boat-entity.service';
 import { CottageService } from 'src/app/features/cottage/services/cottage.service';
+import { SearchDialogComponent } from './search-dialog/search-dialog.component';
 
 @Component({
   selector: 'app-entity-list',
@@ -22,11 +24,13 @@ export class EntityListComponent implements OnInit {
   mode: string;
   @ViewChild('paginator') paginator: MatPaginator;
 
+  searchForm: FormGroup = this.createSearchForm();
   constructor(
     private cottageService: CottageService,
     private boatService: BoatEntityService,
     private adventureService: AdventureService,
-    private router: Router
+    private router: Router,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -198,5 +202,32 @@ export class EntityListComponent implements OnInit {
   getSummarizedDescription(description: string): string {
     if (description.length < 550) return description;
     else return description.substring(0, 550) + '...';
+  }
+
+  createSearchForm(): FormGroup {
+    return new FormGroup({
+      startDate: new FormControl({ value: '' }, Validators.required),
+      endDate: new FormControl({ value: '' }, Validators.required),
+      name: new FormControl(''),
+      minRating: new FormControl(''),
+      location: new FormControl(''),
+      capacity: new FormControl(0),
+      minPrice: new FormControl(0),
+      maxPrice: new FormControl(null),
+    });
+  }
+
+  openSearchDialog() {
+    this.searchForm = this.createSearchForm();
+    const dialogRef = this.dialog.open(SearchDialogComponent, {
+      data: this.searchForm,
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result.search) {
+        // SEARCH LOGIKA
+        console.log('TRUE');
+      }
+    });
   }
 }
