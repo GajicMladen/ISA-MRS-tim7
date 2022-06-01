@@ -1,0 +1,5 @@
+<button mat-raised-button color="primary" class="margin10" (click)="displayCottagesBussy()">Zauzetost vikendica</button>
+<button mat-raised-button color="primary" class="margin10" (click)="displayCottagesIncome()">Prihodi od vikendica</button>
+<button mat-raised-button color="primary" class="margin10">Prosecne ocene</button>
+
+<app-chart [data]="dataForChar" [title]="title" [x_axis]="x_axis" [y_axis]="y_axis"></app-chart>

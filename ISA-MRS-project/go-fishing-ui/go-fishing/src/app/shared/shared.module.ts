@@ -15,6 +15,9 @@ import { DemoComponent } from './components/MyCalendar/demo/component';
 import { OfferInfoComponent } from './components/offer-info/offer-info.component';
 import { NewActionComponent } from './components/new-action/new-action.component';
 import { FormsModule } from '@angular/forms';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { ChartComponent } from './components/chart/chart.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -26,6 +29,7 @@ import { FormsModule } from '@angular/forms';
     OfferInfoComponent,
     NewActionComponent,
     SidebarComponent,
+    ChartComponent,
   ],
   imports: [
     CommonModule,
@@ -35,6 +39,8 @@ import { FormsModule } from '@angular/forms';
     NgbModule,
     DemoModule,
     FormsModule,
+    NgxChartsModule,
+    BrowserAnimationsModule
   ],
   exports: [
     NavbarComponent,
@@ -43,6 +49,7 @@ import { FormsModule } from '@angular/forms';
     DemoComponent,
     OfferInfoComponent,
     SidebarComponent,
+    ChartComponent
   ],
 })
 export class SharedModule {}
