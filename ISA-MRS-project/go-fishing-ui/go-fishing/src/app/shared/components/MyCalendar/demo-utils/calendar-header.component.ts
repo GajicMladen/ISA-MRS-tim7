@@ -14,7 +14,7 @@ import { CalendarView } from 'angular-calendar';
             [(viewDate)]="viewDate"
             (viewDateChange)="viewDateChange.next(viewDate)"
           >
-            Previous
+            Prethodni
           </div>
           <div
             class="btn btn-outline-secondary"
@@ -22,7 +22,7 @@ import { CalendarView } from 'angular-calendar';
             [(viewDate)]="viewDate"
             (viewDateChange)="viewDateChange.next(viewDate)"
           >
-            Today
+            Trenutni
           </div>
           <div
             class="btn btn-primary"
@@ -31,7 +31,7 @@ import { CalendarView } from 'angular-calendar';
             [(viewDate)]="viewDate"
             (viewDateChange)="viewDateChange.next(viewDate)"
           >
-            Next
+            Sledeći
           </div>
         </div>
       </div>
@@ -40,27 +40,7 @@ import { CalendarView } from 'angular-calendar';
       </div>
       <div class="col-md-4">
         <div class="btn-group">
-          <div
-            class="btn btn-primary"
-            (click)="viewChange.emit(CalendarView.Month)"
-            [class.active]="view === CalendarView.Month"
-          >
-            Month
-          </div>
-          <div
-            class="btn btn-primary"
-            (click)="viewChange.emit(CalendarView.Week)"
-            [class.active]="view === CalendarView.Week"
-          >
-            Week
-          </div>
-          <div
-            class="btn btn-primary"
-            (click)="viewChange.emit(CalendarView.Day)"
-            [class.active]="view === CalendarView.Day"
-          >
-            Day
-          </div>
+          
         </div>
       </div>
     </div>

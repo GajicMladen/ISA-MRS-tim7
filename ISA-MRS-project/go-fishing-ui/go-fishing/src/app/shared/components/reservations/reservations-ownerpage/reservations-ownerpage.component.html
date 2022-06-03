@@ -1,0 +1,6 @@
+<select *ngIf="offers.length > 0">
+    <option *ngFor="let offer of offers">
+        {{offer.name}}
+    </option>
+</select>
+<app-reservations-list-view [reservations]="reservations"></app-reservations-list-view>

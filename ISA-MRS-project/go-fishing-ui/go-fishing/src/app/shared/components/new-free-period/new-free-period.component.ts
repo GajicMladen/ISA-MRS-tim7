@@ -81,7 +81,7 @@ export class NewFreePeriodComponent implements OnInit {
       freePeriod.endDate = this.format(this.toDate);
       freePeriod.offerId = this.offerId;
       
-      //console.log(this.freePeriod);
+      console.log(freePeriod);
       //console.log(JSON.stringify(this.freePeriod));
 
       this.freePeriodService.addNewFreePeriod(freePeriod).subscribe(response =>{
