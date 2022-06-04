@@ -11,7 +11,7 @@ public class ReservationDTO {
     private LocalDateTime endDate;
     private Integer offerId;
     private Integer id;
-    private Integer clietId;
+    private Integer clientId;
     private float totalPrice;
 
     private ReservationStatus reservationStatus;
@@ -26,7 +26,7 @@ public class ReservationDTO {
         this.totalPrice = reservation.getTotalPrice();
         this.offerId = reservation.getOffer().getId();
         this.id = reservation.getId();
-        this.clietId = reservation.getClient().getId();
+        this.clientId = reservation.getClient().getId();
         this.reservationStatus = reservation.getStatus();
     }
 
@@ -36,7 +36,7 @@ public class ReservationDTO {
         this.endDate = endDate;
         this.offerId = offerId;
         this.totalPrice = totalPrice;
-        this.clietId = clientID;
+        this.clientId = clientID;
     }
 
     public ReservationStatus getReservationStatus() {
@@ -47,12 +47,12 @@ public class ReservationDTO {
         this.reservationStatus = reservationStatus;
     }
 
-    public Integer getClietId() {
-        return clietId;
+    public Integer getClientId() {
+        return clientId;
     }
 
-    public void setClietId(Integer clietId) {
-        this.clietId = clietId;
+    public void setClientId(Integer clientId) {
+        this.clientId = clientId;
     }
 
     public Integer getId() {

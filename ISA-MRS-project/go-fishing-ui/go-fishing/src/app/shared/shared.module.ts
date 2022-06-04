@@ -14,13 +14,14 @@ import { DemoModule } from './components/MyCalendar/demo/module';
 import { DemoComponent } from './components/MyCalendar/demo/component';
 import { OfferInfoComponent } from './components/offer-info/offer-info.component';
 import { NewActionComponent } from './components/new-action/new-action.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { ChartComponent } from './components/chart/chart.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ChartPieComponent } from './components/calendar/chart-pie/chart-pie.component';
 import { ReservationListView } from './components/reservations/reservations-list-view/reservations-list-view.component';
 import { ReservationsOwnerpageComponent } from './components/reservations/reservations-ownerpage/reservations-ownerpage.component';
+import { ReservationEndReportComponent } from './components/reservations/reservation-end-report/reservation-end-report.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { ReservationsOwnerpageComponent } from './components/reservations/reserv
     ChartPieComponent,
     ReservationListView,
     ReservationsOwnerpageComponent,
+    ReservationEndReportComponent,
   ],
   imports: [
     CommonModule,
@@ -46,7 +48,8 @@ import { ReservationsOwnerpageComponent } from './components/reservations/reserv
     DemoModule,
     FormsModule,
     NgxChartsModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    ReactiveFormsModule
   ],
   exports: [
     NavbarComponent,

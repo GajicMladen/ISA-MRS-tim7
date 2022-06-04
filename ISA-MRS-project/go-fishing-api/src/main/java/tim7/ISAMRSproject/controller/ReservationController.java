@@ -17,7 +17,6 @@ import java.util.List;
 @RequestMapping(value = "api/reservations")
 public class ReservationController {
 
-
     @Autowired
     private ReservationService reservationService;
     @Autowired
@@ -66,7 +65,6 @@ public class ReservationController {
         reservationService.deleteAction(id);
     }
 
-
     @GetMapping(value = "/getReservationsForBoatOwner/{id}")
     public List<ReservationDTO> getReservationsForBoatOwner(@PathVariable int id){
         List<ReservationDTO> retVal = new ArrayList<>();
@@ -101,4 +99,5 @@ public class ReservationController {
         return retVal;
     }
 
+    
 }

@@ -66,6 +66,8 @@ export class ReservationService {
         reservation.offerId = d.offerId;
         reservation.totalPrice = d.totalPrice;
         reservation.id = d.id;
+        reservation.clientId = d.clientId;
+        reservation.reservationStatus = d.reservationStatus;
         res.push(reservation);
       });
     });

@@ -17,6 +17,7 @@ export class ReservationsOwnerpageComponent implements OnInit {
   @Input() ownerType : string;
   
   offers: Offer[];
+  selectedOffer:Offer;
 
   reservations: ReservationDTO[];
 
@@ -34,4 +35,22 @@ export class ReservationsOwnerpageComponent implements OnInit {
     }
   }
 
+  onChange(offerId:any){
+    console.log(offerId);
+    if(offerId == "all"){
+      this.reservationService.getReservationsForOwner(this.ownerId,this.ownerType).subscribe(
+        data => {
+          this.reservations = data;
+          console.log(data);
+          console.log(this.reservations);
+        }
+      );
+    }
+    else{
+      this.reservationService.getReservationsForOffer(offerId).subscribe(data=>{
+        this.reservations = data;
+        console.log(this.reservations);
+      });
+    }
+  }
 }

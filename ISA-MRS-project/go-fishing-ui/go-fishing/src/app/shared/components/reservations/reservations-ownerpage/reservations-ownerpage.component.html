@@ -1,5 +1,8 @@
-<select *ngIf="offers.length > 0">
-    <option *ngFor="let offer of offers">
+<select [ngModel]="selectedOffer" *ngIf="offers.length > 0" (ngModelChange)="onChange($event)">
+    <option value="all">
+        Sve
+    </option>
+    <option *ngFor="let offer of offers" [value]="offer.id">    
         {{offer.name}}
     </option>
 </select>
