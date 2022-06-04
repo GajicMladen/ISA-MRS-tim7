@@ -8,6 +8,8 @@
             <h6 class="font-weight-bold my-2">{{offer.price}} $</h6>
             
         </div>
-        </div><img src="../../../../assets/images/cottages/c1.jpg" alt="Generic placeholder image" width="200" class="ml-lg-5 order-1 order-lg-2">
+        </div>
+        <img *ngIf="offerType=='C'" src="../../../../assets/images/cottages/c1.jpg" alt="Generic placeholder image" width="200" class="ml-lg-5 order-1 order-lg-2">
+        <img *ngIf="offerType=='B'" src="../../../../assets/images/boats/b1.jpg" alt="Generic placeholder image" width="200" class="ml-lg-5 order-1 order-lg-2">
     </div>
 </div>

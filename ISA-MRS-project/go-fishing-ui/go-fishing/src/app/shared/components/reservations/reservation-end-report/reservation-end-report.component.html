@@ -1,0 +1,26 @@
+<mat-card class="card">
+    <h1 class="title">Izvestaj o završenoj rezervaciji</h1>
+    <p>Izvestaj će biti poslat administratorima na uvid. I oni će razmatrati da li i koliko klijent treba da se kazni.</p>
+    <p>Ukoliko odaberete da se klijent nije pojavio on ce automatski dobiti 1 penal.</p>
+    <p style="font-weight: bold;">Molimo Vas, pažljivo popunite izveštaj!</p>
+    <mat-radio-group
+        aria-labelledby="example-radio-group-label"
+        [(ngModel)]="clientShowed">
+        <mat-radio-button class="d-block" [value]="true">
+            Klijent se pojavio
+        </mat-radio-button>
+        <mat-radio-button class="d-block" [value]="false">
+            Klijent se nije pojavio. ( 1 penal )
+        </mat-radio-button>
+    </mat-radio-group>
+    <form [formGroup]="data">
+        <mat-form-field style="margin-top: 30px" *ngIf="clientShowed">
+            <textarea matInput formControlName="reservationReport" placeholder="Unesite izvestaj..."
+                  name="reservationReport" ></textarea>
+        </mat-form-field>
+    </form>
+    <mat-card-actions style="text-align: center;">
+        <button mat-button style="color: red;" (click)="sendReport()">Pošalji izveštaj</button>
+        <button mat-button (click)="cancelReport()">Odustani</button>
+    </mat-card-actions>
+</mat-card>

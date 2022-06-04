@@ -4,10 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import tim7.ISAMRSproject.dto.ActionDTO;
+import tim7.ISAMRSproject.model.Boat;
 import tim7.ISAMRSproject.model.Cottage;
-import tim7.ISAMRSproject.model.Offer;
 import tim7.ISAMRSproject.model.Reservation;
 import tim7.ISAMRSproject.model.ReservationStatus;
+import tim7.ISAMRSproject.repository.BoatRepository;
 import tim7.ISAMRSproject.repository.CottageRepository;
 import tim7.ISAMRSproject.repository.ReservationRepository;
 
@@ -22,6 +23,8 @@ public class ReservationService {
 
 	@Autowired
 	private CottageRepository cottageRepository;
+	@Autowired
+	private BoatRepository boatRepository;
 
 	public boolean AdventureHasReservations(Integer id) {
 		for (Reservation r : reservationRepository.findAll()) {
@@ -40,21 +43,26 @@ public class ReservationService {
 		newAction.setTotalPrice(actionDTO.getTotalPrice());
 		newAction.setStatus(ReservationStatus.FOR_ACTION);
 		Optional<Cottage> cottage = cottageRepository.findById(actionDTO.getOfferId());
-
-		//boat
+		Optional<Boat> boat = boatRepository.findById(actionDTO.getOfferId());
 		//instructor
 
 		if(cottage.isPresent()) {
 			newAction.setOffer(cottage.get());
 			reservationRepository.save(newAction);
+			return;
 		}
-		//bota
+		if(boat.isPresent()){
+			newAction.setOffer(boat.get());
+			reservationRepository.save(newAction);
+			return;
+		}
+
 		//instructor
 
 
 	}
 	
-	public List<Reservation> getActionsForOffer(int offerId){
+	public List<Reservation> getReservationsForOffer(int offerId){
 
 		return reservationRepository.findByOffer_IdEquals(offerId);
 	}

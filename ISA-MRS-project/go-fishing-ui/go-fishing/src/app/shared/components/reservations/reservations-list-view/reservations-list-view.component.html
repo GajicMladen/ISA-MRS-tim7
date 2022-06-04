@@ -1,0 +1,63 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card card-white mb-5">
+                <div class="card-heading clearfix border-bottom mb-4">
+                    <h4 class="card-title">Booking Requests</h4>
+                </div>
+                <div class="card-body">
+                    <ul class="list-unstyled reservations-list">
+                        <li class="position-relative booking reservation-card" *ngFor="let reservation of reservations">
+                            <div class="media">
+                                <div class="media-body">
+                                    <div class="mb-3 d-flex">
+                                        <span class="bg-light-blue mr-auto">{{reservation.id}}</span>
+                                    </div>
+                                    <div class="mb-3 d-flex" [ngSwitch]="reservation.reservationStatus">
+                                        <span class="mr-2 d-block d-sm-inline-block mb-2 mb-sm-0">Status:</span>
+                                        <span *ngSwitchCase="'ON_WAIT'" class="bg-light-blue ml-auto">Na čekanju</span>
+                                        <span *ngSwitchCase="'ACTIVE'" class="bg-light-blue ml-auto">Aktivna</span>
+                                        <span *ngSwitchCase="'CANCELED'" class="bg-light-blue ml-auto">Otkazana</span>
+                                        <span *ngSwitchCase="'IN_PROCESS'" class="bg-light-blue ml-auto">U procesu</span>
+                                        <span *ngSwitchCase="'ENDED'" class="bg-light-blue ml-auto">Završena</span>
+                                        
+                                    </div>
+                                    <div class="mb-3 d-flex">
+                                        <span class="mr-2 d-block d-sm-inline-block mb-2 mb-sm-0">Datum rezervacije:</span>
+                                        <span class="bg-light-blue ml-auto">{{reservation.getStartDateString()}} - {{reservation.getEndDateString()}}</span>
+                                    </div>
+                                    <div class="mb-3 d-flex">
+                                        <span class="mr-2 d-block d-sm-inline-block mb-2 mb-sm-0">Ukupna cena:</span>
+                                        <span class="bg-light-blue ml-auto">$ {{reservation.totalPrice}}</span>
+                                    </div>
+                                    <div class="mb-5 d-flex">
+                                        <span class="mr-2 d-block d-sm-inline-block mb-1 mb-sm-0">Klijent:</span>
+                                        <span class="bg-light-blue ml-auto">{{reservation.clientId}}</span>
+                                    </div>
+                                    <div  [ngSwitch]="reservation.reservationStatus">
+                                        <div *ngSwitchCase="'ON_WAIT'" >
+                                            <div class="btn-gray">Odbaci</div>
+                                            <div class="btn-gray">Prihvati</div>
+                                        </div>
+                                        <div *ngSwitchCase="'ACTIVE'" class="btn-gray">
+                                            Otkazi
+                                        </div>
+                                        <div *ngSwitchCase="'IN_PROCESS'" class="btn-gray">
+                                            Dodaj novu
+                                        </div>
+                                        <div *ngSwitchCase="'ENDED'" class="btn-gray" (click)="sendReservationReport()">
+                                            Popuni izvestaj
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+    
+                    </ul>
+    
+                </div>
+            </div>
+    
+        </div>
+    </div>
+    </div>

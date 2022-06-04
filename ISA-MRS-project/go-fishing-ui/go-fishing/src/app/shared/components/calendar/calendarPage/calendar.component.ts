@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
 import { ActionDTO } from 'src/models/reservation';
-import { FreePeriodDTO } from '../../../../models/freePeriod';
-import { ActionService } from '../../services/action-service/action.service';
-import { FreePeriodService } from '../../services/free-period-service/free-period.service';
+import { FreePeriodDTO } from '../../../../../models/freePeriod';
+import { ActionService } from '../../../services/action-service/action.service';
+import { FreePeriodService } from '../../../services/free-period-service/free-period.service';
 
 @Component({
   selector: 'app-calendar',
@@ -40,7 +40,7 @@ export class CalendarComponent implements OnInit {
   getActions(){
     this.actionServce.getActionsForOffer(this.offerId).subscribe(data =>{
       this.actions = data;
-
+      
     });
   }
 

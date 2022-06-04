@@ -21,7 +21,7 @@ import { UserprofileComponent } from './features/homepage/components/userprofile
 import { EntityListComponent } from './features/homepage/components/entity-list/entity-list.component';
 
 import { NewFreePeriodComponent } from './shared/components/new-free-period/new-free-period.component';
-import { CalendarComponent } from './shared/components/calendarPage/calendar.component';
+import { CalendarComponent } from './shared/components/calendar/calendarPage/calendar.component';
 
 import { AdventureEditComponent } from './features/adventure/components/adventure-edit/adventure-edit.component';
 import { AdventureFreePeriodComponent } from './features/adventure/components/adventure-free-period/adventure-free-period.component';

@@ -22,3 +22,9 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     background-color: orange !important;
     color: white !important;
 }
+
+#chartPie .ngx-charts{
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
