@@ -282,3 +282,6 @@ INSERT INTO public.reservation(id, end_date_time, start_date_time, status, total
 INSERT INTO public.reservation(id, end_date_time, start_date_time, status, total_price, client_id, complaint, grade, offer_id)
     	VALUES (3, '2022-05-25T00:00:01', '2022-05-24T00:00:01', 3, 120.5, 9, null, null, 1);
 
+--ZALBE
+INSERT INTO public.complaint(id, for_offer, from_owner, offender_id, pusnih_offender, status, text)
+	VALUES (1, false, false, 1, true, 0, 'zalim se na klijenta indijanca, ostavio je haos!');

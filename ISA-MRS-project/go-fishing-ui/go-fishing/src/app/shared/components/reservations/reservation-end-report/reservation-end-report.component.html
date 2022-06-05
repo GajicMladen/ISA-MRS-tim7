@@ -13,12 +13,15 @@
             Klijent se nije pojavio. ( 1 penal )
         </mat-radio-button>
     </mat-radio-group>
-    <form [formGroup]="data">
-        <mat-form-field style="margin-top: 30px" *ngIf="clientShowed">
-            <textarea matInput formControlName="reservationReport" placeholder="Unesite izvestaj..."
-                  name="reservationReport" ></textarea>
-        </mat-form-field>
-    </form>
+
+
+    <mat-form-field style="margin-top: 30px" *ngIf="clientShowed">
+        <textarea matInput  placeholder="Unesite izvestaj..." [(ngModel)]="reservationReport" ></textarea>
+    </mat-form-field>
+        <mat-checkbox  [(ngModel)]="punchClient" *ngIf="clientShowed">
+            Želim da se klijent kazni. ( 1 penal )
+        </mat-checkbox>
+
     <mat-card-actions style="text-align: center;">
         <button mat-button style="color: red;" (click)="sendReport()">Pošalji izveštaj</button>
         <button mat-button (click)="cancelReport()">Odustani</button>

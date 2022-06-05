@@ -27,29 +27,7 @@ export class ReservationDTO{
         return this.endDate.day +"."+ this.endDate.month+"."+this.endDate.year;
     }
 
-    getReservationStatusString():string{
-        console.log(this.reservationStatus);
-        switch (this.reservationStatus){
-            case ReservationStatus.ON_WAIT:{
-                return "Na čekanju";
-            }
-            case ReservationStatus.ACTIVE:{
-                return "Aktivna";
-            }
-            case ReservationStatus.CANCELED:{
-                return "Otkazana";
-            }
-            case ReservationStatus.IN_PROCESS:{
-                return "U procesu";
-            }
-            case ReservationStatus.ENDED:{
-                return "Završena";
-            }
-            case ReservationStatus.FOR_ACTION:{
-                return "Za akciju";
-            }
-        } 
-    }
+    
 
 }
 

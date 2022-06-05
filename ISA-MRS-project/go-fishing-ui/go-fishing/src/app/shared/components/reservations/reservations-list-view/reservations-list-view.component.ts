@@ -27,11 +27,11 @@ export class ReservationListView implements OnInit {
       reservationReport: new FormControl({ value: '' }, Validators.required),
     });
   }
-  
+
   deletionForm: FormGroup = this.createDeletionForm();
-  sendReservationReport(){
+  sendReservationReport(reservationId:number,clientId:number){
       this.dialog.open(ReservationEndReportComponent,{
-        data: this.deletionForm,
+        data: [reservationId,clientId]
       })
   }
 }

@@ -61,11 +61,17 @@ public class ReservationService {
 
 
 	}
-	
+
+	public Reservation getReservationById(int id){
+		return reservationRepository.getById(id);
+	}
+
 	public List<Reservation> getReservationsForOffer(int offerId){
 
 		return reservationRepository.findByOffer_IdEquals(offerId);
 	}
+
+
 
 	public void deleteAction(int id){
 		this.reservationRepository.deleteById(id);

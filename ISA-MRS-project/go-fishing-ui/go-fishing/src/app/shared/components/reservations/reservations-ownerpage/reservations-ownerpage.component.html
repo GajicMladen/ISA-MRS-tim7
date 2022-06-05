@@ -1,5 +1,7 @@
+Odaberite vikendicu:
 <select [ngModel]="selectedOffer" *ngIf="offers.length > 0" (ngModelChange)="onChange($event)">
-    <option value="all">
+    
+    <option value="all" selected="selected">
         Sve
     </option>
     <option *ngFor="let offer of offers" [value]="offer.id">    
