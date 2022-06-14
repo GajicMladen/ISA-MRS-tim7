@@ -1,6 +1,6 @@
 <div>
-<div style="padding: 50px;">
-    <mwl-demo-component [freePeriods]="freePeriods" *ngIf="freePeriods.length > 0; else elseBlock;" >Loading...</mwl-demo-component>
+  <div style="padding: 50px;">
+    <mwl-demo-component [freePeriods]="freePeriods" [actions]="actions" *ngIf="freePeriods.length > 0 || actions.length > 0; else elseBlock;" >Loading...</mwl-demo-component>
     
     <ng-template #elseBlock>
         <h2>Nazalost ova vikendica trenutno nema slobodnih termina.</h2>

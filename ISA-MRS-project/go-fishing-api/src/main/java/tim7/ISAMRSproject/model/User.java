@@ -113,11 +113,12 @@ public class User implements UserDetails {
 		this.password = user.password;
 		this.email = user.email;
 		this.name = user.name;
-		this.lastName = user.name;
-		this.phone = user.name;
+		this.lastName = user.lastName;
+		this.phone = user.phone;
 		this.active = user.active;
 		this.deleted = user.deleted;
 		this.loyaltyPoints = user.loyaltyPoints;
+		//this.livingAddress = user.livingAddress;
 	}
 
 	public Integer getId() {

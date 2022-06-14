@@ -15,12 +15,15 @@ import org.springframework.stereotype.Service;
 import tim7.ISAMRSproject.dto.ChangePasswordDTO;
 import tim7.ISAMRSproject.dto.UserRegisterDTO;
 import tim7.ISAMRSproject.model.Address;
+import tim7.ISAMRSproject.model.Admin;
 import tim7.ISAMRSproject.model.BoatOwner;
 import tim7.ISAMRSproject.model.CottageOwner;
 import tim7.ISAMRSproject.model.DeletionRequest;
 import tim7.ISAMRSproject.model.FishingInstructor;
 import tim7.ISAMRSproject.model.Role;
 import tim7.ISAMRSproject.model.User;
+import tim7.ISAMRSproject.repository.AddressRepository;
+import tim7.ISAMRSproject.repository.AdminRepository;
 import tim7.ISAMRSproject.repository.BoatOwnerRepository;
 import tim7.ISAMRSproject.repository.CottageOwnerRepository;
 import tim7.ISAMRSproject.repository.DeletionRequestRepository;
@@ -41,6 +44,12 @@ public class UserService implements UserDetailsService {
 	
 	@Autowired
 	private InstructorRepository instructorRepository;
+	
+	@Autowired
+	private AddressRepository addressRepository;
+	
+	@Autowired
+	private AdminRepository adminRepository;
 
 	@Autowired
 	private DeletionRequestRepository deletionRequestRepository;
@@ -83,6 +92,8 @@ public class UserService implements UserDetailsService {
 		address.setCountry(userRegisterDTO.getCountry());
 		address.setCity(userRegisterDTO.getTown());
 		address.setStreet(userRegisterDTO.getAddress());
+		address.setLatitude("0");
+		address.setLongitude("0");
 		
 		newUser.setEmail(userRegisterDTO.getEmail());
 		newUser.setName(userRegisterDTO.getName());
@@ -144,6 +155,32 @@ public class UserService implements UserDetailsService {
 	
 	public DeletionRequest saveDeletionRequest(DeletionRequest deletionRequest) {
 		return this.deletionRequestRepository.save(deletionRequest);
+	}
+	
+	public User saveAdmin(UserRegisterDTO userRegisterDTO) {
+		User newUser = new User();
+		Address address = new Address();
+		
+		address.setCountry(userRegisterDTO.getCountry());
+		address.setCity(userRegisterDTO.getTown());
+		address.setStreet(userRegisterDTO.getAddress());
+		address.setLongitude("0");
+		address.setLatitude("0");
+		
+		newUser.setEmail(userRegisterDTO.getEmail());
+		newUser.setName(userRegisterDTO.getName());
+		newUser.setLastName(userRegisterDTO.getLastName());
+		newUser.setPassword(passwordEncoder.encode(userRegisterDTO.getPassword()));
+		newUser.setPhone(userRegisterDTO.getPhoneNumber());
+		address.setUser(newUser);
+		newUser.setAddress(address);
+		newUser.setDeleted(false);
+		newUser.setActive(true);
+		List<Role> roles = new ArrayList<Role>();
+		roles.add(roleService.findByName("ROLE_ADMIN"));
+		newUser.setRoles(roles);
+		
+		return (User)(this.adminRepository.save(new Admin(newUser)));
 	}
 	
 }

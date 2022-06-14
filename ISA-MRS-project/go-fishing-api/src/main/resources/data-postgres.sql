@@ -12,6 +12,8 @@ INSERT INTO public.address(city, country, street, latitude, longitude) VALUES
 						('Mali Zvornik', 'Srbija', 'Sakar 25', '44.361094', '19.121489');
 INSERT INTO public.address(city, country, street, latitude, longitude) VALUES
 						('Ljubovija', 'Srbija', 'Vrhpolje 8', '44.131974', '19.447603');
+INSERT INTO public.address(city, country, street, latitude, longitude) VALUES
+						('Ljubovija', 'Srbija', 'Karadjordjeva 10', '44.188249', '19.377129');
 
 INSERT INTO public.users(active, deleted, email, lastname, name, password, phone, loyalty_points, address_id) VALUES
 				    (true, false, 'p3r5kul45@gmail.com', 'Tomic', 'Jovan', '$2a$10$XeS1WZloSVVq2Z2dJd3L7ePADJy51sWu/oLqcy.Qcmppr6VcUtcr6', '+381607229290', 500, 1);
@@ -24,13 +26,17 @@ INSERT INTO public.users(active, deleted, email, lastname, name, password, phone
 INSERT INTO public.users(active, deleted, email, lastname, name, password, phone, loyalty_points, address_id) VALUES
 					(true, false, 'pera.peric.1912@gmail.com', 'Peric', 'Pera', '$2a$10$XeS1WZloSVVq2Z2dJd3L7ePADJy51sWu/oLqcy.Qcmppr6VcUtcr6', '+381642222111', 0, 3);
 					
+					
+INSERT INTO public.users(active, deleted, email, lastname, name, password, phone, loyalty_points, address_id) VALUES
+					(true, false, 'nb@gmail.com', 'Bajagic', 'NIkola', '$2a$10$XeS1WZloSVVq2Z2dJd3L7ePADJy51sWu/oLqcy.Qcmppr6VcUtcr6', '+38161234432', 0, 1);
 
-INSERT INTO public.users(active, deleted, email, lastname, name, password, phone, address_id) VALUES
-					(true, false, 'nb@gmail.com', 'Bajagic', 'NIkola', '$2a$10$XeS1WZloSVVq2Z2dJd3L7ePADJy51sWu/oLqcy.Qcmppr6VcUtcr6', '+38161234432', 1);
+INSERT INTO public.users(active, deleted, email, lastname, name, password, phone,loyalty_points, address_id) VALUES
+					(true, false, 'mb@gmail.com', 'Bajagic', 'Marko', '$2a$10$XeS1WZloSVVq2Z2dJd3L7ePADJy51sWu/oLqcy.Qcmppr6VcUtcr6', '+381659997778', 0, 1);
 
-INSERT INTO public.users(active, deleted, email, lastname, name, password, phone, address_id) VALUES
-					(true, false, 'mb@gmail.com', 'Bajagic', 'Marko', '$2a$10$XeS1WZloSVVq2Z2dJd3L7ePADJy51sWu/oLqcy.Qcmppr6VcUtcr6', '+381659997778', 1);
-
+INSERT INTO public.users(active, deleted, email, lastname, name, password, phone, loyalty_points, address_id) VALUES
+					(true, false, 'djordjejovanovic27@gmail.com', 'Jovanovic', 'Djordje', '$2a$10$XeS1WZloSVVq2Z2dJd3L7ePADJy51sWu/oLqcy.Qcmppr6VcUtcr6', '+381642222111', 0, 8);
+					
+					
 INSERT INTO public.cottage_owners(id) VALUES (2);
 
 	
@@ -45,12 +51,14 @@ INSERT INTO ROLE (name) VALUES ('ROLE_ADMIN');
 INSERT INTO ROLE (name) VALUES ('ROLE_COTTAGE_OWNER');
 INSERT INTO ROLE (name) VALUES ('ROLE_BOAT_OWNER');
 INSERT INTO ROLE (name) VALUES ('ROLE_INSTRUCTOR');
+INSERT INTO ROLE (name) VALUES ('ROLE_SYSADMIN');
 
 INSERT INTO USER_ROLE(user_id, role_id) VALUES (1, 2);
 INSERT INTO USER_ROLE(user_id, role_id) VALUES (2, 3);
 
 INSERT INTO USER_ROLE(user_id, role_id) VALUES (3, 5);
 INSERT INTO USER_ROLE(user_id, role_id) VALUES (4, 5);
+INSERT INTO USER_ROLE(user_id, role_id) VALUES (7, 6);
 
 INSERT INTO public.offer(
 	 price, capacity, name, promo_description , address)

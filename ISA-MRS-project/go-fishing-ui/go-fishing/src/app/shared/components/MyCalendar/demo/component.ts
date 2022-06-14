@@ -43,10 +43,6 @@ export class DemoComponent {
   @Input() actions: ActionDTO[];
 
   beforeMonthViewRender(renderEvent: CalendarMonthViewBeforeRenderEvent): void {
-    console.log(this.freePeriods.length);
-    console.log(">>>>>>>");
-    console.log(this.actions.length);
-    
     renderEvent.body.forEach((day) => {
       const dayOfMonth = day.date.getDate();
       if ( this.freePeriods.length > 0 && this.isDayInFreePeriods(day)) {
@@ -66,14 +62,22 @@ export class DemoComponent {
   }
   
   isDayInFreePeriods(day:MonthViewDay<any>):boolean{
-
+    console.log(day);
     let res = false;
     let day_S = day.date.getFullYear()+"-"+this.getFullNumber(day.date.getMonth()+1)+"-"+this.getFullNumber(day.date.getDate());
   
     this.freePeriods.forEach(fp => {
+      console.log(fp);
+
       let startDate = fp.startDate.year+"-"+this.getFullNumber(fp.startDate.month)+"-"+this.getFullNumber(fp.startDate.day);
       let endDate = fp.endDate.year+"-"+this.getFullNumber(fp.endDate.month)+"-"+this.getFullNumber(fp.endDate.day);
       
+
+      console.log('************');
+      console.log(day_S);
+      console.log(startDate);
+      console.log(endDate);
+
       if( day_S >= startDate && day_S <= endDate){
         res = true;
       }

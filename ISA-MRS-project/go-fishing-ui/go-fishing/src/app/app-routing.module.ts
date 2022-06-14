@@ -28,7 +28,10 @@ import { AdventureFreePeriodComponent } from './features/adventure/components/ad
 import { AdventureInstructorCalendarComponent } from './features/adventure/components/adventure-instructor-calendar/adventure-instructor-calendar.component';
 
 import { BoatOwnerpageComponent } from './features/boat/components/boat-ownerpage/boat-ownerpage.component';
-
+import { AdminProfilpageComponent } from './features/admin/components/admin-profilpage/admin-profilpage.component';
+import { AdminRegistrationRequestsComponent } from './features/admin/components/admin-registration-requests/admin-registration-requests.component';
+import { AdminDeletionRequestsComponent } from './features/admin/components/admin-deletion-requests/admin-deletion-requests.component';
+import { AdminAddAdminComponent } from './features/admin/components/admin-add-admin/admin-add-admin.component';
 const routes: Routes = [
   { path: '', component: StartpagePreviewListComponent },
   { path: 'login', component: StartpageLoginComponent },
@@ -62,15 +65,18 @@ const routes: Routes = [
   { path: 'instructorProfile/:id', component: AdventureInstructorpageComponent },
   { path: 'addFreePeriod/:id', component: AdventureFreePeriodComponent },
   { path: 'instructorCalendar/:id', component: AdventureInstructorCalendarComponent },
-
   { path: 'newFreePeriod/:id' ,component: NewFreePeriodComponent },
   { path: 'calendar/:id' ,component: CalendarComponent },
-
   { path: 'editInstructor/:id', component: AdventureInstructorEditComponent},
+  { path: 'registrationRequests/:id', component: AdminRegistrationRequestsComponent },
+  { path: 'deletionRequests/:id', component: AdminDeletionRequestsComponent },
+  { path: 'addAdmin/:id', component: AdminAddAdminComponent },
 
   { path: 'boatProfile/:id' , component:BoatProfilepageComponent },
   { path: 'boatOwner/:id' , component: BoatOwnerpageComponent},
   { path: 'editAdventure/:id', component:AdventureEditComponent },
+
+  { path: 'adminProfile/:id', component: AdminProfilpageComponent },
   //Ubaciti komponentu za not found
   { path: '**', redirectTo: '', pathMatch: 'full' },
 ];
