@@ -1,17 +1,24 @@
+<div *ngIf="registrationRequests.length === 0">
+    <mat-card>
+        <mat-card-title>Nema zahteva za registraciju</mat-card-title>
+    </mat-card>
+    <button style="float: right; margin-right: 350px;" mat-raised-button color="warn" routerLink="/adminProfile/{{adminId}}" routerLinkActive="active">Nazad</button>
+</div>
+<div *ngIf="registrationRequests.length !== 0">
+
+</div>
 <div class="main-div">
-        <mat-card class="main-entity-card" style="overflow-y: hidden" *ngFor="let r of requests; index as i">
+        <mat-card class="main-entity-card" style="overflow-y: hidden" *ngFor="let r of registrationRequests; index as i">
                 <mat-card-title>Zahtev za registraciju</mat-card-title>
                 <div class="data">
-                    <b>Zahtev podnosi: </b>{{r.name}}
+                    <b>Zahtev podnosi: </b>{{r.name + " " + r.lastName}}                                        
                     <br>
-                    <b>Uloga: </b>{{r.role}}
-                    <br>
-                    <b>Razlog: </b>{{r.reason}}
+                    <b>Razlog: </b>{{r.registrationReason}}
                     <br>
                     <br>
                 </div>
                 <mat-card-actions style="text-align: center">
-                    <span><button mat-raised-button (click)="RequestBeingRefused(r.id)" data-toggle="modal" data-target="#exampleModalCenter" color="warn">Odbij</button><button mat-raised-button (click)="AcceptRequest(r.id)" class="success">Prihvati</button></span>
+                    <span><button mat-raised-button (click)="RequestBeingRefused(r.userId)" data-toggle="modal" data-target="#exampleModalCenter" color="warn">Odbij</button><button mat-raised-button (click)="AcceptRequest(r.userId)" class="success">Prihvati</button></span>
                 </mat-card-actions>
         </mat-card>
     <br>
@@ -30,7 +37,7 @@
             <div class="modal-body">
                 <mat-form-field class="example-full-width" appearance="fill" style="width: 100%;">
                     <mat-label>Razlog</mat-label>
-                    <textarea matInput placeholder="Razlog..."></textarea>
+                    <textarea id="reason" matInput placeholder="Razlog..."></textarea>
                 </mat-form-field>
             </div>
             <div class="modal-footer">

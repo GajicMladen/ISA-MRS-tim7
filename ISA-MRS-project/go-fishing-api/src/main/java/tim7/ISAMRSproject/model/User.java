@@ -67,6 +67,11 @@ public class User implements UserDetails {
 	private DeletionRequest deletionRequest;
 	
 	@JsonIgnore
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "registration_request", referencedColumnName = "id")
+	private RegistrationRequest registrationRequest;
+	
+	@JsonIgnore
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id", referencedColumnName = "id")
 	private Address livingAddress;
@@ -211,7 +216,16 @@ public class User implements UserDetails {
 		this.deletionRequest = deletionRequest;
 	}
 	
-    public List<Role> getRoles() {
+	@JsonIgnore
+    public RegistrationRequest getRegistrationRequest() {
+		return registrationRequest;
+	}
+
+	public void setRegistrationRequest(RegistrationRequest registrationRequest) {
+		this.registrationRequest = registrationRequest;
+	}
+
+	public List<Role> getRoles() {
         return roles;
      }
     

@@ -172,7 +172,6 @@ public class UserService implements UserDetailsService {
 		newUser.setLastName(userRegisterDTO.getLastName());
 		newUser.setPassword(passwordEncoder.encode(userRegisterDTO.getPassword()));
 		newUser.setPhone(userRegisterDTO.getPhoneNumber());
-		address.setUser(newUser);
 		newUser.setAddress(address);
 		newUser.setDeleted(false);
 		newUser.setActive(true);
@@ -180,7 +179,10 @@ public class UserService implements UserDetailsService {
 		roles.add(roleService.findByName("ROLE_ADMIN"));
 		newUser.setRoles(roles);
 		
-		return (User)(this.adminRepository.save(new Admin(newUser)));
+		Admin admin = new Admin(newUser);
+		admin.setFirstLogin(true);
+		this.adminRepository.save(admin);
+		return (User)admin;
 	}
 	
 }

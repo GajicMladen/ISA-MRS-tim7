@@ -17,9 +17,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import tim7.ISAMRSproject.dto.DeletionRequestOutDTO;
+import tim7.ISAMRSproject.dto.RegistrationRequestOutDTO;
 import tim7.ISAMRSproject.dto.UserDTO;
 import tim7.ISAMRSproject.dto.UserRegisterDTO;
 import tim7.ISAMRSproject.model.DeletionRequest.DeletionRequestStatus;
+import tim7.ISAMRSproject.model.RegistrationRequest.RegistrationRequestStatus;
 import tim7.ISAMRSproject.model.User;
 import tim7.ISAMRSproject.service.AdminService;
 import tim7.ISAMRSproject.service.UserService;
@@ -76,6 +78,23 @@ public class AdminController {
 		return new ResponseEntity<>(deletionRequests, HttpStatus.OK);
 	}
 	
+	@GetMapping(value = "/registrationRequests")
+	public ResponseEntity<?> getRegistrationRequests() {
+		List<User> users = userService.findAll();
+		List<RegistrationRequestOutDTO> registrationRequests = new ArrayList<RegistrationRequestOutDTO>();
+		for (User u : users) {
+			if ((u.getRegistrationRequest() != null) && (u.getRegistrationRequest().getRequestStatus() == RegistrationRequestStatus.PENDING)) {
+				RegistrationRequestOutDTO dto = new RegistrationRequestOutDTO();
+				dto.setRegistrationReason(u.getRegistrationRequest().getRegistrationReason());				
+				dto.setUserId(u.getId().toString());
+				dto.setName(u.getName());
+				dto.setLastName(u.getLastName());				
+				registrationRequests.add(dto);
+			}
+		}
+		return new ResponseEntity<>(registrationRequests, HttpStatus.OK);
+	}
+	
 	@PostMapping(value = "/deleteUser/{id}")
 	public ResponseEntity<Void> deleteUser(@PathVariable int id) {
 		Optional<User> user = this.userService.findById(id);
@@ -101,4 +120,27 @@ public class AdminController {
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 	
+	@PostMapping(value = "/registerUser/{id}")
+	public ResponseEntity<Void> registerUser(@PathVariable int id) {
+		Optional<User> user = this.userService.findById(id);
+		if (user.isPresent()) {
+			User u = user.get();
+			u.setActive(true);
+			this.userService.save(u);
+			this.mailService.sendRegistrationEmail(u, true, "");
+		}
+		return new ResponseEntity<Void>(HttpStatus.OK);
+	}
+	
+	@PostMapping(value = "/refuseRegistration/{id}") 
+	public ResponseEntity<Void> refuseRegistration(@PathVariable int id, @RequestBody String reason) {
+		Optional<User> user = this.userService.findById(id);
+		if (user.isPresent()) {
+			User u = user.get();
+			u.setActive(false);
+			this.userService.save(u);
+			this.mailService.sendRegistrationEmail(u, false, reason);
+		}
+		return new ResponseEntity<Void>(HttpStatus.OK);
+	}
 }

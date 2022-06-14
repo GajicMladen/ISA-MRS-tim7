@@ -12,25 +12,6 @@ import { DeletionRequest } from '../../classes/DeletionRequest';
 export class AdminDeletionRequestsComponent implements OnInit {
 
   adminId: number;
-
-  requests = [
-    {
-      id: 1,
-      name: 'Mitar Lukic',
-      reason: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam ad, dignissimos error at aut quidem!'
-    },
-    {
-      id: 2,
-      name: 'Luka Tešić',
-      reason: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam ad, dignissimos error at aut quidem!'
-    },
-    {
-      id: 3,
-      name: 'Mika Mikic',
-      reason: 'Ne zelim vise da radim kao instruktor'
-    }
-  ]
-
   beingRefused: number = -1;
   deletionRequests: DeletionRequest[];
 

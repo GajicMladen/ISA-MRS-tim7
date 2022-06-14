@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MessageService, MessageType } from 'src/app/shared/services/message-service/message.service';
+import { AdminService } from '../../admin.service';
+import { RegistrationRequest } from '../../classes/RegistrationRequest';
 
 @Component({
   selector: 'app-admin-registration-requests',
@@ -10,51 +12,38 @@ import { MessageService, MessageType } from 'src/app/shared/services/message-ser
 export class AdminRegistrationRequestsComponent implements OnInit {
 
   adminId: number;
-
-  requests = [
-    {
-      id: 1,
-      name: 'Marko Stančić',
-      role: 'Instruktor',
-      reason: 'Želim da zaradim novac.'
-    },
-    {
-      id: 2,
-      name: 'Luka Tešić',
-      role: 'Vlasnik vikendice',
-      reason: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam ad, dignissimos error at aut quidem! '
-    },
-    {
-      id: 3,
-      name: 'Ognjen Vasić',
-      role: 'Vlasnik broda',
-      reason: 'Ullam odit, illum, corporis placeat quo quae quod aperiam, ex impedit molestiae quos magni vero.Ullam odit, illum, corporis placeat quo quae quod aperiam, ex impedit molestiae quos magni vero.'
-    }
-  ]
-
   beingRefused: number = -1;
+  registrationRequests: RegistrationRequest[];
 
   constructor(private route: ActivatedRoute,
-              private messageService: MessageService) { }
+              private messageService: MessageService,
+              private adminService: AdminService) { }
 
   ngOnInit(): void {
     this.adminId = Number(this.route.snapshot.paramMap.get('id'));
+    this.adminService.getRegistrationRequests().subscribe( data => {
+      this.registrationRequests = data;
+      console.log(this.registrationRequests);
+    });
   }
 
-  RequestBeingRefused(id: number) {
-    this.beingRefused = id;
-    //console.log("---" + this.beingRefused);
+  RequestBeingRefused(id: string) {
+    this.beingRefused = parseInt(id);
   }
 
   RefuseRequest() {
-    this.requests.forEach((element, index) => {if(element.id === this.beingRefused) this.requests.splice(index, 1)});
-    this.messageService.showMessage('Zahtev za registraciju odbijen!', MessageType.SUCCESS);
+    var reasonInput = document.getElementById('reason') as HTMLInputElement;
+    this.adminService.refuseRegistration(this.beingRefused, reasonInput.value).subscribe(data => {
+      this.messageService.showMessage('Zahtev za registraciju odbijen!', MessageType.SUCCESS);
+      this.registrationRequests.forEach((element, index) => {if(element.userId === this.beingRefused.toString()) this.registrationRequests.splice(index, 1)});
+    });
   }
 
-  AcceptRequest(id: number) {
-    console.log(id);
-    this.requests.forEach((element, index) => {if(element.id === id) this.requests.splice(index, 1)});
-    this.messageService.showMessage('Zahtev za registraciju prihvaćen!', MessageType.SUCCESS);
+  AcceptRequest(id: string) {    
+    this.adminService.registerUser(parseInt(id)).subscribe(data => {
+      this.messageService.showMessage('Zahtev za registraciju prihvaćen!', MessageType.SUCCESS);
+      this.registrationRequests.forEach((element, index) => {if(element.userId === id) this.registrationRequests.splice(index, 1)});
+    });
   }
 
 }
