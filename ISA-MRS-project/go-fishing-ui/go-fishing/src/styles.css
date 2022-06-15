@@ -33,4 +33,9 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 .mat-slider-track-fill {
 	background-color: #3F51B5 !important;
+
+#chartPie .ngx-charts{
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
 }

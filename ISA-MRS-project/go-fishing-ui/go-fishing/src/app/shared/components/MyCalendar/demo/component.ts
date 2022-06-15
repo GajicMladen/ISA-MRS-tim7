@@ -22,10 +22,15 @@ import { ActionDTO } from 'src/models/reservation';
   templateUrl: 'template.html',
   styles: [
     `
-      .cal-month-view .bg-pink,
-      .cal-week-view .cal-day-columns .bg-pink,
-      .cal-day-view .bg-pink {
+      .cal-month-view .bg-green,
+      .cal-week-view .cal-day-columns .bg-green,
+      .cal-day-view .bg-green {
         background-color: #70be70 !important;
+      }
+      .cal-month-view .bg-yellow, 
+      .cal-week-view .cal-day-columns .bg-yellow,
+      .cal-day-view .bg-yellow{
+        background-color: #f2d748 !important;
       }
     `,
   ],
@@ -46,10 +51,10 @@ export class DemoComponent {
     renderEvent.body.forEach((day) => {
       const dayOfMonth = day.date.getDate();
       if ( this.freePeriods.length > 0 && this.isDayInFreePeriods(day)) {
-        day.cssClass = 'bg-pink';
+        day.cssClass = 'bg-green';
       }
       if( this.actions.length > 0 && this.isDayInActions(day)){
-        day.cssClass = 'bg-pink';
+        day.cssClass = 'bg-yellow';
       }
     });
   }

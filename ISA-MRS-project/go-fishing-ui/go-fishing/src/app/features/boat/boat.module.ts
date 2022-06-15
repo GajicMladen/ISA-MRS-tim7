@@ -5,16 +5,24 @@ import { BoatProfilepageComponent } from './components/boat-profilepage/boat-pro
 import { RouterModule } from '@angular/router';
 import { BoatOwnerpageComponent } from './components/boat-ownerpage/boat-ownerpage.component';
 import { BoatGalleryOwnerComponent } from './components/boat-gallery-owner/boat-gallery-owner.component';
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { BoatAddNewComponent } from './components/boat-add-new/boat-add-new.component';
+import { BoatEditComponent } from './components/boat-edit/boat-edit.component';
 
 @NgModule({
   declarations: [
     BoatProfilepageComponent,
     BoatOwnerpageComponent,
-    BoatGalleryOwnerComponent
+    BoatGalleryOwnerComponent,
+    BoatAddNewComponent,
+    BoatEditComponent
   ],
   imports: [
     CommonModule,
-    RouterModule
+    RouterModule,
+    FormsModule,
+    HttpClientModule
   ]
 })
 export class BoatModule { }

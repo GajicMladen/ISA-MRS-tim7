@@ -9,6 +9,9 @@ import { CottageService } from './services/cottage.service';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { CottageEditComponent } from './components/cottage-edit/cottage-edit.component';
+import { BoatEntityService } from './services/boat-entity.service';
+import { CottageReportsComponent } from './components/cottage-reports/cottage-reports.component';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -17,13 +20,9 @@ import { CottageEditComponent } from './components/cottage-edit/cottage-edit.com
     CottageGalleryOwnerComponent,
     CottageAddNewComponent,
     CottageEditComponent,
+    CottageReportsComponent,
   ],
-  imports: [
-    CommonModule,
-    RouterModule,
-    HttpClientModule,
-    FormsModule
-  ],
-  providers:[CottageService]
+  imports: [CommonModule, RouterModule, HttpClientModule, FormsModule,SharedModule],
+  providers: [CottageService, BoatEntityService],
 })
-export class CottageModule { }
+export class CottageModule {}

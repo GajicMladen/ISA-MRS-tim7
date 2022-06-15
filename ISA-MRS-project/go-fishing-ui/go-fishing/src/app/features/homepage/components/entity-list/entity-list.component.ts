@@ -1,5 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { PageEvent } from '@angular/material/paginator';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormControl } from '@angular/forms';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { Router } from '@angular/router';
+import { AdventureService } from 'src/app/features/adventure/adventure.service';
+import { BoatEntityService } from 'src/app/features/cottage/services/boat-entity.service';
+import { CottageService } from 'src/app/features/cottage/services/cottage.service';
 
 @Component({
   selector: 'app-entity-list',
@@ -7,24 +12,191 @@ import { PageEvent } from '@angular/material/paginator';
   styleUrls: ['./entity-list.component.css'],
 })
 export class EntityListComponent implements OnInit {
-  allItems: any[] = [];
+  totalItems: number = 0;
   pageSlice: any[] = [];
-  pageSize: number = 4;
+  pageSize: number = 3;
   pageSizeOptions: number[] = [this.pageSize];
+  sort: FormControl = new FormControl('');
 
-  constructor() {
-    this.allItems = Array(30)
-      .fill(0)
-      .map((x, i) => i);
-    this.pageSlice = this.allItems.slice(0, this.pageSize);
+  //either 'cottage', 'boat' or 'adventure'
+  mode: string;
+  @ViewChild('paginator') paginator: MatPaginator;
+
+  constructor(
+    private cottageService: CottageService,
+    private boatService: BoatEntityService,
+    private adventureService: AdventureService,
+    private router: Router
+  ) {}
+
+  ngOnInit(): void {
+    this.setRole();
+    this.setCount();
+    this.setPageView(0);
+    this.sort.valueChanges.subscribe((res: any) => {
+      this.setSortView(0);
+    });
   }
 
-  ngOnInit(): void {}
+  setRole(): void {
+    switch (this.router.url) {
+      case '/home/cottageList':
+        this.mode = 'cottage';
+        break;
+      case '/home/boatList':
+        this.mode = 'boat';
+        break;
+      case '/home/adventureList':
+        this.mode = 'adventure';
+        break;
+      default:
+        break;
+    }
+  }
+
+  setCount(): void {
+    switch (this.mode) {
+      case 'cottage':
+        this.getCottagesCount().subscribe((res: any) => {
+          this.totalItems = res;
+        });
+        break;
+      case 'boat':
+        this.getBoatsCount().subscribe((res: any) => {
+          this.totalItems = res;
+        });
+        break;
+      case 'adventure':
+        this.getAdventuresCount().subscribe((res: any) => {
+          this.totalItems = res;
+        });
+        break;
+      default:
+        break;
+    }
+  }
+
+  setPageView(page: number): void {
+    switch (this.mode) {
+      case 'cottage':
+        this.getCottagesPage(page).subscribe((res: any) => {
+          this.pageSlice = res;
+        });
+        break;
+      case 'boat':
+        this.getBoatsPage(page).subscribe((res: any) => {
+          this.pageSlice = res;
+        });
+        break;
+      case 'adventure':
+        this.getAdventuresPage(page).subscribe((res: any) => {
+          this.pageSlice = res;
+        });
+        break;
+      default:
+        break;
+    }
+  }
+
+  setSortView(page: number): void {
+    switch (this.mode) {
+      case 'cottage':
+        this.getCottagesPage(page, this.sort.value).subscribe((res: any) => {
+          this.paginator.firstPage();
+          this.pageSlice = res;
+        });
+        break;
+      case 'boat':
+        this.getBoatsPage(page, this.sort.value).subscribe((res: any) => {
+          this.paginator.firstPage();
+          this.pageSlice = res;
+        });
+        break;
+      case 'adventure':
+        this.getAdventuresPage(page, this.sort.value).subscribe((res: any) => {
+          this.paginator.firstPage();
+          this.pageSlice = res;
+        });
+        break;
+      default:
+        break;
+    }
+  }
 
   onPageChange(event: PageEvent) {
-    const startIndex = event.pageIndex * event.pageSize;
-    let endIndex = startIndex + event.pageSize;
-    if (endIndex > this.allItems.length) endIndex = this.allItems.length;
-    this.pageSlice = this.allItems.slice(startIndex, endIndex);
+    switch (this.mode) {
+      case 'cottage':
+        this.getCottagesPage(event.pageIndex, this.sort.value).subscribe(
+          (res: any) => {
+            this.pageSlice = res;
+          }
+        );
+        break;
+      case 'boat':
+        this.getBoatsPage(event.pageIndex, this.sort.value).subscribe(
+          (res: any) => {
+            this.pageSlice = res;
+          }
+        );
+        break;
+      case 'adventure':
+        this.getAdventuresPage(event.pageIndex, this.sort.value).subscribe(
+          (res: any) => {
+            this.pageSlice = res;
+          }
+        );
+        break;
+      default:
+        break;
+    }
+  }
+
+  redirectToEntity(id: number) {
+    switch (this.mode) {
+      case 'cottage':
+        this.router.navigate(['cottageProfile/' + id]);
+        break;
+      case 'boat':
+        this.router.navigate(['boatProfile/' + id]);
+        break;
+      case 'adventure':
+        this.router.navigate(['adventureProfile/' + id]);
+        break;
+      default:
+        break;
+    }
+  }
+
+  getCottagesCount() {
+    return this.cottageService.getCottagesCount();
+  }
+
+  getCottagesPage(pageNum: number, sort: string = 'default') {
+    return this.cottageService.getCottagesPage(pageNum, this.pageSize, sort);
+  }
+
+  getBoatsCount() {
+    return this.boatService.getBoatsCount();
+  }
+
+  getBoatsPage(pageNum: number, sort: string = 'default') {
+    return this.boatService.getBoatsPage(pageNum, this.pageSize, sort);
+  }
+
+  getAdventuresCount() {
+    return this.adventureService.getAdventuresCount();
+  }
+
+  getAdventuresPage(pageNum: number, sort: string = 'default') {
+    return this.adventureService.getAdventuresPage(
+      pageNum,
+      this.pageSize,
+      sort
+    );
+  }
+
+  getSummarizedDescription(description: string): string {
+    if (description.length < 550) return description;
+    else return description.substring(0, 550) + '...';
   }
 }

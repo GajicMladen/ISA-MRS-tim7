@@ -1,5 +1,7 @@
 package tim7.ISAMRSproject.model;
 
+import tim7.ISAMRSproject.dto.BoatDTO;
+
 import java.util.List;
 
 import javax.persistence.Column;
@@ -40,6 +42,14 @@ public class Boat extends Offer {
 		// TODO Auto-generated constructor stub
 	}
 
+	public Boat(BoatDTO boatDTO){
+		super(boatDTO.getId(), boatDTO.getName(), boatDTO.getDescription(), boatDTO.getPrice(),boatDTO.getCapacity());
+		this.cancelConditions = boatDTO.getReservationCancellationTerms();
+		this.length = boatDTO.getLength();
+		this.maxSpeed = boatDTO.getMaxSpeed();
+		this.motorPower = boatDTO.getPowerOfEngines();
+		this.motorsCount = boatDTO.getNumOfMotors();
+	}
 	public Boat(Integer id, String naziv, String promoOpis, List<String> slike, List<String> pravilaPonasanja, float cena,
 				int kapacitet) {
 		super(id, naziv, promoOpis, cena, kapacitet);

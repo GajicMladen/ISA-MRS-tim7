@@ -3,33 +3,33 @@ import { Injectable } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { User } from 'src/app/shared/classes/user';
+import { ConfigService } from 'src/app/shared/services/config.service';
 import { Adventure } from './classes/adventure';
 import { Instructor } from './classes/instructor';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AdventureService {
-
   private adventureUrl: string;
-
-  constructor(private http: HttpClient) {
+  
+  constructor(private http: HttpClient, private config: ConfigService) {
     this.adventureUrl = "http://localhost:8080/adventure";
-   }
-
+  }
+  
+  public addAdventure(adventure: Adventure) {
+    return this.http.post<Adventure>(this.adventureUrl, adventure);
+  }
+  
   public deleteAdventure(id: any): Observable<Adventure>{
     console.log(id);
     return this.http.delete<Adventure>(this.adventureUrl + "/" + id);
   }
-
-  public addAdventure(adventure: Adventure) {
-    return this.http.post<Adventure>(this.adventureUrl, adventure);
-  }
-
+  
   public updateInstructorData(instructor: User) {
     return this.http.put<User>(this.adventureUrl + "/instructor", instructor);
   }
-
+  
   public getAdventureById(adventureId: number): Observable<Adventure>{
     return this.http.get<Adventure>(this.adventureUrl + "/get/" + adventureId);
   }
@@ -56,5 +56,15 @@ export class AdventureService {
 
   public getAdventureIds(instructorId: number) {
     return this.http.get(this.adventureUrl + '/instructor/adventuresId/' + instructorId);
+  }
+  
+  public getAdventuresCount() {
+    return this.http.get(this.config.adventuresCountUrl);
+  }
+
+  public getAdventuresPage(pageNum: number, perpageNum: number, sort: string) {
+    return this.http.get(this.config.adventuresPageUrl, {
+      params: { page: pageNum, perPage: perpageNum, sort: sort },
+    });
   }
 }

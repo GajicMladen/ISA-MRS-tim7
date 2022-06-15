@@ -18,26 +18,35 @@ export class OfferInfoComponent implements OnInit {
 
   ngOnInit(): void {
     
-    this.offerService.getOfferById(this.offerId).subscribe(data =>{
+    this.offerService.getCottageById(this.offerId).subscribe(data =>{
       this.offer = <Offer>data;
-      console.log(data);
-      this.offerType = this.getOfferType(data);
+      
+      if(this.offer == undefined){
+        this.offerService.getBoatById(this.offerId).subscribe(data => {
+          this.offer = <Offer>data;
+          this.offerType= this.getOfferType(data);
+        });
+      }
+      else{
+        this.offerType = this.getOfferType(data);
+      }
     });
   }
 
   getOfferType(offer:Object):string{
     console.log(offer.hasOwnProperty("ownerId"));
-    if(offer.hasOwnProperty("ownerId")) 
-      return "C";
     if(offer.hasOwnProperty("maxSpeed"))
       return "B";
     if(offer.hasOwnProperty("biography"))
       return "I";
+    if(offer.hasOwnProperty("ownerId")) 
+      return "C";
     
     return "N";
   }
 
   openProfile(){
+    
     switch(this.offerType){
       case "C":
         this.router.navigate(["cottageProfile/"+this.offerId])

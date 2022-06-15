@@ -9,6 +9,7 @@ export class ConfigService {
   private _signup_url = this._server_address + '/reg/signup';
   private _login_url = this._server_address + '/login';
   private _user_controller_url = this._server_address + '/api/users';
+  private _entity_controller_url = this._server_address + '/api/entity';
 
   get loginUrl(): string {
     return this._login_url;
@@ -40,5 +41,35 @@ export class ConfigService {
 
   get deletionRequestUrl(): string {
     return this._user_controller_url + '/deletionRequest';
+  }
+
+  /*
+   *
+   *   ENTITIY CONTROLLER
+   *
+   */
+
+  get cottagesPageUrl(): string {
+    return this._entity_controller_url + '/cottages/all';
+  }
+
+  get cottagesCountUrl(): string {
+    return this._entity_controller_url + '/cottages/count';
+  }
+
+  get boatsPageUrl(): string {
+    return this._entity_controller_url + '/boats/all';
+  }
+
+  get boatsCountUrl(): string {
+    return this._entity_controller_url + '/boats/count';
+  }
+
+  get adventuresPageUrl(): string {
+    return this._entity_controller_url + '/adventures/all';
+  }
+
+  get adventuresCountUrl(): string {
+    return this._entity_controller_url + '/adventures/count';
   }
 }
