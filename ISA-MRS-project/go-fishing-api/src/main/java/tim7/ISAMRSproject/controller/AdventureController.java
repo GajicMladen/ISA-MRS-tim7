@@ -21,9 +21,12 @@ import tim7.ISAMRSproject.dto.ActionDTO;
 import tim7.ISAMRSproject.dto.AdventureDTO;
 import tim7.ISAMRSproject.dto.ChangePasswordDTO;
 import tim7.ISAMRSproject.dto.DeletionRequestDTO;
+import tim7.ISAMRSproject.dto.FreePeriodDTO;
 import tim7.ISAMRSproject.dto.UserDTO;
+import tim7.ISAMRSproject.model.Action;
 import tim7.ISAMRSproject.model.Adventure;
 import tim7.ISAMRSproject.model.DeletionRequest;
+import tim7.ISAMRSproject.model.FreePeriod;
 import tim7.ISAMRSproject.model.DeletionRequest.DeletionRequestStatus;
 import tim7.ISAMRSproject.model.User;
 import tim7.ISAMRSproject.service.ActionService;
@@ -172,5 +175,20 @@ public class AdventureController {
 		else {
 			return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
 		}
+	}
+	
+	@GetMapping(value = "/getActionsFromIds/{ids}")
+	public List<ActionDTO> getFromIds(@PathVariable String ids) {
+		List<ActionDTO> actions = new ArrayList<ActionDTO>();
+		String[] offerIds = ids.split(",");
+		for (String i : offerIds) {
+			int id = Integer.parseInt(i);
+			List<Action> ac = this.actionService.getActionByOfferId(id);
+			for (Action a: ac) {
+				actions.add(new ActionDTO(a));
+			}
+		}
+		
+		return actions;
 	}
 }
