@@ -26,6 +26,7 @@ import { CalendarComponent } from './shared/components/calendar/calendarPage/cal
 import { AdventureEditComponent } from './features/adventure/components/adventure-edit/adventure-edit.component';
 import { AdventureFreePeriodComponent } from './features/adventure/components/adventure-free-period/adventure-free-period.component';
 import { AdventureInstructorCalendarComponent } from './features/adventure/components/adventure-instructor-calendar/adventure-instructor-calendar.component';
+import { AdventureActionComponent } from './features/adventure/components/adventure-action/adventure-action.component';
 
 import { BoatOwnerpageComponent } from './features/boat/components/boat-ownerpage/boat-ownerpage.component';
 import { BoatAddNewComponent } from './features/boat/components/boat-add-new/boat-add-new.component';
@@ -76,7 +77,7 @@ const routes: Routes = [
   { path: 'instructorProfile/:id', component: AdventureInstructorpageComponent },
   { path: 'addFreePeriod/:id', component: AdventureFreePeriodComponent },
   { path: 'instructorCalendar/:id', component: AdventureInstructorCalendarComponent },
-
+  { path: 'newAction/:id', component: AdventureActionComponent },
   { path: 'newFreePeriod/:id' ,component: NewFreePeriodComponent },
   { path: 'calendar/:id' ,component: CalendarComponent },
   { path: 'editInstructor/:id', component: AdventureInstructorEditComponent},

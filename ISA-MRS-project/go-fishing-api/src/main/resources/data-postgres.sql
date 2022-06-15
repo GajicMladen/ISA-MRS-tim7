@@ -283,6 +283,9 @@ INSERT INTO public.free_period (
 	start_date_time, end_date_time, offer_id)
 	VALUES ('2022-05-31T00:00:01', '2022-06-10T00:00:01', 4);
 
+INSERT INTO public.free_period (
+	start_date_time, end_date_time, offer_id)
+	VALUES ('2022-06-15T14:30:00', '2022-06-16T10:00:00', 22);
 
 --REZERVACIJE
 INSERT INTO public.reservation(id, end_date_time, start_date_time, status, total_price, client_id, complaint, grade, offer_id)

@@ -4,6 +4,7 @@ import { FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { User } from 'src/app/shared/classes/user';
 import { ConfigService } from 'src/app/shared/services/config.service';
+import { ActionSendDTO } from 'src/models/reservation';
 import { Adventure } from './classes/adventure';
 import { Instructor } from './classes/instructor';
 
@@ -65,6 +66,12 @@ export class AdventureService {
   public getAdventuresPage(pageNum: number, perpageNum: number, sort: string) {
     return this.http.get(this.config.adventuresPageUrl, {
       params: { page: pageNum, perPage: perpageNum, sort: sort },
+    });
+  }
+
+  public addAction(action: ActionSendDTO) {
+    return this.http.post(this.adventureUrl + "/addAction", action, {
+      headers: { 'Content-Type': 'application/json' },
     });
   }
 }

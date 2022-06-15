@@ -18,6 +18,8 @@ export interface IAdventure {
 	latitude: string;
 	longitude: string;
 
+	rating: number;
+
 	instructorId: number;
 	instructorBiography: string;
 	instructorName: string;
@@ -42,6 +44,8 @@ export class Adventure {
 	country: string;
 	latitude: string;
 	longitude: string;
+
+	rating: number;
 
 	instructorId: number;
 	instructorBiography: string;
@@ -69,5 +73,6 @@ export class Adventure {
 		this.instructorName = object.instructorName;
 		this.instructorSurname = object.instructorSurname;
 		this.deleted = object.deleted;
+		this.rating = object.rating;
 	}
 }

@@ -251,7 +251,7 @@ public class AdminController {
 	@DeleteMapping(value = "/deleteBoat/{id}")
 	public ResponseEntity<Void> deleteBoatById(@PathVariable int id) {
 		System.out.println("***************" + id);
-		this.boatService.deleteBoatById(id);
+		this.boatService.deleteBoat(id);
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 }

@@ -36,7 +36,8 @@ export class AdventureProfilpageComponent implements OnInit {
 	  instructorBiography: '',
 	  instructorName: '',
 	  instructorSurname: '',
-    deleted: false
+    deleted: false,
+    rating: 0
   });
   adventure1 = {
     instructor: "Mika Mikic",

@@ -47,7 +47,8 @@ export class AdventureEditComponent implements OnInit {
 	  instructorBiography: '',
 	  instructorName: '',
 	  instructorSurname: '',
-    deleted: false
+    deleted: false,
+    rating: 0
   });
 
   longitude = '';
