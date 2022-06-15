@@ -51,7 +51,11 @@ export class SearchDialogComponent {
 
     if (maxPrice < minPrice) return false;
 
-    return exp.test(String(minPrice)) && exp.test(String(maxPrice));
+    if (maxPrice !== null) {
+      return exp.test(String(minPrice)) && exp.test(String(maxPrice));
+    } else {
+      return exp.test(String(minPrice));
+    }
   }
 
   validateFormDates(): boolean {

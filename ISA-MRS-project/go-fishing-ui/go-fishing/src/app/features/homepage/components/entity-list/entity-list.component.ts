@@ -34,7 +34,7 @@ export class EntityListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.setRole();
+    this.setMode();
     this.setCount();
     this.setPageView(0);
     this.sort.valueChanges.subscribe((res: any) => {
@@ -42,7 +42,7 @@ export class EntityListComponent implements OnInit {
     });
   }
 
-  setRole(): void {
+  setMode(): void {
     switch (this.router.url) {
       case '/home/cottageList':
         this.mode = 'cottage';
@@ -224,9 +224,48 @@ export class EntityListComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      if (result.search) {
+      if (result !== undefined && result.search) {
         // SEARCH LOGIKA
-        console.log('TRUE');
+
+        if (this.searchForm.controls['name'].value.includes('Kosmaj')) {
+          this.totalItems = 1;
+          this.pageSlice = [
+            {
+              id: 1,
+              name: 'Vikendica Kosmaj',
+              description:
+                'Vila Mišeluk se nalazi na samo nekoliko kilometara od Novog Sada što je samo jedan od razloga da je posetite. Idealna je za druženja kako u letnjem periodu, tako i u zimskom. Kada je lepo vreme možete uživati u roštilju pored bazena i prelepom dvorištu. U zimskom periodu, Vaše okupljanje možete napraviti u prostranoj dnevnoj prostoriji. Pored toga tu su i dve spavaće sobe, kuhinja i kupatilo.Ova vila je odličan izbor za momačke i devojačke veceri, kao i za sve ostale tipove druženja. Posetite nas i uverite se!',
+              price: 39.6,
+              ownerName: 'Mladen Gajic',
+              rating: 3.3,
+              address: 'Nikole Tesle 7, Mali Zvornik',
+            },
+          ];
+        } else {
+          this.totalItems = 2;
+          this.pageSlice = [
+            {
+              id: 6,
+              name: 'Milmar Premier',
+              description:
+                'Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus quae fugiat dolore excepturi dolorum magni libero nihil voluptas, voluptate quidem.',
+              price: 250.0,
+              ownerName: 'Mladen Gajic',
+              rating: 4.3,
+              address: 'Tihomira Ostojica 2, Novi Sad',
+            },
+            {
+              id: 11,
+              name: 'Apartmani Zupa',
+              description:
+                'Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium aliquam voluptatibus necessitatibus sequi, accusantium quasi! Similique doloremque ullam voluptatum delectus.',
+              price: 115.0,
+              ownerName: 'Mladen Gajic',
+              rating: 3.3,
+              address: 'Tihomira Ostojica 2, Novi Sad',
+            },
+          ];
+        }
       }
     });
   }
