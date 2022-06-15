@@ -31,6 +31,13 @@ import { BoatOwnerpageComponent } from './features/boat/components/boat-ownerpag
 import { BoatAddNewComponent } from './features/boat/components/boat-add-new/boat-add-new.component';
 import { BoatEditComponent } from './features/boat/components/boat-edit/boat-edit.component';
 
+import { AdminProfilpageComponent } from './features/admin/components/admin-profilpage/admin-profilpage.component';
+import { AdminRegistrationRequestsComponent } from './features/admin/components/admin-registration-requests/admin-registration-requests.component';
+import { AdminDeletionRequestsComponent } from './features/admin/components/admin-deletion-requests/admin-deletion-requests.component';
+import { AdminAddAdminComponent } from './features/admin/components/admin-add-admin/admin-add-admin.component';
+import { AdminEntityOverviewComponent } from './features/admin/components/admin-entity-overview/admin-entity-overview.component';
+
+
 const routes: Routes = [
   { path: '', component: StartpagePreviewListComponent },
   { path: 'login', component: StartpageLoginComponent },
@@ -70,14 +77,21 @@ const routes: Routes = [
   { path: 'addFreePeriod/:id', component: AdventureFreePeriodComponent },
   { path: 'instructorCalendar/:id', component: AdventureInstructorCalendarComponent },
 
-  { path: 'newFreePeriod/:id', component: NewFreePeriodComponent },
-  { path: 'calendar/:id', component: CalendarComponent },
+  { path: 'newFreePeriod/:id' ,component: NewFreePeriodComponent },
+  { path: 'calendar/:id' ,component: CalendarComponent },
+  { path: 'editInstructor/:id', component: AdventureInstructorEditComponent},
+  { path: 'registrationRequests/:id', component: AdminRegistrationRequestsComponent },
+  { path: 'deletionRequests/:id', component: AdminDeletionRequestsComponent },
+  { path: 'addAdmin/:id', component: AdminAddAdminComponent },
 
   { path: 'editInstructor/:id', component: AdventureInstructorEditComponent },
   { path: 'boatProfile/:id' , component:BoatProfilepageComponent },
   { path: 'boatOwner/:id' , component: BoatOwnerpageComponent},
   { path: 'editAdventure/:id', component:AdventureEditComponent },
-    
+
+  { path: 'entityOverview/:id', component: AdminEntityOverviewComponent },
+  { path: 'adminProfile/:id', component: AdminProfilpageComponent },
+
   //Ubaciti komponentu za not found
   { path: '**', redirectTo: '', pathMatch: 'full' },
 ];

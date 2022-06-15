@@ -72,12 +72,40 @@
       <div class="text-center" id="search">
         <form [formGroup]="form">
           <mat-form-field>
-              <input matInput formControlName="searchBar" type="text" placeholder="Pretraži" (keyup)="onKeyupEvent($event)">
+              <input matInput formControlName="searchNameBar" type="text" id="name" placeholder="Naziv" (keyup)="search()">
               <button mat-button matPrefix mat-icon-button>
                   <mat-icon>search</mat-icon>
               </button>
           </mat-form-field>
-      </form>
+          <mat-form-field>
+            <input matInput formControlName="searchLocationBar" type="text" id="location" placeholder="Lokacija" (keyup)="search()">
+            <button mat-button matPrefix mat-icon-button>
+                <mat-icon>search</mat-icon>
+            </button>
+          </mat-form-field>
+          <label>Cena:</label>
+          <mat-slider
+            #priceSlider
+            thumbLabel
+            [displayWith]="formatLabel"
+            tickInterval="1000"
+            step="1"
+            min="{{minPrice}}"
+            max="{{maxPrice}}"
+            aria-label="units"
+            (pointerup)="priceSliderOnChange(priceSlider.value)"></mat-slider>
+          <label>Kapacitet:</label>
+          <mat-slider
+            #capacitySlider
+            thumbLabel
+            [displayWith]="formatLabel"
+            tickInterval="1000"
+            step="1"
+            min="{{minCapacity}}"
+            max="{{maxCapacity}}"
+            aria-label="units"
+            (pointerup)="capacitySliderOnChange(capacitySlider.value)"></mat-slider>
+        </form>
       </div>
       <div class="row" id="adventureRow">
         <div *ngFor="let a of adventures">

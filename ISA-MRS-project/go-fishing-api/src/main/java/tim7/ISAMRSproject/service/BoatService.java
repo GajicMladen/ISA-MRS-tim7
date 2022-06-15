@@ -25,7 +25,15 @@ public class BoatService {
 
         return boatRepository.findByOwnerId(ownerId);
     }
+    
+    public List<Boat> getAllBoats() {
+    	return boatRepository.findAll();
+    }
 
+    public void deleteBoatById(int id) {
+    	this.boatRepository.deleteById(id);
+    }
+  
     public Boat addNewBoat(BoatDTO boatDTO, User user) {
 
         Boat boat = new Boat(boatDTO);
@@ -49,6 +57,5 @@ public class BoatService {
         boatRepository.updateBoat(boatDTO.getId(), boatDTO.getName(),
                 boatDTO.getDescription(), boatDTO.getPrice(),boatDTO.getCapacity());
     }
-
 
 }

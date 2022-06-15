@@ -4,6 +4,7 @@ import { FreePeriodService } from 'src/app/shared/services/free-period-service/f
 import { MessageService, MessageType } from 'src/app/shared/services/message-service/message.service';
 import { UserService } from 'src/app/shared/services/users-services/user.service';
 import { FreePeriodDTO } from 'src/models/freePeriod';
+import { ActionDTO } from 'src/models/reservation';
 import { AdventureService } from '../../adventure.service';
 
 @Component({
@@ -20,6 +21,7 @@ export class AdventureInstructorCalendarComponent implements OnInit {
 
   instructorId: number;
   freePeriods: FreePeriodDTO[] = [];
+  actions: ActionDTO[] = [];
   adventureIds: number[] = [];
 
   ngOnInit(): void {
@@ -41,6 +43,7 @@ export class AdventureInstructorCalendarComponent implements OnInit {
     console.log(id);
     this.freePeriodService.deleteFreePeriod(id).subscribe(data =>{
       this.freePeriods.forEach((element, index) => {if(element.id === id) this.freePeriods.splice(index, 1)});
+      console.log(this.freePeriods);
       this.messageService.showMessage('Slobodan termin uspešno obrisan!', MessageType.SUCCESS);
     });
   }
