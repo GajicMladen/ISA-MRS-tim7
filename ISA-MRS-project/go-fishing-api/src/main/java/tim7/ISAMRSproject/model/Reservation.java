@@ -1,16 +1,9 @@
 package tim7.ISAMRSproject.model;
 
 import java.time.LocalDateTime;
+import java.util.Set;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
 
 @Entity
@@ -46,9 +39,8 @@ public class Reservation {
 	@JoinColumn(name = "grade", referencedColumnName = "id",nullable = true)
 	private Grade grade;
 
-	@OneToOne
-	@JoinColumn(name = "complaint", referencedColumnName = "id",nullable = true)
-	private Complaint complaint;
+	@OneToMany(mappedBy = "reservation", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private Set<Complaint> complaints;
 
 	public Integer getId() {
 		return id;
@@ -114,11 +106,11 @@ public class Reservation {
 		this.grade = grade;
 	}
 
-	public Complaint getComplaint() {
-		return complaint;
+	public Set<Complaint> getComplaints() {
+		return complaints;
 	}
 
-	public void setComplaint(Complaint complaint) {
-		this.complaint = complaint;
+	public void setComplaints(Set<Complaint> complaints) {
+		this.complaints = complaints;
 	}
 }

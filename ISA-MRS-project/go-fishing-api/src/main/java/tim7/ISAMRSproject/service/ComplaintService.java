@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 import tim7.ISAMRSproject.model.Complaint;
 import tim7.ISAMRSproject.repository.ComplaintRepository;
 
+import java.util.Optional;
+
 @Service
 public class ComplaintService {
 
@@ -13,6 +15,10 @@ public class ComplaintService {
 
     public void addNewComplaint(Complaint c){
         complaintRepository.save(c);
+    }
+
+    public Optional<Complaint> findByReservationAndFromOwner(int id){
+        return complaintRepository.findByReservation_IdEqualsAndFormOwnerIsTrue(id);
     }
 }
 

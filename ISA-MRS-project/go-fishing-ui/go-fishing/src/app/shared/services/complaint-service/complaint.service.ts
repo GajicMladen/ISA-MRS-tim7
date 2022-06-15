@@ -16,8 +16,12 @@ export class ComplaintService {
 
   
   public addNewComplaint(complaint:ComplaintDTO):Observable<string>{
-    
+    console.log(JSON.stringify(complaint));
     return this.http.post(this.complaintsUrl+"/addNew",JSON.stringify(complaint),{headers : new HttpHeaders({ 'Content-Type': 'application/json' }),responseType:'text'});
   }
 
+  getComplaintForReservationFromOwner(reservationId:number):Observable<ComplaintDTO>{
+    return this.http.get<ComplaintDTO>(this.complaintsUrl+"/getComplaintFromOwner/"+reservationId);
+  }
+  
 }

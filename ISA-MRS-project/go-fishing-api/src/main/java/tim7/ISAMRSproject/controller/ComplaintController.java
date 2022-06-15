@@ -8,6 +8,8 @@ import tim7.ISAMRSproject.model.Reservation;
 import tim7.ISAMRSproject.service.ComplaintService;
 import tim7.ISAMRSproject.service.ReservationService;
 
+import java.util.Optional;
+
 @RestController
 @RequestMapping(value = "api/complaints")
 public class ComplaintController {
@@ -27,5 +29,13 @@ public class ComplaintController {
 
         complaintService.addNewComplaint(newOne);
 
+    }
+
+    @GetMapping(value = "/getComplaintFromOwner/{id}")
+    public ComplaintDTO getComplaintFromOwner(@PathVariable int id){
+        Optional<Complaint> ret = complaintService.findByReservationAndFromOwner(id);
+        if(ret.isPresent())
+            return  new ComplaintDTO(ret.get());
+        return  null;
     }
 }

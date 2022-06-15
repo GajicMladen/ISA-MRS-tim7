@@ -6,7 +6,7 @@ export class ComplaintDTO{
     approvalStatus:ApprovalStatus;
     reservationId:number;
     offenderId:number;
-    forOffer:boolean = false;
-    formOwner:boolean = false;
+    forOffer:boolean ;
+    fromOwner:boolean ;
     punishOffender : boolean;
 }

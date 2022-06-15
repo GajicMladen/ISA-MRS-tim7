@@ -275,13 +275,15 @@ INSERT INTO public.free_period (
 
 
 --REZERVACIJE
-INSERT INTO public.reservation(id, end_date_time, start_date_time, status, total_price, client_id, complaint, grade, offer_id)
-	VALUES (1, '2022-05-31T00:00:01', '2022-05-30T00:00:01', 0, 365.36, 9, null, null, 1);
-INSERT INTO public.reservation(id, end_date_time, start_date_time, status, total_price, client_id, complaint, grade, offer_id)
-    	VALUES (2, '2022-05-25T00:00:01', '2022-05-24T00:00:01', 1, 120.5, 9, null, null, 1);
-INSERT INTO public.reservation(id, end_date_time, start_date_time, status, total_price, client_id, complaint, grade, offer_id)
-    	VALUES (3, '2022-05-25T00:00:01', '2022-05-24T00:00:01', 3, 120.5, 9, null, null, 1);
+INSERT INTO public.reservation(id, end_date_time, start_date_time, status, total_price, client_id, grade, offer_id)
+	VALUES (1, '2022-05-31T00:00:01', '2022-05-30T00:00:01', 0, 365.36, 9, null, 1);
+INSERT INTO public.reservation(id, end_date_time, start_date_time, status, total_price, client_id, grade, offer_id)
+    	VALUES (2, '2022-05-25T00:00:01', '2022-05-24T00:00:01', 1, 120.5, 9,  null, 1);
+INSERT INTO public.reservation(id, end_date_time, start_date_time, status, total_price, client_id,  grade, offer_id)
+    	VALUES (3, '2022-05-25T00:00:01', '2022-05-24T00:00:01', 3, 120.5, 9,  null, 1);
 
 --ZALBE
-INSERT INTO public.complaint(id, for_offer, from_owner, offender_id, pusnih_offender, status, text)
-	VALUES (1, false, false, 1, true, 0, 'zalim se na klijenta indijanca, ostavio je haos!');
+INSERT INTO public.complaint(id, for_offer, from_owner, offender_id, pusnih_offender, status, text, reservation_id)
+	VALUES (1, false, false, 1, true, 0, 'zalim se na klijenta indijanca, ostavio je haos!',1);
+INSERT INTO public.complaint(id, for_offer, from_owner, offender_id, pusnih_offender, status, text, reservation_id)
+	VALUES (2, false, true, 1, true, 0, 'zalim se na klijenta indijanca, ostavio je haos!',2);

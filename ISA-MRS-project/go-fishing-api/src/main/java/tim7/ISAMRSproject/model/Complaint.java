@@ -2,12 +2,7 @@ package tim7.ISAMRSproject.model;
 
 import tim7.ISAMRSproject.dto.ComplaintDTO;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
 @Entity
 public class Complaint {
@@ -24,7 +19,8 @@ public class Complaint {
     private ApprovalStatus status;
     
 
-	@OneToOne(mappedBy = "complaint")
+	@ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "reservation_id")
     private Reservation reservation;
 
     @Column(name="for_offer",nullable = false)

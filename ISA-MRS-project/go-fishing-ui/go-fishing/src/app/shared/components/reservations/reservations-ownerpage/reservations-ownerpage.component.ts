@@ -30,7 +30,6 @@ export class ReservationsOwnerpageComponent implements OnInit {
     if(this.ownerType == "C"){
       this.cottageService.findCottagesByOwner(this.ownerId).subscribe(data =>{
         this.offers = data;
-        console.log(this.offers);
       });
     }
   }
