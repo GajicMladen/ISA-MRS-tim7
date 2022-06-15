@@ -32,6 +32,7 @@ import { AdminProfilpageComponent } from './features/admin/components/admin-prof
 import { AdminRegistrationRequestsComponent } from './features/admin/components/admin-registration-requests/admin-registration-requests.component';
 import { AdminDeletionRequestsComponent } from './features/admin/components/admin-deletion-requests/admin-deletion-requests.component';
 import { AdminAddAdminComponent } from './features/admin/components/admin-add-admin/admin-add-admin.component';
+import { AdminEntityOverviewComponent } from './features/admin/components/admin-entity-overview/admin-entity-overview.component';
 const routes: Routes = [
   { path: '', component: StartpagePreviewListComponent },
   { path: 'login', component: StartpageLoginComponent },
@@ -75,7 +76,7 @@ const routes: Routes = [
   { path: 'boatProfile/:id' , component:BoatProfilepageComponent },
   { path: 'boatOwner/:id' , component: BoatOwnerpageComponent},
   { path: 'editAdventure/:id', component:AdventureEditComponent },
-
+  { path: 'entityOverview/:id', component: AdminEntityOverviewComponent },
   { path: 'adminProfile/:id', component: AdminProfilpageComponent },
   //Ubaciti komponentu za not found
   { path: '**', redirectTo: '', pathMatch: 'full' },

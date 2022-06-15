@@ -56,6 +56,9 @@ INSERT INTO ROLE (name) VALUES ('ROLE_SYSADMIN');
 INSERT INTO USER_ROLE(user_id, role_id) VALUES (1, 2);
 INSERT INTO USER_ROLE(user_id, role_id) VALUES (2, 3);
 
+INSERT INTO USER_ROLE(user_id, role_id) VALUES (5, 4);
+INSERT INTO USER_ROLE(user_id, role_id) VALUES (6, 4);
+
 INSERT INTO USER_ROLE(user_id, role_id) VALUES (3, 5);
 INSERT INTO USER_ROLE(user_id, role_id) VALUES (4, 5);
 INSERT INTO USER_ROLE(user_id, role_id) VALUES (7, 6);

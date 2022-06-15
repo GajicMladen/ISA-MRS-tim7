@@ -72,7 +72,7 @@ public class User implements UserDetails {
 	private RegistrationRequest registrationRequest;
 	
 	@JsonIgnore
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "address_id", referencedColumnName = "id")
 	private Address livingAddress;
 	
@@ -123,7 +123,8 @@ public class User implements UserDetails {
 		this.active = user.active;
 		this.deleted = user.deleted;
 		this.loyaltyPoints = user.loyaltyPoints;
-		//this.livingAddress = user.livingAddress;
+		System.out.println(user.livingAddress.getCountry() + "**************");
+		this.livingAddress = user.livingAddress;
 	}
 
 	public Integer getId() {

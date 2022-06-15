@@ -24,5 +24,12 @@ public class BoatService {
 
         return boatRepository.findByOwnerId(ownerId);
     }
+    
+    public List<Boat> getAllBoats() {
+    	return boatRepository.findAll();
+    }
 
+    public void deleteBoatById(int id) {
+    	this.boatRepository.deleteById(id);
+    }
 }

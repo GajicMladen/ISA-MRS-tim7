@@ -9,7 +9,6 @@ import { AdminRegistrationRequestsComponent } from './components/admin-registrat
 import { AdminDeletionRequestsComponent } from './components/admin-deletion-requests/admin-deletion-requests.component';
 import { AdminAddAdminComponent } from './components/admin-add-admin/admin-add-admin.component';
 import { AdminService } from './admin.service';
-import { EntityOverviewComponent } from './components/entity-overview/entity-overview.component';
 import { AdminEntityOverviewComponent } from './components/admin-entity-overview/admin-entity-overview.component';
 
 
@@ -20,7 +19,6 @@ import { AdminEntityOverviewComponent } from './components/admin-entity-overview
     AdminRegistrationRequestsComponent,
     AdminDeletionRequestsComponent,
     AdminAddAdminComponent,
-    EntityOverviewComponent,
     AdminEntityOverviewComponent
   ],
   imports: [

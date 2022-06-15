@@ -2,6 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { User } from 'src/app/shared/classes/user';
+import { Boat } from 'src/models/boat';
+import { Cottage } from 'src/models/cottage';
 import { DeletionRequest } from './classes/DeletionRequest';
 import { RegistrationRequest } from './classes/RegistrationRequest';
 
@@ -51,6 +53,42 @@ export class AdminService {
 
   public registerUser(userId: number) {
     return this.http.post(this.adminUrl + "/registerUser/" + userId, null);
+  }
+
+  public getBoats() : Observable<Boat[]> {
+    return this.http.get<Boat[]>(this.adminUrl + "/allBoats");
+  }
+
+  public getCottages() : Observable<Cottage[]> {
+    return this.http.get<Cottage[]>(this.adminUrl + "/allCottages");
+  }
+
+  public getInstructors() : Observable<User[]> {
+    return this.http.get<User[]>(this.adminUrl + "/allInstructors");
+  }
+
+  public getBoatOwners() : Observable<User[]> {
+    return this.http.get<User[]>(this.adminUrl + "/allBoatOwners");
+  }
+
+  public getClients() : Observable<User[]> {
+    return this.http.get<User[]>(this.adminUrl + "/allClients");
+  }
+
+  public getCottageOwners() : Observable<User[]> {
+    return this.http.get<User[]>(this.adminUrl + "/allCottageOwners");
+  }
+
+  public deleteUserEntity(id: number) {
+    return this.http.delete(this.adminUrl + "/deleteUser/" + id);
+  }
+
+  public deleteBoat(id: number) {
+    return this.http.delete(this.adminUrl + "/deleteBoat/" + id);
+  }
+
+  public deleteCottage(id: number) {
+    return this.http.delete(this.adminUrl + "/deleteCottage/" + id);
   }
 
 }

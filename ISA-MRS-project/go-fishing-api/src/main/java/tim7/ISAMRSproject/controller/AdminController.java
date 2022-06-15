@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,14 +17,20 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import tim7.ISAMRSproject.dto.BoatDTO;
+import tim7.ISAMRSproject.dto.CottageDTO;
 import tim7.ISAMRSproject.dto.DeletionRequestOutDTO;
 import tim7.ISAMRSproject.dto.RegistrationRequestOutDTO;
 import tim7.ISAMRSproject.dto.UserDTO;
 import tim7.ISAMRSproject.dto.UserRegisterDTO;
+import tim7.ISAMRSproject.model.Boat;
+import tim7.ISAMRSproject.model.Cottage;
 import tim7.ISAMRSproject.model.DeletionRequest.DeletionRequestStatus;
 import tim7.ISAMRSproject.model.RegistrationRequest.RegistrationRequestStatus;
 import tim7.ISAMRSproject.model.User;
 import tim7.ISAMRSproject.service.AdminService;
+import tim7.ISAMRSproject.service.BoatService;
+import tim7.ISAMRSproject.service.CottageService;
 import tim7.ISAMRSproject.service.UserService;
 import tim7.ISAMRSproject.utils.EmailServiceImpl;
 
@@ -41,6 +48,12 @@ public class AdminController {
 	
 	@Autowired
 	private EmailServiceImpl mailService;
+	
+	@Autowired
+	private BoatService boatService;
+	
+	@Autowired
+	private CottageService cottageService;
 	
 	@PutMapping(value = "/update")
 	public ResponseEntity<Void> updateAdminData(@RequestBody UserDTO i) {
@@ -141,6 +154,104 @@ public class AdminController {
 			this.userService.save(u);
 			this.mailService.sendRegistrationEmail(u, false, reason);
 		}
+		return new ResponseEntity<Void>(HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/allBoats")
+	public ResponseEntity<?> getAllBoats() {
+		List<Boat> boats = this.boatService.getAllBoats();
+		List<BoatDTO> dtos = new ArrayList<BoatDTO>();
+		for (Boat b : boats) {
+			BoatDTO dto = new BoatDTO(b);
+			dtos.add(dto);
+		}
+		return new ResponseEntity<>(dtos, HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/allCottages")
+	public ResponseEntity<?> getAllCottages() {
+		List<Cottage> cottages = this.cottageService.getAllCottages();
+		List<CottageDTO> dtos = new ArrayList<CottageDTO>();
+		for (Cottage c : cottages) {
+			CottageDTO dto = new CottageDTO(c);
+			dtos.add(dto);
+		}
+		return new ResponseEntity<>(dtos, HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/allInstructors")
+	public ResponseEntity<?> getAllInstructors() {
+		List<User> users = this.userService.findAll();
+		List<UserDTO> dtos = new ArrayList<UserDTO>();
+		for (User u : users) {
+			if (u.hasRole("ROLE_INSTRUCTOR") && !u.isDeleted()) {
+				UserDTO dto = new UserDTO(u);
+				dtos.add(dto);
+			}
+		}
+		return new ResponseEntity<>(dtos, HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/allClients")
+	public ResponseEntity<?> getAllClients() {
+		List<User> users = this.userService.findAll();
+		List<UserDTO> dtos = new ArrayList<UserDTO>();
+		for (User u : users) {
+			if (u.hasRole("ROLE_USER") && !u.isDeleted()) {
+				UserDTO dto = new UserDTO(u);
+				dtos.add(dto);
+			}
+		}
+		return new ResponseEntity<>(dtos, HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/allBoatOwners")
+	public ResponseEntity<?> getAllBoatOwners() {
+		List<User> users = this.userService.findAll();
+		List<UserDTO> dtos = new ArrayList<UserDTO>();
+		for (User u : users) {
+			if (u.hasRole("ROLE_BOAT_OWNER") && !u.isDeleted()) {
+				UserDTO dto = new UserDTO(u);
+				dtos.add(dto);
+			}
+		}
+		return new ResponseEntity<>(dtos, HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/allCottageOwners")
+	public ResponseEntity<?> getAllCottageOwners() {
+		List<User> users = this.userService.findAll();
+		List<UserDTO> dtos = new ArrayList<UserDTO>();
+		for (User u : users) {
+			if (u.hasRole("ROLE_COTTAGE_OWNER") && !u.isDeleted()) {
+				UserDTO dto = new UserDTO(u);
+				dtos.add(dto);
+			}
+		}
+		return new ResponseEntity<>(dtos, HttpStatus.OK);
+	}
+	
+	@DeleteMapping(value = "/deleteUser/{id}")
+	public ResponseEntity<Void> deleteUserById(@PathVariable int id) {
+		Optional<User> user = this.userService.findById(id);
+		if (user.isPresent()) {
+			User u = user.get();
+			u.setDeleted(true);			
+			this.userService.save(u);			
+		}			
+		return new ResponseEntity<Void>(HttpStatus.OK);
+	}
+	
+	@DeleteMapping(value = "/deleteCottage/{id}")
+	public ResponseEntity<Void> deleteCottageById(@PathVariable int id) {
+		this.cottageService.deleteCottage(id);
+		return new ResponseEntity<Void>(HttpStatus.OK);
+	}
+	
+	@DeleteMapping(value = "/deleteBoat/{id}")
+	public ResponseEntity<Void> deleteBoatById(@PathVariable int id) {
+		System.out.println("***************" + id);
+		this.boatService.deleteBoatById(id);
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 }

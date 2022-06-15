@@ -70,6 +70,10 @@ public class UserService implements UserDetailsService {
 		return userRepository.findAll();
 	}
 	
+	public void deleteUserById(int id) {
+		this.userRepository.deleteById(id);
+	}
+	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException{
 		User user = userRepository.findByEmail(username);
@@ -94,6 +98,7 @@ public class UserService implements UserDetailsService {
 		address.setStreet(userRegisterDTO.getAddress());
 		address.setLatitude("0");
 		address.setLongitude("0");
+		address.setUser(newUser);
 		
 		newUser.setEmail(userRegisterDTO.getEmail());
 		newUser.setName(userRegisterDTO.getName());
@@ -158,30 +163,35 @@ public class UserService implements UserDetailsService {
 	}
 	
 	public User saveAdmin(UserRegisterDTO userRegisterDTO) {
-		User newUser = new User();
-		Address address = new Address();
+		Admin admin = new Admin();		
 		
+		Address address = new Address();		
 		address.setCountry(userRegisterDTO.getCountry());
 		address.setCity(userRegisterDTO.getTown());
 		address.setStreet(userRegisterDTO.getAddress());
 		address.setLongitude("0");
 		address.setLatitude("0");
 		
-		newUser.setEmail(userRegisterDTO.getEmail());
-		newUser.setName(userRegisterDTO.getName());
-		newUser.setLastName(userRegisterDTO.getLastName());
-		newUser.setPassword(passwordEncoder.encode(userRegisterDTO.getPassword()));
-		newUser.setPhone(userRegisterDTO.getPhoneNumber());
-		newUser.setAddress(address);
-		newUser.setDeleted(false);
-		newUser.setActive(true);
+		admin.setAddress(address);
+		address.setUser(admin);
+		
+		//this.addressRepository.save(address);
+		admin.setEmail(userRegisterDTO.getEmail());
+		admin.setName(userRegisterDTO.getName());
+		admin.setLastName(userRegisterDTO.getLastName());
+		admin.setPassword(passwordEncoder.encode(userRegisterDTO.getPassword()));
+		admin.setPhone(userRegisterDTO.getPhoneNumber());
+		admin.setAddress(address);
+		admin.setDeleted(false);
+		admin.setActive(true);
 		List<Role> roles = new ArrayList<Role>();
 		roles.add(roleService.findByName("ROLE_ADMIN"));
-		newUser.setRoles(roles);
+		admin.setRoles(roles);
 		
-		Admin admin = new Admin(newUser);
+		//Admin admin = new Admin(newUser);
 		admin.setFirstLogin(true);
 		this.adminRepository.save(admin);
+		
 		return (User)admin;
 	}
 	
