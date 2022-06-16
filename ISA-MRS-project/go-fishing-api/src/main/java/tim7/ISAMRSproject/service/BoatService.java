@@ -29,10 +29,6 @@ public class BoatService {
     public List<Boat> getAllBoats() {
     	return boatRepository.findAll();
     }
-
-    public void deleteBoatById(int id) {
-    	this.boatRepository.deleteById(id);
-    }
   
     public Boat addNewBoat(BoatDTO boatDTO, User user) {
 

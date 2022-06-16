@@ -24,6 +24,7 @@ public class AdventureDTO {
 	private String instructorSurname;
 	private Integer instructorId;
 	private String instructorBiography;
+	private float rating; 
 	private boolean deleted;
 	
 	
@@ -93,6 +94,7 @@ public class AdventureDTO {
 		this.instructorSurname = adventure.getFishingInstructor().getLastName();
 		this.instructorId = adventure.getFishingInstructor().getId();
 		this.deleted = adventure.isDeleted();
+		this.rating = adventure.getRating();
 		
 	}
 
@@ -206,6 +208,14 @@ public class AdventureDTO {
 
 	public void setInstructorSurname(String instructorSurname) {
 		this.instructorSurname = instructorSurname;
+	}
+
+	public float getRating() {
+		return rating;
+	}
+
+	public void setRating(float rating) {
+		this.rating = rating;
 	}
 	
 	

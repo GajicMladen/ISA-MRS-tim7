@@ -1,9 +1,9 @@
 <div>
   <div style="padding: 50px;">
-    <mwl-demo-component [freePeriods]="freePeriods" [actions]="actions" *ngIf="freePeriods.length > 0 || actions.length > 0; else elseBlock;" >Loading...</mwl-demo-component>
+    <mwl-demo-component [freePeriods]="freePeriods" [actions]="actions" *ngIf="renderCalendar === 3; else elseBlock;" >Loading...</mwl-demo-component>
     
     <ng-template #elseBlock>
-        <h2>Nazalost ova vikendica trenutno nema slobodnih termina.</h2>
+        <h2>Trenutno nema slobodnih termina i akcija za avanture.</h2>
     </ng-template>
 </div>
 <table class="table">

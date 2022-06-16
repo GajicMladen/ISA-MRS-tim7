@@ -1,22 +1,25 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { FreePeriodService } from 'src/app/shared/services/free-period-service/free-period.service';
 import { MessageService, MessageType } from 'src/app/shared/services/message-service/message.service';
-import { FreePeriodDTO, FreePeriodSendDTO } from 'src/models/freePeriod';
+import { ActionSendDTO } from 'src/models/reservation';
 import { AdventureService } from '../../adventure.service';
 import { Adventure } from '../../classes/adventure';
 
 @Component({
-  selector: 'app-adventure-free-period',
-  templateUrl: './adventure-free-period.component.html',
-  styleUrls: ['./adventure-free-period.component.css']
+  selector: 'app-adventure-action',
+  templateUrl: './adventure-action.component.html',
+  styleUrls: ['./adventure-action.component.css']
 })
-export class AdventureFreePeriodComponent implements OnInit {
+export class AdventureActionComponent implements OnInit {
 
   start: string;
   end: string;
 
   today: Date;
+
+  newPrice: number;
+  form: FormGroup = this.createForm();
 
   adventureId: number;
   adventure = new Adventure({
@@ -45,11 +48,8 @@ export class AdventureFreePeriodComponent implements OnInit {
     rating: 0
   });
 
-  freePeriods: FreePeriodDTO[];
-
   constructor(private route: ActivatedRoute,
               private adventureService: AdventureService,
-              private freePeriodService: FreePeriodService,
               private messageService: MessageService) { }
 
   ngOnInit(): void {
@@ -58,12 +58,6 @@ export class AdventureFreePeriodComponent implements OnInit {
     if(!isNaN(this.adventureId)){
       this.adventureService.getAdventureById(this.adventureId).subscribe(adventure =>{
         this.adventure = adventure;
-      });
-
-      this.freePeriodService.getFreePeriodsForOffer(this.adventureId).subscribe(data =>{
-        console.log(data);
-        this.freePeriods = data;
-  
       });
     }
 
@@ -84,25 +78,33 @@ export class AdventureFreePeriodComponent implements OnInit {
     end.setAttribute('min', t);
   }
 
-  AddNewPeriod() {
+  createForm(): FormGroup {
+    return new FormGroup({
+      discount: new FormControl('')
+    });
+  }
+
+  CountNewPrice() {
+    this.newPrice = this.adventure.price - (this.adventure.price * this.form.get('discount')?.value / 100);
+  }
+
+  AddAction() {
     var start = document.getElementById("start") as HTMLInputElement;
     var startDateTime = start.value;
     var end = document.getElementById('end') as HTMLInputElement;
     var endDateTime = end.value;
-    console.log(startDateTime);
-    console.log(endDateTime);
-    let freePeriod = new FreePeriodSendDTO();
-    freePeriod.startDate = startDateTime;
-    freePeriod.endDate = endDateTime;
-    freePeriod.offerId = this.adventureId;
-    if (startDateTime !== '' && endDateTime !== '') {
-      this.freePeriodService.addFreePeriodAdventure(freePeriod).subscribe(response =>{
-        console.log(response);
-        this.messageService.showMessage('Novi slobodan termin je uspešno dodat!', MessageType.SUCCESS);
+    this.newPrice = this.adventure.price - (this.adventure.price * this.form.get('discount')?.value / 100);
+    let action = new ActionSendDTO();
+    action.startDate = startDateTime;
+    action.endDate = endDateTime;
+    action.offerId = this.adventureId;
+    action.totalPrice = this.newPrice;
+    if (this.form.valid && startDateTime !== '' && endDateTime !== '') {
+      this.adventureService.addAction(action).subscribe(res => {
+        this.messageService.showMessage('Nova akcija je dodata', MessageType.SUCCESS);  
       });
     } else {
-      this.messageService.showMessage('Unesite ispravne datume!', MessageType.WARNING);
+      this.messageService.showMessage('Unesite ispravne podatke!', MessageType.WARNING);
     }
   }
-
 }

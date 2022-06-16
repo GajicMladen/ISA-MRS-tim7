@@ -79,10 +79,11 @@
         <mat-card class="main-entity-card" *ngFor="let c of cottageSlice">
             <mat-card-title-group>
                 <mat-card-title>{{c.name}}</mat-card-title>
-                <mat-card-subtitle><b>Opis:</b>{{c.description}}
-                               <br><b>Cena:</b>{{c.price}}
+                <mat-card-subtitle>
+                               <b>Cena:</b>{{c.price}}
                                <br><b>Kapacitet:</b>{{c.capacity}}
-                               <br><b>Broj soba:</b>{{c.roomCount}} <b>Broj kreveta:</b>{{c.bedCount}}                               
+                               <br><b>Broj soba:</b>{{c.roomCount}}
+                               <br><b>Broj kreveta:</b>{{c.bedCount}}                                                      
                 </mat-card-subtitle>
                 <img class="main-entity-image" style="width: 18%; height: 18%" src="../../../../../assets/images/cottages/c1.jpg">
             </mat-card-title-group>
@@ -152,11 +153,13 @@
         <mat-card class="main-entity-card" *ngFor="let b of boatSlice">
             <mat-card-title-group>
                 <mat-card-title>{{b.name}}</mat-card-title>
-                <mat-card-subtitle><b>Opis:</b>{{b.description}}
-                               <br><b>Cena:</b>{{b.price}}    
-                               <br><b>Kapacitet:</b>{{b.capacity}}                        
-                               <br><b>Dužina:</b>{{b.length}}
-                               <br><b>Maksimalna brzina:</b>{{b.maxSpeed}}
+                <mat-card-subtitle>
+                               <b>Cena:</b>{{b.price}}    
+                               <br><b>Kapacitet: </b>{{b.capacity}}                        
+                               <br><b>Dužina: </b>{{b.length}}
+                               <br><b>Maksimalna brzina: </b>{{b.maxSpeed}}
+                               <br><b>Broj motora: </b>{{b.numOfEngines}}
+                               <br><b>Snaga motora: </b>{{b.powerOfEngines}}
                 </mat-card-subtitle>
                 <img class="main-entity-image" src="../../../../../assets/images/boats/b1.jpg">
             </mat-card-title-group> 

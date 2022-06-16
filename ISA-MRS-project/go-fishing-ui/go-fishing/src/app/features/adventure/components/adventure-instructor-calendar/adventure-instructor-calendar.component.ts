@@ -19,23 +19,36 @@ export class AdventureInstructorCalendarComponent implements OnInit {
               private adventureService: AdventureService,
               private messageService: MessageService) { }
 
+  //freePeriods.length > 0 || actions.length > 0
+  renderCalendar: number = 0;
   instructorId: number;
-  freePeriods: FreePeriodDTO[] = [];
-  actions: ActionDTO[] = [];
+  freePeriods: FreePeriodDTO[];
+  actions: ActionDTO[];
   adventureIds: number[] = [];
 
   ngOnInit(): void {
     this.instructorId = Number(this.route.snapshot.paramMap.get('id'));
     if(!isNaN(this.instructorId)){
-      this.adventureService.getAdventureIds(this.instructorId).subscribe( ids => {
+      this.adventureService.getAdventureIds(this.instructorId).subscribe( async ids => {
         this.adventureIds = ids as number[];
-        console.log(this.adventureIds.join());
-        this.freePeriodService.getFreePeriodsForOffers(this.adventureIds.join()).subscribe(data => {
-          this.freePeriods = data;
-        });
-        console.log(this.freePeriods);
+        this.getFreePeriods();
+        this.getActions();
+        await this.delay(1000);
+        this.renderCalendar = 3;
       });
     }
+  }
+
+  getFreePeriods() {
+    this.freePeriodService.getFreePeriodsForOffers(this.adventureIds.join()).subscribe(data => {
+      this.freePeriods = data;
+    });
+  }
+
+  getActions() {
+    this.adventureService.getActionsForOffers(this.adventureIds.join()).subscribe(data => {
+      this.actions = data;
+    });
   }
 
   deletePeriod(id:number){
@@ -47,5 +60,9 @@ export class AdventureInstructorCalendarComponent implements OnInit {
       this.messageService.showMessage('Slobodan termin uspešno obrisan!', MessageType.SUCCESS);
     });
   }
+
+  delay(ms: number) {
+    return new Promise( resolve => setTimeout(resolve, ms) );
+}
 
 }
