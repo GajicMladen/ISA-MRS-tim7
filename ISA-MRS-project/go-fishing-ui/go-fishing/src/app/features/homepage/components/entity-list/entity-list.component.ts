@@ -213,6 +213,15 @@ export class EntityListComponent implements OnInit {
   }
 
   redirectToEntity(id: number) {
+    localStorage.setItem(
+      'startDate',
+      this.convertDateToString(this.searchForm.controls['startDate'].value)
+    );
+    localStorage.setItem(
+      'endDate',
+      this.convertDateToString(this.searchForm.controls['endDate'].value)
+    );
+
     switch (this.mode) {
       case 'cottage':
         this.router.navigate(['cottageProfile/' + id]);
@@ -308,7 +317,6 @@ export class EntityListComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      console.log(result);
       if (result !== undefined && result.search) {
         this.search = true;
         this.paginator.firstPage();
@@ -374,5 +382,14 @@ export class EntityListComponent implements OnInit {
     this.ngOnInit();
     this.search = false;
     this.sort.setValue('');
+  }
+
+  convertDateToString(date: any): string {
+    if (date.value !== '') {
+      date = date as Date;
+      return (
+        date.getDate() + '-' + (date.getMonth() + 1) + '-' + date.getFullYear()
+      );
+    } else return '';
   }
 }
