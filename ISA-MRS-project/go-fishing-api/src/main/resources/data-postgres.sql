@@ -44,13 +44,15 @@ INSERT INTO public.users(active, deleted, email, lastname, name, password, phone
 INSERT INTO public.users(active, deleted, email, lastname, name, password, phone, loyalty_points, address_id) VALUES
 					(true, false, 'djordjejovanovic27@gmail.com', 'Jovanovic', 'Djordje', '$2a$10$XeS1WZloSVVq2Z2dJd3L7ePADJy51sWu/oLqcy.Qcmppr6VcUtcr6', '+381642222111', 0, 8);										
 INSERT INTO public.users(active, deleted, email, lastname, name, password, phone, loyalty_points, address_id) VALUES
-                (true, false, 'niko.nikic093:test123@gmail.com', 'Klijentovic', 'Klijent', '$2a$10$XeS1WZloSVVq2Z2dJd3L7ePADJy51sWu/oLqcy.Qcmppr6VcUtcr6', '+381659997778', 600, 1);
+                (true, false, 'niko.nikic093+test1@gmail.com', 'Klijentovic', 'Klijent', '$2a$10$XeS1WZloSVVq2Z2dJd3L7ePADJy51sWu/oLqcy.Qcmppr6VcUtcr6', '+381659997778', 600, 1);
 INSERT INTO public.users(active, deleted, email, lastname, name, password, phone, loyalty_points, address_id) VALUES
-                (true, false, 'niko.nikic093@gmail.com', 'Klijentovic2', 'Klijent2', '$2a$10$XeS1WZloSVVq2Z2dJd3L7ePADJy51sWu/oLqcy.Qcmppr6VcUtcr6', '+381659997778', 600, 1);
+                (true, false, 'niko.nikic093+test2@gmail.com', 'Klijentovic2', 'Klijent2', '$2a$10$XeS1WZloSVVq2Z2dJd3L7ePADJy51sWu/oLqcy.Qcmppr6VcUtcr6', '+381659997778', 600, 1);
 
 --KLIJENTI
 INSERT INTO public.client(penal_count, suspended, id) VALUES (0, FALSE, 9);
 INSERT INTO public.client(penal_count, suspended, id) VALUES (0, FALSE, 10);
+INSERT INTO public.client(penal_count, suspended, id) VALUES (0, FALSE, 11);
+INSERT INTO public.client(penal_count, suspended, id) VALUES (0, FALSE, 12);
 
 -- VLASNICI KOLIBA				
 INSERT INTO public.cottage_owners(id) VALUES(2);
@@ -353,5 +355,5 @@ INSERT INTO public.complaint(id, for_offer, from_owner, offender_id, pusnih_offe
 
 
 --SUBSCRIBES
-INSERT INTO public.subscribers(client_id, offer_id) VALUES (9, 1);
-INSERT INTO public.subscribers(client_id, offer_id) VALUES (10, 1);
+--INSERT INTO public.subscribers(client_id, offer_id) VALUES (9, 1);
+--INSERT INTO public.subscribers(client_id, offer_id) VALUES (10, 1);

@@ -104,5 +104,5 @@ export class NewFreePeriodComponent implements OnInit {
       stringDate += "T00:00:01"
     }
     return stringDate;
-}
+  }
 }

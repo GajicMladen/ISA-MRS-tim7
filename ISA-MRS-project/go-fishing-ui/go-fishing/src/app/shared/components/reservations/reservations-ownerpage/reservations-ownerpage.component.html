@@ -3,7 +3,7 @@
     <span *ngSwitchCase="'B'">Odaberite brod:</span>
 </div>
 
-<select [ngModel]="selectedOffer" *ngIf="offers.length > 0" (ngModelChange)="onChange($event)">
+<select [ngModel]="selectedOffer" *ngIf="offers != null && offers.length > 0" (ngModelChange)="onChange($event)">
     
     <option value="all" selected="selected">
         Sve
