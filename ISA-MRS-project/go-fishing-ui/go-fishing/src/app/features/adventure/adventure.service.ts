@@ -5,7 +5,11 @@ import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
 import { Observable, of } from 'rxjs';
 import { User } from 'src/app/shared/classes/user';
 import { ConfigService } from 'src/app/shared/services/config.service';
-import { ActionDTO, ActionReciveDTO, ActionSendDTO } from 'src/models/reservation';
+import {
+  ActionDTO,
+  ActionReciveDTO,
+  ActionSendDTO,
+} from 'src/models/reservation';
 import { Adventure } from './classes/adventure';
 import { Instructor } from './classes/instructor';
 
@@ -142,24 +146,31 @@ export class AdventureService {
         maxPrice: searchParams.maxPrice,
       },
     });
-    
+  }
+
   public addAction(action: ActionSendDTO) {
-    return this.http.post(this.adventureUrl + "/addAction", action, {
+    return this.http.post(this.adventureUrl + '/addAction', action, {
       headers: { 'Content-Type': 'application/json' },
     });
   }
 
-  public getActionsForOffers(ids: string) : Observable<ActionDTO[]> {
-    let data = this.http.get<ActionReciveDTO[]>(this.adventureUrl + "/getActionsFromIds/" + ids);
+  public getActionsForOffers(ids: string): Observable<ActionDTO[]> {
+    let data = this.http.get<ActionReciveDTO[]>(
+      this.adventureUrl + '/getActionsFromIds/' + ids
+    );
 
     let res: ActionDTO[] = [];
-    
-    data.subscribe(dat => {
-      dat.forEach(d => {  
+
+    data.subscribe((dat) => {
+      dat.forEach((d) => {
         console.log(d);
         let action = new ActionDTO();
-        action.startDate = new NgbDate(d.startDate[0],d.startDate[1],d.startDate[2]);  
-        action.endDate = new NgbDate(d.endDate[0],d.endDate[1],d.endDate[2]);
+        action.startDate = new NgbDate(
+          d.startDate[0],
+          d.startDate[1],
+          d.startDate[2]
+        );
+        action.endDate = new NgbDate(d.endDate[0], d.endDate[1], d.endDate[2]);
         action.offerId = d.offerId;
         action.totalPrice = d.totalPrice;
         action.id = d.id;

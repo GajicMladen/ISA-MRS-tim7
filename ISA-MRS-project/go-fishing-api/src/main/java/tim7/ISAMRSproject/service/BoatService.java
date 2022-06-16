@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import tim7.ISAMRSproject.dto.OfferShortDTO;
 import tim7.ISAMRSproject.model.Boat;
 import tim7.ISAMRSproject.dto.BoatDTO;
-import tim7.ISAMRSproject.dto.CottageDTO;
 import tim7.ISAMRSproject.model.*;
 import tim7.ISAMRSproject.repository.BoatRepository;
 

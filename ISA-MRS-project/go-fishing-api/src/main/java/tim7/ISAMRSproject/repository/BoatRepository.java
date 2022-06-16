@@ -10,8 +10,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
 import tim7.ISAMRSproject.model.Boat;
 
-import tim7.ISAMRSproject.model.Boat;
-
 public interface BoatRepository extends JpaRepository<Boat,Integer>{
 
   @Query("select COUNT(*) from Boat")
@@ -27,9 +25,6 @@ public interface BoatRepository extends JpaRepository<Boat,Integer>{
 	@Query("select COUNT(c) from Boat c inner join c.freePeriods freePeriods " +
           "where upper(c.name) like ?1 and c.price <= ?2 and c.price >= ?3 and c.rating >= ?4 and upper(c.address.city) like ?5 and c.capacity >= ?6 and freePeriods.startDateTime > ?7 and freePeriods.endDateTime < ?8")
   public int getBoatsSearchCount(String name, float price, float price1, float rating, String city, int capacity, LocalDateTime startDateTime, LocalDateTime endDateTime);
-
-  @Query("select v from Boat v where v.boatOwner.id = ?1")
-  public List<Boat> findByOwnerId(Integer ownerId);
 
   @Transactional
   @Modifying
