@@ -21,6 +21,7 @@ import { TokenInterceptor } from './shared/interceptor/TokenInterceptor';
 import { HomepageModule } from './features/homepage/homepage.module';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import { AdminModule } from './features/admin/admin.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -46,7 +47,8 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
     CalendarModule.forRoot({
       provide: DateAdapter,
       useFactory: adapterFactory,
-    })
+    }),
+    AdminModule
   ],
   providers: [
     {

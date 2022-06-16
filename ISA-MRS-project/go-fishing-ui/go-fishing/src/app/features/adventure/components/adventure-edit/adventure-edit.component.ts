@@ -47,7 +47,8 @@ export class AdventureEditComponent implements OnInit {
 	  instructorBiography: '',
 	  instructorName: '',
 	  instructorSurname: '',
-    deleted: false
+    deleted: false,
+    rating: 0
   });
 
   longitude = '';
@@ -66,13 +67,15 @@ export class AdventureEditComponent implements OnInit {
         this.adventure.equipment = this.adventure.equipment.split("|").join("\r\n");
         this.adventure.rulesOfConduct = this.adventure.rulesOfConduct.split("|").join("\r\n");
         console.log(adventure);
+        let loader = new Loader({
+          apiKey: "AIzaSyAPNK7vqFqOCb5Lu1B0j--zFj4ws4czwGQ"
+        })
+        this.loadMap(loader);
       })
     }
+  }
 
-    let loader = new Loader({
-      apiKey: "AIzaSyAPNK7vqFqOCb5Lu1B0j--zFj4ws4czwGQ"
-    })
-
+  loadMap(loader: Loader) {
     loader.load().then(() => {
       const map = document.getElementById("map") as HTMLElement;
       const googleMap = new google.maps.Map(map, {
@@ -117,8 +120,8 @@ export class AdventureEditComponent implements OnInit {
     if (this.form.invalid || locationErr) {
       this.messageService.showMessage('Forma nije ispravno popunjena!', MessageType.WARNING);
     } else {
-      this.adventure.equipment = this.adventure.equipment.split(/\r?\n/).join("|");
-      this.adventure.rulesOfConduct = this.adventure.rulesOfConduct.split(/\r?\n/).join("|");
+      //this.adventure.equipment = this.adventure.equipment.split(/\r?\n/).join("|");
+      //this.adventure.rulesOfConduct = this.adventure.rulesOfConduct.split(/\r?\n/).join("|");
       this.adventureService.editAdventure(this.adventure).subscribe(data => {
         this.messageService.showMessage("Podaci avanture su uspešno izmenjeni!", MessageType.SUCCESS);
         this.adventure.equipment = this.adventure.equipment.split("|").join("\r\n");

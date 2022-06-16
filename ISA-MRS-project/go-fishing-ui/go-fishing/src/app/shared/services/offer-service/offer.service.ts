@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { BoatService } from 'src/app/features/boat/services/boat.service';
 import { CottageService } from 'src/app/features/cottage/services/cottage.service';
 import { Offer } from 'src/models/offer';
 
@@ -8,13 +9,19 @@ import { Offer } from 'src/models/offer';
 })
 export class OfferService {
 
-  constructor(private cottageService: CottageService) { }
+  constructor(private cottageService: CottageService,private boatService: BoatService) { }
 
-  getOfferById(offerId:number):Observable<Object>{
+  getCottageById(offerId:number):Observable<Object>{
     
     let offer = this.cottageService.findCottageById(offerId);
-
+    
     return offer;
     
+  }
+
+  getBoatById(offerId:number):Observable<Object>{
+
+    let offer = this.boatService.findBoatById(offerId);
+    return offer;
   }
 }

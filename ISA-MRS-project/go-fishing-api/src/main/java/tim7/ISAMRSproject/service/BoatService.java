@@ -10,9 +10,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-
 import tim7.ISAMRSproject.dto.OfferShortDTO;
 import tim7.ISAMRSproject.model.Boat;
+import tim7.ISAMRSproject.dto.BoatDTO;
+import tim7.ISAMRSproject.dto.CottageDTO;
+import tim7.ISAMRSproject.model.*;
 import tim7.ISAMRSproject.repository.BoatRepository;
 
 @Service
@@ -30,6 +32,7 @@ public class BoatService {
 
         return boatRepository.findByOwnerId(ownerId);
     }
+
     public List<OfferShortDTO> getBoatsPage(int page, int perPage, String sort){
 	    ArrayList<OfferShortDTO> boatsDTO = new ArrayList<OfferShortDTO>();
 		Page<Boat> boats;
@@ -130,4 +133,32 @@ public class BoatService {
 		LocalDateTime retVal = LocalDateTime.of(Integer.parseInt(tokens[2]), Integer.parseInt(tokens[1]), Integer.parseInt(tokens[0]), 0, 0);
 		return retVal;
 	}
+
+  public List<Boat> getAllBoats() {
+    return boatRepository.findAll();
+  }
+
+  public Boat addNewBoat(BoatDTO boatDTO, User user) {
+
+      Boat boat = new Boat(boatDTO);
+      boat.setBoatOwner((BoatOwner) user);
+      return boatRepository.save(boat);
+
+  }
+
+  public boolean deleteBoat(Integer id){
+      try{
+          boatRepository.deleteById(id);
+          return true;
+      }
+      catch (Exception e){
+          System.out.println(e.getMessage());
+          return false;
+      }
+  }
+
+  public void editBoat(BoatDTO boatDTO){
+      boatRepository.updateBoat(boatDTO.getId(), boatDTO.getName(),
+              boatDTO.getDescription(), boatDTO.getPrice(),boatDTO.getCapacity());
+  }
 }

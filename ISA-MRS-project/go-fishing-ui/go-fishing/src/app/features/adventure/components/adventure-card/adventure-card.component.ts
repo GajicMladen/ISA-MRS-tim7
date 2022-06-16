@@ -33,7 +33,8 @@ export class AdventureCardComponent implements OnInit {
 	  instructorBiography: '',
 	  instructorName: '',
 	  instructorSurname: '',
-    deleted: false
+    deleted: false,
+    rating: 0
   });
   
   @Input('adventureId')

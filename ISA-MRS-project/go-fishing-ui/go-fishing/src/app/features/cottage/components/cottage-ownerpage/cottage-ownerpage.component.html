@@ -41,15 +41,21 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#favorite" role="tab" data-toggle="tab">
+                            <a class="nav-link" href="#reservations" role="tab" data-toggle="tab">
                               <i class="material-icons">list</i>
                                 Rezervacije
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#works" role="tab" data-toggle="tab">
+                            <a class="nav-link" href="#grades" role="tab" data-toggle="tab">
                               <i class="material-icons">star</i>
                                 Ocene
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#charts" role="tab" data-toggle="tab">
+                              <i class="material-icons">bar_chart</i>
+                                Izveštaji
                             </a>
                         </li>
                       </ul>
@@ -57,24 +63,27 @@
             </div>
         </div>
     
-      <div class="tab-content tab-space">
-        <div class="tab-pane active text-center gallery" id="cottages">
+        <div class="tab-content tab-space">
+            <div class="tab-pane active text-center gallery" id="cottages">
               
-                  <app-cottage-gallery-owner [ownerId]="ownerId"></app-cottage-gallery-owner>
+                <app-cottage-gallery-owner [ownerId]="ownerId" ></app-cottage-gallery-owner>
                 
               
-          </div>
-        <div class="tab-pane text-center gallery" id="works">
-              <div class="row">
-                  
-              </div>
-          </div>
-        <div class="tab-pane text-center gallery" id="favorite">
-              <div class="row">
-                  
-              </div>
-          </div>
-      </div>
+            </div>
+            <div class="tab-pane text-center gallery" id="reservations">
+                <app-reservations-ownerpage [ownerId]="ownerId" [ownerType]="'C'"></app-reservations-ownerpage>
+            </div>
+            <div class="tab-pane text-center gallery" id="grades">
+                <div class="row">
+                    
+                </div>
+            </div>
+            <div class="tab-pane text-center gallery" id="charts">
+                <div class="row">
+                    <app-cottage-reports></app-cottage-reports>
+                </div>
+            </div>
+        </div>
 
     
         </div>

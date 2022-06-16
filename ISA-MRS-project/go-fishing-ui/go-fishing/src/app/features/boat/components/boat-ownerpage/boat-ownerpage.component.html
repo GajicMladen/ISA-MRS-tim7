@@ -52,6 +52,12 @@
                                 Ocene
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#charts" role="tab" data-toggle="tab">
+                              <i class="material-icons">bar_chart</i>
+                                Izveštaji
+                            </a>
+                        </li>
                       </ul>
                     </div>
             </div>
@@ -59,7 +65,7 @@
     
       <div class="tab-content tab-space">
         <div class="tab-pane active text-center gallery" id="boats">
-              
+              <app-boat-gallery-owner [ownerId]="ownerId"></app-boat-gallery-owner>
           </div>
         <div class="tab-pane text-center gallery" id="works">
               <div class="row">
