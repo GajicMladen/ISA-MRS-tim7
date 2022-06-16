@@ -1,17 +1,29 @@
 package tim7.ISAMRSproject.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import tim7.ISAMRSproject.dto.ActionDTO;
 import tim7.ISAMRSproject.dto.ReservationDTO;
-import tim7.ISAMRSproject.model.*;
+import tim7.ISAMRSproject.model.Adventure;
+import tim7.ISAMRSproject.model.Boat;
+import tim7.ISAMRSproject.model.Cottage;
+import tim7.ISAMRSproject.model.Reservation;
+import tim7.ISAMRSproject.model.ReservationStatus;
+import tim7.ISAMRSproject.service.AdventureService;
 import tim7.ISAMRSproject.service.BoatService;
 import tim7.ISAMRSproject.service.CottageService;
 import tim7.ISAMRSproject.service.ReservationService;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @RestController
 @RequestMapping(value = "api/reservations")
@@ -23,6 +35,8 @@ public class ReservationController {
     private BoatService boatService;
     @Autowired
     private CottageService cottageService;
+    @Autowired
+    private AdventureService adventureService;
 
 
     @PostMapping(value = "/addNewAction",consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -97,6 +111,19 @@ public class ReservationController {
         }
 
         return retVal;
+    }
+    
+    @GetMapping(value ="/getReservationsForInstructor/{id}")
+    public List<ReservationDTO> getReservationsForInstructor(@PathVariable int id) {
+    	List<ReservationDTO> reservationsDTO = new ArrayList<ReservationDTO>();
+    	List<Adventure> adventures = this.adventureService.getAdventuresByInstructorId(id);
+    	for (Adventure a : adventures) {
+    		List<Reservation> reservations = this.reservationService.getReservationsForOffer(a.getId());
+    		for (Reservation r : reservations) {
+    			reservationsDTO.add(new ReservationDTO(r));
+    		}
+    	}
+    	return reservationsDTO;
     }
 
     
