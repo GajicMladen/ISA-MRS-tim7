@@ -22,6 +22,7 @@ import { ChartPieComponent } from './components/calendar/chart-pie/chart-pie.com
 import { ReservationListView } from './components/reservations/reservations-list-view/reservations-list-view.component';
 import { ReservationsOwnerpageComponent } from './components/reservations/reservations-ownerpage/reservations-ownerpage.component';
 import { ReservationEndReportComponent } from './components/reservations/reservation-end-report/reservation-end-report.component';
+import { ReservationAddNewWithClientComponent } from './components/reservations/reservation-add-new-with-clent/reservation-add-new-with-client.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { ReservationEndReportComponent } from './components/reservations/reserva
     ReservationListView,
     ReservationsOwnerpageComponent,
     ReservationEndReportComponent,
+    ReservationAddNewWithClientComponent
   ],
   imports: [
     CommonModule,

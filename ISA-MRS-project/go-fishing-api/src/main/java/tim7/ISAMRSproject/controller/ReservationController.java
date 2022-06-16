@@ -1,7 +1,9 @@
 package tim7.ISAMRSproject.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tim7.ISAMRSproject.dto.ActionDTO;
 import tim7.ISAMRSproject.dto.ReservationDTO;
@@ -99,5 +101,19 @@ public class ReservationController {
         return retVal;
     }
 
+
+    @PostMapping(value = "/addNewReservation")
+    public ResponseEntity<?> addNewReservation(@RequestBody ReservationDTO newReservation){
+
+
+
+        String msg = reservationService.addNewReservation(newReservation);
+        if(msg.equals("OK")){
+            return new ResponseEntity<>("DONE!",HttpStatus.OK);
+
+        }
+        return new ResponseEntity<>(msg,HttpStatus.BAD_REQUEST);
+
+    }
     
 }
