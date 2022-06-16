@@ -66,7 +66,8 @@ export class AdventureAddNewComponent implements OnInit {
 	  instructorBiography: '',
 	  instructorName: '',
 	  instructorSurname: '',
-    deleted: false
+    deleted: false,
+    rating: 0
   });
 
   instructorId: number;
@@ -239,7 +240,8 @@ export class AdventureAddNewComponent implements OnInit {
       instructorBiography: '',
       instructorName: '',
       instructorSurname: '',
-      deleted: false
+      deleted: false,
+      rating: 0
     });
     return newAdventure;
   }

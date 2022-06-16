@@ -15,12 +15,15 @@ import org.springframework.stereotype.Service;
 import tim7.ISAMRSproject.dto.ChangePasswordDTO;
 import tim7.ISAMRSproject.dto.UserRegisterDTO;
 import tim7.ISAMRSproject.model.Address;
+import tim7.ISAMRSproject.model.Admin;
 import tim7.ISAMRSproject.model.BoatOwner;
 import tim7.ISAMRSproject.model.CottageOwner;
 import tim7.ISAMRSproject.model.DeletionRequest;
 import tim7.ISAMRSproject.model.FishingInstructor;
 import tim7.ISAMRSproject.model.Role;
 import tim7.ISAMRSproject.model.User;
+import tim7.ISAMRSproject.repository.AddressRepository;
+import tim7.ISAMRSproject.repository.AdminRepository;
 import tim7.ISAMRSproject.repository.BoatOwnerRepository;
 import tim7.ISAMRSproject.repository.CottageOwnerRepository;
 import tim7.ISAMRSproject.repository.DeletionRequestRepository;
@@ -41,6 +44,12 @@ public class UserService implements UserDetailsService {
 	
 	@Autowired
 	private InstructorRepository instructorRepository;
+	
+	@Autowired
+	private AddressRepository addressRepository;
+	
+	@Autowired
+	private AdminRepository adminRepository;
 
 	@Autowired
 	private DeletionRequestRepository deletionRequestRepository;
@@ -59,6 +68,10 @@ public class UserService implements UserDetailsService {
 	public List<User> findAll(){
 		
 		return userRepository.findAll();
+	}
+	
+	public void deleteUserById(int id) {
+		this.userRepository.deleteById(id);
 	}
 	
 	@Override
@@ -83,6 +96,9 @@ public class UserService implements UserDetailsService {
 		address.setCountry(userRegisterDTO.getCountry());
 		address.setCity(userRegisterDTO.getTown());
 		address.setStreet(userRegisterDTO.getAddress());
+		address.setLatitude("0");
+		address.setLongitude("0");
+		address.setUser(newUser);
 		
 		newUser.setEmail(userRegisterDTO.getEmail());
 		newUser.setName(userRegisterDTO.getName());
@@ -144,6 +160,39 @@ public class UserService implements UserDetailsService {
 	
 	public DeletionRequest saveDeletionRequest(DeletionRequest deletionRequest) {
 		return this.deletionRequestRepository.save(deletionRequest);
+	}
+	
+	public User saveAdmin(UserRegisterDTO userRegisterDTO) {
+		Admin admin = new Admin();		
+		
+		Address address = new Address();		
+		address.setCountry(userRegisterDTO.getCountry());
+		address.setCity(userRegisterDTO.getTown());
+		address.setStreet(userRegisterDTO.getAddress());
+		address.setLongitude("0");
+		address.setLatitude("0");
+		
+		admin.setAddress(address);
+		address.setUser(admin);
+		
+		//this.addressRepository.save(address);
+		admin.setEmail(userRegisterDTO.getEmail());
+		admin.setName(userRegisterDTO.getName());
+		admin.setLastName(userRegisterDTO.getLastName());
+		admin.setPassword(passwordEncoder.encode(userRegisterDTO.getPassword()));
+		admin.setPhone(userRegisterDTO.getPhoneNumber());
+		admin.setAddress(address);
+		admin.setDeleted(false);
+		admin.setActive(true);
+		List<Role> roles = new ArrayList<Role>();
+		roles.add(roleService.findByName("ROLE_ADMIN"));
+		admin.setRoles(roles);
+		
+		//Admin admin = new Admin(newUser);
+		admin.setFirstLogin(true);
+		this.adminRepository.save(admin);
+		
+		return (User)admin;
 	}
 	
 }

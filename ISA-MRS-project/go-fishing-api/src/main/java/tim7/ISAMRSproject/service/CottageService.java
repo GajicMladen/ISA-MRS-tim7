@@ -1,19 +1,24 @@
 package tim7.ISAMRSproject.service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import tim7.ISAMRSproject.dto.CottageDTO;
-import tim7.ISAMRSproject.dto.FreePeriodDTO;
-import tim7.ISAMRSproject.model.*;
+import tim7.ISAMRSproject.dto.OfferShortDTO;
+import tim7.ISAMRSproject.model.Cottage;
+import tim7.ISAMRSproject.model.CottageOwner;
+import tim7.ISAMRSproject.model.User;
 import tim7.ISAMRSproject.repository.CottageRepository;
-import tim7.ISAMRSproject.repository.FreePeriodRepository;
-
-import javax.transaction.Transactional;
 
 @Service
 @Transactional
@@ -21,10 +26,6 @@ public class CottageService {
 
 	@Autowired
 	private CottageRepository cottageRepository;
-
-	@Autowired
-	private FreePeriodRepository freePeriodRepository;
-
 	
 	public List<Cottage> getAllCottages(){
 		
@@ -62,6 +63,105 @@ public class CottageService {
 		cottageRepository.updateCottage(cottageDTO.getId(), cottageDTO.getName(),
 				cottageDTO.getDescription(), cottageDTO.getPrice(),cottageDTO.getCapacity());
 	}
-
-
+	
+	public List<OfferShortDTO> getCottagesPage(int page, int perPage, String sort){
+		List<OfferShortDTO> cottagesDTO = new ArrayList<OfferShortDTO>();
+		Page<Cottage> cottages;
+		switch(sort) {
+			case "name-asc":
+				cottages = cottageRepository.findAll(PageRequest.of(page, perPage, Sort.by("name").ascending()));
+				break;
+			case "name-desc":
+				cottages = cottageRepository.findAll(PageRequest.of(page, perPage, Sort.by("name").descending()));
+				break;
+			case "rating-asc":
+				cottages = cottageRepository.findAll(PageRequest.of(page, perPage, Sort.by("rating").ascending()));
+				break;
+			case "rating-desc":
+				cottages = cottageRepository.findAll(PageRequest.of(page, perPage, Sort.by("rating").descending()));
+				break;
+			case "location-asc":
+				cottages = cottageRepository.findAll(PageRequest.of(page, perPage, Sort.by("address.city").ascending()));
+				break;
+			case "location-desc":
+				cottages = cottageRepository.findAll(PageRequest.of(page, perPage, Sort.by("address.city").descending()));
+				break;
+			case "price-asc":
+				cottages = cottageRepository.findAll(PageRequest.of(page, perPage, Sort.by("price").ascending()));
+				break;
+			case "price-desc":
+				cottages = cottageRepository.findAll(PageRequest.of(page, perPage, Sort.by("price").descending()));
+				break;
+			default:
+				cottages = cottageRepository.findAll(PageRequest.of(page, perPage));
+		}
+		for(Cottage c: cottages)
+			cottagesDTO.add(new OfferShortDTO(c));
+		return cottagesDTO;
+	}
+	
+	public int getTotalCottages() {
+		return cottageRepository.getTotalCottages();
+	}
+	
+	public List<Cottage> getCottagesPageSearch(int page, int perPage, String sort, String startDate, String endDate, String name, float minRating, String location, int capacity, int minPrice, String maxPrice){
+		name = "%" + name.toUpperCase() + "%";
+		location = "%" + location.toUpperCase() + "%";
+		LocalDateTime startDateObj = convertDateString(startDate);
+		LocalDateTime endDateObj = convertDateString(endDate);	
+		float maxPriceObj;
+		if (maxPrice.equals("null")) maxPriceObj = 99999999;
+		else maxPriceObj = Float.parseFloat(maxPrice);
+		
+		List<Cottage> cottages;
+		switch(sort) {
+			case "name-asc":
+				cottages = cottageRepository.getCottagesPageSearch(name, maxPriceObj, (float)minPrice, minRating, location, capacity, startDateObj, endDateObj, PageRequest.of(page, perPage, Sort.by("name").ascending()));
+				break;
+			case "name-desc":
+				cottages = cottageRepository.getCottagesPageSearch(name, maxPriceObj, (float)minPrice, minRating, location, capacity, startDateObj, endDateObj, PageRequest.of(page, perPage, Sort.by("name").descending()));
+				break;
+			case "rating-asc":
+				cottages = cottageRepository.getCottagesPageSearch(name, maxPriceObj, (float)minPrice, minRating, location, capacity, startDateObj, endDateObj, PageRequest.of(page, perPage, Sort.by("rating").ascending()));
+				break;
+			case "rating-desc":
+				cottages = cottageRepository.getCottagesPageSearch(name, maxPriceObj, (float)minPrice, minRating, location, capacity, startDateObj, endDateObj, PageRequest.of(page, perPage, Sort.by("rating").descending()));
+				break;
+			case "location-asc":
+				cottages = cottageRepository.getCottagesPageSearch(name, maxPriceObj, (float)minPrice, minRating, location, capacity, startDateObj, endDateObj, PageRequest.of(page, perPage, Sort.by("address.city").ascending()));
+				break;
+			case "location-desc":
+				cottages = cottageRepository.getCottagesPageSearch(name, maxPriceObj, (float)minPrice, minRating, location, capacity, startDateObj, endDateObj, PageRequest.of(page, perPage, Sort.by("address.city").descending()));
+				break;
+			case "price-asc":
+				cottages = cottageRepository.getCottagesPageSearch(name, maxPriceObj, (float)minPrice, minRating, location, capacity, startDateObj, endDateObj, PageRequest.of(page, perPage, Sort.by("price").ascending()));
+				break;
+			case "price-desc":
+				cottages = cottageRepository.getCottagesPageSearch(name, maxPriceObj, (float)minPrice, minRating, location, capacity, startDateObj, endDateObj, PageRequest.of(page, perPage, Sort.by("price").descending()));
+				break;
+			default:
+				cottages = cottageRepository.getCottagesPageSearch(name, maxPriceObj, (float)minPrice, minRating, location, capacity, startDateObj, endDateObj, PageRequest.of(page, perPage));
+		}
+		
+		return cottages;
+	}
+	
+	
+	public Integer getCottagesPageSearchCount(String startDate, String endDate, String name, float minRating, String location, int capacity, int minPrice, String maxPrice) {	
+		name = "%" + name.toUpperCase() + "%";
+		location = "%" + location.toUpperCase() + "%";
+		LocalDateTime startDateObj = convertDateString(startDate);
+		LocalDateTime endDateObj = convertDateString(endDate);	
+		float maxPriceObj;
+		if (maxPrice.equals("null")) maxPriceObj = 99999999;
+		else maxPriceObj = Float.parseFloat(maxPrice);
+		
+		return cottageRepository.getCottagesSearchCount(name, maxPriceObj, (float)minPrice, minRating, location, capacity, startDateObj, endDateObj);	
+	}
+	
+	private LocalDateTime convertDateString(String s) {
+		String[] tokens = s.split("-");
+		LocalDateTime retVal = LocalDateTime.of(Integer.parseInt(tokens[2]), Integer.parseInt(tokens[1]), Integer.parseInt(tokens[0]), 0, 0);
+		return retVal;
+	}
 }

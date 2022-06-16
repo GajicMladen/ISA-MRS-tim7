@@ -1,8 +1,9 @@
 package tim7.ISAMRSproject.dto;
 
-import tim7.ISAMRSproject.model.Reservation;
-
 import java.time.LocalDateTime;
+
+import tim7.ISAMRSproject.model.Action;
+import tim7.ISAMRSproject.model.Reservation;
 
 public class ActionDTO {
 
@@ -23,6 +24,14 @@ public class ActionDTO {
         this.totalPrice = reservation.getTotalPrice();
         this.offerId = reservation.getOffer().getId();
         this.id = reservation.getId();
+    }
+    
+    public ActionDTO(Action action) {
+    	this.endDate = action.getEndDate();
+    	this.startDate = action.getStartDate();
+    	this.totalPrice = action.getPrice();
+    	this.id = action.getId().intValue();
+    	this.offerId = action.getOffer().getId();
     }
 
 

@@ -19,8 +19,8 @@ public class UserDTO {
 	private String longitude;
 	private String latitude;
 
-	private List<Role> roles;
-
+	private String userRole;
+	
 	public UserDTO() {
 		
 	}
@@ -28,12 +28,13 @@ public class UserDTO {
 	public UserDTO(User user) {
 		
 		this(user.getId(), user.getName(), user.getLastName(), user.getUsername(),user.getEmail(),user.getPhone(), user.getAddress().getStreet(),
-			 user.getAddress().getCity(), user.getAddress().getCountry(), user.getAddress().getLongitude(), user.getAddress().getLatitude(),
-				user.getRoles());
+
+			 user.getAddress().getCity(), user.getAddress().getCountry(), user.getAddress().getLongitude(), user.getAddress().getLatitude(), user.getRoles().toString());
 	}
 	
 	public UserDTO(Integer id, String name, String lastName, String username,String email,String phone, String street, String city, String country,
-			       String longitude, String latitude,List<Role> roles) {
+			       String longitude, String latitude, String role) {
+
 		super();
 		this.id = id;
 		this.name = name;
@@ -46,7 +47,8 @@ public class UserDTO {
 		this.country = country;
 		this.longitude = longitude;
 		this.latitude = latitude;
-		this.roles = roles;
+
+		this.userRole = role;
 	}
 
 	public Integer getId() {

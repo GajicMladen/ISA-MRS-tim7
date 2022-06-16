@@ -1,13 +1,18 @@
 package tim7.ISAMRSproject.service;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import tim7.ISAMRSproject.dto.AdventureDTO;
-import tim7.ISAMRSproject.dto.InstructorDTO;
+import tim7.ISAMRSproject.dto.OfferShortDTO;
 import tim7.ISAMRSproject.dto.UserDTO;
 import tim7.ISAMRSproject.model.Address;
 import tim7.ISAMRSproject.model.Adventure;
@@ -23,9 +28,6 @@ public class AdventureService {
 	
 	@Autowired
 	private UserService userService;
-	
-	@Autowired
-	private AddressService addressService;
 	
 	public Optional<Adventure> findById(Integer id) {
 		return this.adventureRepository.findById(id);
@@ -122,5 +124,106 @@ public class AdventureService {
 			
 			adventureRepository.save(adventure);
 		}
+	}
+	
+	public List<OfferShortDTO> getAdventuresPage(int page, int perPage, String sort){
+		List<OfferShortDTO> adventuresDTO = new ArrayList<OfferShortDTO>();
+		Page<Adventure> adventures;
+		switch(sort) {
+			case "name-asc":
+				adventures = adventureRepository.findAll(PageRequest.of(page, perPage, Sort.by("name").ascending()));
+				break;
+			case "name-desc":
+				adventures = adventureRepository.findAll(PageRequest.of(page, perPage, Sort.by("name").descending()));
+				break;
+			case "rating-asc":
+				adventures = adventureRepository.findAll(PageRequest.of(page, perPage, Sort.by("rating").ascending()));
+				break;
+			case "rating-desc":
+				adventures = adventureRepository.findAll(PageRequest.of(page, perPage, Sort.by("rating").descending()));
+				break;
+			case "location-asc":
+				adventures = adventureRepository.findAll(PageRequest.of(page, perPage, Sort.by("address.city").ascending()));
+				break;
+			case "location-desc":
+				adventures = adventureRepository.findAll(PageRequest.of(page, perPage, Sort.by("address.city").descending()));
+				break;
+			case "price-asc":
+				adventures = adventureRepository.findAll(PageRequest.of(page, perPage, Sort.by("price").ascending()));
+				break;
+			case "price-desc":
+				adventures = adventureRepository.findAll(PageRequest.of(page, perPage, Sort.by("price").descending()));
+				break;
+			default:
+				adventures = adventureRepository.findAll(PageRequest.of(page, perPage));
+		}
+		for(Adventure a: adventures)
+			adventuresDTO.add(new OfferShortDTO(a));
+		return adventuresDTO;
+	}
+	
+	public Integer getTotalAdventures() {
+		return adventureRepository.getTotalAdventures();
+	}
+	
+	public List<Adventure> getAdventuresPageSearch(int page, int perPage, String sort, String startDate, String endDate, String name, float minRating, String location, int capacity, int minPrice, String maxPrice){
+		name = "%" + name.toUpperCase() + "%";
+		location = "%" + location.toUpperCase() + "%";
+		LocalDateTime startDateObj = convertDateString(startDate);
+		LocalDateTime endDateObj = convertDateString(endDate);	
+		float maxPriceObj;
+		if (maxPrice.equals("null")) maxPriceObj = 99999999;
+		else maxPriceObj = Float.parseFloat(maxPrice);
+		
+		List<Adventure> adventures;
+		switch(sort) {
+			case "name-asc":
+				adventures = adventureRepository.getAdventuresPageSearch(name, maxPriceObj, (float)minPrice, minRating, location, capacity, startDateObj, endDateObj, PageRequest.of(page, perPage, Sort.by("name").ascending()));
+				break;
+			case "name-desc":
+				adventures = adventureRepository.getAdventuresPageSearch(name, maxPriceObj, (float)minPrice, minRating, location, capacity, startDateObj, endDateObj, PageRequest.of(page, perPage, Sort.by("name").descending()));
+				break;
+			case "rating-asc":
+				adventures = adventureRepository.getAdventuresPageSearch(name, maxPriceObj, (float)minPrice, minRating, location, capacity, startDateObj, endDateObj, PageRequest.of(page, perPage, Sort.by("rating").ascending()));
+				break;
+			case "rating-desc":
+				adventures = adventureRepository.getAdventuresPageSearch(name, maxPriceObj, (float)minPrice, minRating, location, capacity, startDateObj, endDateObj, PageRequest.of(page, perPage, Sort.by("rating").descending()));
+				break;
+			case "location-asc":
+				adventures = adventureRepository.getAdventuresPageSearch(name, maxPriceObj, (float)minPrice, minRating, location, capacity, startDateObj, endDateObj, PageRequest.of(page, perPage, Sort.by("address.city").ascending()));
+				break;
+			case "location-desc":
+				adventures = adventureRepository.getAdventuresPageSearch(name, maxPriceObj, (float)minPrice, minRating, location, capacity, startDateObj, endDateObj, PageRequest.of(page, perPage, Sort.by("address.city").descending()));
+				break;
+			case "price-asc":
+				adventures = adventureRepository.getAdventuresPageSearch(name, maxPriceObj, (float)minPrice, minRating, location, capacity, startDateObj, endDateObj, PageRequest.of(page, perPage, Sort.by("price").ascending()));
+				break;
+			case "price-desc":
+				adventures = adventureRepository.getAdventuresPageSearch(name, maxPriceObj, (float)minPrice, minRating, location, capacity, startDateObj, endDateObj, PageRequest.of(page, perPage, Sort.by("price").descending()));
+				break;
+			default:
+				adventures = adventureRepository.getAdventuresPageSearch(name, maxPriceObj, (float)minPrice, minRating, location, capacity, startDateObj, endDateObj, PageRequest.of(page, perPage));
+		}
+		
+		return adventures;
+	}
+	
+	
+	public Integer getAdventuresPageSearchCount(String startDate, String endDate, String name, float minRating, String location, int capacity, int minPrice, String maxPrice) {	
+		name = "%" + name.toUpperCase() + "%";
+		location = "%" + location.toUpperCase() + "%";
+		LocalDateTime startDateObj = convertDateString(startDate);
+		LocalDateTime endDateObj = convertDateString(endDate);	
+		float maxPriceObj;
+		if (maxPrice.equals("null")) maxPriceObj = 99999999;
+		else maxPriceObj = Float.parseFloat(maxPrice);
+		
+		return adventureRepository.getAdventuresSearchCount(name, maxPriceObj, (float)minPrice, minRating, location, capacity, startDateObj, endDateObj);	
+	}
+	
+	private LocalDateTime convertDateString(String s) {
+		String[] tokens = s.split("-");
+		LocalDateTime retVal = LocalDateTime.of(Integer.parseInt(tokens[2]), Integer.parseInt(tokens[1]), Integer.parseInt(tokens[0]), 0, 0);
+		return retVal;
 	}
 }
