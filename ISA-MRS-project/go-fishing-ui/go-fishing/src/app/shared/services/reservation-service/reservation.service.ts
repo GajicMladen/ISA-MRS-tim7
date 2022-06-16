@@ -33,6 +33,8 @@ export class ReservationService {
         reservation.offerId = d.offerId;
         reservation.totalPrice = d.totalPrice;
         reservation.id = d.id;
+        reservation.clientId = d.clientId;
+        reservation.reservationStatus = d.reservationStatus;
         res.push(reservation);
       });
     });
@@ -76,7 +78,7 @@ export class ReservationService {
   }
 
   public deleteReservation(id:number){
-    //console.log("ovfd");
     return this.http.delete(this.reservationsUrl+"/delete/"+id);
   }
+
 }

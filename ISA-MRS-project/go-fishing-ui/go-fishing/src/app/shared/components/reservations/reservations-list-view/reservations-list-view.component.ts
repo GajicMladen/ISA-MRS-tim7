@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ReservationDTO } from 'src/models/reservation';
+import { ReservationAddNewWithClientComponent } from '../reservation-add-new-with-clent/reservation-add-new-with-client.component';
 import { ReservationEndReportComponent } from '../reservation-end-report/reservation-end-report.component';
 
 @Component({
@@ -13,6 +14,7 @@ export class ReservationListView implements OnInit {
 
   @Input() reservations: ReservationDTO[];
   
+  @Input() ownerType:string;
 
   constructor(
     private dialog: MatDialog) { }
@@ -27,11 +29,18 @@ export class ReservationListView implements OnInit {
       reservationReport: new FormControl({ value: '' }, Validators.required),
     });
   }
-  
+
   deletionForm: FormGroup = this.createDeletionForm();
-  sendReservationReport(){
+
+  sendReservationReport(reservationId:number,clientId:number){
       this.dialog.open(ReservationEndReportComponent,{
-        data: this.deletionForm,
+        data: [reservationId,clientId]
       })
+  }
+
+  addNewReservation(offerId:number,clientId:number){
+    this.dialog.open(ReservationAddNewWithClientComponent,{
+      data:[offerId,clientId,this.ownerType]
+    })
   }
 }

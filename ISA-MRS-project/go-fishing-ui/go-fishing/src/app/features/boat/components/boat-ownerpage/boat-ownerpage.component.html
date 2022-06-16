@@ -41,7 +41,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#favorite" role="tab" data-toggle="tab">
+                            <a class="nav-link" href="#reservations" role="tab" data-toggle="tab">
                               <i class="material-icons">list</i>
                                 Rezervacije
                             </a>
@@ -67,14 +67,12 @@
         <div class="tab-pane active text-center gallery" id="boats">
               <app-boat-gallery-owner [ownerId]="ownerId"></app-boat-gallery-owner>
           </div>
-        <div class="tab-pane text-center gallery" id="works">
+        <div class="tab-pane text-center gallery" id="reservations">
+            <app-reservations-ownerpage [ownerId]="ownerId" [ownerType]="'B'"></app-reservations-ownerpage>
+        </div>
+        <div class="tab-pane text-center gallery" id="charts">
               <div class="row">
-                  
-              </div>
-          </div>
-        <div class="tab-pane text-center gallery" id="favorite">
-              <div class="row">
-                  
+                  <app-boat-reports></app-boat-reports>
               </div>
           </div>
       </div>

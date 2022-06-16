@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { BoatService } from 'src/app/features/boat/services/boat.service';
 import { CottageService } from 'src/app/features/cottage/services/cottage.service';
 import { ReservationService } from 'src/app/shared/services/reservation-service/reservation.service';
 import { Offer } from 'src/models/offer';
@@ -11,7 +12,9 @@ import { ReservationDTO } from 'src/models/reservation';
 })
 export class ReservationsOwnerpageComponent implements OnInit {
 
-  constructor(private reservationService:ReservationService, private cottageService:CottageService) { }
+  constructor(private reservationService:ReservationService,
+    private cottageService:CottageService,
+    private boatService:BoatService) { }
 
   @Input() ownerId : number;
   @Input() ownerType : string;
@@ -30,13 +33,16 @@ export class ReservationsOwnerpageComponent implements OnInit {
     if(this.ownerType == "C"){
       this.cottageService.findCottagesByOwner(this.ownerId).subscribe(data =>{
         this.offers = data;
-        console.log(this.offers);
+      });
+    }
+    if(this.ownerType == "B"){
+      this.boatService.findBoatsByOwner(this.ownerId).subscribe(data =>{
+        this.offers = data;
       });
     }
   }
 
   onChange(offerId:any){
-    console.log(offerId);
     if(offerId == "all"){
       this.reservationService.getReservationsForOwner(this.ownerId,this.ownerType).subscribe(
         data => {
