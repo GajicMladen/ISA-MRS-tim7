@@ -17,11 +17,11 @@ public interface AdventureRepository extends JpaRepository<Adventure, Integer> {
 	public Integer getTotalAdventures();
 	
 	@Query("select c from Adventure c inner join c.freePeriods freePeriods " +
-            "where upper(c.name) like upper(?1) and c.price <= ?2 and c.price >= ?3 and c.rating >= ?4 and upper(c.address.city) like ?5 and c.capacity >= ?6 and freePeriods.startDateTime > ?7 and freePeriods.endDateTime < ?8")
+            "where upper(c.name) like upper(?1) and c.price <= ?2 and c.price >= ?3 and c.rating >= ?4 and upper(c.address.city) like ?5 and c.capacity >= ?6 and freePeriods.startDateTime < ?7 and freePeriods.endDateTime > ?8")
     public List<Adventure> getAdventuresPageSearch(String name, float price, float price1, float rating, String city, int capacity, LocalDateTime startDateTime, LocalDateTime endDateTime, Pageable pageable);
 
 	@Query("select COUNT(c) from Adventure c inner join c.freePeriods freePeriods " +
-            "where upper(c.name) like upper(?1) and c.price <= ?2 and c.price >= ?3 and c.rating >= ?4 and upper(c.address.city) like ?5 and c.capacity >= ?6 and freePeriods.startDateTime > ?7 and freePeriods.endDateTime < ?8")
+            "where upper(c.name) like upper(?1) and c.price <= ?2 and c.price >= ?3 and c.rating >= ?4 and upper(c.address.city) like ?5 and c.capacity >= ?6 and freePeriods.startDateTime < ?7 and freePeriods.endDateTime > ?8")
     public int getAdventuresSearchCount(String name, float price, float price1, float rating, String city, int capacity, LocalDateTime startDateTime, LocalDateTime endDateTime);
 
 }

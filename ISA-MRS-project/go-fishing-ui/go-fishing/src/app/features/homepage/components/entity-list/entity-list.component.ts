@@ -308,6 +308,7 @@ export class EntityListComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
+      console.log(result);
       if (result !== undefined && result.search) {
         this.search = true;
         this.paginator.firstPage();
