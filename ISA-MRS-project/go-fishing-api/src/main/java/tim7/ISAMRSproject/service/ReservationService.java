@@ -12,6 +12,7 @@ import tim7.ISAMRSproject.repository.CottageRepository;
 import tim7.ISAMRSproject.repository.ReservationRepository;
 
 import java.time.Period;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -71,7 +72,28 @@ public class ReservationService {
 
 	public List<Reservation> getReservationsForOffer(int offerId){
 
-		return reservationRepository.findByOffer_IdEquals(offerId);
+		List<Reservation> ret = new ArrayList<>();
+
+		List<Reservation> allReservations =  reservationRepository.findByOffer_IdEquals(offerId);
+		for (Reservation reservation:allReservations) {
+			if(! reservation.getStatus().equals(ReservationStatus.FOR_ACTION))
+				ret.add(reservation);
+		}
+
+		return ret;
+	}
+
+
+	public List<Reservation> getActionsForOffer(int offerId){
+		List<Reservation> ret = new ArrayList<>();
+
+		List<Reservation> allReservations =  reservationRepository.findByOffer_IdEquals(offerId);
+		for (Reservation reservation:allReservations) {
+			if(reservation.getStatus().equals(ReservationStatus.FOR_ACTION))
+				ret.add(reservation);
+		}
+
+		return ret;
 	}
 
 	public void deleteAction(int id){

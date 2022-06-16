@@ -46,6 +46,7 @@ public class EmailServiceImpl {
 		confirmationBody += "\nCena: " + action.getTotalPrice();
 
 		sendSimpleMessage(user.getEmail(), ACTION_SUBJECT, confirmationBody);
+	}
 	
 	public void sendAdminConfirmationMail(User user) {
 		String confirmationBody = "Dear " + user.getName() + " " + user.getLastName() + ", \n";

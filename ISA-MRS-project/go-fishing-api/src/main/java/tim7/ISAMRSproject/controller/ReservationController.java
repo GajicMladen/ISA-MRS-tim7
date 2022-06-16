@@ -6,6 +6,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tim7.ISAMRSproject.dto.ActionDTO;
+import tim7.ISAMRSproject.dto.DataForChartDTO;
 import tim7.ISAMRSproject.dto.ReservationDTO;
 import tim7.ISAMRSproject.model.*;
 import tim7.ISAMRSproject.service.BoatService;
@@ -55,12 +56,10 @@ public class ReservationController {
     @GetMapping(value = "/getActions/{id}")
     public List<ActionDTO> getActionsForOffer(@PathVariable int id){
 
-        List<Reservation> actionsForOffer =  reservationService.getReservationsForOffer(id);
+        List<Reservation> actionsForOffer =  reservationService.getActionsForOffer(id);
         List<ActionDTO> retVal = new ArrayList<>();
-        for (Reservation reservation:
-             actionsForOffer) {
-            if(reservation.getStatus().equals(ReservationStatus.FOR_ACTION))
-                retVal.add(new ActionDTO(reservation));
+        for (Reservation reservation:actionsForOffer) {
+            retVal.add(new ActionDTO(reservation));
         }
 
         return retVal;
@@ -69,11 +68,9 @@ public class ReservationController {
     @GetMapping(value = "/getReservationsForOffer/{id}")
     public List<ReservationDTO> getReservationsForOffer(@PathVariable int id){
 
-        List<Reservation> actionsForOffer =  reservationService.getReservationsForOffer(id);
+        List<Reservation> reservationsForOffer =  reservationService.getReservationsForOffer(id);
         List<ReservationDTO> retVal = new ArrayList<>();
-        for (Reservation reservation:
-                actionsForOffer) {
-            if( ! reservation.getStatus().equals(ReservationStatus.FOR_ACTION))
+        for (Reservation reservation:reservationsForOffer) {
                 retVal.add(new ReservationDTO(reservation));
         }
 
@@ -108,7 +105,7 @@ public class ReservationController {
 
         List<Cottage> offers = cottageService.getCottagesByOwnerId(id);
         for (Cottage cottage:offers) {
-            List<Reservation> actionsForOffer =  reservationService.getReservationsForOffer(cottage .getId());
+            List<Reservation> actionsForOffer =  reservationService.getReservationsForOffer(cottage.getId());
             for (Reservation reservation:
                     actionsForOffer) {
                 if( ! reservation.getStatus().equals(ReservationStatus.FOR_ACTION))
@@ -119,6 +116,47 @@ public class ReservationController {
         return retVal;
     }
 
+    @GetMapping(value = "/getProfitChartDataForCottageOwner/{id}")
+    public List<DataForChartDTO> getDataForChartCottageOwner(@PathVariable int id){
+        List<DataForChartDTO> retVal = new ArrayList<>();
+
+        List<Cottage> offers = cottageService.getCottagesByOwnerId(id);
+        for (Cottage cottage:offers) {
+            DataForChartDTO newData = new DataForChartDTO();
+            newData.setName(cottage.getName());
+            float value = 0;
+            List<Reservation> reservations =  reservationService.getReservationsForOffer(cottage.getId());
+            for (Reservation reservation: reservations) {
+                value += reservation.getTotalPrice();
+            }
+            newData.setValue(value);
+            retVal.add(newData);
+        }
+
+        return retVal;
+
+    }
+
+    @GetMapping(value = "/getProfitChartDataForBoatOwner/{id}")
+    public List<DataForChartDTO> getDataForChartBoatOwner(@PathVariable int id){
+        List<DataForChartDTO> retVal = new ArrayList<>();
+
+        List<Boat> offers = boatService.getBoatsByOwnerId(id);
+        for (Boat boat:offers) {
+            DataForChartDTO newData = new DataForChartDTO();
+            newData.setName(boat.getName());
+            float value = 0;
+            List<Reservation> reservations =  reservationService.getReservationsForOffer(boat.getId());
+            for (Reservation reservation: reservations) {
+                value += reservation.getTotalPrice();
+            }
+            newData.setValue(value);
+            retVal.add(newData);
+        }
+
+        return retVal;
+
+    }
 
     @PostMapping(value = "/addNewReservation")
     public ResponseEntity<?> addNewReservation(@RequestBody ReservationDTO newReservation){
