@@ -9,6 +9,6 @@ export class ImageServiceService {
   constructor() {}
 
   get loyaltyBadge() {
-    return this.imagesPath + 'loyalty-badges/platinum_badge.png';
+    return this.imagesPath + 'loyalty-badges/silver_badge.png';
   }
 }

@@ -279,13 +279,49 @@ INSERT INTO public.Adventure(
 			'Mamci|Mreza za pecanje|Stapovi|Varalice|Prsluci za spasavanje|Cizme|Dodatni camci|Kombinezoni', 'Avantura se održava dva puta dnevno. Prvi termin je u 9h, a drugi u 15h. Mesto okupljanja je gradska plaža. Avantura traje dva sata.', 'Zabranjeno bacanje smenja|Zabranjeno skakanje u vodu bez dozvole|Zabranjeno donosenje alkohola|Zabranjeno donosenje hrane|Zabranjeno pusenje',
 			'U slučaju otkazivanja instruktor zadržava 30% uplaćene sume.', false);			
 
+
+-- SLOBODNI TERMINI			
 INSERT INTO public.free_period (
 	start_date_time, end_date_time, offer_id)
-	VALUES ('2022-05-31T00:00:01', '2022-06-10T00:00:01', 4);
-
+	VALUES ('2022-06-10T00:00:01', '2022-05-31T00:00:01', 4);
+INSERT INTO public.free_period (
+	start_date_time, end_date_time, offer_id)
+	VALUES ('2022-06-10T00:00:01', '2022-05-31T00:00:01', 3);
+INSERT INTO public.free_period (
+	start_date_time, end_date_time, offer_id)
+	VALUES ('2022-06-10T00:00:01', '2022-05-31T00:00:01', 5);
+INSERT INTO public.free_period (
+	start_date_time, end_date_time, offer_id)
+	VALUES ('2022-06-10T00:00:01', '2022-05-31T00:00:01', 6);
+	
+INSERT INTO public.free_period (
+	start_date_time, end_date_time, offer_id)
+	VALUES ('2022-06-10T00:00:01', '2022-05-31T00:00:01', 12);
+INSERT INTO public.free_period (
+	start_date_time, end_date_time, offer_id)
+	VALUES ('2022-06-10T00:00:01', '2022-05-31T00:00:01', 13);
+INSERT INTO public.free_period (
+	start_date_time, end_date_time, offer_id)
+	VALUES ('2022-06-10T00:00:01', '2022-05-31T00:00:01', 15);
+INSERT INTO public.free_period (
+	start_date_time, end_date_time, offer_id)
+	VALUES ('2022-06-10T00:00:01', '2022-05-31T00:00:01', 16);
+	
 INSERT INTO public.free_period (
 	start_date_time, end_date_time, offer_id)
 	VALUES ('2022-06-15T14:30:00', '2022-06-16T10:00:00', 22);
+INSERT INTO public.free_period (
+	start_date_time, end_date_time, offer_id)
+	VALUES ('2022-06-10T00:00:01', '2022-05-31T00:00:01', 24);
+INSERT INTO public.free_period (
+	start_date_time, end_date_time, offer_id)
+	VALUES ('2022-06-10T00:00:01', '2022-05-31T00:00:01', 23);
+INSERT INTO public.free_period (
+	start_date_time, end_date_time, offer_id)
+	VALUES ('2022-06-10T00:00:01', '2022-05-31T00:00:01', 25);
+INSERT INTO public.free_period (
+	start_date_time, end_date_time, offer_id)
+	VALUES ('2022-06-10T00:00:01', '2022-05-31T00:00:01', 26);
 
 --REZERVACIJE
 INSERT INTO public.reservation(id, end_date_time, start_date_time, status, total_price, client_id, complaint, grade, offer_id)
@@ -294,4 +330,3 @@ INSERT INTO public.reservation(id, end_date_time, start_date_time, status, total
     	VALUES (2, '2022-05-25T00:00:01', '2022-05-24T00:00:01', 1, 120.5, 9, null, null, 1);
 INSERT INTO public.reservation(id, end_date_time, start_date_time, status, total_price, client_id, complaint, grade, offer_id)
     	VALUES (3, '2022-05-25T00:00:01', '2022-05-24T00:00:01', 3, 120.5, 9, null, null, 1);
-
