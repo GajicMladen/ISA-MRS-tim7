@@ -46,5 +46,38 @@ public class EmailServiceImpl {
 		confirmationBody += "\nCena: " + action.getTotalPrice();
 
 		sendSimpleMessage(user.getEmail(), ACTION_SUBJECT, confirmationBody);
+	
+	public void sendAdminConfirmationMail(User user) {
+		String confirmationBody = "Dear " + user.getName() + " " + user.getLastName() + ", \n";
+		confirmationBody += "Thank you for joining Go Fishing! You have been added as admin! ";
+		
+		sendSimpleMessage("djordjejovanovic27@gmail.com", "Go fishing admin", confirmationBody);
+	}
+	
+	public void sendDeletionEmail(User user, boolean deleted, String reason) {
+		String confirmationBody = "Dear " + user.getName() + " " + user.getLastName() + ", \n";
+		if (deleted) {
+			confirmationBody += "Your account on GoFishing! has been successfully deleted!\n";
+		}
+		else {
+			confirmationBody += "Your request for deletion of your account has been refused!\n";
+			confirmationBody += "Reason for refusal: " + reason + "\n";
+		}
+		confirmationBody += "\nGoFishing! admin team";
+		sendSimpleMessage("djordjejovanovic27@gmail.com", "Go fishing admin", confirmationBody);
+	}
+	
+	public void sendRegistrationEmail(User user, boolean registered, String reason) {
+		String confirmationBody = "Dear " + user.getName() + " " + user.getLastName() + ", \n";
+		if (registered) {
+			confirmationBody += "Your account on GoFishing! has been successfully added!\n";
+			confirmationBody += "You can now log in with your email and password!\n";
+		}
+		else {
+			confirmationBody += "Your request for registration has been refused!\n";
+			confirmationBody += "Reason for refusal: " + reason + "\n";
+		}
+		confirmationBody += "\nGoFishing! admin team";
+		sendSimpleMessage("djordjejovanovic27@gmail.com", "Go fishing admin", confirmationBody);
 	}
 }

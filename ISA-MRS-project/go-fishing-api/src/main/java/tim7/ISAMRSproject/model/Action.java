@@ -28,13 +28,17 @@ public class Action {
 	@Column(name ="maxPerson",nullable = false)
 	private int maxPerson;
 	
-	@Column(name ="totalPrice" , nullable = false)
-	private float totalPrice;
+	@Column(name ="price" , nullable = false)
+	private float price;
 	
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "offer_id")
 	private Offer offer;
+	
+	public Action() {
+		
+	}
 
 	public Long getId() {
 		return id;
@@ -68,12 +72,12 @@ public class Action {
 		this.maxPerson = maxPerson;
 	}
 
-	public float getTotalPrice() {
-		return totalPrice;
+	public float getPrice() {
+		return price;
 	}
 
-	public void setTotalPrice(float totalPrice) {
-		this.totalPrice = totalPrice;
+	public void setPrice(float cena) {
+		this.price = cena;
 	}
 
 	public Offer getOffer() {
@@ -83,4 +87,6 @@ public class Action {
 	public void setOffer(Offer offer) {
 		this.offer = offer;
 	}
+	
+	
 }
