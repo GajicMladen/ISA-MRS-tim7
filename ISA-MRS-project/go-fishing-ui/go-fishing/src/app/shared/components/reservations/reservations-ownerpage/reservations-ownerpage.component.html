@@ -1,9 +1,15 @@
+<div [ngSwitch]="ownerType">
+    <span *ngSwitchCase="'C'">Odaberite vikendicu:</span>
+    <span *ngSwitchCase="'B'">Odaberite brod:</span>
+</div>
+
 <select [ngModel]="selectedOffer" *ngIf="offers.length > 0" (ngModelChange)="onChange($event)">
-    <option value="all">
+    
+    <option value="all" selected="selected">
         Sve
     </option>
     <option *ngFor="let offer of offers" [value]="offer.id">    
         {{offer.name}}
     </option>
 </select>
-<app-reservations-list-view [reservations]="reservations"></app-reservations-list-view>
+<app-reservations-list-view [reservations]="reservations" [ownerType]="ownerType"></app-reservations-list-view>

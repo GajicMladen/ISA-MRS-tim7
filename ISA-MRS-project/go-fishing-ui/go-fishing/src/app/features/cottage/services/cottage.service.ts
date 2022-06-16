@@ -60,4 +60,62 @@ export class CottageService {
       params: { page: pageNum, perPage: perPageNum, sort: sort },
     });
   }
+
+  public getCottagesPageSearch(
+    pageNum: number,
+    perPageNum: number,
+    sort: string,
+    searchParams: any
+  ) {
+    return this.http.get(this.config.cottagesPageSearchUrl, {
+      params: {
+        page: pageNum,
+        perPage: perPageNum,
+        sort: sort,
+        startDate:
+          searchParams.startDate.getDate() +
+          '-' +
+          (searchParams.startDate.getMonth() + 1) +
+          '-' +
+          searchParams.startDate.getFullYear(),
+        endDate:
+          searchParams.endDate.getDate() +
+          '-' +
+          (searchParams.endDate.getMonth() + 1) +
+          '-' +
+          searchParams.endDate.getFullYear(),
+        name: searchParams.name,
+        minRating: searchParams.minRating,
+        location: searchParams.location,
+        capacity: searchParams.capacity,
+        minPrice: searchParams.minPrice,
+        maxPrice: searchParams.maxPrice,
+      },
+    });
+  }
+
+  public getCottagesPageSearchCount(searchParams: any) {
+    return this.http.get(this.config.cottagesPageSearchCountUrl, {
+      params: {
+        startDate:
+          searchParams.startDate.getDate() +
+          '-' +
+          (searchParams.startDate.getMonth() + 1) +
+          '-' +
+          searchParams.startDate.getFullYear(),
+        endDate:
+          searchParams.endDate.getDate() +
+          '-' +
+          (searchParams.endDate.getMonth() + 1) +
+          '-' +
+          searchParams.endDate.getFullYear(),
+        name: searchParams.name,
+        minRating: searchParams.minRating,
+        location: searchParams.location,
+        capacity: searchParams.capacity,
+        minPrice: searchParams.minPrice,
+        maxPrice: searchParams.maxPrice,
+      },
+    });
+  }
 }

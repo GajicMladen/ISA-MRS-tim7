@@ -2,11 +2,9 @@
     <div class="row">
         <div class="col-md-12">
             <div class="card card-white mb-5">
-                <div class="card-heading clearfix border-bottom mb-4">
-                    <h4 class="card-title">Booking Requests</h4>
-                </div>
-                <div class="card-body">
-                    <ul class="list-unstyled reservations-list">
+                
+                <div class="card-body" style="overflow-y: scroll; height:600px;">
+                    <ul class="list-unstyled reservations-list" *ngIf="reservations.length > 0; else elseblock">
                         <li class="position-relative booking reservation-card" *ngFor="let reservation of reservations">
                             <div class="media">
                                 <div class="media-body">
@@ -39,13 +37,14 @@
                                             <div class="btn-gray">Odbaci</div>
                                             <div class="btn-gray">Prihvati</div>
                                         </div>
-                                        <div *ngSwitchCase="'ACTIVE'" class="btn-gray">
-                                            Otkazi
+                                        <div *ngSwitchCase="'ACTIVE'"  >
+                                            <div class="btn-gray">Otkaži</div>
+                                            <div class="btn-gray" (click)="addNewReservation(reservation.offerId,reservation.clientId)">Dodaj novu rezervaciju</div>
                                         </div>
-                                        <div *ngSwitchCase="'IN_PROCESS'" class="btn-gray">
-                                            Dodaj novu
+                                        <div *ngSwitchCase="'IN_PROCESS'" class="btn-gray" (click)="addNewReservation(reservation.offerId,reservation.clientId)" >
+                                            Dodaj novu rezervaciju
                                         </div>
-                                        <div *ngSwitchCase="'ENDED'" class="btn-gray" (click)="sendReservationReport()">
+                                        <div *ngSwitchCase="'ENDED'" class="btn-gray" (click)="sendReservationReport(reservation.id,reservation.clientId)">
                                             Popuni izvestaj
                                         </div>
                                     </div>
@@ -54,7 +53,9 @@
                         </li>
     
                     </ul>
-    
+                    <ng-template #elseblock>
+                        <h2>Još uvek ne postoje rezervacije... :(</h2>
+                    </ng-template>
                 </div>
             </div>
     

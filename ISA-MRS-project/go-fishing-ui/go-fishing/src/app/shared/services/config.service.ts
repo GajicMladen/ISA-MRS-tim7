@@ -49,13 +49,29 @@ export class ConfigService {
    *
    */
 
+  /*
+   *  COTTAGES
+   */
+
   get cottagesPageUrl(): string {
     return this._entity_controller_url + '/cottages/all';
+  }
+
+  get cottagesPageSearchUrl(): string {
+    return this._entity_controller_url + '/cottages/search';
   }
 
   get cottagesCountUrl(): string {
     return this._entity_controller_url + '/cottages/count';
   }
+
+  get cottagesPageSearchCountUrl(): string {
+    return this._entity_controller_url + '/cottages/searchcount';
+  }
+
+  /*
+   *  BOATS
+   */
 
   get boatsPageUrl(): string {
     return this._entity_controller_url + '/boats/all';
@@ -65,11 +81,31 @@ export class ConfigService {
     return this._entity_controller_url + '/boats/count';
   }
 
+  get boatsPageSearchUrl(): string {
+    return this._entity_controller_url + '/boats/search';
+  }
+
+  get boatsPageSearchCountUrl(): string {
+    return this._entity_controller_url + '/boats/searchcount';
+  }
+
+  /*
+   *  ADVENTURES
+   */
+
   get adventuresPageUrl(): string {
     return this._entity_controller_url + '/adventures/all';
   }
 
   get adventuresCountUrl(): string {
     return this._entity_controller_url + '/adventures/count';
+  }
+
+  get adventuresPageSearchUrl(): string {
+    return this._entity_controller_url + '/adventures/search';
+  }
+
+  get adventuresPageSearchCountUrl(): string {
+    return this._entity_controller_url + '/adventures/searchcount';
   }
 }

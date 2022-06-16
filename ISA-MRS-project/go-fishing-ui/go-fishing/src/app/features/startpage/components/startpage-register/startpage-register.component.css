@@ -31,3 +31,8 @@ mat-form-field {
 .role-radio-button {
     margin: 5px;
 }
+
+.reason-textarea{
+    max-height: 100px;
+    min-height: 30px;
+}

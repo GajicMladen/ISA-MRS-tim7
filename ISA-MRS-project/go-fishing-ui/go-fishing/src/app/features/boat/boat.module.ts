@@ -9,6 +9,8 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { BoatAddNewComponent } from './components/boat-add-new/boat-add-new.component';
 import { BoatEditComponent } from './components/boat-edit/boat-edit.component';
+import { BoatReportsComponent } from './components/boat-reports/boat-reports.component';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -16,13 +18,15 @@ import { BoatEditComponent } from './components/boat-edit/boat-edit.component';
     BoatOwnerpageComponent,
     BoatGalleryOwnerComponent,
     BoatAddNewComponent,
-    BoatEditComponent
+    BoatEditComponent,
+    BoatReportsComponent
   ],
   imports: [
     CommonModule,
     RouterModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    SharedModule
   ]
 })
 export class BoatModule { }
