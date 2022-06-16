@@ -322,7 +322,6 @@ export class EntityListComponent implements OnInit {
                 this.searchForm.getRawValue()
               )
               .subscribe((res: any) => {
-                console.log(res);
                 this.pageSlice = res;
               });
             this.cottageService
@@ -340,9 +339,7 @@ export class EntityListComponent implements OnInit {
                 this.searchForm.getRawValue()
               )
               .subscribe((res: any) => {
-                console.log(res);
                 this.pageSlice = res;
-                console.log(this.pageSlice);
               });
             this.boatService
               .getBoatsPageSearchCount(this.searchForm.getRawValue())
@@ -359,7 +356,6 @@ export class EntityListComponent implements OnInit {
                 this.searchForm.getRawValue()
               )
               .subscribe((res: any) => {
-                console.log(res);
                 this.pageSlice = res;
               });
             this.adventureService
