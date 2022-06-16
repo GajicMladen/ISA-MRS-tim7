@@ -61,7 +61,6 @@ export class ReservationService {
     
     data.subscribe(dat => {
       dat.forEach(d => {  
-        console.log(d);
         let reservation = new ReservationDTO();
         reservation.startDate = new NgbDate(d.startDate[0],d.startDate[1],d.startDate[2]);  
         reservation.endDate = new NgbDate(d.endDate[0],d.endDate[1],d.endDate[2]);

@@ -19,16 +19,21 @@ import org.springframework.web.bind.annotation.RestController;
 import tim7.ISAMRSproject.dto.ActionDTO;
 import tim7.ISAMRSproject.dto.DateRangeStringDTO;
 import tim7.ISAMRSproject.dto.ReservationDTO;
+
 import tim7.ISAMRSproject.model.Boat;
 import tim7.ISAMRSproject.model.Cottage;
 import tim7.ISAMRSproject.model.FreePeriod;
 import tim7.ISAMRSproject.model.Reservation;
 import tim7.ISAMRSproject.model.ReservationStatus;
 import tim7.ISAMRSproject.model.User;
+import tim7.ISAMRSproject.model.Adventure;
+import tim7.ISAMRSproject.service.AdventureService;
+
 import tim7.ISAMRSproject.service.BoatService;
 import tim7.ISAMRSproject.service.CottageService;
 import tim7.ISAMRSproject.service.FreePeriodService;
 import tim7.ISAMRSproject.service.ReservationService;
+
 import tim7.ISAMRSproject.service.UserService;
 
 @RestController
@@ -41,6 +46,8 @@ public class ReservationController {
     private BoatService boatService;
     @Autowired
     private CottageService cottageService;
+    @Autowired
+    private AdventureService adventureService;
 
     @Autowired
     private FreePeriodService freePeriodService;
@@ -120,6 +127,19 @@ public class ReservationController {
         }
 
         return retVal;
+    }
+    
+    @GetMapping(value ="/getReservationsForInstructor/{id}")
+    public List<ReservationDTO> getReservationsForInstructor(@PathVariable int id) {
+    	List<ReservationDTO> reservationsDTO = new ArrayList<ReservationDTO>();
+    	List<Adventure> adventures = this.adventureService.getAdventuresByInstructorId(id);
+    	for (Adventure a : adventures) {
+    		List<Reservation> reservations = this.reservationService.getReservationsForOffer(a.getId());
+    		for (Reservation r : reservations) {
+    			reservationsDTO.add(new ReservationDTO(r));
+    		}
+    	}
+    	return reservationsDTO;
     }
 
 
