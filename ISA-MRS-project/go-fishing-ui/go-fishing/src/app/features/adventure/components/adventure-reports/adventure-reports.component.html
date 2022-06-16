@@ -4,14 +4,28 @@
             <span (click)="showRating()">Prosečne ocene</span>
         </ng-template>
         <div class="chart">
-            <app-chart [data]="ratingsData" [title]="title" [x_axis]="x_axis" [y_axis]="y_axis" *ngIf="showRatings"></app-chart>
+            <app-chart [data]="ratingsData" [title]="ratingsTitle" [x_axis]="x_axis" [y_axis]="y_axis" *ngIf="showRatings"></app-chart>
         </div>
         <div class="back">
             <button style="float: right; margin-right: 150px;" mat-raised-button color="warn" routerLink="/instructorProfile/{{instructorId}}" routerLinkActive="active">Nazad</button>
         </div>
     </mat-tab>
-    <mat-tab label="Rezervacije avantura">
-
+    <mat-tab>
+        <ng-template mat-tab-label>
+            <span (click)="showReservations()">Rezervacije avantura</span>
+        </ng-template>
+        <div class="chart">
+            <app-chart [data]="weekData" [title]="weekTitle" [x_axis]="x_axis" [y_axis]="y_axis" *ngIf="showWeek"></app-chart>                        
+        </div>
+        <div class="chart">
+            <app-chart [data]="monthData" [title]="monthTitle" [x_axis]="x_axis" [y_axis]="y_axis" *ngIf="showMonth"></app-chart>                        
+        </div>
+        <div class="chart">
+            <app-chart [data]="yearData" [title]="yearTitle" [x_axis]="x_axis" [y_axis]="y_axis" *ngIf="showYear"></app-chart>                        
+        </div>
+        <div class="back">
+            <button style="float: right; margin-right: 150px; margin-bottom: 10px;" mat-raised-button color="warn" routerLink="/instructorProfile/{{instructorId}}" routerLinkActive="active">Nazad</button>
+        </div>
     </mat-tab>
     <mat-tab label="Prihodi od avantura">        
         <div class="datepicker">

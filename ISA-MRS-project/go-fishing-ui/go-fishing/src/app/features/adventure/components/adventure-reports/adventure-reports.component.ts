@@ -24,14 +24,36 @@ export class AdventureReportsComponent implements OnInit {
   adventureIds: number[];
   reservations: ReservationDTO[];
 
-  title:string;
+  ratingsTitle:string = 'Prosečne ocene';
+  weekTitle: string = 'Ova nedelja';
+  monthTitle: string = 'Ovaj mesec';
+  yearTitle: string = 'Ova godina';
   x_axis:string;
   y_axis:string;
   ratingsData: any = [];
   dataForPieChart: any = [];
+  yearData = [
+    {name: 'Januar', value: 0},
+    {name: 'Februar', value: 0},
+    {name: 'Mart', value: 0},
+    {name: 'April', value: 0},
+    {name: 'Maj', value: 0},
+    {name: 'Jun', value: 0},
+    {name: 'Jul', value: 0},
+    {name: 'Avgust', value: 0},
+    {name: 'Septembar', value: 0},
+    {name: 'Oktobar', value: 0},
+    {name: 'Novembar', value: 0},
+    {name: 'Decembar', value: 0}
+  ];
+  monthData = this.generateMonthData();
+  weekData = this.generateWeekData();
 
   showRatings: boolean = false;
   displayPieChart: boolean = false;
+  showWeek: boolean = false;
+  showMonth: boolean = false;
+  showYear: boolean = false;
 
   constructor(private route: ActivatedRoute,
               private adventureService: AdventureService,
@@ -59,7 +81,6 @@ export class AdventureReportsComponent implements OnInit {
   }
 
   showRating() {
-    this.title = 'Prosečne ocene';
     this.showRatings = true;
   }
 
@@ -96,5 +117,45 @@ export class AdventureReportsComponent implements OnInit {
       }
     });
     return adventure;
+  }
+
+  showReservations() {
+    var t = new Date();
+    console.log(t);
+    console.log(t.getFullYear());
+    console.log(this.yearData[5]);
+
+    this.reservations.forEach(reservation => {
+      if (reservation.startDate.year === t.getFullYear()) {
+        this.yearData[reservation.startDate.month-1].value += 1;
+      }
+      //this.showYear = true;
+      if (reservation.startDate.month === t.getMonth()+1) {
+        this.monthData[reservation.startDate.day-1].value += 1;
+      }
+      //this.showMonth = true;
+      if(reservation.startDate.day >= t.getDay()-7 && reservation.startDate.day <= t.getDay() && (reservation.startDate.month === t.getMonth()+1)) {
+        this.weekData[6-(t.getDay()-reservation.startDate.day)].value += 1;
+      }
+    });
+    this.showYear = true;
+    this.showMonth = true;
+    this.showWeek = true;
+  }
+
+  generateMonthData() : any {
+    var retVal = [];
+    for (let ii = 0; ii < 31; ii++) {
+      retVal.push({name: (ii+1).toString(), value: 0});
+    }
+    return retVal;
+  }
+
+  generateWeekData(): any {
+    var retVal = [];
+    for (let ii = 0; ii < 7; ii++) {
+      retVal.push({name: (ii+1).toString(), value: 0});
+    }
+    return retVal
   }
 }
