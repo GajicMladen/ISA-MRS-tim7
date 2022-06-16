@@ -3,11 +3,7 @@ package tim7.ISAMRSproject.model;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 
 @Entity
 public class Client extends User {
@@ -25,6 +21,13 @@ public class Client extends User {
 	private Set<Reservation> reservations = new HashSet<Reservation>();
 	
 
+	@ManyToMany
+	@JoinTable(
+			name="subscribers",
+			joinColumns = @JoinColumn(name = "client_id"),
+			inverseJoinColumns = @JoinColumn(name = "offer_id")
+	)
+	private Set<Offer> subscribedOffers = new HashSet<Offer>();
 /*
 	@OneToMany(mappedBy = "klijent", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Set<Complaint> zalbae = new HashSet<Complaint>();

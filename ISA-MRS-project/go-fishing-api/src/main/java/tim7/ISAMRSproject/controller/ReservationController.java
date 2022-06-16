@@ -9,8 +9,10 @@ import tim7.ISAMRSproject.dto.ActionDTO;
 import tim7.ISAMRSproject.dto.ReservationDTO;
 import tim7.ISAMRSproject.model.*;
 import tim7.ISAMRSproject.service.BoatService;
+import tim7.ISAMRSproject.service.ClientService;
 import tim7.ISAMRSproject.service.CottageService;
 import tim7.ISAMRSproject.service.ReservationService;
+import tim7.ISAMRSproject.utils.EmailServiceImpl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,12 +28,28 @@ public class ReservationController {
     @Autowired
     private CottageService cottageService;
 
+    @Autowired
+    private EmailServiceImpl emailService;
+
+    @Autowired
+    private ClientService clientService;
+
 
     @PostMapping(value = "/addNewAction",consumes = MediaType.APPLICATION_JSON_VALUE)
     public void getAllCottages(@RequestBody ActionDTO actionDTO){
 
-        reservationService.addNewAction(actionDTO);
-
+        Reservation newAction = reservationService.addNewAction(actionDTO);
+        if(newAction != null){
+            List<Client> subscribers = clientService.getSubscribersForOffer(newAction.getOffer().getId());
+            for(Client client: subscribers ) {
+                try {
+                    emailService.sendActionEmail(client,newAction);
+                }
+                catch (Exception e){
+                    System.out.println("Exceprion on sending email to : "+client.getEmail());
+                }
+            }
+        }
     }
 
     @GetMapping(value = "/getActions/{id}")

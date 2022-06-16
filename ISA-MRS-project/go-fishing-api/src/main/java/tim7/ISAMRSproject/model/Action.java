@@ -28,11 +28,59 @@ public class Action {
 	@Column(name ="maxPerson",nullable = false)
 	private int maxPerson;
 	
-	@Column(name ="cena" , nullable = false)
-	private float cena;
+	@Column(name ="totalPrice" , nullable = false)
+	private float totalPrice;
 	
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "offer_id")
 	private Offer offer;
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public LocalDateTime getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(LocalDateTime startDate) {
+		this.startDate = startDate;
+	}
+
+	public LocalDateTime getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(LocalDateTime endDate) {
+		this.endDate = endDate;
+	}
+
+	public int getMaxPerson() {
+		return maxPerson;
+	}
+
+	public void setMaxPerson(int maxPerson) {
+		this.maxPerson = maxPerson;
+	}
+
+	public float getTotalPrice() {
+		return totalPrice;
+	}
+
+	public void setTotalPrice(float totalPrice) {
+		this.totalPrice = totalPrice;
+	}
+
+	public Offer getOffer() {
+		return offer;
+	}
+
+	public void setOffer(Offer offer) {
+		this.offer = offer;
+	}
 }

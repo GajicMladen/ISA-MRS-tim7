@@ -39,7 +39,7 @@ public class ReservationService {
 		
 	}
 
-	public void addNewAction(ActionDTO actionDTO){
+	public Reservation addNewAction(ActionDTO actionDTO){
 		Reservation newAction = new Reservation();
 		newAction.setEndDateTime(actionDTO.getEndDate());
 		newAction.setStartDateTime(actionDTO.getStartDate());
@@ -51,17 +51,17 @@ public class ReservationService {
 
 		if(cottage.isPresent()) {
 			newAction.setOffer(cottage.get());
-			reservationRepository.save(newAction);
-			return;
+			return reservationRepository.save(newAction);
+
 		}
 		if(boat.isPresent()){
 			newAction.setOffer(boat.get());
-			reservationRepository.save(newAction);
-			return;
+			return reservationRepository.save(newAction);
+
 		}
 
 		//instructor
-
+		return null;
 
 	}
 

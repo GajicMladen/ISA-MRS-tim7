@@ -36,9 +36,9 @@ INSERT INTO public.users(active, deleted, email, lastname, name, password, phone
 INSERT INTO public.users(active, deleted, email, lastname, name, password, phone, loyalty_points, address_id) VALUES
 					(true, false, 'mb@gmail.com', 'Bajagic', 'Marko', '$2a$10$XeS1WZloSVVq2Z2dJd3L7ePADJy51sWu/oLqcy.Qcmppr6VcUtcr6', '+381659997778', 600, 1);
 INSERT INTO public.users(active, deleted, email, lastname, name, password, phone, loyalty_points, address_id) VALUES
-                (true, false, 'mb@gmail.com', 'Klijentovic', 'Klijent', '$2a$10$XeS1WZloSVVq2Z2dJd3L7ePADJy51sWu/oLqcy.Qcmppr6VcUtcr6', '+381659997778', 600, 1);
+                (true, false, 'niko.nikic093:test123@gmail.com', 'Klijentovic', 'Klijent', '$2a$10$XeS1WZloSVVq2Z2dJd3L7ePADJy51sWu/oLqcy.Qcmppr6VcUtcr6', '+381659997778', 600, 1);
 INSERT INTO public.users(active, deleted, email, lastname, name, password, phone, loyalty_points, address_id) VALUES
-                (true, false, 'mb@gmail.com', 'Klijentovic2', 'Klijent2', '$2a$10$XeS1WZloSVVq2Z2dJd3L7ePADJy51sWu/oLqcy.Qcmppr6VcUtcr6', '+381659997778', 600, 1);
+                (true, false, 'niko.nikic093@gmail.com', 'Klijentovic2', 'Klijent2', '$2a$10$XeS1WZloSVVq2Z2dJd3L7ePADJy51sWu/oLqcy.Qcmppr6VcUtcr6', '+381659997778', 600, 1);
 
 --KLIJENTI
 INSERT INTO public.client(penal_count, suspended, id) VALUES (0, FALSE, 9);
@@ -294,3 +294,8 @@ INSERT INTO public.complaint(id, for_offer, from_owner, offender_id, pusnih_offe
 	VALUES (1, false, false, 1, true, 0, 'zalim se na klijenta indijanca, ostavio je haos!',1);
 INSERT INTO public.complaint(id, for_offer, from_owner, offender_id, pusnih_offender, status, text, reservation_id)
 	VALUES (2, false, true, 1, true, 0, 'zalim se na klijenta indijanca, ostavio je haos!',2);
+
+
+--SUBSCRIBES
+INSERT INTO public.subscribers(client_id, offer_id) VALUES (9, 1);
+INSERT INTO public.subscribers(client_id, offer_id) VALUES (10, 1);
