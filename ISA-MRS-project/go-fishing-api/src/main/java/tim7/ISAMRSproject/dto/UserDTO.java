@@ -1,6 +1,9 @@
 package tim7.ISAMRSproject.dto;
 
+import tim7.ISAMRSproject.model.Role;
 import tim7.ISAMRSproject.model.User;
+
+import java.util.List;
 
 public class UserDTO {
 
@@ -16,6 +19,8 @@ public class UserDTO {
 	private String longitude;
 	private String latitude;
 
+	private List<Role> roles;
+
 	public UserDTO() {
 		
 	}
@@ -23,11 +28,12 @@ public class UserDTO {
 	public UserDTO(User user) {
 		
 		this(user.getId(), user.getName(), user.getLastName(), user.getUsername(),user.getEmail(),user.getPhone(), user.getAddress().getStreet(),
-			 user.getAddress().getCity(), user.getAddress().getCountry(), user.getAddress().getLongitude(), user.getAddress().getLatitude());
+			 user.getAddress().getCity(), user.getAddress().getCountry(), user.getAddress().getLongitude(), user.getAddress().getLatitude(),
+				user.getRoles());
 	}
 	
 	public UserDTO(Integer id, String name, String lastName, String username,String email,String phone, String street, String city, String country,
-			       String longitude, String latitude) {
+			       String longitude, String latitude,List<Role> roles) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -40,6 +46,7 @@ public class UserDTO {
 		this.country = country;
 		this.longitude = longitude;
 		this.latitude = latitude;
+		this.roles = roles;
 	}
 
 	public Integer getId() {

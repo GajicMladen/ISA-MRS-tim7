@@ -23,6 +23,8 @@ export class BoatOwnerpageComponent implements OnInit {
     if(!isNaN(this.ownerId)){
       this.userService.findById(this.ownerId).subscribe(user => {
         this.owner = user;
+        console.log(user);
+        console.log("===========");
         console.log(this.owner);
       })
     }

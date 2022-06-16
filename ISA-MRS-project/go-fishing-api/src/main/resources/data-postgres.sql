@@ -37,9 +37,12 @@ INSERT INTO public.users(active, deleted, email, lastname, name, password, phone
 					(true, false, 'mb@gmail.com', 'Bajagic', 'Marko', '$2a$10$XeS1WZloSVVq2Z2dJd3L7ePADJy51sWu/oLqcy.Qcmppr6VcUtcr6', '+381659997778', 600, 1);
 INSERT INTO public.users(active, deleted, email, lastname, name, password, phone, loyalty_points, address_id) VALUES
                 (true, false, 'mb@gmail.com', 'Klijentovic', 'Klijent', '$2a$10$XeS1WZloSVVq2Z2dJd3L7ePADJy51sWu/oLqcy.Qcmppr6VcUtcr6', '+381659997778', 600, 1);
+INSERT INTO public.users(active, deleted, email, lastname, name, password, phone, loyalty_points, address_id) VALUES
+                (true, false, 'mb@gmail.com', 'Klijentovic2', 'Klijent2', '$2a$10$XeS1WZloSVVq2Z2dJd3L7ePADJy51sWu/oLqcy.Qcmppr6VcUtcr6', '+381659997778', 600, 1);
 
 --KLIJENTI
 INSERT INTO public.client(penal_count, suspended, id) VALUES (0, FALSE, 9);
+INSERT INTO public.client(penal_count, suspended, id) VALUES (0, FALSE, 10);
 
 -- VLASNICI KOLIBA				
 INSERT INTO public.cottage_owners(id) VALUES(2);
@@ -281,6 +284,10 @@ INSERT INTO public.reservation(id, end_date_time, start_date_time, status, total
     	VALUES (2, '2022-05-25T00:00:01', '2022-05-24T00:00:01', 1, 120.5, 9,  null, 1);
 INSERT INTO public.reservation(id, end_date_time, start_date_time, status, total_price, client_id,  grade, offer_id)
     	VALUES (3, '2022-05-25T00:00:01', '2022-05-24T00:00:01', 3, 120.5, 9,  null, 1);
+INSERT INTO public.reservation(id, end_date_time, start_date_time, status, total_price, client_id,  grade, offer_id)
+    	VALUES (4, '2022-05-25T00:00:01', '2022-05-24T00:00:01', 3, 120.5, 10,  null, 20);
+INSERT INTO public.reservation(id, end_date_time, start_date_time, status, total_price, client_id,  grade, offer_id)
+    	VALUES (5, '2022-05-25T00:00:01', '2022-05-24T00:00:01', 2, 120.5, 10,  null, 19);
 
 --ZALBE
 INSERT INTO public.complaint(id, for_offer, from_owner, offender_id, pusnih_offender, status, text, reservation_id)

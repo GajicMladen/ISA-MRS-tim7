@@ -14,6 +14,7 @@ export class ReservationListView implements OnInit {
 
   @Input() reservations: ReservationDTO[];
   
+  @Input() ownerType:string;
 
   constructor(
     private dialog: MatDialog) { }
@@ -39,7 +40,7 @@ export class ReservationListView implements OnInit {
 
   addNewReservation(offerId:number,clientId:number){
     this.dialog.open(ReservationAddNewWithClientComponent,{
-      data:[offerId,clientId]
+      data:[offerId,clientId,this.ownerType]
     })
   }
 }

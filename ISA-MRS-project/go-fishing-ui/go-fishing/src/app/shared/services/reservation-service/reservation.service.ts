@@ -78,7 +78,7 @@ export class ReservationService {
   }
 
   public deleteReservation(id:number){
-    //console.log("ovfd");
     return this.http.delete(this.reservationsUrl+"/delete/"+id);
   }
+
 }

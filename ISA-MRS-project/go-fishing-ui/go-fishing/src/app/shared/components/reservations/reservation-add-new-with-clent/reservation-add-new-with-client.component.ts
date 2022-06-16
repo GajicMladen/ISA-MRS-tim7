@@ -9,6 +9,8 @@ import { UserService} from 'src/app/shared/services/users-services/user.service'
 import { Offer } from 'src/models/offer';
 import { OfferService } from 'src/app/shared/services/offer-service/offer.service';
 import { NgbCalendar, NgbDate, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
+import { ReservationSendDTO, ReservationStatus } from 'src/models/reservation';
+import { ReservationService } from 'src/app/shared/services/reservation-service/reservation.service';
 
 @Component({
   selector: 'reservation-add-new-with-client',
@@ -16,6 +18,9 @@ import { NgbCalendar, NgbDate, NgbDateParserFormatter } from '@ng-bootstrap/ng-b
   styleUrls: ['./reservation-add-new-with-client.component.css']
 })
 export class ReservationAddNewWithClientComponent implements OnInit {
+
+
+  ownerType:string;
 
   offerId:number;
   offer: Offer;
@@ -33,17 +38,17 @@ export class ReservationAddNewWithClientComponent implements OnInit {
 
   constructor(
     public dialogRef: MatDialogRef<ReservationAddNewWithClientComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: number[],
+    @Inject(MAT_DIALOG_DATA) public data: any[],
     private calendar: NgbCalendar,
     public formatter: NgbDateParserFormatter,
     private userService:UserService,
     private offerService:OfferService,
-    private clientService:ClientService) { }
+    private reservationService:ReservationService) { }
 
   ngOnInit(): void {
         this.offerId = this.data[0];
         this.clientId = this.data[1];
-
+        this.ownerType = this.data[2];
 
         this.userService.findById(this.clientId).subscribe(
           data => {
@@ -51,54 +56,36 @@ export class ReservationAddNewWithClientComponent implements OnInit {
           }
         );
         
-        this.offerService.getCottageById(this.offerId).subscribe(
-          data=>{
-            this.offer = data;
-          }
-        )
+        if(this.ownerType == "C"){
+          this.offerService.getCottageById(this.offerId).subscribe(
+            data=>{
+              this.offer = data;
+            }
+          )
+        }
+        if(this.ownerType == "B"){
+          this.offerService.getBoatById(this.offerId).subscribe(
+            data=>{
+              this.offer = data;
+            }
+          )
+        }
 
   }
 
-  sendReportOwner(){
-    /*
-    if(! this.clientShowed){
-      this.clientService.addPenalToClient(this.data[1]).subscribe();
-      
-      let newComplaint: ComplaintDTO = new ComplaintDTO();
-      newComplaint.text = "Klijent se nije pojavio, dobio je 1 penal";
-      newComplaint.approvalStatus = 1;
-      newComplaint.reservationId = this.data[0];
-      newComplaint.punishOffender = this.punchClient;
-      newComplaint.offenderId = this.data[1];
-      newComplaint.fromOwner = true;
-      
-      this.complaintService.addNewComplaint(newComplaint).subscribe(
-        data=>{
-          console.log(data);
-          this.dialogRef.close();
-        }
-      );
-      return;
-    }
+  addNewReservation(){
+      let newReservation = new ReservationSendDTO();
 
-    if(this.clientShowed && this.punchClient){
+      newReservation.clientId = this.clientId;
+      newReservation.offerId = this.offerId;
+      newReservation.reservationStatus = ReservationStatus.ACTIVE;
+      newReservation.startDate = this.format(this.fromDate);
+      newReservation.endDate = this.format(this.toDate);
 
-      let newComplaint: ComplaintDTO = new ComplaintDTO();
-      newComplaint.text = this.reservationReport;
-      newComplaint.approvalStatus = 0;
-      newComplaint.reservationId = this.data[0];
-      newComplaint.punishOffender = this.punchClient;
-      newComplaint.offenderId = this.data[1];
-      newComplaint.fromOwner = true;
-      
-      this.complaintService.addNewComplaint(newComplaint).subscribe(
-        data=>{
-          console.log(data);
-          this.dialogRef.close();
-        }
-      );
-    }
-    */
+      this.reservationService.addNewReservation(newReservation).subscribe(data =>{
+        console.log(data);
+      });
+       
   } 
 
   cancelReport(){
@@ -133,4 +120,14 @@ export class ReservationAddNewWithClientComponent implements OnInit {
     return parsed && this.calendar.isValid(NgbDate.from(parsed)) ? NgbDate.from(parsed) : currentValue;
   }
 
+  format(date: NgbDate | null): string {
+    let stringDate: string = ""; 
+    if(date != null) {
+      stringDate += date.year+"-";
+      stringDate += date.month ? date.month<10 ? "0"+date.month +"-": date.month + "-" : "01-";
+      stringDate += date.day ? date.day < 10 ? "0"+date.day : date.day : "01";
+      stringDate += "T00:00:01"
+    }
+    return stringDate;
+  }
 }

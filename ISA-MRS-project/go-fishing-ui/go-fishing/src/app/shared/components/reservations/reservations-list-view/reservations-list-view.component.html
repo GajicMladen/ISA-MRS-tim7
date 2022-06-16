@@ -41,7 +41,7 @@
                                             <div class="btn-gray">Otkaži</div>
                                             <div class="btn-gray" (click)="addNewReservation(reservation.offerId,reservation.clientId)">Dodaj novu rezervaciju</div>
                                         </div>
-                                        <div *ngSwitchCase="'IN_PROCESS'" class="btn-gray" >
+                                        <div *ngSwitchCase="'IN_PROCESS'" class="btn-gray" (click)="addNewReservation(reservation.offerId,reservation.clientId)" >
                                             Dodaj novu rezervaciju
                                         </div>
                                         <div *ngSwitchCase="'ENDED'" class="btn-gray" (click)="sendReservationReport(reservation.id,reservation.clientId)">

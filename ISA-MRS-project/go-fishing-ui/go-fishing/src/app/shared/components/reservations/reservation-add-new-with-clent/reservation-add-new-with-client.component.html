@@ -1,6 +1,11 @@
 <mat-card class="card" >
     <h1 class="title">Dodavanje nove rezervacije u dogovoru sa klijentom</h1>
-    <p>Vikendica: <b>{{offer.name}} </b> </p>
+
+    <div [ngSwitch]="ownerType">
+        <p *ngSwitchCase="'C'">Vikendica: <b>{{offer.name}} </b> </p>
+        <p *ngSwitchCase="'B'">Brod: <b>{{offer.name}} </b> </p>
+    
+    </div>
     <p>Klijent: <b>{{client.name }} {{client.lastName}} </b></p>
     <p style="font-weight: bold;">Molimo Vas, odaberite datume:</p>
    
@@ -66,7 +71,7 @@
 
 
     <mat-card-actions style="text-align: center;">
-        <button mat-button style="color: rgb(0, 255, 4);" (click)="sendReportOwner()">Dodaj rezervaciju</button>
+        <button mat-button style="color: rgb(0, 255, 4);" (click)="addNewReservation()">Dodaj rezervaciju</button>
         <button mat-button (click)="cancelReport()">Odustani</button>
     </mat-card-actions>
 </mat-card>
