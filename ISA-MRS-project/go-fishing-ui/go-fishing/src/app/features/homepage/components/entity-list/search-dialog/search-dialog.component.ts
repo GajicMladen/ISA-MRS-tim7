@@ -49,7 +49,7 @@ export class SearchDialogComponent {
     const minPrice = this.data.controls['minPrice'].value;
     const maxPrice = this.data.controls['maxPrice'].value;
 
-    if (maxPrice < minPrice) return false;
+    if (maxPrice < minPrice && maxPrice !== null) return false;
 
     if (maxPrice !== null) {
       return exp.test(String(minPrice)) && exp.test(String(maxPrice));

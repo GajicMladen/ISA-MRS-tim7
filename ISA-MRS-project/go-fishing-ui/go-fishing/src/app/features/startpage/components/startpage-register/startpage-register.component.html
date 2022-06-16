@@ -79,7 +79,11 @@
                     Adventure Instructor
                 </mat-radio-button>
             </mat-radio-group>
-
+            
+            <mat-form-field *ngIf="showRegistrationReason">
+                <mat-label>Leave an explanation</mat-label>
+                <textarea matInput formControlName="reason" class="reason-textarea"></textarea>
+            </mat-form-field>
 
             <button mat-raised-button color="primary" type="button" (click)="saveRequest()">Register</button>
             <h3 class="top-spacing">Already have an account? <a routerLink="/login" routerLinkActive="active">Log In!</a></h3>

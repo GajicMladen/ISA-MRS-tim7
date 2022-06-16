@@ -20,6 +20,7 @@ export class EntityListComponent implements OnInit {
   pageSizeOptions: number[] = [this.pageSize];
   sort: FormControl = new FormControl('');
 
+  search: boolean = false;
   //either 'cottage', 'boat' or 'adventure'
   mode: string;
   @ViewChild('paginator') paginator: MatPaginator;
@@ -105,22 +106,52 @@ export class EntityListComponent implements OnInit {
   setSortView(page: number): void {
     switch (this.mode) {
       case 'cottage':
-        this.getCottagesPage(page, this.sort.value).subscribe((res: any) => {
-          this.paginator.firstPage();
-          this.pageSlice = res;
-        });
+        if (!this.search) {
+          this.getCottagesPage(page, this.sort.value).subscribe((res: any) => {
+            this.paginator.firstPage();
+            this.pageSlice = res;
+          });
+        } else {
+          this.getCottagesPageSearch(page, this.sort.value).subscribe(
+            (res: any) => {
+              this.paginator.firstPage();
+              this.pageSlice = res;
+            }
+          );
+        }
         break;
       case 'boat':
-        this.getBoatsPage(page, this.sort.value).subscribe((res: any) => {
-          this.paginator.firstPage();
-          this.pageSlice = res;
-        });
+        if (!this.search) {
+          this.getBoatsPage(page, this.sort.value).subscribe((res: any) => {
+            this.paginator.firstPage();
+            this.pageSlice = res;
+          });
+        } else {
+          this.getBoatsPageSearch(page, this.sort.value).subscribe(
+            (res: any) => {
+              this.paginator.firstPage();
+              this.pageSlice = res;
+            }
+          );
+        }
         break;
       case 'adventure':
-        this.getAdventuresPage(page, this.sort.value).subscribe((res: any) => {
-          this.paginator.firstPage();
-          this.pageSlice = res;
-        });
+        if (!this.search) {
+          this.getAdventuresPage(page, this.sort.value).subscribe(
+            (res: any) => {
+              this.paginator.firstPage();
+              this.pageSlice = res;
+            }
+          );
+        } else {
+          this.getAdventuresPageSearch(page, this.sort.value).subscribe(
+            (res: any) => {
+              this.paginator.firstPage();
+              this.pageSlice = res;
+            }
+          );
+        }
+
         break;
       default:
         break;
@@ -130,25 +161,51 @@ export class EntityListComponent implements OnInit {
   onPageChange(event: PageEvent) {
     switch (this.mode) {
       case 'cottage':
-        this.getCottagesPage(event.pageIndex, this.sort.value).subscribe(
-          (res: any) => {
+        if (!this.search) {
+          this.getCottagesPage(event.pageIndex, this.sort.value).subscribe(
+            (res: any) => {
+              this.pageSlice = res;
+            }
+          );
+        } else {
+          this.getCottagesPageSearch(
+            event.pageIndex,
+            this.sort.value
+          ).subscribe((res: any) => {
             this.pageSlice = res;
-          }
-        );
+          });
+        }
         break;
       case 'boat':
-        this.getBoatsPage(event.pageIndex, this.sort.value).subscribe(
-          (res: any) => {
-            this.pageSlice = res;
-          }
-        );
+        if (!this.search) {
+          this.getBoatsPage(event.pageIndex, this.sort.value).subscribe(
+            (res: any) => {
+              this.pageSlice = res;
+            }
+          );
+        } else {
+          this.getBoatsPageSearch(event.pageIndex, this.sort.value).subscribe(
+            (res: any) => {
+              this.pageSlice = res;
+            }
+          );
+        }
         break;
       case 'adventure':
-        this.getAdventuresPage(event.pageIndex, this.sort.value).subscribe(
-          (res: any) => {
+        if (!this.search) {
+          this.getAdventuresPage(event.pageIndex, this.sort.value).subscribe(
+            (res: any) => {
+              this.pageSlice = res;
+            }
+          );
+        } else {
+          this.getAdventuresPageSearch(
+            event.pageIndex,
+            this.sort.value
+          ).subscribe((res: any) => {
             this.pageSlice = res;
-          }
-        );
+          });
+        }
         break;
       default:
         break;
@@ -179,12 +236,30 @@ export class EntityListComponent implements OnInit {
     return this.cottageService.getCottagesPage(pageNum, this.pageSize, sort);
   }
 
+  getCottagesPageSearch(pageNum: number, sort: string = 'default') {
+    return this.cottageService.getCottagesPageSearch(
+      pageNum,
+      this.pageSize,
+      sort,
+      this.searchForm.getRawValue()
+    );
+  }
+
   getBoatsCount() {
     return this.boatService.getBoatsCount();
   }
 
   getBoatsPage(pageNum: number, sort: string = 'default') {
     return this.boatService.getBoatsPage(pageNum, this.pageSize, sort);
+  }
+
+  getBoatsPageSearch(pageNum: number, sort: string = 'default') {
+    return this.boatService.getBoatsPageSearch(
+      pageNum,
+      this.pageSize,
+      sort,
+      this.searchForm.getRawValue()
+    );
   }
 
   getAdventuresCount() {
@@ -199,6 +274,15 @@ export class EntityListComponent implements OnInit {
     );
   }
 
+  getAdventuresPageSearch(pageNum: number, sort: string = 'default') {
+    return this.adventureService.getAdventuresPageSearch(
+      pageNum,
+      this.pageSize,
+      sort,
+      this.searchForm.getRawValue()
+    );
+  }
+
   getSummarizedDescription(description: string): string {
     if (description.length < 550) return description;
     else return description.substring(0, 550) + '...';
@@ -209,7 +293,7 @@ export class EntityListComponent implements OnInit {
       startDate: new FormControl({ value: '' }, Validators.required),
       endDate: new FormControl({ value: '' }, Validators.required),
       name: new FormControl(''),
-      minRating: new FormControl(''),
+      minRating: new FormControl(0),
       location: new FormControl(''),
       capacity: new FormControl(0),
       minPrice: new FormControl(0),
@@ -225,48 +309,73 @@ export class EntityListComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result !== undefined && result.search) {
-        // SEARCH LOGIKA
-
-        if (this.searchForm.controls['name'].value.includes('Kosmaj')) {
-          this.totalItems = 1;
-          this.pageSlice = [
-            {
-              id: 1,
-              name: 'Vikendica Kosmaj',
-              description:
-                'Vila Mišeluk se nalazi na samo nekoliko kilometara od Novog Sada što je samo jedan od razloga da je posetite. Idealna je za druženja kako u letnjem periodu, tako i u zimskom. Kada je lepo vreme možete uživati u roštilju pored bazena i prelepom dvorištu. U zimskom periodu, Vaše okupljanje možete napraviti u prostranoj dnevnoj prostoriji. Pored toga tu su i dve spavaće sobe, kuhinja i kupatilo.Ova vila je odličan izbor za momačke i devojačke veceri, kao i za sve ostale tipove druženja. Posetite nas i uverite se!',
-              price: 39.6,
-              ownerName: 'Mladen Gajic',
-              rating: 3.3,
-              address: 'Nikole Tesle 7, Mali Zvornik',
-            },
-          ];
-        } else {
-          this.totalItems = 2;
-          this.pageSlice = [
-            {
-              id: 6,
-              name: 'Milmar Premier',
-              description:
-                'Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus quae fugiat dolore excepturi dolorum magni libero nihil voluptas, voluptate quidem.',
-              price: 250.0,
-              ownerName: 'Mladen Gajic',
-              rating: 4.3,
-              address: 'Tihomira Ostojica 2, Novi Sad',
-            },
-            {
-              id: 11,
-              name: 'Apartmani Zupa',
-              description:
-                'Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium aliquam voluptatibus necessitatibus sequi, accusantium quasi! Similique doloremque ullam voluptatum delectus.',
-              price: 115.0,
-              ownerName: 'Mladen Gajic',
-              rating: 3.3,
-              address: 'Tihomira Ostojica 2, Novi Sad',
-            },
-          ];
+        this.search = true;
+        this.paginator.firstPage();
+        this.sort.setValue('');
+        switch (this.mode) {
+          case 'cottage':
+            this.cottageService
+              .getCottagesPageSearch(
+                0,
+                this.pageSize,
+                'default',
+                this.searchForm.getRawValue()
+              )
+              .subscribe((res: any) => {
+                console.log(res);
+                this.pageSlice = res;
+              });
+            this.cottageService
+              .getCottagesPageSearchCount(this.searchForm.getRawValue())
+              .subscribe((res: any) => {
+                this.totalItems = res;
+              });
+            break;
+          case 'boat':
+            this.boatService
+              .getBoatsPageSearch(
+                0,
+                this.pageSize,
+                'default',
+                this.searchForm.getRawValue()
+              )
+              .subscribe((res: any) => {
+                console.log(res);
+                this.pageSlice = res;
+                console.log(this.pageSlice);
+              });
+            this.boatService
+              .getBoatsPageSearchCount(this.searchForm.getRawValue())
+              .subscribe((res: any) => {
+                this.totalItems = res;
+              });
+            break;
+          case 'adventure':
+            this.adventureService
+              .getAdventuresPageSearch(
+                0,
+                this.pageSize,
+                'default',
+                this.searchForm.getRawValue()
+              )
+              .subscribe((res: any) => {
+                console.log(res);
+                this.pageSlice = res;
+              });
+            this.adventureService
+              .getAdventuresPageSearchCount(this.searchForm.getRawValue())
+              .subscribe((res: any) => {
+                this.totalItems = res;
+              });
+            break;
         }
       }
     });
+  }
+
+  resetSearch() {
+    this.ngOnInit();
+    this.search = false;
+    this.sort.setValue('');
   }
 }
