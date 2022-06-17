@@ -62,7 +62,7 @@ export class SearchDialogComponent {
     const startDateControl = this.data.controls['startDate'];
     const endDateControl = this.data.controls['endDate'];
 
-    return startDateControl.valid || endDateControl.valid;
+    return startDateControl.valid && endDateControl.valid;
   }
 
   validateFormCapacity(): boolean {

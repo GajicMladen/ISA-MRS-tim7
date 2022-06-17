@@ -53,6 +53,8 @@ INSERT INTO public.client(penal_count, suspended, id) VALUES (0, FALSE, 9);
 INSERT INTO public.client(penal_count, suspended, id) VALUES (0, FALSE, 10);
 INSERT INTO public.client(penal_count, suspended, id) VALUES (0, FALSE, 11);
 INSERT INTO public.client(penal_count, suspended, id) VALUES (0, FALSE, 12);
+INSERT INTO public.client(penal_count, suspended, id) VALUES (0, FALSE, 1);
+
 
 -- VLASNICI KOLIBA				
 INSERT INTO public.cottage_owners(id) VALUES(2);
@@ -77,8 +79,7 @@ INSERT INTO ROLE (name) VALUES ('ROLE_BOAT_OWNER');
 INSERT INTO ROLE (name) VALUES ('ROLE_INSTRUCTOR');
 INSERT INTO ROLE (name) VALUES ('ROLE_SYSADMIN');
 
-INSERT INTO USER_ROLE(user_id, role_id) VALUES (1, 2);
-INSERT INTO USER_ROLE(user_id, role_id) VALUES (1, 3);
+INSERT INTO USER_ROLE(user_id, role_id) VALUES (1, 1);
 INSERT INTO USER_ROLE(user_id, role_id) VALUES (2, 3);
 
 INSERT INTO USER_ROLE(user_id, role_id) VALUES (5, 4);
@@ -87,6 +88,11 @@ INSERT INTO USER_ROLE(user_id, role_id) VALUES (6, 4);
 INSERT INTO USER_ROLE(user_id, role_id) VALUES (3, 5);
 INSERT INTO USER_ROLE(user_id, role_id) VALUES (4, 5);
 INSERT INTO USER_ROLE(user_id, role_id) VALUES (10, 6);
+
+INSERT INTO USER_ROLE(user_id, role_id) VALUES (9, 1);
+INSERT INTO USER_ROLE(user_id, role_id) VALUES (10, 1);
+INSERT INTO USER_ROLE(user_id, role_id) VALUES (11, 1);
+INSERT INTO USER_ROLE(user_id, role_id) VALUES (12, 1);
 
 -- OFFER - KOLIBE
 INSERT INTO public.offer(
@@ -211,19 +217,19 @@ INSERT INTO public.Cottage(
 	VALUES (6, 2,6,9);
 INSERT INTO public.Cottage(
 	id, owner_id,room_count,bed_count)
-	VALUES (7, 1 ,2,2);
+	VALUES (7, 2 ,2,2);
 INSERT INTO public.Cottage(
 	id, owner_id,room_count,bed_count)
-	VALUES (8, 1,5,7);
+	VALUES (8, 2,5,7);
 INSERT INTO public.Cottage(
 	id, owner_id,room_count,bed_count)
-	VALUES (9, 1,6,9);
+	VALUES (9, 2,6,9);
 INSERT INTO public.Cottage(
 	id, owner_id,room_count,bed_count)
-	VALUES (10, 1 ,2,2);
+	VALUES (10, 2 ,2,2);
 INSERT INTO public.Cottage(
 	id, owner_id,room_count,bed_count)
-	VALUES (11, 1,5,7);
+	VALUES (11, 2,5,7);
 	
 -- DODAVANJE BRODOVA
 INSERT INTO public.boat(
@@ -288,70 +294,71 @@ INSERT INTO public.Adventure(
 -- SLOBODNI TERMINI			
 INSERT INTO public.free_period (
 	start_date_time, end_date_time, offer_id)
-	VALUES ('2022-06-10T00:00:01', '2022-05-31T00:00:01', 4);
+	VALUES ('2022-06-01T00:00:01', '2022-06-30T00:00:01', 4);
 INSERT INTO public.free_period (
 	start_date_time, end_date_time, offer_id)
-	VALUES ('2022-06-10T00:00:01', '2022-05-31T00:00:01', 3);
+	VALUES ('2022-06-01T00:00:01', '2022-06-30T00:00:01', 3);
 INSERT INTO public.free_period (
 	start_date_time, end_date_time, offer_id)
-	VALUES ('2022-06-10T00:00:01', '2022-05-31T00:00:01', 5);
+	VALUES ('2022-06-01T00:00:01', '2022-06-30T00:00:01', 5);
 INSERT INTO public.free_period (
 	start_date_time, end_date_time, offer_id)
-	VALUES ('2022-06-10T00:00:01', '2022-05-31T00:00:01', 6);
+	VALUES ('2022-06-01T00:00:01', '2022-06-30T00:00:01', 6);
 	
 INSERT INTO public.free_period (
 	start_date_time, end_date_time, offer_id)
-	VALUES ('2022-06-10T00:00:01', '2022-05-31T00:00:01', 12);
+	VALUES ('2022-06-01T00:00:01', '2022-06-30T00:00:01', 12);
 INSERT INTO public.free_period (
 	start_date_time, end_date_time, offer_id)
-	VALUES ('2022-06-10T00:00:01', '2022-05-31T00:00:01', 13);
+	VALUES ('2022-06-01T00:00:01', '2022-06-30T00:00:01', 13);
 INSERT INTO public.free_period (
 	start_date_time, end_date_time, offer_id)
-	VALUES ('2022-06-10T00:00:01', '2022-05-31T00:00:01', 15);
+	VALUES ('2022-06-01T00:00:01', '2022-06-30T00:00:01', 15);
 INSERT INTO public.free_period (
 	start_date_time, end_date_time, offer_id)
-	VALUES ('2022-06-10T00:00:01', '2022-05-31T00:00:01', 16);
+	VALUES ('2022-06-01T00:00:01', '2022-06-30T00:00:01', 16);
 	
 INSERT INTO public.free_period (
 	start_date_time, end_date_time, offer_id)
 	VALUES ('2022-06-15T14:30:00', '2022-06-16T10:00:00', 22);
 INSERT INTO public.free_period (
 	start_date_time, end_date_time, offer_id)
-	VALUES ('2022-06-10T00:00:01', '2022-05-31T00:00:01', 24);
+	VALUES ('2022-06-01T00:00:01', '2022-06-30T00:00:01', 24);
 INSERT INTO public.free_period (
 	start_date_time, end_date_time, offer_id)
-	VALUES ('2022-06-10T00:00:01', '2022-05-31T00:00:01', 23);
+	VALUES ('2022-06-01T00:00:01', '2022-06-30T00:00:01', 23);
 INSERT INTO public.free_period (
 	start_date_time, end_date_time, offer_id)
-	VALUES ('2022-06-10T00:00:01', '2022-05-31T00:00:01', 25);
+	VALUES ('2022-06-01T00:00:01', '2022-06-30T00:00:01', 25);
 INSERT INTO public.free_period (
 	start_date_time, end_date_time, offer_id)
-	VALUES ('2022-06-10T00:00:01', '2022-05-31T00:00:01', 26);
+	VALUES ('2022-06-01T00:00:01', '2022-06-30T00:00:01', 26);
 
 --REZERVACIJE
-INSERT INTO public.reservation(id, end_date_time, start_date_time, status, total_price, client_id, grade, offer_id)
-	VALUES (1, '2022-05-31T00:00:01', '2022-05-30T00:00:01', 0, 365.36, 9, null, 1);
-INSERT INTO public.reservation(id, end_date_time, start_date_time, status, total_price, client_id, grade, offer_id)
-    	VALUES (2, '2022-05-25T00:00:01', '2022-05-24T00:00:01', 1, 120.5, 9,  null, 1);
-INSERT INTO public.reservation(id, end_date_time, start_date_time, status, total_price, client_id,  grade, offer_id)
-    	VALUES (3, '2022-05-25T00:00:01', '2022-05-24T00:00:01', 3, 120.5, 9,  null, 1);
-INSERT INTO public.reservation(id, end_date_time, start_date_time, status, total_price, client_id,  grade, offer_id)
-    	VALUES (4, '2022-05-25T00:00:01', '2022-05-24T00:00:01', 3, 120.5, 10,  null, 20);
-INSERT INTO public.reservation(id, end_date_time, start_date_time, status, total_price, client_id,  grade, offer_id)
-    	VALUES (5, '2022-05-25T00:00:01', '2022-05-24T00:00:01', 2, 120.5, 10,  null, 19);
+INSERT INTO public.reservation(end_date_time, start_date_time, status, total_price, client_id, grade, offer_id)
+	VALUES ('2022-05-31T00:00:01', '2022-05-30T00:00:01', 0, 365.36, 1, null, 1);
+INSERT INTO public.reservation(end_date_time, start_date_time, status, total_price, client_id, grade, offer_id)
+    	VALUES ('2022-05-25T00:00:01', '2022-05-24T00:00:01', 1, 120.5, 1,  null, 1);
+INSERT INTO public.reservation(end_date_time, start_date_time, status, total_price, client_id,  grade, offer_id)
+    	VALUES ('2022-05-25T00:00:01', '2022-05-24T00:00:01', 3, 120.5, 1,  null, 1);
+INSERT INTO public.reservation(end_date_time, start_date_time, status, total_price, client_id,  grade, offer_id)
+    	VALUES ('2022-05-25T00:00:01', '2022-05-24T00:00:01', 3, 120.5, 1,  null, 20);
+INSERT INTO public.reservation(end_date_time, start_date_time, status, total_price, client_id,  grade, offer_id)
+    	VALUES ('2022-05-25T00:00:01', '2022-05-24T00:00:01', 2, 120.5, 1,  null, 19);
 
-INSERT INTO public.reservation(id, end_date_time, start_date_time, status, total_price, client_id,  grade, offer_id)
-	VALUES (6, '2022-05-31T00:00:01', '2022-05-30T00:00:01', 0, 365.36, 9,  null, 1);
-INSERT INTO public.reservation(id, end_date_time, start_date_time, status, total_price, client_id,  grade, offer_id)
-    	VALUES (7, '2022-05-25T00:00:01', '2022-05-24T00:00:01', 1, 120.5, 9,  null, 1);
-INSERT INTO public.reservation(id, end_date_time, start_date_time, status, total_price, client_id,  grade, offer_id)
-    	VALUES (8, '2022-05-25T00:00:01', '2022-05-24T00:00:01', 3, 120.5, 9,  null, 1);
-      
+INSERT INTO public.reservation(end_date_time, start_date_time, status, total_price, client_id, grade, offer_id)
+	VALUES ('2022-05-31T00:00:01', '2022-05-30T00:00:01', 0, 365.36, 1, null, 1);
+INSERT INTO public.reservation(end_date_time, start_date_time, status, total_price, client_id, grade, offer_id)
+    	VALUES ('2022-05-25T00:00:01', '2022-05-24T00:00:01', 1, 120.5, 1, null, 1);
+INSERT INTO public.reservation(end_date_time, start_date_time, status, total_price, client_id, grade, offer_id)
+    	VALUES ('2022-05-25T00:00:01', '2022-05-24T00:00:01', 3, 120.5, 1, null, 1);
+  
 --ZALBE
-INSERT INTO public.complaint(id, for_offer, from_owner, offender_id, pusnih_offender, status, text, reservation_id)
-	VALUES (1, false, false, 1, true, 0, 'zalim se na klijenta indijanca, ostavio je haos!',1);
-INSERT INTO public.complaint(id, for_offer, from_owner, offender_id, pusnih_offender, status, text, reservation_id)
-	VALUES (2, false, true, 1, true, 0, 'zalim se na klijenta indijanca, ostavio je haos!',2);
+INSERT INTO public.complaint(for_offer, from_owner, offender_id, pusnih_offender, status, text, reservation_id)
+	VALUES (false, false, 1, true, 0, 'zalim se na klijenta indijanca, ostavio je haos!',1);
+INSERT INTO public.complaint(for_offer, from_owner, offender_id, pusnih_offender, status, text, reservation_id)
+	VALUES (false, true, 1, true, 0, 'zalim se na klijenta indijanca, ostavio je haos!',2);
+
 
 
 --SUBSCRIBES

@@ -37,6 +37,7 @@ import { AdminRegistrationRequestsComponent } from './features/admin/components/
 import { AdminDeletionRequestsComponent } from './features/admin/components/admin-deletion-requests/admin-deletion-requests.component';
 import { AdminAddAdminComponent } from './features/admin/components/admin-add-admin/admin-add-admin.component';
 import { AdminEntityOverviewComponent } from './features/admin/components/admin-entity-overview/admin-entity-overview.component';
+import { AdventureReportsComponent } from './features/adventure/components/adventure-reports/adventure-reports.component';
 
 
 const routes: Routes = [
@@ -78,6 +79,7 @@ const routes: Routes = [
   { path: 'addFreePeriod/:id', component: AdventureFreePeriodComponent },
   { path: 'instructorCalendar/:id', component: AdventureInstructorCalendarComponent },
   { path: 'newAction/:id', component: AdventureActionComponent },
+  { path: 'adventureReports/:id', component: AdventureReportsComponent },
   { path: 'newFreePeriod/:id' ,component: NewFreePeriodComponent },
   { path: 'calendar/:id' ,component: CalendarComponent },
   { path: 'editInstructor/:id', component: AdventureInstructorEditComponent},

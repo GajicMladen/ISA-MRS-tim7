@@ -27,19 +27,18 @@ export class BoatEntityService {
         page: pageNum,
         perPage: perPageNum,
         sort: sort,
-        // startDate:
-        //   searchParams.startDate.getDate() +
-        //   '-' +
-        //   (searchParams.startDate.getMonth() + 1) +
-        //   '-' +
-        //   searchParams.startDate.getFullYear(),
-        startDate: '1-1-2022',
-        endDate: '1-1-2023',
-        // searchParams.endDate.getDate() +
-        // '-' +
-        // (searchParams.endDate.getMonth() + 1) +
-        // '-' +
-        // searchParams.endDate.getFullYear(),
+        startDate:
+          searchParams.startDate.getDate() +
+          '-' +
+          (searchParams.startDate.getMonth() + 1) +
+          '-' +
+          searchParams.startDate.getFullYear(),
+        endDate:
+          searchParams.endDate.getDate() +
+          '-' +
+          (searchParams.endDate.getMonth() + 1) +
+          '-' +
+          searchParams.endDate.getFullYear(),
         name: searchParams.name,
         minRating: searchParams.minRating,
         location: searchParams.location,
@@ -53,19 +52,18 @@ export class BoatEntityService {
   public getBoatsPageSearchCount(searchParams: any) {
     return this.http.get(this.config.boatsPageSearchCountUrl, {
       params: {
-        // startDate:
-        //   searchParams.startDate.getDate() +
-        //   '-' +
-        //   (searchParams.startDate.getMonth() + 1) +
-        //   '-' +
-        //   searchParams.startDate.getFullYear(),
-        startDate: '1-1-2022',
-        endDate: '1-1-2023',
-        // searchParams.endDate.getDate() +
-        // '-' +
-        // (searchParams.endDate.getMonth() + 1) +
-        // '-' +
-        // searchParams.endDate.getFullYear(),
+        startDate:
+          searchParams.startDate.getDate() +
+          '-' +
+          (searchParams.startDate.getMonth() + 1) +
+          '-' +
+          searchParams.startDate.getFullYear(),
+        endDate:
+          searchParams.endDate.getDate() +
+          '-' +
+          (searchParams.endDate.getMonth() + 1) +
+          '-' +
+          searchParams.endDate.getFullYear(),
         name: searchParams.name,
         minRating: searchParams.minRating,
         location: searchParams.location,

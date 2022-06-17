@@ -1,14 +1,26 @@
 package tim7.ISAMRSproject.service;
 
+import java.time.LocalDateTime;
+import java.time.Period;
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import tim7.ISAMRSproject.dto.ActionDTO;
 import tim7.ISAMRSproject.dto.ReservationDTO;
-import tim7.ISAMRSproject.model.*;
+import tim7.ISAMRSproject.model.Boat;
+import tim7.ISAMRSproject.model.Client;
+import tim7.ISAMRSproject.model.Cottage;
+import tim7.ISAMRSproject.model.FreePeriod;
+import tim7.ISAMRSproject.model.Reservation;
+import tim7.ISAMRSproject.model.ReservationStatus;
+import tim7.ISAMRSproject.model.User;
 import tim7.ISAMRSproject.repository.BoatRepository;
 import tim7.ISAMRSproject.repository.ClientRepository;
 import tim7.ISAMRSproject.repository.CottageRepository;
+import tim7.ISAMRSproject.repository.FreePeriodRepository;
 import tim7.ISAMRSproject.repository.ReservationRepository;
 
 import java.time.Period;
@@ -29,6 +41,9 @@ public class ReservationService {
 
 	@Autowired
 	private ClientRepository clientRepository;
+	
+	@Autowired
+	private FreePeriodRepository fpRepository;
 
 	public boolean AdventureHasReservations(Integer id) {
 		for (Reservation r : reservationRepository.findAll()) {
@@ -137,5 +152,51 @@ public class ReservationService {
 		//instructor
 
 		return "Invalid Offer ID";
+	}
+	
+	public String createNewReservation(String startDateString, String endDateString, int offerId, float totalPrice, User user) {
+		LocalDateTime startDate = convertDateString(startDateString);
+		LocalDateTime endDate = convertDateString(endDateString);
+		
+		Reservation res = new Reservation();
+		res.setStartDateTime(startDate);
+		res.setEndDateTime(endDate);
+		res.setTotalPrice(totalPrice);
+		res.setOffer(cottageRepository.getById(offerId));
+		res.setStatus(ReservationStatus.ON_WAIT);
+		res.setClient(clientRepository.getById(user.getId()));
+		
+		List<FreePeriod> fps = fpRepository.findByOffer_Id(offerId);
+		
+
+		for (FreePeriod fp: fps) {
+			if(fp.getStartDateTime().isBefore(startDate) && fp.getEndDateTime().isAfter(endDate)) {
+				FreePeriod before = new FreePeriod();
+				FreePeriod after = new FreePeriod();
+				
+				before.setOffer(cottageRepository.getById(offerId));
+				after.setOffer(cottageRepository.getById(offerId));
+				before.setStartDateTime(fp.getStartDateTime());
+				before.setEndDateTime(startDate.minusDays(1));
+				after.setStartDateTime(endDate);
+				after.setEndDateTime(fp.getEndDateTime());
+				
+				fpRepository.deleteById(fp.getId());
+				fpRepository.save(before);
+				fpRepository.save(after);
+			} else if (fp.getStartDateTime().equals(startDate) && fp.getEndDateTime().equals(endDate)) {
+				fpRepository.deleteById(fp.getId());
+			}
+		}
+		
+		reservationRepository.save(res);
+		return "Your reservation is successful!";
+		
+	}
+	
+	private LocalDateTime convertDateString(String s) {
+		String[] tokens = s.split("-");
+		LocalDateTime retVal = LocalDateTime.of(Integer.parseInt(tokens[2]), Integer.parseInt(tokens[1]), Integer.parseInt(tokens[0]), 0, 0);
+		return retVal;
 	}
 }

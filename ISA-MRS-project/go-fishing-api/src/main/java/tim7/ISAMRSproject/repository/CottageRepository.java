@@ -26,11 +26,11 @@ public interface CottageRepository extends JpaRepository<Cottage,Integer>{
 	public Integer getTotalCottages();
 
 	@Query("select c from Cottage c inner join c.freePeriods freePeriods " +
-            "where upper(c.name) like ?1 and c.price <= ?2 and c.price >= ?3 and c.rating >= ?4 and upper(c.address.city) like ?5 and c.capacity >= ?6 and freePeriods.startDateTime > ?7 and freePeriods.endDateTime < ?8")
+            "where upper(c.name) like ?1 and c.price <= ?2 and c.price >= ?3 and c.rating >= ?4 and upper(c.address.city) like ?5 and c.capacity >= ?6 and freePeriods.startDateTime < ?7 and freePeriods.endDateTime > ?8")
     public List<Cottage> getCottagesPageSearch(String name, float price, float price1, float rating, String city, int capacity, LocalDateTime startDateTime, LocalDateTime endDateTime, Pageable pageable);
 
 	@Query("select COUNT(c) from Cottage c inner join c.freePeriods freePeriods " +
-            "where upper(c.name) like ?1 and c.price <= ?2 and c.price >= ?3 and c.rating >= ?4 and upper(c.address.city) like ?5 and c.capacity >= ?6 and freePeriods.startDateTime > ?7 and freePeriods.endDateTime < ?8")
+            "where upper(c.name) like ?1 and c.price <= ?2 and c.price >= ?3 and c.rating >= ?4 and upper(c.address.city) like ?5 and c.capacity >= ?6 and freePeriods.startDateTime < ?7 and freePeriods.endDateTime > ?8")
     public int getCottagesSearchCount(String name, float price, float price1, float rating, String city, int capacity, LocalDateTime startDateTime, LocalDateTime endDateTime);
 
 

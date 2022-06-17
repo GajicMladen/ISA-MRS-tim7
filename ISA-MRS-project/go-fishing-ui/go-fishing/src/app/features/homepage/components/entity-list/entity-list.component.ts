@@ -213,6 +213,15 @@ export class EntityListComponent implements OnInit {
   }
 
   redirectToEntity(id: number) {
+    localStorage.setItem(
+      'startDate',
+      this.convertDateToString(this.searchForm.controls['startDate'].value)
+    );
+    localStorage.setItem(
+      'endDate',
+      this.convertDateToString(this.searchForm.controls['endDate'].value)
+    );
+
     switch (this.mode) {
       case 'cottage':
         this.router.navigate(['cottageProfile/' + id]);
@@ -322,7 +331,6 @@ export class EntityListComponent implements OnInit {
                 this.searchForm.getRawValue()
               )
               .subscribe((res: any) => {
-                console.log(res);
                 this.pageSlice = res;
               });
             this.cottageService
@@ -340,9 +348,7 @@ export class EntityListComponent implements OnInit {
                 this.searchForm.getRawValue()
               )
               .subscribe((res: any) => {
-                console.log(res);
                 this.pageSlice = res;
-                console.log(this.pageSlice);
               });
             this.boatService
               .getBoatsPageSearchCount(this.searchForm.getRawValue())
@@ -359,7 +365,6 @@ export class EntityListComponent implements OnInit {
                 this.searchForm.getRawValue()
               )
               .subscribe((res: any) => {
-                console.log(res);
                 this.pageSlice = res;
               });
             this.adventureService
@@ -377,5 +382,14 @@ export class EntityListComponent implements OnInit {
     this.ngOnInit();
     this.search = false;
     this.sort.setValue('');
+  }
+
+  convertDateToString(date: any): string {
+    if (date.value !== '') {
+      date = date as Date;
+      return (
+        date.getDate() + '-' + (date.getMonth() + 1) + '-' + date.getFullYear()
+      );
+    } else return '';
   }
 }
