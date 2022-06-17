@@ -94,4 +94,29 @@ export class ReservationService {
   
     return new Observable();
   }
+
+  public getReservationsByDateRange(dateRange: any): Observable<ReservationDTO[]> {
+    let data: Observable<ReservationReciveDTO[]> = this.http.post<ReservationReciveDTO[]>(this.reservationsUrl+"/getReservationsByDateRange", dateRange);
+
+    let res: ReservationDTO[] = [];
+
+    data.subscribe(dat => {
+      dat.forEach(d => {  
+        let reservation = new ReservationDTO();
+        reservation.startDate = new NgbDate(d.startDate[0],d.startDate[1],d.startDate[2]);  
+        reservation.endDate = new NgbDate(d.endDate[0],d.endDate[1],d.endDate[2]);
+        reservation.offerId = d.offerId;
+        reservation.totalPrice = d.totalPrice;
+        reservation.id = d.id;
+        reservation.clientId = d.clientId;
+        reservation.reservationStatus = d.reservationStatus;
+        reservation.clientName = d.clientName;
+        reservation.clientLastName = d.clientLastName;
+        res.push(reservation);
+      });
+    });
+
+    return of(res);
+
+  }
 }

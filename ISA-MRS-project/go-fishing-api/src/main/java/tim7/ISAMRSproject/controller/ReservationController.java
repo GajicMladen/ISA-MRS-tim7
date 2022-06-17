@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import tim7.ISAMRSproject.dto.ActionDTO;
 import tim7.ISAMRSproject.dto.DataForChartDTO;
+import tim7.ISAMRSproject.dto.DateRangeDTO;
 import tim7.ISAMRSproject.dto.DateRangeStringDTO;
 import tim7.ISAMRSproject.dto.ReservationDTO;
 import tim7.ISAMRSproject.model.Adventure;
@@ -39,6 +41,7 @@ import tim7.ISAMRSproject.utils.EmailServiceImpl;
 
 @RestController
 @RequestMapping(value = "api/reservations")
+@CrossOrigin(origins = "http://localhost:4200")
 public class ReservationController {
 
     @Autowired
@@ -223,5 +226,27 @@ public class ReservationController {
     	User u = userService.findByEmail(user.getName());
     	String status = reservationService.createNewReservation(dateRangeDTO.getStartDateString(), dateRangeDTO.getEndDateString(), dateRangeDTO.getOfferId(), dateRangeDTO.getTotalPrice(), u);
     	return ResponseEntity.status(HttpStatus.CREATED).body("{\"status\":\"" + status + "\"}");
+    }
+    
+    @PostMapping(value = "/getReservationsByDateRange")
+    public ResponseEntity<?> getReservationsByDateRange(@RequestBody DateRangeDTO dateRange) {
+    	List<Reservation> reservations = this.reservationService.getReservationsByDataRange( dateRange.getStart(), dateRange.getEnd());
+    	List<ReservationDTO> dtos = new ArrayList<ReservationDTO>();
+    	for (Reservation r : reservations) {
+    		ReservationDTO dto = new ReservationDTO(r);
+    		dtos.add(dto);
+    	}
+    	return new ResponseEntity<List<ReservationDTO>>(dtos, HttpStatus.OK);
+    }
+    
+    @GetMapping(value = "/AllReservations")
+    public ResponseEntity<List<ReservationDTO>> getAllReservations() {
+    	List<Reservation> reservations = this.reservationService.getAllReservations();
+    	List<ReservationDTO> dtos = new ArrayList<ReservationDTO>();
+    	for (Reservation r : reservations) {
+    		ReservationDTO dto = new ReservationDTO(r);
+    		dtos.add(dto);
+    	}
+    	return new ResponseEntity<List<ReservationDTO>>(dtos, HttpStatus.OK);
     }
 }

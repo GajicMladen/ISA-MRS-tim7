@@ -199,4 +199,13 @@ public class ReservationService {
 		LocalDateTime retVal = LocalDateTime.of(Integer.parseInt(tokens[2]), Integer.parseInt(tokens[1]), Integer.parseInt(tokens[0]), 0, 0);
 		return retVal;
 	}
+	
+	
+	public List<Reservation> getAllReservations() {
+		return this.reservationRepository.findAll();
+	}
+
+	public List<Reservation> getReservationsByDataRange(LocalDateTime start, LocalDateTime end) {
+		return this.reservationRepository.findAllByDateRange(start, end);
+	}
 }
