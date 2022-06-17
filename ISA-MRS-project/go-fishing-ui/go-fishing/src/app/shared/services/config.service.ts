@@ -125,4 +125,16 @@ export class ConfigService {
   get newReservationUrl(): string {
     return this._reservation_controller_url + '/newReservation';
   }
+
+  get activeReservationsUrl(): string {
+    return this._reservation_controller_url + '/activeReservations';
+  }
+
+  get pastReservationsUrl(): string {
+    return this._reservation_controller_url + '/pastReservations';
+  }
+
+  get cancelReservationUrl(): string {
+    return this._reservation_controller_url + '/cancelReservation/';
+  }
 }

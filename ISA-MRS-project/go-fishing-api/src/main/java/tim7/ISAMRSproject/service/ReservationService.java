@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import tim7.ISAMRSproject.dto.ActionDTO;
 import tim7.ISAMRSproject.dto.ReservationDTO;
+import tim7.ISAMRSproject.dto.ReservationListItemDTO;
 import tim7.ISAMRSproject.model.Boat;
 import tim7.ISAMRSproject.model.Client;
 import tim7.ISAMRSproject.model.Cottage;
@@ -203,6 +204,43 @@ public class ReservationService {
 		emailService.sendReservationConfirmationMail(user, res, res.getOffer().getName());
 		return "Your reservation is successful!";
 		
+	}
+	
+	public List<ReservationListItemDTO> getActiveReservations(User u) {
+		List<ReservationListItemDTO> retVal = new ArrayList<ReservationListItemDTO>();
+		for(Reservation r: reservationRepository.findByClient_IdEquals(u.getId())) {
+			if (r.getStartDateTime().isAfter(LocalDateTime.now())) {
+				ReservationListItemDTO rli = new ReservationListItemDTO();
+				rli.setId(r.getId());
+				rli.setStartDate(r.getStartDateTime());
+				rli.setEndDate(r.getEndDateTime());
+				rli.setClientId(u.getId());
+				rli.setOfferId(r.getOffer().getId());
+				rli.setOfferName(r.getOffer().getName());
+				rli.setTotalPrice(r.getTotalPrice());
+				rli.setOfferAddress(r.getOffer().getAddress().toString());
+				if(LocalDateTime.now().plusDays(3).isAfter(r.getStartDateTime()))
+					rli.setCanCancel(false);
+				else
+					rli.setCanCancel(true);
+				retVal.add(rli);
+			}
+		}
+		return retVal;
+	}
+	
+	public boolean cancelReservation(int id) {
+		Reservation res = reservationRepository.getById(id);
+		if (res == null) return false;
+		else {
+			FreePeriod fp = new FreePeriod();
+			fp.setStartDateTime(res.getStartDateTime());
+			fp.setEndDateTime(res.getEndDateTime());
+			fp.setOffer(res.getOffer());
+			reservationRepository.cancelReservationById(id);
+			fpRepository.save(fp);
+			return true;
+		}
 	}
 	
 	private LocalDateTime convertDateString(String s) {

@@ -10,6 +10,8 @@ import { LoyaltyDialogComponent } from './components/userprofile/loyalty-dialog/
 import { DeletionRequestDialogComponent } from './components/userprofile/deletion-request-dialog/deletion-request-dialog.component';
 import { EntityListComponent } from './components/entity-list/entity-list.component';
 import { SearchDialogComponent } from './components/entity-list/search-dialog/search-dialog.component';
+import { ReservationListComponent } from './components/reservation-list/reservation-list.component';
+import { CancelReservationDialogComponent } from './components/reservation-list/cancel-reservation-dialog/cancel-reservation-dialog.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +22,8 @@ import { SearchDialogComponent } from './components/entity-list/search-dialog/se
     DeletionRequestDialogComponent,
     EntityListComponent,
     SearchDialogComponent,
+    ReservationListComponent,
+    CancelReservationDialogComponent,
   ],
   imports: [CommonModule, SharedModule, RouterModule, ReactiveFormsModule],
 })

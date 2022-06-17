@@ -1,0 +1,16 @@
+<mat-card class="main-entity-card" style="overflow-y: auto; margin-bottom: 5px;" *ngFor="let item of reservationList">
+    <mat-card-title-group>
+        <mat-card-title style="text-align: center;">{{item.offerName}}</mat-card-title>
+    </mat-card-title-group>
+    <mat-card-actions>
+        <mat-card-subtitle>Date range: <b>{{getDateString(item.startDate)}} - {{getDateString(item.endDate)}}</b></mat-card-subtitle>
+        <mat-card-subtitle>Location: <b>{{item.offerAddress}}</b></mat-card-subtitle>
+        <mat-card-subtitle>Total Cost: <b>{{item.totalPrice | currency:'USD'}}</b></mat-card-subtitle>
+        <button mat-button style="color:red" *ngIf="item.canCancel" (click)="openCancelDialog(item)">CANCEL RESERVATION</button>
+        <button mat-button style="color: gray" *ngIf="!item.canCancel" disabled>THIS RESERVATON IS NOT CANCELLABLE</button>
+    </mat-card-actions>
+</mat-card>
+
+<div *ngIf="totalItems === 0">
+    <app-no-entities-found></app-no-entities-found>
+</div>

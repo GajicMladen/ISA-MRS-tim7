@@ -18,10 +18,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import tim7.ISAMRSproject.dto.ActionDTO;
 import tim7.ISAMRSproject.dto.DataForChartDTO;
-
 import tim7.ISAMRSproject.dto.DateRangeStringDTO;
 import tim7.ISAMRSproject.dto.ReservationDTO;
-
+import tim7.ISAMRSproject.dto.ReservationListItemDTO;
+import tim7.ISAMRSproject.model.Adventure;
 import tim7.ISAMRSproject.model.Boat;
 import tim7.ISAMRSproject.model.Client;
 import tim7.ISAMRSproject.model.Cottage;
@@ -29,17 +29,14 @@ import tim7.ISAMRSproject.model.FreePeriod;
 import tim7.ISAMRSproject.model.Reservation;
 import tim7.ISAMRSproject.model.ReservationStatus;
 import tim7.ISAMRSproject.model.User;
-import tim7.ISAMRSproject.model.Adventure;
 import tim7.ISAMRSproject.service.AdventureService;
-
 import tim7.ISAMRSproject.service.BoatService;
 import tim7.ISAMRSproject.service.ClientService;
 import tim7.ISAMRSproject.service.CottageService;
 import tim7.ISAMRSproject.service.FreePeriodService;
 import tim7.ISAMRSproject.service.ReservationService;
-import tim7.ISAMRSproject.utils.EmailServiceImpl;
-
 import tim7.ISAMRSproject.service.UserService;
+import tim7.ISAMRSproject.utils.EmailServiceImpl;
 
 @RestController
 @RequestMapping(value = "api/reservations")
@@ -227,5 +224,21 @@ public class ReservationController {
     	User u = userService.findByEmail(user.getName());
     	String status = reservationService.createNewReservation(dateRangeDTO.getStartDateString(), dateRangeDTO.getEndDateString(), dateRangeDTO.getOfferId(), dateRangeDTO.getTotalPrice(), dateRangeDTO.getOfferType(), u);
     	return ResponseEntity.status(HttpStatus.CREATED).body("{\"status\":\"" + status + "\"}");
+    }
+    
+    @GetMapping(value = "/activeReservations")
+    public ResponseEntity<?> getActiveReservations(Principal user){
+    	User u = userService.findByEmail(user.getName());
+    	List<ReservationListItemDTO> activeReservations = reservationService.getActiveReservations(u);
+    	return new ResponseEntity<>(activeReservations, HttpStatus.OK);
+    }
+    
+    @DeleteMapping(value = "/cancelReservation/{id}")
+    public ResponseEntity<?> cancelReservation(@PathVariable int id){
+    	boolean status = reservationService.cancelReservation(id);
+    	if (status)
+    		return new ResponseEntity<>(HttpStatus.OK);
+    	else
+    		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 }
