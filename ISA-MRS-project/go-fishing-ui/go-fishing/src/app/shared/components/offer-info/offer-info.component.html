@@ -1,5 +1,5 @@
 
-<div class="cottage-info" (click)="openProfile()">
+<div class="cottage-info" (click)="openProfile()" *ngIf="offer != undefined">
     <div class="media align-items-lg-center flex-column flex-lg-row p-3" style="width: 80vw;">
         <div class="media-body order-2 order-lg-1">
         <h5 class="mt-0 font-weight-bold mb-2">{{offer.name}}</h5>

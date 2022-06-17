@@ -26,6 +26,44 @@ public class Grade {
 
 	@OneToOne(mappedBy = "grade")
     private Reservation reservation;
-	
-	
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public int getGrade() {
+		return grade;
+	}
+
+	public void setGrade(int grade) {
+		this.grade = grade;
+	}
+
+	public String getRevision() {
+		return revision;
+	}
+
+	public void setRevision(String revision) {
+		this.revision = revision;
+	}
+
+	public ApprovalStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(ApprovalStatus status) {
+		this.status = status;
+	}
+
+	public Reservation getReservation() {
+		return reservation;
+	}
+
+	public void setReservation(Reservation reservation) {
+		this.reservation = reservation;
+	}
 }
