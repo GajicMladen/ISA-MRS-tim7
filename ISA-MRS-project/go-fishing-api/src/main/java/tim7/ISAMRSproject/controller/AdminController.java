@@ -7,6 +7,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,14 +16,17 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import tim7.ISAMRSproject.dto.AdminDTO;
 import tim7.ISAMRSproject.dto.BoatDTO;
 import tim7.ISAMRSproject.dto.CottageDTO;
 import tim7.ISAMRSproject.dto.DeletionRequestOutDTO;
 import tim7.ISAMRSproject.dto.RegistrationRequestOutDTO;
 import tim7.ISAMRSproject.dto.UserDTO;
 import tim7.ISAMRSproject.dto.UserRegisterDTO;
+import tim7.ISAMRSproject.model.Admin;
 import tim7.ISAMRSproject.model.Boat;
 import tim7.ISAMRSproject.model.Cottage;
 import tim7.ISAMRSproject.model.DeletionRequest.DeletionRequestStatus;
@@ -54,6 +58,36 @@ public class AdminController {
 	
 	@Autowired
 	private CottageService cottageService;
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+	
+	@GetMapping(value = "/getAdmin/{id}")
+	public ResponseEntity<AdminDTO> getAdminByUserId(@PathVariable int id) {
+		Optional<User> admin = this.userService.findById(id);
+		if (admin.isPresent()) {
+			boolean isFirstLogin = this.adminService.getFirstLoginForId(id);
+			AdminDTO adminDTO = new AdminDTO(admin.get());
+			adminDTO.setFirstLogin(isFirstLogin);
+			return new ResponseEntity<>(adminDTO, HttpStatus.OK);
+		}
+		else {
+			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+		}
+	}
+	
+	@PostMapping(value = "/setPassword/{id}")
+	public ResponseEntity<Void> setAdminPassword(@PathVariable int id, @RequestBody String password) {
+		Optional<User> admin = this.userService.findById(id);
+		if (admin.isPresent()) {
+			User user = admin.get();
+			user.setPassword(passwordEncoder.encode(password));
+			this.userService.save(user);
+			this.adminService.changeFirstLogin(id);
+			return new ResponseEntity<Void>(HttpStatus.ACCEPTED);
+		}
+		return new ResponseEntity<Void>(HttpStatus.NOT_ACCEPTABLE);
+	}
 	
 	@PutMapping(value = "/update")
 	public ResponseEntity<Void> updateAdminData(@RequestBody UserDTO i) {
@@ -250,7 +284,6 @@ public class AdminController {
 	
 	@DeleteMapping(value = "/deleteBoat/{id}")
 	public ResponseEntity<Void> deleteBoatById(@PathVariable int id) {
-		System.out.println("***************" + id);
 		this.boatService.deleteBoat(id);
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}

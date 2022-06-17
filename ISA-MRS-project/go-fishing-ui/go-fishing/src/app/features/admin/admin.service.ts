@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { User } from 'src/app/shared/classes/user';
 import { Boat } from 'src/models/boat';
 import { Cottage } from 'src/models/cottage';
+import { Admin } from './classes/Admin';
 import { DeletionRequest } from './classes/DeletionRequest';
 import { RegistrationRequest } from './classes/RegistrationRequest';
 
@@ -16,6 +17,14 @@ export class AdminService {
 
   constructor(private http: HttpClient) {
     this.adminUrl = "http://localhost:8080/admin"
+  }
+
+  public getAdminById(adminId: number) : Observable<Admin> {
+    return this.http.get<Admin>(this.adminUrl + '/getAdmin/' + adminId);
+  }
+
+  public setAdminPassword(adminId: number, password: string) {
+    return this.http.post(this.adminUrl + "/setPassword/" + adminId, password);
   }
 
   public updateAdminData(admin: User) {

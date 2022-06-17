@@ -19,6 +19,8 @@ INSERT INTO public.address(city, country, street, latitude, longitude) VALUES
 						('Ljubovija', 'Srbija', 'Vrhpolje 8', '44.131974', '19.447603');
 INSERT INTO public.address(city, country, street, latitude, longitude) VALUES
 						('Ljubovija', 'Srbija', 'Karadjordjeva 10', '44.188249', '19.377129');
+INSERT INTO public.address(city, country, street, latitude, longitude) VALUES
+						('Ljubovija', 'Srbija', 'Karadjordjeva 1', '44.188249', '19.377129');
 
 
             
@@ -47,7 +49,9 @@ INSERT INTO public.users(active, deleted, email, lastname, name, password, phone
                 (true, false, 'niko.nikic093+test1@gmail.com', 'Klijentovic', 'Klijent', '$2a$10$XeS1WZloSVVq2Z2dJd3L7ePADJy51sWu/oLqcy.Qcmppr6VcUtcr6', '+381659997778', 600, 1);
 INSERT INTO public.users(active, deleted, email, lastname, name, password, phone, loyalty_points, address_id) VALUES
                 (true, false, 'niko.nikic093+test2@gmail.com', 'Klijentovic2', 'Klijent2', '$2a$10$XeS1WZloSVVq2Z2dJd3L7ePADJy51sWu/oLqcy.Qcmppr6VcUtcr6', '+381659997778', 600, 1);
-
+INSERT INTO public.users(active, deleted, email, lastname, name, password, phone, loyalty_points, address_id) VALUES
+				(true, false, 'max.verstappen@gmail.com', 'Verstappen', 'Max', '$2a$10$XeS1WZloSVVq2Z2dJd3L7ePADJy51sWu/oLqcy.Qcmppr6VcUtcr6', '+381612345678', 0, 11);
+                
 --KLIJENTI
 INSERT INTO public.client(penal_count, suspended, id) VALUES (0, FALSE, 9);
 INSERT INTO public.client(penal_count, suspended, id) VALUES (0, FALSE, 10);
@@ -71,6 +75,10 @@ INSERT INTO public.boat_owner(id) VALUES (8);
 INSERT INTO public.fishing_instructor (id) VALUES (3);
 INSERT INTO public.fishing_instructor (id) VALUES (4);
 
+--ADMINI
+INSERT INTO public.admin (id, is_first_login) VALUES (10, false);
+INSERT INTO public.admin (id, is_first_login) VALUES (13, true);
+
 -- ROLE	
 INSERT INTO ROLE (name) VALUES ('ROLE_USER');
 INSERT INTO ROLE (name) VALUES ('ROLE_ADMIN');
@@ -90,9 +98,11 @@ INSERT INTO USER_ROLE(user_id, role_id) VALUES (4, 5);
 INSERT INTO USER_ROLE(user_id, role_id) VALUES (10, 6);
 
 INSERT INTO USER_ROLE(user_id, role_id) VALUES (9, 1);
-INSERT INTO USER_ROLE(user_id, role_id) VALUES (10, 1);
 INSERT INTO USER_ROLE(user_id, role_id) VALUES (11, 1);
 INSERT INTO USER_ROLE(user_id, role_id) VALUES (12, 1);
+
+INSERT INTO USER_ROLE(user_id, role_id) VALUES (13, 2);
+
 
 -- OFFER - KOLIBE
 INSERT INTO public.offer(
@@ -352,9 +362,9 @@ INSERT INTO public.reservation(end_date_time, start_date_time, status, total_pri
 INSERT INTO public.reservation(end_date_time, start_date_time, status, total_price, client_id, grade, offer_id)
     	VALUES ('2022-07-03T00:00:01', '2022-07-02T00:00:01', 1, 49.99, 9, null, 26);
 INSERT INTO public.reservation(end_date_time, start_date_time, status, total_price, client_id, grade, offer_id)
-    	VALUES ('2022-05-25T00:00:01', '2022-05-24T00:00:01', 3, 120.5, 10,  null, 20);
+    	VALUES ('2022-05-25T00:00:01', '2022-05-24T00:00:01', 3, 120.5, 9,  null, 20);
 INSERT INTO public.reservation(end_date_time, start_date_time, status, total_price, client_id, grade, offer_id)
-    	VALUES ('2022-05-25T00:00:01', '2022-05-24T00:00:01', 2, 120.5, 10,  null, 19);
+    	VALUES ('2022-05-25T00:00:01', '2022-05-24T00:00:01', 2, 120.5, 9,  null, 19);
 INSERT INTO public.reservation(end_date_time, start_date_time, status, total_price, client_id, grade, offer_id)
 	    VALUES ('2022-05-31T00:00:01', '2022-05-30T00:00:01', 0, 365.36, 9, null, 1);
 INSERT INTO public.reservation(end_date_time, start_date_time, status, total_price, client_id, grade, offer_id)

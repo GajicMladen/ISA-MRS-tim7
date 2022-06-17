@@ -14,6 +14,7 @@ public class ComplaintService {
     private ComplaintRepository complaintRepository;
 
     public void addNewComplaint(Complaint c){
+    	
         complaintRepository.save(c);
     }
 

@@ -5,6 +5,7 @@ import { User } from 'src/app/shared/classes/user';
 import { MessageService, MessageType } from 'src/app/shared/services/message-service/message.service';
 import { UserService } from 'src/app/shared/services/users-services/user.service';
 import { AdminService } from '../../admin.service';
+import { Admin } from '../../classes/Admin';
 
 @Component({
   selector: 'app-admin-profilpage',
@@ -15,8 +16,10 @@ export class AdminProfilpageComponent implements OnInit {
 
   form: FormGroup = this.createProfileForm();
   oldForm: FormGroup = this.createProfileForm();
+  passwordForm: FormGroup = this.createPasswordForm();
   adminId: number;
   admin: User = new User();
+  isFirstLogin: boolean;
 
   constructor(
     private route: ActivatedRoute,
@@ -29,13 +32,18 @@ export class AdminProfilpageComponent implements OnInit {
     this.adminId = Number(this.route.snapshot.paramMap.get('id'));
 
     if(!isNaN(this.adminId)){
+      this.adminService.getAdminById(this.adminId).subscribe(admin => {
+        this.isFirstLogin = admin.firstLogin;
+        console.log(admin);
+      });
+
       this.userService.findById(this.adminId).subscribe(user => {
         this.admin = user;
         this.form.patchValue(user);
         this.oldForm.patchValue(user);
       
         console.log(this.admin);
-      })
+      });
     }
   }
 
@@ -56,6 +64,16 @@ export class AdminProfilpageComponent implements OnInit {
       city: new FormControl(''),
       street: new FormControl(''),
       phone: new FormControl('', Validators.pattern('^[+][0-9]{10,12}$')),
+    });
+  }
+
+  createPasswordForm() : FormGroup {
+    return new FormGroup({
+      password: new FormControl(
+        '',
+        Validators.compose([Validators.minLength(8), Validators.maxLength(30)])
+      ),
+      confirmPassword: new FormControl('')
     });
   }
 
@@ -81,6 +99,23 @@ export class AdminProfilpageComponent implements OnInit {
         this.messageService.showMessage('Podaci uspešno izmenjeni!', MessageType.SUCCESS);
       });
     }    
+  }
+
+  setPassword() {
+    if (this.passwordForm.valid) {
+      if ((this.passwordForm.get('password')?.value === this.passwordForm.get('confirmPassword')?.value)) {
+        this.adminService.setAdminPassword(this.adminId, this.passwordForm.get('password')?.value).subscribe(res => {
+          this.isFirstLogin = false;
+          this.messageService.showMessage('Lozinka je promenjena!', MessageType.SUCCESS);  
+        });
+      }
+      else {
+        this.messageService.showMessage('Lozinke se ne poklapaju!', MessageType.WARNING);  
+      }
+    }
+    else {
+      this.messageService.showMessage('Unesite podatke ispravno!', MessageType.WARNING);
+    }
   }
 
 }
