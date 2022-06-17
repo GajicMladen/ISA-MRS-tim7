@@ -21,11 +21,9 @@ import tim7.ISAMRSproject.dto.ChangePasswordDTO;
 import tim7.ISAMRSproject.dto.DeletionRequestDTO;
 import tim7.ISAMRSproject.dto.UserDTO;
 import tim7.ISAMRSproject.dto.UserRegisterDTO;
-import tim7.ISAMRSproject.model.Boat;
-import tim7.ISAMRSproject.model.Cottage;
-import tim7.ISAMRSproject.model.DeletionRequest;
+import tim7.ISAMRSproject.model.*;
 import tim7.ISAMRSproject.model.DeletionRequest.DeletionRequestStatus;
-import tim7.ISAMRSproject.model.User;
+import tim7.ISAMRSproject.service.AdventureService;
 import tim7.ISAMRSproject.service.BoatService;
 import tim7.ISAMRSproject.service.CottageService;
 import tim7.ISAMRSproject.service.UserService;
@@ -43,6 +41,8 @@ public class UserController {
 	@Autowired
 	private BoatService boatService;
 
+	@Autowired
+	private AdventureService adventureService;
 
 	@GetMapping(value = "/all")
 	public ResponseEntity<List<UserDTO>> getAllKorisnici() {
@@ -130,7 +130,7 @@ public class UserController {
 		User requestUser = userService.findByEmail(user.getName());
 		Optional<Cottage> cottage = cottageService.getCottageById(offerId);
 		Optional<Boat> boat = boatService.getBoat(offerId);
-		//instructor
+		Optional<Adventure> adventure =  adventureService.findById(offerId);
 
 		if(cottage.isPresent()){
 			return cottage.get().getCottageOwnerId() == requestUser.getId();
@@ -138,7 +138,9 @@ public class UserController {
 		if(boat.isPresent()){
 			return boat.get().getBoatOwner().getId() == requestUser.getId();
 		}
-		//instructor
+		if(adventure.isPresent()){
+			return adventure.get().getInstructorId() == requestUser.getId();
+		}
 		return false;
 	}
 
