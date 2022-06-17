@@ -84,6 +84,10 @@ export class AdminProfilpageComponent implements OnInit {
     );
   }
 
+  get isSysAdmin(): boolean {
+    return (this.admin.email !== 'djordjejovanovic27@gmail.com');
+  }
+
   UpdateAdminData() {
     this.oldForm.patchValue(this.form.getRawValue());
     var user = new User();

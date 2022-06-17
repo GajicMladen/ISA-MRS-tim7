@@ -14,7 +14,7 @@
                     <mat-icon>delete_forever</mat-icon>
                     Zahtevi za brisanje profila
                 </button>
-                <button mat-raised-button class="sidebar-item" routerLink="/addAdmin/{{adminId}}" routerLinkActive="active">
+                <button mat-raised-button class="sidebar-item" [disabled]="isSysAdmin" routerLink="/addAdmin/{{adminId}}" routerLinkActive="active">
                     <mat-icon>add</mat-icon>
                     Dodavanje administratora
                 </button>
@@ -34,7 +34,7 @@
                     <mat-icon>star</mat-icon>
                     Loyalty program
                 </button>
-                <button mat-raised-button class="sidebar-item">
+                <button mat-raised-button class="sidebar-item" routerLink="/adminReport/{{adminId}}" routerLinkActive="active">
                     <mat-icon> attach_money</mat-icon>
                     Izveštaji
                 </button>

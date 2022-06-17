@@ -38,6 +38,7 @@ import { AdminAddAdminComponent } from './features/admin/components/admin-add-ad
 import { AdminEntityOverviewComponent } from './features/admin/components/admin-entity-overview/admin-entity-overview.component';
 import { AdventureReportsComponent } from './features/adventure/components/adventure-reports/adventure-reports.component';
 import { AdventureReservationsComponent } from './features/adventure/components/adventure-reservations/adventure-reservations.component';
+import { AdminReportComponent } from './features/admin/components/admin-report/admin-report.component';
 
 
 const routes: Routes = [
@@ -86,7 +87,7 @@ const routes: Routes = [
   { path: 'registrationRequests/:id', component: AdminRegistrationRequestsComponent },
   { path: 'deletionRequests/:id', component: AdminDeletionRequestsComponent },
   { path: 'addAdmin/:id', component: AdminAddAdminComponent },
-
+  { path: 'adminReport/:id', component: AdminReportComponent },
   { path: 'editInstructor/:id', component: AdventureInstructorEditComponent },
   { path: 'boatProfile/:id' , component:BoatProfilepageComponent },
   { path: 'boatOwner/:id' , component: BoatOwnerpageComponent},

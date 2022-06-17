@@ -388,6 +388,9 @@ INSERT INTO public.complaint(for_offer, from_owner, offender_id, pusnih_offender
 INSERT INTO public.complaint(for_offer, from_owner, offender_id, pusnih_offender, status, text, reservation_id)
 	VALUES (false, true, 1, true, 0, 'zalim se na klijenta indijanca, ostavio je haos!',2);
 
+--PROCENAT ZARADE
+INSERT INTO public.earnings_percentage(percentage, date_of_setting)
+	VALUES (5, '2022-06-17T00:00:01');
 
 
 --SUBSCRIBES

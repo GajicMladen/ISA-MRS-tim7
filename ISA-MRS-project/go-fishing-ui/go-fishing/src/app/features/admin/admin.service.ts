@@ -6,6 +6,7 @@ import { Boat } from 'src/models/boat';
 import { Cottage } from 'src/models/cottage';
 import { Admin } from './classes/Admin';
 import { DeletionRequest } from './classes/DeletionRequest';
+import { EarningsPercentage } from './classes/EarningPercentage';
 import { RegistrationRequest } from './classes/RegistrationRequest';
 
 @Injectable({
@@ -98,6 +99,14 @@ export class AdminService {
 
   public deleteCottage(id: number) {
     return this.http.delete(this.adminUrl + "/deleteCottage/" + id);
+  }
+
+  public getEarningPercentage() :Observable<EarningsPercentage> {
+    return this.http.get<EarningsPercentage>(this.adminUrl + "/getEarningPercentage");
+  }
+
+  public setNewEarningPercentage(percentage: number) :Observable<EarningsPercentage> {
+    return this.http.post<EarningsPercentage>(this.adminUrl + "/setEarningPercentage", percentage);
   }
 
 }

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import javax.swing.RepaintManager;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +25,7 @@ import tim7.ISAMRSproject.dto.AdminDTO;
 import tim7.ISAMRSproject.dto.BoatDTO;
 import tim7.ISAMRSproject.dto.CottageDTO;
 import tim7.ISAMRSproject.dto.DeletionRequestOutDTO;
+import tim7.ISAMRSproject.dto.EarningsPercentageDTO;
 import tim7.ISAMRSproject.dto.RegistrationRequestOutDTO;
 import tim7.ISAMRSproject.dto.UserDTO;
 import tim7.ISAMRSproject.dto.UserRegisterDTO;
@@ -30,11 +33,13 @@ import tim7.ISAMRSproject.model.Admin;
 import tim7.ISAMRSproject.model.Boat;
 import tim7.ISAMRSproject.model.Cottage;
 import tim7.ISAMRSproject.model.DeletionRequest.DeletionRequestStatus;
+import tim7.ISAMRSproject.model.EarningsPercentage;
 import tim7.ISAMRSproject.model.RegistrationRequest.RegistrationRequestStatus;
 import tim7.ISAMRSproject.model.User;
 import tim7.ISAMRSproject.service.AdminService;
 import tim7.ISAMRSproject.service.BoatService;
 import tim7.ISAMRSproject.service.CottageService;
+import tim7.ISAMRSproject.service.EarningsPercentageService;
 import tim7.ISAMRSproject.service.UserService;
 import tim7.ISAMRSproject.utils.EmailServiceImpl;
 
@@ -58,6 +63,9 @@ public class AdminController {
 	
 	@Autowired
 	private CottageService cottageService;
+	
+	@Autowired
+	private EarningsPercentageService earningsPercentageService;
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
@@ -286,5 +294,22 @@ public class AdminController {
 	public ResponseEntity<Void> deleteBoatById(@PathVariable int id) {
 		this.boatService.deleteBoat(id);
 		return new ResponseEntity<Void>(HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/getEarningPercentage")
+	public ResponseEntity<?> getEarningsPercentage() {
+		EarningsPercentage ep = this.earningsPercentageService.getLastEntry();
+		if (ep != null) {
+			return new ResponseEntity<>(new EarningsPercentageDTO(ep), HttpStatus.OK);
+		}
+		else {
+			return new ResponseEntity<>(null, HttpStatus.OK);
+		}
+	}
+	
+	@PostMapping(value = "/setEarningPercentage")
+	public ResponseEntity<?> setEarningsPercentage(@RequestBody int percentage) {
+		this.earningsPercentageService.save(percentage);
+		return new ResponseEntity<>(new EarningsPercentageDTO(this.earningsPercentageService.getLastEntry()), HttpStatus.OK);
 	}
 }
