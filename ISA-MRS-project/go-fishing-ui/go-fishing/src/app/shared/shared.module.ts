@@ -62,7 +62,8 @@ import { ReservationAddNewWithClientComponent } from './components/reservations/
     SidebarComponent,
     ChartComponent,
     ChartPieComponent,
-    ReservationsOwnerpageComponent
+    ReservationsOwnerpageComponent,
+    ReservationListView
   ],
 })
 export class SharedModule {}
