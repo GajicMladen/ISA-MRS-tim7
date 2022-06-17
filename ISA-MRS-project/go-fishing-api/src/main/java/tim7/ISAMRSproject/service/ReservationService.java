@@ -17,6 +17,7 @@ import tim7.ISAMRSproject.model.Boat;
 import tim7.ISAMRSproject.model.Client;
 import tim7.ISAMRSproject.model.Cottage;
 import tim7.ISAMRSproject.model.FreePeriod;
+import tim7.ISAMRSproject.model.Grade;
 import tim7.ISAMRSproject.model.Reservation;
 import tim7.ISAMRSproject.model.ReservationStatus;
 import tim7.ISAMRSproject.model.User;
@@ -25,6 +26,7 @@ import tim7.ISAMRSproject.repository.BoatRepository;
 import tim7.ISAMRSproject.repository.ClientRepository;
 import tim7.ISAMRSproject.repository.CottageRepository;
 import tim7.ISAMRSproject.repository.FreePeriodRepository;
+import tim7.ISAMRSproject.repository.GradeRepository;
 import tim7.ISAMRSproject.repository.ReservationRepository;
 import tim7.ISAMRSproject.utils.EmailServiceImpl;
 
@@ -47,6 +49,9 @@ public class ReservationService {
 	
 	@Autowired
 	private FreePeriodRepository fpRepository;
+
+	@Autowired
+	private GradeRepository gradeRepository;
 	
 	@Autowired
 	private EmailServiceImpl emailService;
@@ -229,6 +234,29 @@ public class ReservationService {
 		return retVal;
 	}
 	
+	public List<ReservationListItemDTO> getPastReservations(User u) {
+		List<ReservationListItemDTO> retVal = new ArrayList<ReservationListItemDTO>();
+		for(Reservation r: reservationRepository.findByClient_IdEquals(u.getId())) {
+			if (r.getStartDateTime().isBefore(LocalDateTime.now())) {
+				ReservationListItemDTO rli = new ReservationListItemDTO();
+				rli.setId(r.getId());
+				rli.setStartDate(r.getStartDateTime());
+				rli.setEndDate(r.getEndDateTime());
+				rli.setClientId(u.getId());
+				rli.setOfferId(r.getOffer().getId());
+				rli.setOfferName(r.getOffer().getName());
+				rli.setTotalPrice(r.getTotalPrice());
+				rli.setOfferAddress(r.getOffer().getAddress().toString());
+				if(r.getGrade() == null)
+					rli.setCanCancel(true);
+				else
+					rli.setCanCancel(false);
+				retVal.add(rli);
+			}
+		}
+		return retVal;
+	}
+	
 	public boolean cancelReservation(int id) {
 		Reservation res = reservationRepository.getById(id);
 		if (res == null) return false;
@@ -241,6 +269,17 @@ public class ReservationService {
 			fpRepository.save(fp);
 			return true;
 		}
+	}
+	
+	public boolean addReview(Grade grade, int reservationId) {
+		Reservation res = reservationRepository.getById(reservationId);
+		if (res != null) {
+			res.setGrade(grade);
+			grade.setReservation(res);
+			gradeRepository.save(grade);
+			return true;
+		} else return false;
+
 	}
 	
 	private LocalDateTime convertDateString(String s) {

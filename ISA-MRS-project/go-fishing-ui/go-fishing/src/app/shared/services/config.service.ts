@@ -137,4 +137,8 @@ export class ConfigService {
   get cancelReservationUrl(): string {
     return this._reservation_controller_url + '/cancelReservation/';
   }
+
+  get addReviewUrl(): string {
+    return this._reservation_controller_url + '/addReview';
+  }
 }

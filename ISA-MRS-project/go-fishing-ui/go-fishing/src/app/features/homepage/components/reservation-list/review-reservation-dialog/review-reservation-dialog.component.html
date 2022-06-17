@@ -1,0 +1,26 @@
+<mat-card class="card">
+    <h1 class="title">Review Reservation</h1>
+    <mat-card-content class="card-content">
+        <mat-divider></mat-divider>
+        <br>
+        <p>Here you can leave a review for your reservation.</p>
+        <form [formGroup]="form">
+            <!-- Rating -->
+            <h4>
+                Select minimal rating:
+            </h4>
+            
+            <mat-slider thumbLabel step="0.5" min="0" max="5" formControlName="grade"
+                style="margin-top: 20px; transform:scale(1.35); margin-left:25px; width: 175px;"></mat-slider>
+            
+            <!-- Min Price -->
+            <mat-form-field style="margin-top: 10px;">
+                <textarea matInput formControlName="reviewText" placeholder="Leave review text..." style="max-height:200px"></textarea>
+            </mat-form-field>
+        </form>
+    </mat-card-content>
+    <mat-card-actions style="text-align: center;">
+        <button mat-button style="color:GREEN" (click)="onReviewClick()">SEND REVIEW</button>
+        <button mat-button (click)="onCancelClick()">CANCEL</button>
+    </mat-card-actions>
+</mat-card>

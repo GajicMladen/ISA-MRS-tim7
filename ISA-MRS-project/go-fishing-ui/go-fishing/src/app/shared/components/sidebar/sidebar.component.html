@@ -23,21 +23,13 @@
                 <fa-icon class="fa-2x" [icon]="activeReservationsIcon"></fa-icon>
                 Active Reservations
             </button>
-            <button mat-raised-button color="accent" class="sidebar-item">
+            <button mat-raised-button color="accent" class="sidebar-item" [routerLink]="['pastReservations']" routerLinkActive="active">
                 <fa-icon class="fa-2x" [icon]="historyIcon"></fa-icon>
                 Reservation History
             </button>
             <button mat-raised-button color="accent" class="sidebar-item">
                 <fa-icon class="fa-2x" [icon]="subscriptionsIcon"></fa-icon>
                 Subscriptions
-            </button>
-            <button mat-raised-button color="accent" class="sidebar-item">
-                <fa-icon class="fa-2x" [icon]="penaltyIcon"></fa-icon>
-                Penalties
-            </button>
-            <button mat-raised-button color="accent" class="sidebar-item">
-                <fa-icon class="fa-2x" [icon]="complaintsIcon"></fa-icon>
-                Complaints
             </button>
         </mat-card>
     </mat-sidenav>

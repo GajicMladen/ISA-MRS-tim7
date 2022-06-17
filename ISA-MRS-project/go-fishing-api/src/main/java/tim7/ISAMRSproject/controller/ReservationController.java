@@ -19,13 +19,16 @@ import org.springframework.web.bind.annotation.RestController;
 import tim7.ISAMRSproject.dto.ActionDTO;
 import tim7.ISAMRSproject.dto.DataForChartDTO;
 import tim7.ISAMRSproject.dto.DateRangeStringDTO;
+import tim7.ISAMRSproject.dto.GradeDTO;
 import tim7.ISAMRSproject.dto.ReservationDTO;
 import tim7.ISAMRSproject.dto.ReservationListItemDTO;
 import tim7.ISAMRSproject.model.Adventure;
+import tim7.ISAMRSproject.model.ApprovalStatus;
 import tim7.ISAMRSproject.model.Boat;
 import tim7.ISAMRSproject.model.Client;
 import tim7.ISAMRSproject.model.Cottage;
 import tim7.ISAMRSproject.model.FreePeriod;
+import tim7.ISAMRSproject.model.Grade;
 import tim7.ISAMRSproject.model.Reservation;
 import tim7.ISAMRSproject.model.ReservationStatus;
 import tim7.ISAMRSproject.model.User;
@@ -236,6 +239,27 @@ public class ReservationController {
     @DeleteMapping(value = "/cancelReservation/{id}")
     public ResponseEntity<?> cancelReservation(@PathVariable int id){
     	boolean status = reservationService.cancelReservation(id);
+    	if (status)
+    		return new ResponseEntity<>(HttpStatus.OK);
+    	else
+    		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+    
+    @GetMapping(value = "/pastReservations")
+    public ResponseEntity<?> getPastReservations(Principal user){
+    	User u = userService.findByEmail(user.getName());
+    	List<ReservationListItemDTO> pastReservations = reservationService.getPastReservations(u);
+    	return new ResponseEntity<>(pastReservations, HttpStatus.OK);
+    }
+    
+    @PostMapping(value = "/addReview")
+    public ResponseEntity<?> addReview(@RequestBody GradeDTO gradeDTO){
+    	Grade grade = new Grade();
+    	grade.setGrade(gradeDTO.getGrade());
+    	grade.setRevision(gradeDTO.getReviewText());
+    	grade.setStatus(ApprovalStatus.ON_WAIT);
+    	
+    	boolean status = reservationService.addReview(grade, gradeDTO.getId());
     	if (status)
     		return new ResponseEntity<>(HttpStatus.OK);
     	else

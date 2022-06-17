@@ -12,6 +12,7 @@ import { EntityListComponent } from './components/entity-list/entity-list.compon
 import { SearchDialogComponent } from './components/entity-list/search-dialog/search-dialog.component';
 import { ReservationListComponent } from './components/reservation-list/reservation-list.component';
 import { CancelReservationDialogComponent } from './components/reservation-list/cancel-reservation-dialog/cancel-reservation-dialog.component';
+import { ReviewReservationDialogComponent } from './components/reservation-list/review-reservation-dialog/review-reservation-dialog.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { CancelReservationDialogComponent } from './components/reservation-list/
     SearchDialogComponent,
     ReservationListComponent,
     CancelReservationDialogComponent,
+    ReviewReservationDialogComponent,
   ],
   imports: [CommonModule, SharedModule, RouterModule, ReactiveFormsModule],
 })

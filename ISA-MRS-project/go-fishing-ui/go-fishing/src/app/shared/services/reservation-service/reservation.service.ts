@@ -148,7 +148,10 @@ export class ReservationService {
   }
 
   public cancelReservation(id: number) {
-    console.log(this.config.cancelReservationUrl + id.toString());
     return this.http.delete(this.config.cancelReservationUrl + id.toString());
+  }
+
+  public addReview(data: any) {
+    return this.http.post(this.config.addReviewUrl, data);
   }
 }

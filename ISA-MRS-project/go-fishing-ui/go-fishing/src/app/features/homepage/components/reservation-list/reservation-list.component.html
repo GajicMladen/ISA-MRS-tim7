@@ -3,11 +3,17 @@
         <mat-card-title style="text-align: center;">{{item.offerName}}</mat-card-title>
     </mat-card-title-group>
     <mat-card-actions>
-        <mat-card-subtitle>Date range: <b>{{getDateString(item.startDate)}} - {{getDateString(item.endDate)}}</b></mat-card-subtitle>
+        <mat-card-subtitle>Date: <b>{{getDateString(item.startDate)}} - {{getDateString(item.endDate)}}</b></mat-card-subtitle>
         <mat-card-subtitle>Location: <b>{{item.offerAddress}}</b></mat-card-subtitle>
         <mat-card-subtitle>Total Cost: <b>{{item.totalPrice | currency:'USD'}}</b></mat-card-subtitle>
-        <button mat-button style="color:red" *ngIf="item.canCancel" (click)="openCancelDialog(item)">CANCEL RESERVATION</button>
-        <button mat-button style="color: gray" *ngIf="!item.canCancel" disabled>THIS RESERVATON IS NOT CANCELLABLE</button>
+        <div *ngIf="mode === 'active'">
+            <button mat-button style="color:red" *ngIf="item.canCancel" (click)="openCancelDialog(item)">CANCEL RESERVATION</button>
+            <button mat-button style="color: gray" *ngIf="!item.canCancel" disabled>THIS RESERVATON IS NOT CANCELLABLE</button>
+        </div>
+        <div *ngIf="mode === 'past'">
+            <button mat-button style="color:green" *ngIf="item.canCancel" (click)="openReviewDialog(item)">LEAVE A REVIEW</button>
+            <button mat-button style="color: gray" *ngIf="!item.canCancel" disabled>ALREADY REVIEWED</button>
+        </div>
     </mat-card-actions>
 </mat-card>
 

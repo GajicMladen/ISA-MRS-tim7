@@ -70,6 +70,7 @@ const routes: Routes = [
       { path: 'boatList', component: EntityListComponent },
       { path: 'adventureList', component: EntityListComponent },
       { path: 'activeReservations', component: ReservationListComponent },
+      { path: 'pastReservations', component: ReservationListComponent },
       { path: '', redirectTo: 'userProfile', pathMatch: 'full' },
     ],
   },
