@@ -11,6 +11,7 @@ import { BoatAddNewComponent } from './components/boat-add-new/boat-add-new.comp
 import { BoatEditComponent } from './components/boat-edit/boat-edit.component';
 import { BoatReportsComponent } from './components/boat-reports/boat-reports.component';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { BoatGalleryVisitorComponent } from './components/boat-gallery-visitor/boat-gallery-visitor.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { SharedModule } from 'src/app/shared/shared.module';
     BoatGalleryOwnerComponent,
     BoatAddNewComponent,
     BoatEditComponent,
-    BoatReportsComponent
+    BoatReportsComponent,
+    BoatGalleryVisitorComponent
   ],
   imports: [
     CommonModule,

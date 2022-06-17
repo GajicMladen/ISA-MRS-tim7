@@ -5,12 +5,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tim7.ISAMRSproject.dto.FreePeriodDTO;
 import tim7.ISAMRSproject.model.Adventure;
+import tim7.ISAMRSproject.model.Boat;
 import tim7.ISAMRSproject.model.Cottage;
 import tim7.ISAMRSproject.model.FreePeriod;
-import tim7.ISAMRSproject.repository.AdventureRepository;
-import tim7.ISAMRSproject.repository.CottageRepository;
-import tim7.ISAMRSproject.repository.FreePeriodRepository;
-import tim7.ISAMRSproject.repository.InstructorRepository;
+import tim7.ISAMRSproject.repository.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -25,6 +23,8 @@ public class FreePeriodService {
 
     @Autowired
     private CottageRepository cottageRepository;
+    @Autowired
+    private BoatRepository boatRepository;
     
     @Autowired
     private AdventureRepository adventureRepository;
@@ -40,15 +40,12 @@ public class FreePeriodService {
         LocalDateTime endDate = freePeriodDTO.getEndDate();
 
         Optional<Cottage> cottage = cottageRepository.findById(freePeriodDTO.getOfferId());
-
+        Optional<Boat> boat = boatRepository.findById(freePeriodDTO.getOfferId());
         //Optional<Instructor> instructor = instructorRepository.findById(freePeriodDTO.getOfferId());
 
-        //Optional<Boat> boat = boatRepository.findById(freePeriodDTO.getOfferId());
 
-        if(cottage.isPresent()){
-
-            freePeriodRepository.save(new FreePeriod(startDate,endDate,cottage.get()));
-        }
+        cottage.ifPresent(value -> freePeriodRepository.save(new FreePeriod(startDate, endDate, value)));
+        boat.ifPresent(value -> freePeriodRepository.save(new FreePeriod(startDate, endDate, value)));
         /*
         * elif( instuctor.isPresent()) ....
         * */

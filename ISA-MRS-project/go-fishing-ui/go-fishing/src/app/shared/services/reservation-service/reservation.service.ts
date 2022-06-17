@@ -91,4 +91,27 @@ export class ReservationService {
   
     return new Observable();
   }
+
+  public getVisitChartDataForReservations(ownerId:number,ownerType:string):Observable<DataForChart[]>{
+    if(ownerType == "C")
+      return this.http.get<DataForChart[]>(this.reservationsUrl + "/getVisitChartDataForCottageOwner/"+ownerId);
+    if(ownerType == "B")
+      return this.http.get<DataForChart[]>(this.reservationsUrl + "/getVisitChartDataForBoatOwner/"+ownerId);
+    if(ownerType == "I")
+      return this.http.get<DataForChart[]>(this.reservationsUrl + "/getVisitChartDataForInstructor/"+ownerId);
+  
+    return new Observable();
+  }
+  
+
+  public getGradeChartDataForReservations(ownerId:number,ownerType:string):Observable<DataForChart[]>{
+    if(ownerType == "C")
+      return this.http.get<DataForChart[]>(this.reservationsUrl + "/getGradeChartDataForCottageOwner/"+ownerId);
+    if(ownerType == "B")
+      return this.http.get<DataForChart[]>(this.reservationsUrl + "/getGradeChartDataForBoatOwner/"+ownerId);
+    if(ownerType == "I")
+      return this.http.get<DataForChart[]>(this.reservationsUrl + "/getGradeChartDataForInstructor/"+ownerId);
+  
+    return new Observable();
+  }
 }

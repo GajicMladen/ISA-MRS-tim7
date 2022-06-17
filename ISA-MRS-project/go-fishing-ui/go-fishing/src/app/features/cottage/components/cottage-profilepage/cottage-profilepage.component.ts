@@ -9,6 +9,7 @@ import {
   MessageService,
   MessageType,
 } from 'src/app/shared/services/message-service/message.service';
+import { UserService } from 'src/app/shared/services/users-services/user.service';
 
 import { Cottage } from 'src/models/cottage';
 import { ActionDTO } from 'src/models/reservation';
@@ -29,6 +30,9 @@ export class CottageProfilepageComponent implements OnInit {
 
   isSuscribed:boolean;
 
+
+  clientLoggedIn:boolean;
+
   constructor(
     private route: ActivatedRoute,
     private cottageService: CottageService,
@@ -36,7 +40,8 @@ export class CottageProfilepageComponent implements OnInit {
     private dialog: MatDialog,
     private reservationService: CottageReservationService,
     private messageService: MessageService,
-    private clientService:ClientService 
+    private clientService:ClientService ,
+    private userService:UserService
   ) {}
 
   ngOnInit(): void {
@@ -47,6 +52,14 @@ export class CottageProfilepageComponent implements OnInit {
         .subscribe((cottage) => {
           this.cottage = cottage;
         });
+
+        
+      this.userService.isLoggedUserOnlyClient().subscribe(
+        data =>{
+          console.log(data);
+          this.clientLoggedIn = data;
+        }
+      );
     }
 
     this.actionService

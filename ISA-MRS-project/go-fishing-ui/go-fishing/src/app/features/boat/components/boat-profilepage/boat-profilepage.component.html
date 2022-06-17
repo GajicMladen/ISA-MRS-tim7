@@ -90,9 +90,12 @@
                     </div>
                 </div>
                 <div class="buttons">
-                        <button class="btn btn-outline-warning btn-long cart">Rezerviši</button>
-                    
-                        <button class="btn btn-warning btn-long buy" routerLink="/calendar/{{boat.id}}"><i class="fa fa-calendar-check-o"></i> Proveri dostupnost </button> <button class="btn btn-light wishlist"> <i class="fa fa-heart"></i> </button> </div>
+                        <button class="btn btn-outline-warning btn-long cart" *ngIf="clientLoggedIn">Rezerviši</button>
+                        <button class="btn btn-warning btn-long buy" routerLink="/calendar/{{boat.id}}"><i class="fa fa-calendar-check-o"></i> Proveri dostupnost </button> 
+                        
+                        <button class="btn btn-light wishlist" (click)="addSubscription()" *ngIf="!isSuscribed && clientLoggedIn"> <i class="fa fa-bell"></i> Pretplati se </button> 
+                        <button class="btn btn-light wishlist" (click)="removeSubscription()" *ngIf="isSuscribed && clientLoggedIn"> <i class="fa fa-bell-slash"></i> Odjavi se </button> 
+                </div>
                 <hr>
                 <div class="product-description">
                     <div><span class="font-weight-bold">Broj soba:</span><span> 2</span></div>

@@ -1,6 +1,7 @@
 <app-offer-info [offerId]="offerId"></app-offer-info>
 <h2>Kalendar dostupnsoti
 </h2>
+<div *ngIf="ownerLoggedIn">
 <button  mat-raised-button color="primary" class="btn-edit-freePeriods" (click)="editPeriodsClick()"><i class="material-icons">edit</i>Izmeni slobodne periode</button>
 <button  mat-raised-button color="primary" class="btn-edit-actions" (click)="editActionsClick()"><i class="material-icons">edit</i>Izmeni akcije</button>
 
@@ -30,10 +31,11 @@
       Dodaj novu akciju:  <app-new-action [_pData]="getParentMethod()"></app-new-action>
     </div>
 </div>
-
+</div>
 
 <div style="padding: 50px;">
-    <mwl-demo-component [freePeriods]="freePeriods" [actions]="actions" *ngIf="freePeriods.length > 0 || actions.length > 0; else elseBlock;" >Loading...</mwl-demo-component>
+    <mwl-demo-component [freePeriods]="freePeriods" [actions]="actions" [reservations]="reservations" 
+     *ngIf="freePeriods.length > 0 || actions.length > 0 || reservations.length > 0; else elseBlock;" >Loading...</mwl-demo-component>
     
     <ng-template #elseBlock>
         <h2>Nazalost ova vikendica trenutno nema slobodnih termina.</h2>
