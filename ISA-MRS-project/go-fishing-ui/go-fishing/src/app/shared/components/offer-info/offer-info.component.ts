@@ -24,7 +24,20 @@ export class OfferInfoComponent implements OnInit {
       if(this.offer == undefined){
         this.offerService.getBoatById(this.offerId).subscribe(data => {
           this.offer = <Offer>data;
-          this.offerType= this.getOfferType(data);
+
+          if(this.offer == undefined){
+            this.offerService.getAdventureById(this.offerId).subscribe(
+              data=> {
+                console.log(data);
+                this.offer = <Offer><unknown>data;
+                this.offerType = this.getOfferType(data);
+              }
+            )
+          }
+          else{
+            this.offerType = this.getOfferType(data);
+          }
+
         });
       }
       else{
@@ -34,10 +47,10 @@ export class OfferInfoComponent implements OnInit {
   }
 
   getOfferType(offer:Object):string{
-    console.log(offer.hasOwnProperty("ownerId"));
+
     if(offer.hasOwnProperty("maxSpeed"))
       return "B";
-    if(offer.hasOwnProperty("biography"))
+    if(offer.hasOwnProperty("instructorBiography"))
       return "I";
     if(offer.hasOwnProperty("ownerId")) 
       return "C";
@@ -46,7 +59,7 @@ export class OfferInfoComponent implements OnInit {
   }
 
   openProfile(){
-    
+    console.log(this.offerType)
     switch(this.offerType){
       case "C":
         this.router.navigate(["cottageProfile/"+this.offerId])
@@ -55,7 +68,7 @@ export class OfferInfoComponent implements OnInit {
         this.router.navigate(["boatProfile/"+this.offerId])
         break;
       case "I":
-        this.router.navigate(["instructorProfile/"+this.offerId])
+        this.router.navigate(["adventureProfile/"+this.offerId])
         break;
     }
   }

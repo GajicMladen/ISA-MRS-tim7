@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Loader } from '@googlemaps/js-api-loader';
+import { ClientService } from 'src/app/shared/services/client-service/client.service';
+import { UserService } from 'src/app/shared/services/users-services/user.service';
 import { AdventureService } from '../../adventure.service';
 import { Adventure } from '../../classes/adventure';
 
@@ -14,6 +16,11 @@ export class AdventureProfilpageComponent implements OnInit {
   adventureId: number;
   instructorId: number;
   instructorName: string;
+  
+  clientLoggedIn:boolean;
+  
+  isSuscribed:boolean;
+
   adventure = new Adventure({
     id: 0,
 	  name: '',
@@ -56,7 +63,10 @@ export class AdventureProfilpageComponent implements OnInit {
     cancellation: "U slučaju otkazivanja instruktor zadržava 30% uplaćene sume."
   }
 
-  constructor(private route: ActivatedRoute, private adventureService: AdventureService) { }
+  constructor(private route: ActivatedRoute,
+     private adventureService: AdventureService,
+     private clientService:ClientService,
+     private userService:UserService) { }
 
   ngOnInit(): void {
     this.adventureId = Number(this.route.snapshot.paramMap.get('id'));
@@ -71,6 +81,12 @@ export class AdventureProfilpageComponent implements OnInit {
         this.LoadMap(loader);
       })
     }
+    
+    this.userService.isLoggedUserOnlyClient().subscribe(
+      data=>{
+        this.clientLoggedIn= data;
+      }
+    );
     
   }
 
@@ -92,4 +108,28 @@ export class AdventureProfilpageComponent implements OnInit {
     document.getElementById("mainImage")?.setAttribute("src", this.adventure1.images[i]);
   }
 
+  getIsSuscribed(){
+
+    this.clientService.isSuscribedToOffer(this.adventureId).subscribe(
+      data=>{
+        console.log(data);
+        this.isSuscribed = data;
+      }
+    )
+  }
+
+  addSubscription(){
+    this.clientService.addSubscription(this.adventureId).subscribe(
+      data=>{
+        this.getIsSuscribed()
+      }
+    );
+  }
+  removeSubscription(){
+    this.clientService.removeSubscription(this.adventureId).subscribe(
+      data=>{
+        this.getIsSuscribed();
+      }
+    );
+  }
 }
