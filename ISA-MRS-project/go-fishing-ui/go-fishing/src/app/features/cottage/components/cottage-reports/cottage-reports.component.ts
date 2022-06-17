@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { ReservationService } from 'src/app/shared/services/reservation-service/reservation.service';
 
 @Component({
   selector: 'app-cottage-reports',
@@ -7,15 +8,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CottageReportsComponent implements OnInit {
 
-  constructor() { }
+  constructor(private reservationService:ReservationService) { }
 
-  dataForChar:any=[
-    { name: "Vikendica Kosmaj", value: 100 },
-    { name: "Vila Raj", value: 55 },
-    { name: "Selo Tur", value: 150 },
-    { name: "Vrhpolje", value: 500 },
-    { name: "Rocevic", value: 200 }
-  ];
+  dataForChar:any=[];
 
   title:string;
   x_axis:string;
@@ -23,6 +18,8 @@ export class CottageReportsComponent implements OnInit {
 
   displayChartPie:boolean = false;
   displayChart:boolean = true;
+
+  @Input() ownerId:number;
   
   ngOnInit(): void {
   }
@@ -33,6 +30,7 @@ export class CottageReportsComponent implements OnInit {
     this.displayChartPie= false;
 
     this.title = "Zauzetost vikendica";
+    
     this.dataForChar = [
       { name: "Vikendica Kosmaj", value: 100 },
       { name: "Vila Raj", value: 55 },
@@ -40,6 +38,7 @@ export class CottageReportsComponent implements OnInit {
       { name: "Vrhpolje", value: 500 },
       { name: "Rocevic", value: 200 }
     ];
+
   }
 
 
@@ -49,13 +48,11 @@ export class CottageReportsComponent implements OnInit {
 
 
     this.title = "Prihodi od vikendica";
-    this.dataForChar = [
-      { name: "Vikendica Kosmaj", value: 8900 },
-      { name: "Vila Raj", value: 505 },
-      { name: "Selo Tur", value: 1050 },
-      { name: "Vrhpolje", value: 5090 },
-      { name: "Rocevic", value: 8200 }
-    ];
+    this.reservationService.getProfitChartDataForReservations(this.ownerId,'C').subscribe(
+      data =>{
+        this.dataForChar = data;
+      }
+    );
   }
 
   displayCottagesGrades(){

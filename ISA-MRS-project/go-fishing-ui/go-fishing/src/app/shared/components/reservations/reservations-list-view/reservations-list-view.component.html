@@ -4,7 +4,7 @@
             <div class="card card-white mb-5">
                 
                 <div class="card-body" style="overflow-y: scroll; height:600px;">
-                    <ul class="list-unstyled reservations-list" *ngIf="reservations.length > 0; else elseblock">
+                    <ul class="list-unstyled reservations-list" *ngIf="reservations != undefined && reservations.length > 0; else elseblock">
                         <li class="position-relative booking reservation-card" *ngFor="let reservation of reservations">
                             <div class="media">
                                 <div class="media-body">

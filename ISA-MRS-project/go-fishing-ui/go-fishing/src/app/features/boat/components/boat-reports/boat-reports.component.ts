@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { ReservationService } from 'src/app/shared/services/reservation-service/reservation.service';
 
 @Component({
   selector: 'app-boat-reports',
@@ -7,7 +8,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BoatReportsComponent implements OnInit {
 
-  constructor() { }
+  @Input() ownerId:number;
+
+  constructor(private reservationService:ReservationService) { }
 
   dataForChar:any=[
     { name: "Vikendica Kosmaj", value: 100 },
@@ -56,6 +59,11 @@ export class BoatReportsComponent implements OnInit {
       { name: "Vrhpolje", value: 5090 },
       { name: "Rocevic", value: 8200 }
     ];
+    this.reservationService.getProfitChartDataForReservations(this.ownerId,'B').subscribe(
+      data =>{
+        this.dataForChar = data;
+      }
+    );
   }
 
   displayCottagesGrades(){

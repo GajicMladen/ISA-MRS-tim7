@@ -65,8 +65,10 @@ public class Offer {
 	
 	@OneToMany(mappedBy = "offer", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Set<Action> actions = new HashSet<Action>();
-	
-	
+
+	@ManyToMany(mappedBy = "subscribedOffers")
+	private Set<Client> subscribers = new HashSet<Client>();
+
 	
 	public Offer() {
 		super();

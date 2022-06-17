@@ -11,6 +11,9 @@ export class ConfigService {
   private _user_controller_url = this._server_address + '/api/users';
   private _entity_controller_url = this._server_address + '/api/entity';
 
+  private _reservation_controller_url =
+    this._server_address + '/api/reservations';
+
   get loginUrl(): string {
     return this._login_url;
   }
@@ -107,5 +110,19 @@ export class ConfigService {
 
   get adventuresPageSearchCountUrl(): string {
     return this._entity_controller_url + '/adventures/searchcount';
+  }
+
+  /*
+   *
+   *   RESERVATION CONTROLLER
+   *
+   */
+
+  get freePeriodsByIdUrl(): string {
+    return this._reservation_controller_url + '/getFreePeriods/';
+  }
+
+  get newReservationUrl(): string {
+    return this._reservation_controller_url + '/newReservation';
   }
 }
