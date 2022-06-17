@@ -23,6 +23,11 @@ import tim7.ISAMRSproject.repository.CottageRepository;
 import tim7.ISAMRSproject.repository.FreePeriodRepository;
 import tim7.ISAMRSproject.repository.ReservationRepository;
 
+import java.time.Period;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
 @Service
 public class ReservationService {
 	
@@ -50,7 +55,7 @@ public class ReservationService {
 		
 	}
 
-	public void addNewAction(ActionDTO actionDTO){
+	public Reservation addNewAction(ActionDTO actionDTO){
 		Reservation newAction = new Reservation();
 		newAction.setEndDateTime(actionDTO.getEndDate());
 		newAction.setStartDateTime(actionDTO.getStartDate());
@@ -62,17 +67,17 @@ public class ReservationService {
 
 		if(cottage.isPresent()) {
 			newAction.setOffer(cottage.get());
-			reservationRepository.save(newAction);
-			return;
+			return reservationRepository.save(newAction);
+
 		}
 		if(boat.isPresent()){
 			newAction.setOffer(boat.get());
-			reservationRepository.save(newAction);
-			return;
+			return reservationRepository.save(newAction);
+
 		}
 
 		//instructor
-
+		return null;
 
 	}
 
@@ -82,7 +87,28 @@ public class ReservationService {
 
 	public List<Reservation> getReservationsForOffer(int offerId){
 
-		return reservationRepository.findByOffer_IdEquals(offerId);
+		List<Reservation> ret = new ArrayList<>();
+
+		List<Reservation> allReservations =  reservationRepository.findByOffer_IdEquals(offerId);
+		for (Reservation reservation:allReservations) {
+			if(! reservation.getStatus().equals(ReservationStatus.FOR_ACTION))
+				ret.add(reservation);
+		}
+
+		return ret;
+	}
+
+
+	public List<Reservation> getActionsForOffer(int offerId){
+		List<Reservation> ret = new ArrayList<>();
+
+		List<Reservation> allReservations =  reservationRepository.findByOffer_IdEquals(offerId);
+		for (Reservation reservation:allReservations) {
+			if(reservation.getStatus().equals(ReservationStatus.FOR_ACTION))
+				ret.add(reservation);
+		}
+
+		return ret;
 	}
 
 	public void deleteAction(int id){

@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
 import { Observable, of } from 'rxjs';
+import { DataForChart } from 'src/models/dataForChart';
 import { ReservationDTO, ReservationReciveDTO, ReservationSendDTO } from 'src/models/reservation';
 
 @Injectable({
@@ -80,4 +81,14 @@ export class ReservationService {
     return this.http.delete(this.reservationsUrl+"/delete/"+id);
   }
 
+  public getProfitChartDataForReservations(ownerId:number,ownerType:string):Observable<DataForChart[]>{
+    if(ownerType == "C")
+      return this.http.get<DataForChart[]>(this.reservationsUrl + "/getProfitChartDataForCottageOwner/"+ownerId);
+    if(ownerType == "B")
+      return this.http.get<DataForChart[]>(this.reservationsUrl + "/getProfitChartDataForBoatOwner/"+ownerId);
+    if(ownerType == "I")
+      return this.http.get<DataForChart[]>(this.reservationsUrl + "/getProfitChartDataForInstructor/"+ownerId);
+  
+    return new Observable();
+  }
 }
