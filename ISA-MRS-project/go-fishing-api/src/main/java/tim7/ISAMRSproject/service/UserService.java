@@ -20,6 +20,8 @@ import tim7.ISAMRSproject.model.BoatOwner;
 import tim7.ISAMRSproject.model.CottageOwner;
 import tim7.ISAMRSproject.model.DeletionRequest;
 import tim7.ISAMRSproject.model.FishingInstructor;
+import tim7.ISAMRSproject.model.RegistrationRequest;
+import tim7.ISAMRSproject.model.RegistrationRequest.RegistrationRequestStatus;
 import tim7.ISAMRSproject.model.Role;
 import tim7.ISAMRSproject.model.User;
 import tim7.ISAMRSproject.repository.AddressRepository;
@@ -28,6 +30,7 @@ import tim7.ISAMRSproject.repository.BoatOwnerRepository;
 import tim7.ISAMRSproject.repository.CottageOwnerRepository;
 import tim7.ISAMRSproject.repository.DeletionRequestRepository;
 import tim7.ISAMRSproject.repository.InstructorRepository;
+import tim7.ISAMRSproject.repository.RegistrationRequestRepository;
 import tim7.ISAMRSproject.repository.UserRepository;
 
 @Service
@@ -57,6 +60,8 @@ public class UserService implements UserDetailsService {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 	
+	@Autowired
+	private RegistrationRequestRepository rrRepository;
 	
 	@Autowired
 	private RoleService roleService;
@@ -90,7 +95,15 @@ public class UserService implements UserDetailsService {
 	
 	public User save(UserRegisterDTO userRegisterDTO) {
 		
-		User newUser = new User();
+		User newUser;
+		if (userRegisterDTO.getRole().equals("ROLE_COTTAGE_OWNER")) {
+			newUser = new CottageOwner();
+		} else if (userRegisterDTO.getRole().equals("ROLE_BOAT_OWNER")) {
+			newUser = new BoatOwner();
+		} else if (userRegisterDTO.getRole().equals("ROLE_INSTRUCTOR")) {
+			newUser = new FishingInstructor();
+		} else newUser = new User();
+		
 		Address address = new Address();
 		
 		address.setCountry(userRegisterDTO.getCountry());
@@ -110,19 +123,24 @@ public class UserService implements UserDetailsService {
 		newUser.setActive(false);
 		List<Role> roles = new ArrayList<Role>();
 		roles.add(roleService.findByName("ROLE_USER"));
-		if (!userRegisterDTO.getRole().equals("ROLE_USER"))
+		RegistrationRequest rr = new RegistrationRequest();
+		if (!userRegisterDTO.getRole().equals("ROLE_USER")) {
 			roles.add(roleService.findByName(userRegisterDTO.getRole()));
+			rr.setRegistrationReason(userRegisterDTO.getReason());
+			rr.setRequestStatus(RegistrationRequestStatus.PENDING);
+			rr.setUser(newUser);
+			newUser.setRegistrationRequest(rr);		
+		}
 		newUser.setRoles(roles);
-		
 		switch(userRegisterDTO.getRole()) {
 			case("ROLE_USER"):
 				return (User)(this.userRepository.save(newUser));
 			case("ROLE_BOAT_OWNER"):
-				return (User)(this.boatOwnerRepository.save(new BoatOwner(newUser)));
+				return (User)(this.boatOwnerRepository.save((BoatOwner)newUser));
 			case("ROLE_COTTAGE_OWNER"):
-				return (User)(this.cottageOwnerRepository.save(new CottageOwner(newUser)));
+				return (User)(this.cottageOwnerRepository.save((CottageOwner)newUser));
 			case("ROLE_INSTRUCTOR"):
-				return (User)(this.instructorRepository.save(new FishingInstructor(newUser)));
+				return (User)(this.instructorRepository.save((FishingInstructor)(newUser)));
 		}
 		return null;
 	}

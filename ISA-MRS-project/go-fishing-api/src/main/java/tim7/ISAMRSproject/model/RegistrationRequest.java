@@ -52,5 +52,15 @@ public class RegistrationRequest {
 
 	public void setRequestStatus(RegistrationRequestStatus requestStatus) {
 		this.requestStatus = requestStatus;
-	}	
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+	
+	
 }

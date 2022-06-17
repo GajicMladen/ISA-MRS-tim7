@@ -23,6 +23,7 @@ import tim7.ISAMRSproject.dto.DateRangeStringDTO;
 import tim7.ISAMRSproject.dto.ReservationDTO;
 
 import tim7.ISAMRSproject.model.Boat;
+import tim7.ISAMRSproject.model.Client;
 import tim7.ISAMRSproject.model.Cottage;
 import tim7.ISAMRSproject.model.FreePeriod;
 import tim7.ISAMRSproject.model.Reservation;

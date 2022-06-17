@@ -4,6 +4,8 @@ import tim7.ISAMRSproject.dto.ComplaintDTO;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Complaint {
 	
@@ -18,7 +20,7 @@ public class Complaint {
     @Column(name = "status",nullable = false)
     private ApprovalStatus status;
     
-
+    @JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "reservation_id")
     private Reservation reservation;

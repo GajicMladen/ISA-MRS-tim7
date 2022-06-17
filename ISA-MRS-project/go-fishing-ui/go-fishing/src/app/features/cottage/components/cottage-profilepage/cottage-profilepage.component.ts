@@ -27,7 +27,9 @@ export class CottageProfilepageComponent implements OnInit {
 
   actions: ActionDTO[];
 
-  isSuscribed:boolean;
+  isSuscribed: boolean;
+
+  hasFreePeriods: boolean = true;
 
   constructor(
     private route: ActivatedRoute,
@@ -36,7 +38,7 @@ export class CottageProfilepageComponent implements OnInit {
     private dialog: MatDialog,
     private reservationService: CottageReservationService,
     private messageService: MessageService,
-    private clientService:ClientService 
+    private clientService: ClientService
   ) {}
 
   ngOnInit(): void {
@@ -56,33 +58,32 @@ export class CottageProfilepageComponent implements OnInit {
       });
 
     this.getIsSuscribed();
+
+    this.reservationService
+      .getFreePeriodsById(this.cottageId)
+      .subscribe((res: any) => {
+        this.hasFreePeriods = res.length > 0;
+      });
   }
 
-  getIsSuscribed(){
-
-    this.clientService.isSuscribedToOffer(this.cottageId).subscribe(
-      data=>{
-        console.log(data);
-        this.isSuscribed = data;
-      }
-    )
+  getIsSuscribed() {
+    this.clientService.isSuscribedToOffer(this.cottageId).subscribe((data) => {
+      console.log(data);
+      this.isSuscribed = data;
+    });
   }
 
-  addSubscription(){
-    this.clientService.addSubscription(this.cottageId).subscribe(
-      data=>{
-        this.getIsSuscribed()
-      }
-    );
+  addSubscription() {
+    this.clientService.addSubscription(this.cottageId).subscribe((data) => {
+      this.getIsSuscribed();
+    });
   }
-  removeSubscription(){
-    this.clientService.removeSubscription(this.cottageId).subscribe(
-      data=>{
-        this.getIsSuscribed();
-      }
-    );
+  removeSubscription() {
+    this.clientService.removeSubscription(this.cottageId).subscribe((data) => {
+      this.getIsSuscribed();
+    });
   }
-  
+
   public openReservationDialog() {
     this.reservationService
       .getFreePeriodsById(this.cottage.id)
@@ -161,5 +162,9 @@ export class CottageProfilepageComponent implements OnInit {
     date2.setSeconds(0);
 
     return [date1, date2];
+  }
+
+  get reservationTooltipText() {
+    return 'No free periods are available!';
   }
 }
