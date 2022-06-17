@@ -115,7 +115,7 @@ public class ReservationController {
     	for (Adventure a : adventures) {
     		List<Reservation> reservations = this.reservationService.getReservationsForOffer(a.getId());
     		for (Reservation r : reservations) {
-    			reservationsDTO.add(new ReservationDTO(r));
+    			reservationsDTO.add(new ReservationDTO(r));    			
     		}
     	}
     	return reservationsDTO;

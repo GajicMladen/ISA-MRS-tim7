@@ -38,6 +38,7 @@ export class ReservationService {
         res.push(reservation);
       });
     });
+    console.log(res);
 
     return of(res);
   }
@@ -69,6 +70,8 @@ export class ReservationService {
         reservation.id = d.id;
         reservation.clientId = d.clientId;
         reservation.reservationStatus = d.reservationStatus;
+        reservation.clientName = d.clientName;
+        reservation.clientLastName = d.clientLastName;
         res.push(reservation);
       });
     });

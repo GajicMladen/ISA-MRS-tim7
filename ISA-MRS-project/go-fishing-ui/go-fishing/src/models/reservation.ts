@@ -18,6 +18,8 @@ export class ReservationDTO{
     totalPrice: number;
     reservationStatus:ReservationStatus;
     clientId: number;
+    clientName: string;
+    clientLastName: string;
     //add more reservation atributes
     
     getStartDateString():string {
@@ -49,6 +51,8 @@ export class ReservationReciveDTO{
     totalPrice: number;
     reservationStatus:ReservationStatus;
     clientId: number;
+    clientName: string;
+    clientLastName: string;
     //add more reservation atributes
     
 }
