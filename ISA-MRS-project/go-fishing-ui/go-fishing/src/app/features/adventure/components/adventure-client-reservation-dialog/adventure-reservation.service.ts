@@ -1,12 +1,12 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, map, throwError } from 'rxjs';
+import { map } from 'rxjs';
 import { ConfigService } from 'src/app/shared/services/config.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class CottageReservationService {
+export class AdventureReservationService {
   constructor(private configService: ConfigService, private http: HttpClient) {}
 
   public getFreePeriodsById(id: number) {
@@ -29,7 +29,7 @@ export class CottageReservationService {
           endDateString,
           totalPrice,
           offerId,
-          offerType: 'cottage',
+          offerType: 'adventure',
         },
         {
           headers: {

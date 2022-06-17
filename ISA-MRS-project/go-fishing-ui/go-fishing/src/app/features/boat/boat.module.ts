@@ -5,12 +5,13 @@ import { BoatProfilepageComponent } from './components/boat-profilepage/boat-pro
 import { RouterModule } from '@angular/router';
 import { BoatOwnerpageComponent } from './components/boat-ownerpage/boat-ownerpage.component';
 import { BoatGalleryOwnerComponent } from './components/boat-gallery-owner/boat-gallery-owner.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { BoatAddNewComponent } from './components/boat-add-new/boat-add-new.component';
 import { BoatEditComponent } from './components/boat-edit/boat-edit.component';
 import { BoatReportsComponent } from './components/boat-reports/boat-reports.component';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { BoatClientReservationDialogComponent } from './components/boat-client-reservation-dialog/boat-client-reservation-dialog.component';
 
 @NgModule({
   declarations: [
@@ -19,14 +20,16 @@ import { SharedModule } from 'src/app/shared/shared.module';
     BoatGalleryOwnerComponent,
     BoatAddNewComponent,
     BoatEditComponent,
-    BoatReportsComponent
+    BoatReportsComponent,
+    BoatClientReservationDialogComponent,
   ],
   imports: [
     CommonModule,
     RouterModule,
     FormsModule,
     HttpClientModule,
-    SharedModule
-  ]
+    SharedModule,
+    ReactiveFormsModule,
+  ],
 })
-export class BoatModule { }
+export class BoatModule {}

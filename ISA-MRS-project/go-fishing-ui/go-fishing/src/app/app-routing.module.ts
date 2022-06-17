@@ -6,7 +6,6 @@ import { StartpageRegisterComponent } from './features/startpage/components/star
 import { CottageProfilepageComponent } from './features/cottage/components/cottage-profilepage/cottage-profilepage.component';
 import { ReservationStartpageComponent } from './features/reservation/components/reservation-startpage/reservation-startpage.component';
 import { AdventureProfilpageComponent } from './features/adventure/components/adventure-profilpage/adventure-profilpage.component';
-import { AdventureReservationComponent } from './features/adventure/components/adventure-reservation/adventure-reservation.component';
 import { CottageOwnerpageComponent } from './features/cottage/components/cottage-ownerpage/cottage-ownerpage.component';
 import { AdventureInstructorpageComponent } from './features/adventure/components/adventure-instructorpage/adventure-instructorpage.component';
 import { EditProfileComponent } from './shared/components/edit-profile/edit-profile.component';
@@ -39,7 +38,6 @@ import { AdminAddAdminComponent } from './features/admin/components/admin-add-ad
 import { AdminEntityOverviewComponent } from './features/admin/components/admin-entity-overview/admin-entity-overview.component';
 import { AdventureReportsComponent } from './features/adventure/components/adventure-reports/adventure-reports.component';
 
-
 const routes: Routes = [
   { path: '', component: StartpagePreviewListComponent },
   { path: 'login', component: StartpageLoginComponent },
@@ -48,7 +46,6 @@ const routes: Routes = [
   { path: 'cottageProfile/:id', component: CottageProfilepageComponent },
   { path: 'reservationStart', component: ReservationStartpageComponent },
   { path: 'adventureProfile/:id', component: AdventureProfilpageComponent },
-  { path: 'adventureReservation', component: AdventureReservationComponent },
 
   { path: 'adventureCard', component: AdventureCardComponent },
   { path: 'cottageOwner/:id', component: CottageOwnerpageComponent },
@@ -60,7 +57,7 @@ const routes: Routes = [
   { path: 'editProfile', component: UserprofileComponent },
   { path: 'addNewCottage', component: CottageAddNewComponent },
   { path: 'editCottage/:id', component: CottageEditComponent },
-  
+
   { path: 'addNewBoat', component: BoatAddNewComponent },
   { path: 'editBoat/:id', component: BoatEditComponent },
   {
@@ -75,22 +72,31 @@ const routes: Routes = [
     ],
   },
   { path: 'adventureAddNew/:id', component: AdventureAddNewComponent },
-  { path: 'instructorProfile/:id', component: AdventureInstructorpageComponent },
+  {
+    path: 'instructorProfile/:id',
+    component: AdventureInstructorpageComponent,
+  },
   { path: 'addFreePeriod/:id', component: AdventureFreePeriodComponent },
-  { path: 'instructorCalendar/:id', component: AdventureInstructorCalendarComponent },
+  {
+    path: 'instructorCalendar/:id',
+    component: AdventureInstructorCalendarComponent,
+  },
   { path: 'newAction/:id', component: AdventureActionComponent },
   { path: 'adventureReports/:id', component: AdventureReportsComponent },
-  { path: 'newFreePeriod/:id' ,component: NewFreePeriodComponent },
-  { path: 'calendar/:id' ,component: CalendarComponent },
-  { path: 'editInstructor/:id', component: AdventureInstructorEditComponent},
-  { path: 'registrationRequests/:id', component: AdminRegistrationRequestsComponent },
+  { path: 'newFreePeriod/:id', component: NewFreePeriodComponent },
+  { path: 'calendar/:id', component: CalendarComponent },
+  { path: 'editInstructor/:id', component: AdventureInstructorEditComponent },
+  {
+    path: 'registrationRequests/:id',
+    component: AdminRegistrationRequestsComponent,
+  },
   { path: 'deletionRequests/:id', component: AdminDeletionRequestsComponent },
   { path: 'addAdmin/:id', component: AdminAddAdminComponent },
 
   { path: 'editInstructor/:id', component: AdventureInstructorEditComponent },
-  { path: 'boatProfile/:id' , component:BoatProfilepageComponent },
-  { path: 'boatOwner/:id' , component: BoatOwnerpageComponent},
-  { path: 'editAdventure/:id', component:AdventureEditComponent },
+  { path: 'boatProfile/:id', component: BoatProfilepageComponent },
+  { path: 'boatOwner/:id', component: BoatOwnerpageComponent },
+  { path: 'editAdventure/:id', component: AdventureEditComponent },
 
   { path: 'entityOverview/:id', component: AdminEntityOverviewComponent },
   { path: 'adminProfile/:id', component: AdminProfilpageComponent },

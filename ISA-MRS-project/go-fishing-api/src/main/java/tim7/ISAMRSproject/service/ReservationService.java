@@ -2,11 +2,13 @@ package tim7.ISAMRSproject.service;
 
 import java.time.LocalDateTime;
 import java.time.Period;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import tim7.ISAMRSproject.dto.ActionDTO;
 import tim7.ISAMRSproject.dto.ReservationDTO;
@@ -17,18 +19,16 @@ import tim7.ISAMRSproject.model.FreePeriod;
 import tim7.ISAMRSproject.model.Reservation;
 import tim7.ISAMRSproject.model.ReservationStatus;
 import tim7.ISAMRSproject.model.User;
+import tim7.ISAMRSproject.repository.AdventureRepository;
 import tim7.ISAMRSproject.repository.BoatRepository;
 import tim7.ISAMRSproject.repository.ClientRepository;
 import tim7.ISAMRSproject.repository.CottageRepository;
 import tim7.ISAMRSproject.repository.FreePeriodRepository;
 import tim7.ISAMRSproject.repository.ReservationRepository;
-
-import java.time.Period;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import tim7.ISAMRSproject.utils.EmailServiceImpl;
 
 @Service
+@Transactional
 public class ReservationService {
 	
 	@Autowired
@@ -38,12 +38,17 @@ public class ReservationService {
 	private CottageRepository cottageRepository;
 	@Autowired
 	private BoatRepository boatRepository;
+	@Autowired
+	private AdventureRepository adventureRepository;
 
 	@Autowired
 	private ClientRepository clientRepository;
 	
 	@Autowired
 	private FreePeriodRepository fpRepository;
+	
+	@Autowired
+	private EmailServiceImpl emailService;
 
 	public boolean AdventureHasReservations(Integer id) {
 		for (Reservation r : reservationRepository.findAll()) {
@@ -154,7 +159,7 @@ public class ReservationService {
 		return "Invalid Offer ID";
 	}
 	
-	public String createNewReservation(String startDateString, String endDateString, int offerId, float totalPrice, User user) {
+	public String createNewReservation(String startDateString, String endDateString, int offerId, float totalPrice, String offerType, User user) {
 		LocalDateTime startDate = convertDateString(startDateString);
 		LocalDateTime endDate = convertDateString(endDateString);
 		
@@ -162,8 +167,13 @@ public class ReservationService {
 		res.setStartDateTime(startDate);
 		res.setEndDateTime(endDate);
 		res.setTotalPrice(totalPrice);
-		res.setOffer(cottageRepository.getById(offerId));
-		res.setStatus(ReservationStatus.ON_WAIT);
+		if (offerType.equals("cottage"))
+			res.setOffer(cottageRepository.getById(offerId));
+		else if (offerType.equals("boat"))
+			res.setOffer(boatRepository.getById(offerId));
+		else if (offerType.equals("adventure"))
+			res.setOffer(adventureRepository.getById(offerId));
+		res.setStatus(ReservationStatus.ACTIVE);
 		res.setClient(clientRepository.getById(user.getId()));
 		
 		List<FreePeriod> fps = fpRepository.findByOffer_Id(offerId);
@@ -174,8 +184,8 @@ public class ReservationService {
 				FreePeriod before = new FreePeriod();
 				FreePeriod after = new FreePeriod();
 				
-				before.setOffer(cottageRepository.getById(offerId));
-				after.setOffer(cottageRepository.getById(offerId));
+				before.setOffer(fp.getOffer());
+				after.setOffer(fp.getOffer());
 				before.setStartDateTime(fp.getStartDateTime());
 				before.setEndDateTime(startDate.minusDays(1));
 				after.setStartDateTime(endDate);
@@ -190,6 +200,7 @@ public class ReservationService {
 		}
 		
 		reservationRepository.save(res);
+		emailService.sendReservationConfirmationMail(user, res, res.getOffer().getName());
 		return "Your reservation is successful!";
 		
 	}

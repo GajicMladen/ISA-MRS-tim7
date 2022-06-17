@@ -6,7 +6,7 @@ import { ConfigService } from 'src/app/shared/services/config.service';
 @Injectable({
   providedIn: 'root',
 })
-export class CottageReservationService {
+export class BoatReservationService {
   constructor(private configService: ConfigService, private http: HttpClient) {}
 
   public getFreePeriodsById(id: number) {
@@ -29,7 +29,7 @@ export class CottageReservationService {
           endDateString,
           totalPrice,
           offerId,
-          offerType: 'cottage',
+          offerType: 'boat',
         },
         {
           headers: {

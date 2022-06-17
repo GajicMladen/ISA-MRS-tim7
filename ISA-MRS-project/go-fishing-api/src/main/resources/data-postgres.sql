@@ -320,7 +320,7 @@ INSERT INTO public.free_period (
 	
 INSERT INTO public.free_period (
 	start_date_time, end_date_time, offer_id)
-	VALUES ('2022-06-15T14:30:00', '2022-06-16T10:00:00', 22);
+	VALUES ('2022-06-01T14:30:00', '2022-06-30T10:00:00', 22);
 INSERT INTO public.free_period (
 	start_date_time, end_date_time, offer_id)
 	VALUES ('2022-06-01T00:00:01', '2022-06-30T00:00:01', 24);
@@ -338,20 +338,20 @@ INSERT INTO public.free_period (
 INSERT INTO public.reservation(end_date_time, start_date_time, status, total_price, client_id, grade, offer_id)
 	VALUES ('2022-05-31T00:00:01', '2022-05-30T00:00:01', 0, 365.36, 1, null, 1);
 INSERT INTO public.reservation(end_date_time, start_date_time, status, total_price, client_id, grade, offer_id)
-    	VALUES ('2022-05-25T00:00:01', '2022-05-24T00:00:01', 1, 120.5, 1,  null, 1);
+    	VALUES ('2022-05-25T00:00:01', '2022-05-24T00:00:01', 0, 120.5, 1,  null, 1);
 INSERT INTO public.reservation(end_date_time, start_date_time, status, total_price, client_id,  grade, offer_id)
-    	VALUES ('2022-05-25T00:00:01', '2022-05-24T00:00:01', 3, 120.5, 1,  null, 1);
+    	VALUES ('2022-05-25T00:00:01', '2022-05-24T00:00:01', 2, 120.5, 1,  null, 1);
 INSERT INTO public.reservation(end_date_time, start_date_time, status, total_price, client_id,  grade, offer_id)
-    	VALUES ('2022-05-25T00:00:01', '2022-05-24T00:00:01', 3, 120.5, 1,  null, 20);
+    	VALUES ('2022-05-25T00:00:01', '2022-05-24T00:00:01', 2, 120.5, 1,  null, 20);
 INSERT INTO public.reservation(end_date_time, start_date_time, status, total_price, client_id,  grade, offer_id)
-    	VALUES ('2022-05-25T00:00:01', '2022-05-24T00:00:01', 2, 120.5, 1,  null, 19);
+    	VALUES ('2022-05-25T00:00:01', '2022-05-24T00:00:01', 1, 120.5, 1,  null, 19);
 
 INSERT INTO public.reservation(end_date_time, start_date_time, status, total_price, client_id, grade, offer_id)
 	VALUES ('2022-05-31T00:00:01', '2022-05-30T00:00:01', 0, 365.36, 1, null, 1);
 INSERT INTO public.reservation(end_date_time, start_date_time, status, total_price, client_id, grade, offer_id)
-    	VALUES ('2022-05-25T00:00:01', '2022-05-24T00:00:01', 1, 120.5, 1, null, 1);
+    	VALUES ('2022-05-25T00:00:01', '2022-05-24T00:00:01', 0, 120.5, 1, null, 1);
 INSERT INTO public.reservation(end_date_time, start_date_time, status, total_price, client_id, grade, offer_id)
-    	VALUES ('2022-05-25T00:00:01', '2022-05-24T00:00:01', 3, 120.5, 1, null, 1);
+    	VALUES ('2022-05-25T00:00:01', '2022-05-24T00:00:01', 2, 120.5, 1, null, 1);
   
 --ZALBE
 INSERT INTO public.complaint(for_offer, from_owner, offender_id, pusnih_offender, status, text, reservation_id)
