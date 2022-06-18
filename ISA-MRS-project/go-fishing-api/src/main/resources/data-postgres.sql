@@ -340,18 +340,9 @@ INSERT INTO public.reservation(end_date_time, start_date_time, status, total_pri
 INSERT INTO public.reservation(end_date_time, start_date_time, status, total_price, client_id, grade, offer_id)
     	VALUES ('2022-05-25T00:00:01', '2022-05-24T00:00:01', 0, 120.5, 1,  null, 1);
 INSERT INTO public.reservation(end_date_time, start_date_time, status, total_price, client_id,  grade, offer_id)
-    	VALUES ('2022-05-25T00:00:01', '2022-05-24T00:00:01', 2, 120.5, 1,  null, 1);
-INSERT INTO public.reservation(end_date_time, start_date_time, status, total_price, client_id,  grade, offer_id)
     	VALUES ('2022-05-25T00:00:01', '2022-05-24T00:00:01', 2, 120.5, 1,  null, 20);
 INSERT INTO public.reservation(end_date_time, start_date_time, status, total_price, client_id,  grade, offer_id)
     	VALUES ('2022-05-25T00:00:01', '2022-05-24T00:00:01', 1, 120.5, 1,  null, 19);
-
-INSERT INTO public.reservation(end_date_time, start_date_time, status, total_price, client_id, grade, offer_id)
-	VALUES ('2022-05-31T00:00:01', '2022-05-30T00:00:01', 0, 365.36, 1, null, 1);
-INSERT INTO public.reservation(end_date_time, start_date_time, status, total_price, client_id, grade, offer_id)
-    	VALUES ('2022-05-25T00:00:01', '2022-05-24T00:00:01', 0, 120.5, 1, null, 1);
-INSERT INTO public.reservation(end_date_time, start_date_time, status, total_price, client_id, grade, offer_id)
-    	VALUES ('2022-05-25T00:00:01', '2022-05-24T00:00:01', 2, 120.5, 1, null, 1);
     	
 INSERT INTO public.reservation(end_date_time, start_date_time, status, total_price, client_id, grade, offer_id)
 	VALUES ('2022-06-30T00:00:00', '2022-06-19T00:00:00', 0, 365.36, 1, null, 1);
@@ -362,7 +353,7 @@ INSERT INTO public.reservation(end_date_time, start_date_time, status, total_pri
       
 --ZALBE
 INSERT INTO public.complaint(for_offer, from_owner, offender_id, pusnih_offender, status, text, reservation_id)
-	VALUES (false, false, 1, true, 0, 'zalim se na klijenta indijanca, ostavio je haos!',1);
+	VALUES (false, true, 1, true, 0, 'zalim se na klijenta indijanca, ostavio je haos!',1);
 INSERT INTO public.complaint(for_offer, from_owner, offender_id, pusnih_offender, status, text, reservation_id)
 	VALUES (false, true, 1, true, 0, 'zalim se na klijenta indijanca, ostavio je haos!',2);
 

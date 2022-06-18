@@ -37,4 +37,15 @@ export class SubscriptionListComponent implements OnInit {
       );
     });
   }
+
+  public resubscribeOffer(id: number) {
+    this.subscriptionService.resubscribeOffer(id).subscribe((res) => {
+      let index = this.subscriptionList.findIndex((item) => item.id === id);
+      this.subscriptionList[index].subscribed = true;
+      this.messageService.showMessage(
+        'Subscribed successfully!',
+        MessageType.SUCCESS
+      );
+    });
+  }
 }

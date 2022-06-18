@@ -9,7 +9,7 @@
         <mat-card-subtitle>Cost per day: <b>{{item.price | currency:'USD'}}</b></mat-card-subtitle>
         <div>
             <button mat-button style="color:red" *ngIf="item.subscribed" (click)="unsubscribeOffer(item.id)">UNSUBSCRIBE</button>
-            <button mat-button style="color: green" *ngIf="!item.subscribed" disabled>RESUBSCRIBE</button>
+            <button mat-button style="color: green" *ngIf="!item.subscribed" (click)="resubscribeOffer(item.id)">RESUBSCRIBE</button>
         </div>
     </mat-card-actions>
 </mat-card>
