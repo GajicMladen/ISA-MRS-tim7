@@ -9,6 +9,8 @@ public class BoatDTO {
     private String description;
     private float price;
     private int capacity;
+
+    private String extraFavors;
     private Integer ownerId;
     private float length;
     private Integer numOfMotors;
@@ -32,6 +34,15 @@ public class BoatDTO {
         powerOfEngines = boat.getMotorPower();
         maxSpeed = boat.getMaxSpeed();
         reservationCancellationTerms = boat.getCancelConditions();
+        extraFavors = boat.getExtraFavors();
+    }
+
+    public String getExtraFavors() {
+        return extraFavors;
+    }
+
+    public void setExtraFavors(String extraFavors) {
+        this.extraFavors = extraFavors;
     }
 
     public Integer getId() {

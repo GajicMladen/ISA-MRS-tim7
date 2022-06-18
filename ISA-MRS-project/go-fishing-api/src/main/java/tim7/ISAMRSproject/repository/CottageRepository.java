@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 import org.springframework.transaction.annotation.Transactional;
+import tim7.ISAMRSproject.model.Client;
 import tim7.ISAMRSproject.model.Cottage;
 
 

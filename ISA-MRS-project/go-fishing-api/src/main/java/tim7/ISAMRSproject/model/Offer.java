@@ -54,8 +54,8 @@ public class Offer {
 	@JoinColumn(name = "address" ,referencedColumnName = "id")
 	private Address address;
 
-	@ManyToMany(mappedBy = "offers")
-	private Set<ExtraFavor> extraFavors = new HashSet<ExtraFavor>();
+	@Column(name = "extra_favors" ,nullable = true, columnDefinition = "TEXT")
+	private String extraFavors;
 
 	@OneToMany(mappedBy = "offer", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Set<FreePeriod> freePeriods = new HashSet<FreePeriod>();
@@ -74,6 +74,18 @@ public class Offer {
 		super();
 	}
 
+	public Offer(Integer id, String name, String promoDescription, float price, int capacity,String extraFavors) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.promoDescription = promoDescription;
+//		this.slike = slike;
+//		this.pravilaPonasanja = pravilaPonasanja;
+		this.price = price;
+		this.capacity = capacity;
+		this.extraFavors = extraFavors;
+	}
+
 	public Offer(Integer id, String name, String promoDescription, float price, int capacity) {
 		super();
 		this.id = id;
@@ -84,7 +96,6 @@ public class Offer {
 		this.price = price;
 		this.capacity = capacity;
 	}
-	
 	public Offer(Offer offer) {
 		super();
 		this.id = offer.id;
@@ -94,9 +105,11 @@ public class Offer {
 //		this.pravilaPonasanja = offer.pravilaPonasanja;
 		this.price = offer.price;
 		this.capacity = offer.capacity;
+		this.extraFavors = offer.extraFavors;
 	}
 	
-	public Offer(Integer id, String name, String promoDescription, Object slike, Object pravilaPonasanja, float price, int capacity) {
+	public Offer(Integer id, String name, String promoDescription, Object slike, Object pravilaPonasanja, float price,
+				 int capacity) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -107,20 +120,20 @@ public class Offer {
 		this.capacity = capacity;
 	}
 
+	public String getExtraFavors() {
+		return extraFavors;
+	}
+
+	public void setExtraFavors(String extraFavors) {
+		this.extraFavors = extraFavors;
+	}
+
 	public Address getAddress() {
 		return address;
 	}
 
 	public void setAddress(Address address) {
 		this.address = address;
-	}
-	
-	public Set<ExtraFavor> getExtraFavors() {
-		return extraFavors;
-	}
-
-	public void setExtraFavors(Set<ExtraFavor> extraFavors) {
-		this.extraFavors = extraFavors;
 	}
 
 	public Set<FreePeriod> getFreePeriods() {

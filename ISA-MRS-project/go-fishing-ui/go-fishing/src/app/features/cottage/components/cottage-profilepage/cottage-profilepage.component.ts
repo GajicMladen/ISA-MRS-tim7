@@ -35,6 +35,8 @@ export class CottageProfilepageComponent implements OnInit {
 
   clientLoggedIn:boolean;
 
+  extraFavors:string[];
+
   constructor(
     private route: ActivatedRoute,
     private cottageService: CottageService,
@@ -53,6 +55,8 @@ export class CottageProfilepageComponent implements OnInit {
         .findCottageById(this.cottageId)
         .subscribe((cottage) => {
           this.cottage = cottage;
+          if( this.cottage!= null && this.cottage.extraFavors != null)
+            this.extraFavors = this.cottage.extraFavors.split("|");
         });
 
         
@@ -62,6 +66,7 @@ export class CottageProfilepageComponent implements OnInit {
           this.clientLoggedIn = data;
         }
       );
+
     }
 
     this.actionService

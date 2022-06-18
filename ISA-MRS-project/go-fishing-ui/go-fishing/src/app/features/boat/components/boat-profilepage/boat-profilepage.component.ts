@@ -29,6 +29,8 @@ export class BoatProfilepageComponent implements OnInit {
 
   isSuscribed: boolean;
 
+  extraFavors:string[];
+
   hasFreePeriods: boolean = true;
   constructor(
     private route: ActivatedRoute,
@@ -44,6 +46,8 @@ export class BoatProfilepageComponent implements OnInit {
     this.boatId = Number(this.route.snapshot.paramMap.get('id'));
     this.boatService.findBoatById(this.boatId).subscribe((data) => {
       this.boat = data;
+      if(this.boat != null && this.boat.extraFavors != null)
+        this.extraFavors = this.boat.extraFavors.split("|");
     });
 
     this.actionService.getActionsForOffer(this.boatId).subscribe((data) => {

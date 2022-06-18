@@ -31,6 +31,7 @@ export class StartpagePreviewListService {
       averageRating: 3.3,
       boatType: 'Small Fishing Boat',
       length: 25,
+      extraFavors:""
     };
 
     let boat2: Boat = {
@@ -52,6 +53,7 @@ export class StartpagePreviewListService {
       averageRating: 4.7,
       boatType: 'Yacht',
       length: 100,
+      extraFavors:""
     };
 
     let boat3: Boat = {
@@ -72,6 +74,7 @@ export class StartpagePreviewListService {
       averageRating: 3.8,
       length: 20,
       boatType: 'Medium Sized Boat',
+      extraFavors:""
     };
 
     let boat4: Boat = {
@@ -93,6 +96,7 @@ export class StartpagePreviewListService {
       averageRating: 1.9,
       boatType: 'Semi Large Cruiser',
       length: 75,
+      extraFavors:""
     };
 
     let boat5: Boat = {
@@ -111,6 +115,7 @@ export class StartpagePreviewListService {
       averageRating: 4.9,
       boatType: 'Small Boat',
       length: 30,
+      extraFavors:""
     };
 
     boatArray.push(boat1, boat2, boat3, boat4, boat5);
@@ -136,7 +141,8 @@ export class StartpagePreviewListService {
       roomCount: 1,
       bedCount: 2,
       ownerId:1,
-      id:1
+      id:1,
+      extraFavors:""
     };
 
     let cottage2: Cottage = {
@@ -152,7 +158,8 @@ export class StartpagePreviewListService {
       averageRating: 3.8,roomCount: 1,
       bedCount: 2,
       ownerId:1,
-      id:1
+      id:1,
+      extraFavors:""
     };
     let cottage3: Cottage = {
       name: 'Large Cottage',
@@ -167,7 +174,8 @@ export class StartpagePreviewListService {
       averageRating: 4.2,roomCount: 1,
       bedCount: 2,
       ownerId:1,
-      id:1
+      id:1,
+      extraFavors:""
     };
     let cottage4: Cottage = {
       name: 'Extra Large Cottage',
@@ -183,7 +191,8 @@ export class StartpagePreviewListService {
       roomCount: 1,
       bedCount: 2,
       ownerId:1,
-      id:1
+      id:1,
+      extraFavors:""
     };
     let cottage5: Cottage = {
       name: 'Small Cabin',
@@ -199,7 +208,8 @@ export class StartpagePreviewListService {
       roomCount: 1,
       bedCount: 2,
       ownerId:1,
-      id:1
+      id:1,
+      extraFavors:""
     };
 
     cottageArray.push(cottage1, cottage2, cottage3, cottage4, cottage5);
@@ -222,6 +232,7 @@ export class StartpagePreviewListService {
       deleted: false,
       capacity: 2,
       averageRating: 3.9,
+      extraFavors:"",
       biography: 'Jack Sparrow will take you bear hunting',
     };
 
@@ -237,6 +248,7 @@ export class StartpagePreviewListService {
       deleted: false,
       capacity: 3,
       averageRating: 3.4,
+      extraFavors:"",
       biography: 'Jason Vorhees will take you whale fishing',
     };
 
@@ -252,6 +264,7 @@ export class StartpagePreviewListService {
       deleted: false,
       capacity: 1,
       averageRating: 2.9,
+      extraFavors:"",
       biography: 'Cristiano Ronaldo will take you bear hunting',
     };
 
@@ -267,6 +280,7 @@ export class StartpagePreviewListService {
       deleted: false,
       capacity: 1,
       averageRating: 4.8,
+      extraFavors:"",
       biography: 'Jack Sparrow will take you bungee jumping',
     };
 
@@ -282,6 +296,7 @@ export class StartpagePreviewListService {
       deleted: false,
       capacity: 2,
       averageRating: 3.9,
+      extraFavors:"",
       biography: 'Diego Forlan will take you boating',
     };
 
