@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { MessageService, MessageType } from 'src/app/shared/services/message-service/message.service';
 import { Boat } from 'src/models/boat';
 import { BoatService } from '../../services/boat.service';
 
@@ -22,7 +23,9 @@ export class BoatAddNewComponent implements OnInit {
 
   extraFavorsString:String;
 
-  constructor(private boatService:BoatService,private router: Router) { }
+  constructor(private boatService:BoatService,
+    private router: Router,
+    private messageService:MessageService) { }
 
   ngOnInit(): void {
     this.ownerId = history.state.ownerId;
@@ -38,9 +41,9 @@ export class BoatAddNewComponent implements OnInit {
     this.newBoat.extraFavors = this.extraFavorsString.split(/\r?\n/).join("|");
     
     this.boatService.addNewBoat(this.newBoat).subscribe(data =>{
-      console.log(data);
+      this.messageService.showMessage("Uspešno ste dodali novi brod.",MessageType.SUCCESS);
     });
-    //this.boats.push(this.newBoat);
+
     this.router.navigate(["/boatOwner/"+this.ownerId]);
 
   }

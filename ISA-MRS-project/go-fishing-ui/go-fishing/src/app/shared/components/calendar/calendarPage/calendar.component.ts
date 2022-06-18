@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { MessageService, MessageType } from 'src/app/shared/services/message-service/message.service';
 import { ReservationService } from 'src/app/shared/services/reservation-service/reservation.service';
 import { UserService } from 'src/app/shared/services/users-services/user.service';
 import { ActionDTO, ReservationDTO } from 'src/models/reservation';
@@ -28,7 +29,8 @@ export class CalendarComponent implements OnInit {
     private freePeriodService:FreePeriodService,
     private actionServce:ActionService,
     private userService:UserService,
-    private reservationService:ReservationService) { }
+    private reservationService:ReservationService,
+    private messageService:MessageService) { }
 
   ngOnInit(): void {
     
@@ -67,16 +69,24 @@ export class CalendarComponent implements OnInit {
   }
 
   deletePeriod(id:number){
-    this.freePeriodService.deleteFreePeriod(id).subscribe(data =>{
-      this.getFreePeriods();
-    });
+    
+    if(confirm("Da li ste sigurni da zelite da izbrišete period dostupnosti?")){
+      
+      this.freePeriodService.deleteFreePeriod(id).subscribe(data =>{
+        this.getFreePeriods();
+        this.messageService.showMessage("Uspešno ste obrisali period dostupnosti.",MessageType.SUCCESS);
+      });
+    }
   }
 
   
   deleteAction(id:number){
-    this.actionServce.deleteAction(id).subscribe(data =>{
-      this.getActions();
-    });
+    if(confirm("Da li ste sigurni da zelite da izbrišete akciju?")){
+      this.actionServce.deleteAction(id).subscribe(data =>{
+        this.getActions();
+        this.messageService.showMessage("Uspešno ste obrisali akciju.",MessageType.SUCCESS);
+      });
+    }
   }
 
   getParentMethod():any {
@@ -84,6 +94,7 @@ export class CalendarComponent implements OnInit {
       callParentMethod: () => {
         this.getFreePeriods();
         this.getActions();
+        this.getReservations();
       }
     }
   }

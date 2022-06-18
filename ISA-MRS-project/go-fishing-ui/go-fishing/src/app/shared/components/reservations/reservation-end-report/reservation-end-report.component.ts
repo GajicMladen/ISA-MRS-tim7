@@ -4,6 +4,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ComplaintService } from 'src/app/shared/services/complaint-service/complaint.service';
 import { ComplaintDTO } from 'src/models/complaint';
 import { ClientService } from 'src/app/shared/services/client-service/client.service';
+import { MessageService, MessageType } from 'src/app/shared/services/message-service/message.service';
 
 @Component({
   selector: 'app-reservation-end-report',
@@ -27,7 +28,8 @@ export class ReservationEndReportComponent implements OnInit {
     public dialogRef: MatDialogRef<ReservationEndReportComponent>,
     @Inject(MAT_DIALOG_DATA) public data: number[],
     private complaintService:ComplaintService,
-    private clientService:ClientService) { }
+    private clientService:ClientService,
+    private messageService:MessageService) { }
 
   ngOnInit(): void {
     this.complaintService.getComplaintForReservationFromOwner(this.data[0]).subscribe(
@@ -60,6 +62,7 @@ export class ReservationEndReportComponent implements OnInit {
         data=>{
           console.log(data);
           this.dialogRef.close();
+          this.messageService.showMessage("Žalba je uspešno poslata. Klijet je sankcionisan sa 1 poenom!",MessageType.SUCCESS)
         }
       );
       return;
@@ -79,6 +82,7 @@ export class ReservationEndReportComponent implements OnInit {
         data=>{
           console.log(data);
           this.dialogRef.close();
+          this.messageService.showMessage("Žalba je uspešno poslata administratoru na razmatranje.",MessageType.SUCCESS);
         }
       );
     }

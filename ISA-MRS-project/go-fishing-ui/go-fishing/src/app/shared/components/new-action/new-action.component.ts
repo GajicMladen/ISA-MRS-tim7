@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NgbCalendar, NgbDate, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
 import { ActionDTO, ActionSendDTO } from 'src/models/reservation';
 import { ActionService } from '../../services/action-service/action.service';
+import { MessageService, MessageType } from '../../services/message-service/message.service';
 
 @Component({
   selector: 'app-new-action',
@@ -30,7 +31,8 @@ export class NewActionComponent implements OnInit {
     private router:Router,
      private calendar: NgbCalendar,
      public formatter: NgbDateParserFormatter,
-     private actionService:ActionService) {
+     private actionService:ActionService,
+     private messageService:MessageService) {
       this.fromDate = calendar.getToday();
       this.toDate = calendar.getNext(calendar.getToday(), 'd', 10);
       this.today = calendar.getToday();
@@ -79,16 +81,15 @@ export class NewActionComponent implements OnInit {
       action.offerId = this.offerId;
       action.totalPrice = this.totalPrice;
       
-      //console.log(this.freePeriod);
-      //console.log(JSON.stringify(this.freePeriod));
 
       this.actionService.addNewAction(action).subscribe(response =>{
         this.router.navigate(["/calendar/"+this.offerId]);
         this._pData.callParentMethod();
+        this.messageService.showMessage("Uspešno ste dodali akciju.",MessageType.SUCCESS);
       });
     }
     else{
-      console.log("lepo odaberi datume");
+      this.messageService.showMessage("Lepo odaberite datume.",MessageType.WARNING);
     }
   }
   @Input() _pData !: any;
@@ -99,7 +100,7 @@ export class NewActionComponent implements OnInit {
       stringDate += date.year+"-";
       stringDate += date.month ? date.month<10 ? "0"+date.month +"-": date.month + "-" : "01-";
       stringDate += date.day ? date.day < 10 ? "0"+date.day : date.day : "01";
-      stringDate += "T00:00:01"
+      stringDate += "T00:00:00"
     }
     return stringDate;
 }

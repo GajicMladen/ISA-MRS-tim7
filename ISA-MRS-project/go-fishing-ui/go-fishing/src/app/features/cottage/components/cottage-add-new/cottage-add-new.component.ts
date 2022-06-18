@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { MessageService, MessageType } from 'src/app/shared/services/message-service/message.service';
 import { Cottage } from 'src/models/cottage';
 import { CottageService } from '../../services/cottage.service';
 
@@ -22,7 +23,8 @@ export class CottageAddNewComponent implements OnInit {
 
   extraFavorString:string;
   constructor(private cottageService:CottageService,
-    private router: Router) { }
+    private router: Router,
+    private messageService:MessageService) { }
 
   ngOnInit(): void {
     this.ownerId = history.state.ownerId;
@@ -40,7 +42,7 @@ export class CottageAddNewComponent implements OnInit {
     
     
     this.cottageService.addNewCottage(this.newCottage).subscribe(data =>{
-      console.log(data);
+      this.messageService.showMessage("Uspešno ste dodali vikendicu",MessageType.SUCCESS);
     });
     
     this.router.navigate(["/cottageOwner/"+this.ownerId]);

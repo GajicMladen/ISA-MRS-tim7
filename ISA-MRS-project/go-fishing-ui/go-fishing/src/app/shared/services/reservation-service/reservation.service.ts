@@ -20,14 +20,25 @@ export class ReservationService {
     this.reservationsUrl = 'http://localhost:8080/api/reservations';
   }
 
-  public addNewReservation(
-    reservation: ReservationSendDTO
+  public addNewReservationWithClient(
+    reservation: ReservationSendDTO,offerType:string
   ): Observable<string> {
+    
+    let startDateString = reservation.startDate;
+    let endDateString = reservation.endDate;
+    let offerId = reservation.offerId;
+    let totalPrice = 0;
     return this.http.post(
-      this.reservationsUrl + '/addNewReservation',
-      JSON.stringify(reservation),
+      this.reservationsUrl + '/newReservation/'+reservation.clientId,
       {
-        headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+        startDateString,
+        endDateString,
+        totalPrice,
+        offerId,
+        offerType
+      },
+      {
+        headers: new HttpHeaders({ 'Content-Type': 'application/json',"Access-Control-Allow-Origin": "*"  }),
         responseType: 'text',
       }
     );

@@ -11,6 +11,7 @@ import {
 } from '../../../../models/freePeriod';
 import { FreePeriodService } from '../../services/free-period-service/free-period.service';
 import { EventEmitter } from 'stream';
+import { MessageService, MessageType } from '../../services/message-service/message.service';
 
 @Component({
   selector: 'app-new-free-period',
@@ -36,7 +37,8 @@ export class NewFreePeriodComponent implements OnInit {
     private router: Router,
     private calendar: NgbCalendar,
     public formatter: NgbDateParserFormatter,
-    private freePeriodService: FreePeriodService
+    private freePeriodService: FreePeriodService,
+    private messageService:MessageService
   ) {
     this.fromDate = calendar.getToday();
     this.toDate = calendar.getNext(calendar.getToday(), 'd', 10);
@@ -94,24 +96,22 @@ export class NewFreePeriodComponent implements OnInit {
   }
 
   addNewFreePeriod() {
-    //console.log("mama");
     if (this.fromDate != undefined && this.toDate != undefined) {
       let freePeriod = new FreePeriodSendDTO();
       freePeriod.startDate = this.format(this.fromDate);
       freePeriod.endDate = this.format(this.toDate);
       freePeriod.offerId = this.offerId;
 
-      //console.log(this.freePeriod);
-      //console.log(JSON.stringify(this.freePeriod));
 
       this.freePeriodService
         .addNewFreePeriod(freePeriod)
         .subscribe((response) => {
           this.router.navigate(['/calendar/' + this.offerId]);
           this._pData.callParentMethod();
+          this.messageService.showMessage("Uspešno ste dodali period dostupnosti.",MessageType.SUCCESS);
         });
     } else {
-      console.log('lepo odaberi datume');
+      this.messageService.showMessage("Niste lepo odabrali datume.",MessageType.WARNING);
     }
   }
   @Input() _pData!: any;
