@@ -1,7 +1,8 @@
 <mat-card class="card">
     <h1 class="title">Reservation Confirmation</h1>
     <mat-card-content class="card-content">
-    <h3>Reservation details:</h3>
+    <mat-divider></mat-divider>
+    <br>
     <p>Cottage: <b>{{data.name}}</b></p>
     <p>Price (per day): <b>{{data.pricePerDay | currency:'USD'}}</b></p>
     <br>
@@ -18,11 +19,13 @@
         </mat-form-field>
     </form>
 
-
     <br>
-    <p>Cumulative price: <b>{{totalPrice | currency:'USD'}}</b></p>
+    <p style="margin-top:5px">Cumulative price: <b>{{totalPrice | currency:'USD'}}</b></p>
     <p>Loyalty discount: <b>{{loyaltyDiscount}}</b></p>
-    <p>TOTAL BILL: <b>{{totalFee | currency:'USD'}}</b></p>
+    <mat-divider></mat-divider>
+    <br>
+    <br>
+    <p style="font-size:20px">TOTAL BILL: <b>{{totalFee | currency:'USD'}}</b></p>
     </mat-card-content>
     <mat-card-actions style="text-align: center;">
         <button mat-button style="color:green" (click)="onConfirmClick()">CONFIRM</button>

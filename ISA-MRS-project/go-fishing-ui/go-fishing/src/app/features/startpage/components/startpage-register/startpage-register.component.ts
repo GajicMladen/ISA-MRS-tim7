@@ -88,10 +88,13 @@ export class StartpageRegisterComponent implements OnInit {
         .pipe()
         .subscribe(
           (res) => {
-            this.messageService.showMessage(
-              'Success! A confirmation e-mail has been sent!',
-              MessageType.SUCCESS
-            );
+            let msgString;
+            if (this.form.controls['role'].value === 'ROLE_USER')
+              msgString = 'Success! A confirmation e-mail has been sent!';
+            else
+              msgString =
+                'Success! An admin will review your applicaton shortly!';
+            this.messageService.showMessage(msgString, MessageType.SUCCESS);
             this.router.navigate(['/login']);
           },
           (error) => {

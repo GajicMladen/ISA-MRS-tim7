@@ -5,6 +5,8 @@ import java.util.Set;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 @Entity
 public class Reservation {
@@ -26,19 +28,22 @@ public class Reservation {
 	@Column(name = "status" , nullable = false)
 	private ReservationStatus status;
 
+	@JsonIgnore
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "client_id",nullable = true)
 	private Client client;
 	
-
+	@JsonIgnore
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "offer_id",nullable = false)
 	private Offer offer;
 	
+	@JsonIgnore
 	@OneToOne
 	@JoinColumn(name = "grade", referencedColumnName = "id",nullable = true)
 	private Grade grade;
 
+	@JsonIgnore
 	@OneToMany(mappedBy = "reservation", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Set<Complaint> complaints;
 

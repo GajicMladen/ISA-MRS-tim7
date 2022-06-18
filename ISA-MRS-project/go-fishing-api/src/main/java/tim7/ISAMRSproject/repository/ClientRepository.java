@@ -5,7 +5,6 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
 import tim7.ISAMRSproject.model.Client;
-import tim7.ISAMRSproject.model.Offer;
 
 import java.util.List;
 
@@ -18,7 +17,5 @@ public interface ClientRepository extends JpaRepository<Client,Integer> {
 
     @Query("select c from Client c inner join c.subscribedOffers subscribedOffers where subscribedOffers.id = ?1")
     List<Client> getSubscribersForOffer(Integer id);
-
-
 
 }
