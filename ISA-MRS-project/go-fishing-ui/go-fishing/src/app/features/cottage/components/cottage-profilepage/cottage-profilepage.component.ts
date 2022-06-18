@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ActionService } from 'src/app/shared/services/action-service/action.service';
 
 import { ClientService } from 'src/app/shared/services/client-service/client.service';
+import { ExtraFavorsService } from 'src/app/shared/services/extra-favors-service/extra-favors.service';
 
 import {
   MessageService,
@@ -33,6 +34,8 @@ export class CottageProfilepageComponent implements OnInit {
 
   clientLoggedIn:boolean;
 
+  extraFavors:string[];
+
   constructor(
     private route: ActivatedRoute,
     private cottageService: CottageService,
@@ -41,7 +44,8 @@ export class CottageProfilepageComponent implements OnInit {
     private reservationService: CottageReservationService,
     private messageService: MessageService,
     private clientService:ClientService ,
-    private userService:UserService
+    private userService:UserService,
+    private extraFavorService:ExtraFavorsService
   ) {}
 
   ngOnInit(): void {
@@ -60,6 +64,8 @@ export class CottageProfilepageComponent implements OnInit {
           this.clientLoggedIn = data;
         }
       );
+
+      this.extraFavors = this.extraFavorService.getFavorsForCottage(this.cottageId);
     }
 
     this.actionService

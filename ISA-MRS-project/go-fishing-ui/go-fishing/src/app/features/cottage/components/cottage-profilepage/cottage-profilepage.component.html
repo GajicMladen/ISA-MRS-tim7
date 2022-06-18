@@ -110,12 +110,9 @@
                         <hr >       
                         <div class="bullets">
                             <span class="font-weight-bold">Dodatne usluge:</span>
-                            <div class="d-flex align-items-center"> <span class="dot"></span> <span class="bullet-text">Wi-fi</span> </div>
-                            <div class="d-flex align-items-center"> <span class="dot"></span> <span class="bullet-text">Spa</span> </div>
-                            <div class="d-flex align-items-center"> <span class="dot"></span> <span class="bullet-text">Đakuzi</span> </div>
-                            <div class="d-flex align-items-center"> <span class="dot"></span> <span class="bullet-text">Bazen</span> </div>
-                            <div class="d-flex align-items-center"> <span class="dot"></span> <span class="bullet-text">TV</span> </div>
-                            <div class="d-flex align-items-center"> <span class="dot"></span> <span class="bullet-text">Klima</span> </div>
+                            <div *ngFor="let extraFavor of extraFavors" class="d-flex align-items-center"> 
+                                <span class="dot"></span> <span class="bullet-text">{{extraFavor}}</span> 
+                            </div>
                         </div>
                     </div>
                     <hr >

@@ -6,6 +6,7 @@ import { ActionService } from 'src/app/shared/services/action-service/action.ser
 import { ActionDTO } from 'src/models/reservation';
 import { UserService } from 'src/app/shared/services/users-services/user.service';
 import { ClientService } from 'src/app/shared/services/client-service/client.service';
+import { ExtraFavorsService } from 'src/app/shared/services/extra-favors-service/extra-favors.service';
 
 @Component({
   selector: 'app-boat-profilepage',
@@ -18,7 +19,8 @@ export class BoatProfilepageComponent implements OnInit {
     private boatService:BoatService,
     private actionService:ActionService,
     private userService:UserService,
-    private clientService:ClientService) { }
+    private clientService:ClientService,
+    private extraFavorService:ExtraFavorsService) { }
   boatId : number;
   boat:Boat;
 
@@ -27,6 +29,8 @@ export class BoatProfilepageComponent implements OnInit {
   clientLoggedIn:boolean;
   
   isSuscribed:boolean;
+
+  extraFavors:string[];
 
   ngOnInit(): void {
     
@@ -44,6 +48,7 @@ export class BoatProfilepageComponent implements OnInit {
         this.clientLoggedIn= data;
       }
     );
+    this.extraFavors = this.extraFavorService.getFavorsForBoat(this.boatId);
   }
   getIsSuscribed(){
 

@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ExtraFavorsService } from 'src/app/shared/services/extra-favors-service/extra-favors.service';
 import { Cottage } from 'src/models/cottage';
 import { CottageService } from '../../services/cottage.service';
 
@@ -20,10 +21,14 @@ export class CottageAddNewComponent implements OnInit {
   promoDescription : string;
   bedCount:number;
 
-  constructor(private cottageService:CottageService,private router: Router) { }
+  extraFavors: string[];
+  constructor(private cottageService:CottageService,
+    private router: Router,
+    private extraFavorService:ExtraFavorsService) { }
 
   ngOnInit(): void {
     this.ownerId = history.state.ownerId;
+    this.extraFavors = this.extraFavorService.extraFavorsForCottage;
   }
 
   addNewCottage() {
