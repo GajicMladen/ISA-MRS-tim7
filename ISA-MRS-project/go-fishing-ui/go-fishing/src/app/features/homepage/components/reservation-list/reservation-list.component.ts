@@ -74,12 +74,22 @@ export class ReservationListComponent implements OnInit {
   }
 
   public openReviewDialog(item: any) {
-    const dialogRef = this.dialog.open(ReviewReservationDialogComponent);
+    let data = 'review';
+    const dialogRef = this.dialog.open(ReviewReservationDialogComponent, {
+      data: data,
+    });
 
     dialogRef.afterClosed().subscribe((res: any) => {
-      if (res !== undefined) {
-        res.id = item.id;
-        this.addReview(res);
+      if (this.mode == 'review') {
+        if (res !== undefined) {
+          res.id = item.id;
+          this.addReview(res);
+        }
+      } else {
+        if (res !== undefined) {
+          res.id = item.id;
+          this.addComplaint(res);
+        }
       }
     });
   }
@@ -98,12 +108,38 @@ export class ReservationListComponent implements OnInit {
     );
   }
 
+  public openComplaintDialog(item: any) {
+    let data = 'complaint';
+
+    const dialogRef = this.dialog.open(ReviewReservationDialogComponent, {
+      data: data,
+    });
+
+    dialogRef.afterClosed().subscribe((res: any) => {
+      if (res !== undefined) {
+        res.id = item.id;
+        this.addComplaint(res);
+      }
+    });
+  }
+
   public addReview(data: any) {
     this.reservationService.addReview(data).subscribe((res: any) => {
       let index = this.reservationList.findIndex((item) => item.id === data.id);
       this.reservationList[index].canCancel = false;
       this.messageService.showMessage(
         'Review sent successfully!',
+        MessageType.SUCCESS
+      );
+    });
+  }
+
+  public addComplaint(data: any) {
+    this.reservationService.addComplaint(data).subscribe((res: any) => {
+      let index = this.reservationList.findIndex((item) => item.id === data.id);
+      this.reservationList[index].canComplain = false;
+      this.messageService.showMessage(
+        'Complaint sent successfully!',
         MessageType.SUCCESS
       );
     });

@@ -13,7 +13,14 @@ public class ReservationListItemDTO {
     private boolean canCancel;
     private String offerName;
     private String offerAddress;
+    private boolean canComplain;
     
+	public boolean isCanComplain() {
+		return canComplain;
+	}
+	public void setCanComplain(boolean canComplain) {
+		this.canComplain = canComplain;
+	}
 	public String getOfferAddress() {
 		return offerAddress;
 	}

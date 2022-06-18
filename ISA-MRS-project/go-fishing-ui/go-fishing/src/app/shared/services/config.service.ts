@@ -141,4 +141,8 @@ export class ConfigService {
   get addReviewUrl(): string {
     return this._reservation_controller_url + '/addReview';
   }
+
+  get addComplaintUrl(): string {
+    return this._reservation_controller_url + '/addComplaint';
+  }
 }

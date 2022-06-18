@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import tim7.ISAMRSproject.dto.ActionDTO;
+import tim7.ISAMRSproject.dto.ClientComplaintDTO;
 import tim7.ISAMRSproject.dto.DataForChartDTO;
 import tim7.ISAMRSproject.dto.DateRangeStringDTO;
 import tim7.ISAMRSproject.dto.GradeDTO;
@@ -26,6 +28,7 @@ import tim7.ISAMRSproject.model.Adventure;
 import tim7.ISAMRSproject.model.ApprovalStatus;
 import tim7.ISAMRSproject.model.Boat;
 import tim7.ISAMRSproject.model.Client;
+import tim7.ISAMRSproject.model.Complaint;
 import tim7.ISAMRSproject.model.Cottage;
 import tim7.ISAMRSproject.model.FreePeriod;
 import tim7.ISAMRSproject.model.Grade;
@@ -35,6 +38,7 @@ import tim7.ISAMRSproject.model.User;
 import tim7.ISAMRSproject.service.AdventureService;
 import tim7.ISAMRSproject.service.BoatService;
 import tim7.ISAMRSproject.service.ClientService;
+import tim7.ISAMRSproject.service.ComplaintService;
 import tim7.ISAMRSproject.service.CottageService;
 import tim7.ISAMRSproject.service.FreePeriodService;
 import tim7.ISAMRSproject.service.ReservationService;
@@ -63,6 +67,8 @@ public class ReservationController {
     @Autowired
     private FreePeriodService freePeriodService;
 
+    @Autowired
+    private ComplaintService complaintService;
 
     @Autowired
     private UserService userService;
@@ -264,5 +270,20 @@ public class ReservationController {
     		return new ResponseEntity<>(HttpStatus.OK);
     	else
     		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+    
+    @PostMapping(value = "/addComplaint")
+    public ResponseEntity<?> addReview(@RequestBody ClientComplaintDTO complaintDTO){
+    	Complaint complaint = new Complaint();
+    	Reservation res = reservationService.getReservationById(complaintDTO.getId());
+    	
+    	complaint.setFormOwner(false);
+    	complaint.setForOffer(true);
+    	complaint.setPunishOffender(false);
+    	complaint.setText(complaintDTO.getComplaintText());
+    	complaint.setStatus(ApprovalStatus.ON_WAIT);
+    	
+    	complaintService.addNewComplaint(complaint, complaintDTO.getId());
+		return new ResponseEntity<>(HttpStatus.OK);
     }
 }

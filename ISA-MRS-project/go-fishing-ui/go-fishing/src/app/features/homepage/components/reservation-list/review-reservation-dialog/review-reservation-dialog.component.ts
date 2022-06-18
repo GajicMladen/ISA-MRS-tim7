@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import {
   MessageService,
   MessageType,
@@ -15,9 +15,12 @@ import { CancelReservationDialogComponent } from '../cancel-reservation-dialog/c
 export class ReviewReservationDialogComponent implements OnInit {
   form: any = this.createReviewForm();
 
+  complaintForm: any = this.createComplaintForm();
+
   constructor(
     public dialogRef: MatDialogRef<CancelReservationDialogComponent>,
-    private messageService: MessageService
+    private messageService: MessageService,
+    @Inject(MAT_DIALOG_DATA) public data: any
   ) {}
 
   ngOnInit(): void {}
@@ -26,6 +29,12 @@ export class ReviewReservationDialogComponent implements OnInit {
     return new FormGroup({
       grade: new FormControl(''),
       reviewText: new FormControl('', Validators.required),
+    });
+  }
+
+  createComplaintForm(): FormGroup {
+    return new FormGroup({
+      complaintText: new FormControl(''),
     });
   }
 
@@ -48,5 +57,20 @@ export class ReviewReservationDialogComponent implements OnInit {
       return;
     }
     this.dialogRef.close(this.form.getRawValue());
+  }
+
+  public onComplainClick() {
+    if (this.complaintForm.controls['complaintText'].value === '') {
+      this.messageService.showMessage(
+        'Please enter complaint text!',
+        MessageType.WARNING
+      );
+      return;
+    }
+    this.dialogRef.close(this.complaintForm.getRawValue());
+  }
+
+  get mode() {
+    return this.data;
   }
 }

@@ -24,17 +24,25 @@ public class Complaint {
 	@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "reservation_id")
     private Reservation reservation;
-
-    @Column(name="for_offer",nullable = false)
+    
+    // flag - da li salje korisnik ili vlasnik
+    // za klijenta -> true
+    @Column(name="for_offer", nullable = false)
     private boolean forOffer;
 
-    @Column(name="offender_id",nullable = false)
+    // na koga se odnosi zalba
+    // Moze biti i od offera.. Kum
+    // za klijenta -> id ponude
+    @Column(name="offender_id", nullable = false)
     private Integer offenderId;
 
-    @Column(name="from_owner",nullable = false)
+    // flag - da li salje korisnik ili vlasnik
+    // za klijenta -> false
+    @Column(name="from_owner", nullable = false)
     private boolean formOwner;
-
-    @Column(name="pusnih_offender",nullable = false)
+    
+    // za klijenta -> false
+    @Column(name="pusnih_offender", nullable = false)
     private boolean punishOffender;
     public Complaint(){}
 

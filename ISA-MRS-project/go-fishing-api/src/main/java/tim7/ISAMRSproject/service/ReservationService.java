@@ -15,6 +15,7 @@ import tim7.ISAMRSproject.dto.ReservationDTO;
 import tim7.ISAMRSproject.dto.ReservationListItemDTO;
 import tim7.ISAMRSproject.model.Boat;
 import tim7.ISAMRSproject.model.Client;
+import tim7.ISAMRSproject.model.Complaint;
 import tim7.ISAMRSproject.model.Cottage;
 import tim7.ISAMRSproject.model.FreePeriod;
 import tim7.ISAMRSproject.model.Grade;
@@ -251,6 +252,12 @@ public class ReservationService {
 					rli.setCanCancel(true);
 				else
 					rli.setCanCancel(false);
+				boolean canComplain = true;
+				for (Complaint c: r.getComplaints()) {
+					if (c.getOffenderId() != u.getId())
+						canComplain = false;
+				}
+				rli.setCanComplain(canComplain);
 				retVal.add(rli);
 			}
 		}

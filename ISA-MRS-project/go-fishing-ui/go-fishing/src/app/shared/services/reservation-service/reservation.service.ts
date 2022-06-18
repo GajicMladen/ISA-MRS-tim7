@@ -154,4 +154,8 @@ export class ReservationService {
   public addReview(data: any) {
     return this.http.post(this.config.addReviewUrl, data);
   }
+
+  public addComplaint(data: any) {
+    return this.http.post(this.config.addComplaintUrl, data);
+  }
 }

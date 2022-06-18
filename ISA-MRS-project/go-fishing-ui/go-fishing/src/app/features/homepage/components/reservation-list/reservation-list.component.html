@@ -13,6 +13,9 @@
         <div *ngIf="mode === 'past'">
             <button mat-button style="color:green" *ngIf="item.canCancel" (click)="openReviewDialog(item)">LEAVE A REVIEW</button>
             <button mat-button style="color: gray" *ngIf="!item.canCancel" disabled>ALREADY REVIEWED</button>
+
+            <button mat-button style="color:red" *ngIf="item.canComplain" (click)="openComplaintDialog(item)">SEND A COMPLAINT</button>
+            <button mat-button style="color: gray" *ngIf="!item.canComplain" disabled>COMPLAINT ALREADY SENT</button>
         </div>
     </mat-card-actions>
 </mat-card>
