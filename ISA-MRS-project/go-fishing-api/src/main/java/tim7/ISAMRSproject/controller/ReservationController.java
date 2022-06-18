@@ -9,14 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import tim7.ISAMRSproject.dto.ActionDTO;
 import tim7.ISAMRSproject.dto.ClientComplaintDTO;
@@ -323,7 +316,7 @@ public class ReservationController {
     }
 
     @PostMapping(value = "/newReservation/{clientId}")
-    public ResponseEntity<?> addNewReservation(@RequestBody DateRangeStringDTO dateRangeDTO,
+    public ResponseEntity<?> addNewReservationFromOwner(@RequestBody DateRangeStringDTO dateRangeDTO,
                                                @PathVariable int clientId,
                                                Principal user){
         User owner = userService.findByEmail(user.getName());
@@ -419,5 +412,14 @@ public class ReservationController {
     	
     	complaintService.addNewComplaint(complaint, complaintDTO.getId());
 		return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PutMapping(value = "/buyAction/{idAction}")
+    public ResponseEntity<?> buyAction(Principal user,@PathVariable int idAction){
+        User u = userService.findByEmail(user.getName());
+
+        reservationService.buyAction(u.getId(),idAction);
+
+        return ResponseEntity.status(200).body("Success");
     }
 }
