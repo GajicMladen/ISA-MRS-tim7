@@ -420,6 +420,6 @@ public class ReservationController {
 
         reservationService.buyAction(u.getId(),idAction);
 
-        return ResponseEntity.status(200).body("Success");
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

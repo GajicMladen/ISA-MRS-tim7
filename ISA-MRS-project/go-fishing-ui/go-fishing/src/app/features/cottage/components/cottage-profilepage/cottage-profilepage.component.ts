@@ -36,7 +36,7 @@ export class CottageProfilepageComponent implements OnInit {
 
   clientLoggedIn: boolean;
 
-  extraFavors:string[];
+  extraFavors: string[];
 
   constructor(
     private route: ActivatedRoute,
@@ -56,35 +56,35 @@ export class CottageProfilepageComponent implements OnInit {
         .findCottageById(this.cottageId)
         .subscribe((cottage) => {
           this.cottage = cottage;
-          if( this.cottage!= null && this.cottage.extraFavors != null)
-            this.extraFavors = this.cottage.extraFavors.split("|");
-            
-          this.userService.findById(this.cottage.ownerId).subscribe(data=>{
-            this.ownerName = data.name+" "+data.lastName;
+          if (this.cottage != null && this.cottage.extraFavors != null)
+            this.extraFavors = this.cottage.extraFavors.split('|');
+
+          this.userService.findById(this.cottage.ownerId).subscribe((data) => {
+            this.ownerName = data.name + ' ' + data.lastName;
           });
         });
-      
+
       this.userService.isLoggedUserOnlyClient().subscribe((data) => {
         console.log(data);
         this.clientLoggedIn = data;
       });
 
-    this.actionService
-      .getActionsForOffer(this.cottageId)
-      .subscribe((actions) => {
-        this.actions = actions;
-      });
+      this.actionService
+        .getActionsForOffer(this.cottageId)
+        .subscribe((actions) => {
+          this.actions = actions;
+        });
 
-    this.getIsSuscribed();
+      this.getIsSuscribed();
 
-    this.reservationService
-      .getFreePeriodsById(this.cottageId)
-      .subscribe((res: any) => {
-        this.hasFreePeriods = res.length > 0;
-      });
-
+      this.reservationService
+        .getFreePeriodsById(this.cottageId)
+        .subscribe((res: any) => {
+          this.hasFreePeriods = res.length > 0;
+        });
+    }
   }
-  ownerName:string;
+  ownerName: string;
   getIsSuscribed() {
     this.clientService.isSuscribedToOffer(this.cottageId).subscribe((data) => {
       console.log(data);
@@ -117,6 +117,10 @@ export class CottageProfilepageComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((res: any) => {
       if (res !== undefined) {
+        this.actions.splice(
+          this.actions.findIndex((i) => i.id === item.id),
+          1
+        );
         this.reservationService.confirmAction(item.id).subscribe((res: any) => {
           this.messageService.showMessage(
             'Action reserved successfully!',
