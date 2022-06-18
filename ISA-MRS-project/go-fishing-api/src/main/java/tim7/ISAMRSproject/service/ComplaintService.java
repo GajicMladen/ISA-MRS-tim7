@@ -29,9 +29,9 @@ public class ComplaintService {
     }
     
     public void addNewComplaint(Complaint c, int reservationId){
-    	Reservation res = resService.getReservationById(reservationId);
-    	c.setReservation(res);
-    	c.setOffenderId(res.getOffer().getId());
+    	Optional<Reservation> res = resService.getReservationById(reservationId);
+    	c.setReservation(res.get());
+    	c.setOffenderId(res.get().getOffer().getId());
         complaintRepository.save(c);
     }
 
