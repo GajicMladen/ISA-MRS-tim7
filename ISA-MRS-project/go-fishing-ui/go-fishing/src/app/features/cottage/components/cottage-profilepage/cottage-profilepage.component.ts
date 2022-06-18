@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
+import { iif } from 'rxjs';
 import { ActionService } from 'src/app/shared/services/action-service/action.service';
 
 import { ClientService } from 'src/app/shared/services/client-service/client.service';
@@ -14,6 +15,7 @@ import { UserService } from 'src/app/shared/services/users-services/user.service
 import { Cottage } from 'src/models/cottage';
 import { ActionDTO } from 'src/models/reservation';
 import { CottageService } from '../../services/cottage.service';
+import { CottageActionConfirmDialogComponent } from '../cottage-action-confirm-dialog/cottage-action-confirm-dialog.component';
 import { CottageClientReservationDialogComponent } from '../cottage-client-reservation-dialog/cottage-client-reservation-dialog.component';
 import { CottageReservationService } from '../cottage-client-reservation-dialog/cottage-reservation.service';
 
@@ -32,8 +34,7 @@ export class CottageProfilepageComponent implements OnInit {
 
   hasFreePeriods: boolean = true;
 
-
-  clientLoggedIn:boolean;
+  clientLoggedIn: boolean;
 
   extraFavors:string[];
 
@@ -44,8 +45,8 @@ export class CottageProfilepageComponent implements OnInit {
     private dialog: MatDialog,
     private reservationService: CottageReservationService,
     private messageService: MessageService,
-    private clientService:ClientService ,
-    private userService:UserService
+    private clientService: ClientService,
+    private userService: UserService
   ) {}
 
   ngOnInit(): void {
@@ -62,16 +63,11 @@ export class CottageProfilepageComponent implements OnInit {
             this.ownerName = data.name+" "+data.lastName;
           });
         });
-
-        
-      this.userService.isLoggedUserOnlyClient().subscribe(
-        data =>{
-          console.log(data);
-          this.clientLoggedIn = data;
-        }
-      );
-
-    }
+      
+      this.userService.isLoggedUserOnlyClient().subscribe((data) => {
+        console.log(data);
+        this.clientLoggedIn = data;
+      });
 
     this.actionService
       .getActionsForOffer(this.cottageId)
@@ -104,6 +100,30 @@ export class CottageProfilepageComponent implements OnInit {
   removeSubscription() {
     this.clientService.removeSubscription(this.cottageId).subscribe((data) => {
       this.getIsSuscribed();
+    });
+  }
+
+  public openActionConfirmDialog(item: any) {
+    let data = {
+      id: item.id,
+      name: this.cottage.name,
+      startDate: item.getStartDateString(),
+      endDate: item.getEndDateString(),
+      totalPrice: item.totalPrice,
+    };
+    const dialogRef = this.dialog.open(CottageActionConfirmDialogComponent, {
+      data: data,
+    });
+
+    dialogRef.afterClosed().subscribe((res: any) => {
+      if (res !== undefined) {
+        this.reservationService.confirmAction(item.id).subscribe((res: any) => {
+          this.messageService.showMessage(
+            'Action reserved successfully!',
+            MessageType.SUCCESS
+          );
+        });
+      }
     });
   }
 

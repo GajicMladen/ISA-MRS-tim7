@@ -147,6 +147,10 @@ export class ConfigService {
     return this._reservation_controller_url + '/addComplaint';
   }
 
+  get confirmActionUrl(): string {
+    return this._reservation_controller_url + '/buyAction/';
+  }
+
   /*
    *
    *   CLIENT CONTROLLER
