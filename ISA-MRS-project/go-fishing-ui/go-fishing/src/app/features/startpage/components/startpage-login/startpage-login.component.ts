@@ -63,7 +63,7 @@ export class StartpageLoginComponent implements OnInit {
       .pipe()
       .subscribe(
         (res) => {
-          this.router.navigate(['home']);
+          this.router.navigateByUrl('home/');
         },
         (error) => {
           this.messageService.showMessage(error, MessageType.ERROR);

@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { LoyaltyService } from 'src/app/shared/services/loyalty-service/loyalty.service';
 import {
   MessageService,
   MessageType,
@@ -17,10 +18,12 @@ export class AdventureClientReservationDialogComponent implements OnInit {
 
   form: any = this.createDatesForm();
   totalPrice: number = 0;
+  loyaltyDiscount: any = 0;
   constructor(
     public dialogRef: MatDialogRef<AdventureClientReservationDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private loyaltyService: LoyaltyService
   ) {}
 
   ngOnInit(): void {
@@ -43,6 +46,9 @@ export class AdventureClientReservationDialogComponent implements OnInit {
     }
     this.form.controls['endDateVal'].valueChanges.subscribe((res: any) => {
       if (res !== null) this.setPrice();
+    });
+    this.loyaltyService.getLoyaltyForUser().subscribe((res) => {
+      this.loyaltyDiscount = res;
     });
   }
 
@@ -79,10 +85,6 @@ export class AdventureClientReservationDialogComponent implements OnInit {
         totalPrice: parseFloat(this.totalFee.toString()),
       });
     }
-  }
-
-  get loyaltyDiscount() {
-    return 1;
   }
 
   get totalFee() {

@@ -51,7 +51,10 @@ const routes: Routes = [
   { path: 'cottageProfile/:id', component: CottageProfilepageComponent },
   { path: 'reservationStart', component: ReservationStartpageComponent },
   { path: 'adventureProfile/:id', component: AdventureProfilpageComponent },
-  { path: 'adventureReservations/:id', component: AdventureReservationsComponent },
+  {
+    path: 'adventureReservations/:id',
+    component: AdventureReservationsComponent,
+  },
 
   { path: 'adventureCard', component: AdventureCardComponent },
   { path: 'cottageOwner/:id', component: CottageOwnerpageComponent },
@@ -63,6 +66,7 @@ const routes: Routes = [
   { path: 'editProfile', component: UserprofileComponent },
   { path: 'addNewCottage', component: CottageAddNewComponent },
   { path: 'editCottage/:id', component: CottageEditComponent },
+  { path: 'home', component: HomepageComponent },
 
   { path: 'addNewBoat', component: BoatAddNewComponent },
   { path: 'editBoat/:id', component: BoatEditComponent },
@@ -77,7 +81,7 @@ const routes: Routes = [
       { path: 'activeReservations', component: ReservationListComponent },
       { path: 'pastReservations', component: ReservationListComponent },
       { path: 'subscriptions', component: SubscriptionListComponent },
-      { path: '', redirectTo: 'userProfile', pathMatch: 'full' },
+      { path: '**', redirectTo: 'userProfile', pathMatch: 'full' },
     ],
   },
   { path: 'adventureAddNew/:id', component: AdventureAddNewComponent },
