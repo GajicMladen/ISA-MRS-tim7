@@ -13,6 +13,7 @@ export class ConfigService {
   private _reservation_controller_url =
     this._server_address + '/api/reservations';
   private _client_controller_url = this._server_address + '/api/clients';
+  private _loyalty_controller_url = this._server_address + '/api/loyalty';
 
   get loginUrl(): string {
     return this._login_url;
@@ -160,5 +161,19 @@ export class ConfigService {
   }
   get resubscribeUrl(): string {
     return this._client_controller_url + '/resubscribe';
+  }
+
+  /*
+   *
+   *   CLIENT CONTROLLER
+   *
+   */
+
+  get allLoyaltiesUrl(): string {
+    return this._loyalty_controller_url + '/getLoyalties';
+  }
+
+  get userLoyaltyUrl(): string {
+    return this._loyalty_controller_url + '/getLoyalty';
   }
 }

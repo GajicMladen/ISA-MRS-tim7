@@ -362,3 +362,17 @@ INSERT INTO public.complaint(for_offer, from_owner, offender_id, pusnih_offender
 --SUBSCRIBES
 INSERT INTO public.subscribers(client_id, offer_id) VALUES (1, 1);
 INSERT INTO public.subscribers(client_id, offer_id) VALUES (1, 2);
+
+--LOYALTY
+INSERT INTO public.loyalty_definition(
+	discount_rate, max_points, min_points, rank_name)
+	VALUES (1, 249, 0, 'Bronze');
+INSERT INTO public.loyalty_definition(
+	discount_rate, max_points, min_points, rank_name)
+	VALUES (0.95, 499, 250, 'Silver');
+INSERT INTO public.loyalty_definition(
+	discount_rate, max_points, min_points, rank_name)
+	VALUES (0.9, 999, 500, 'Gold');
+INSERT INTO public.loyalty_definition(
+	discount_rate, max_points, min_points, rank_name)
+	VALUES (0.8, 99999, 1000, 'Platinum');
