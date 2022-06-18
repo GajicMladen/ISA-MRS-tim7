@@ -11,6 +11,7 @@ import { OfferService } from 'src/app/shared/services/offer-service/offer.servic
 import { NgbCalendar, NgbDate, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
 import { ReservationSendDTO, ReservationStatus } from 'src/models/reservation';
 import { ReservationService } from 'src/app/shared/services/reservation-service/reservation.service';
+import { MessageService, MessageType } from 'src/app/shared/services/message-service/message.service';
 
 @Component({
   selector: 'reservation-add-new-with-client',
@@ -43,7 +44,8 @@ export class ReservationAddNewWithClientComponent implements OnInit {
     public formatter: NgbDateParserFormatter,
     private userService:UserService,
     private offerService:OfferService,
-    private reservationService:ReservationService) { }
+    private reservationService:ReservationService,
+    private messageService:MessageService) { }
 
   ngOnInit(): void {
         this.offerId = this.data[0];
@@ -79,11 +81,22 @@ export class ReservationAddNewWithClientComponent implements OnInit {
       newReservation.clientId = this.clientId;
       newReservation.offerId = this.offerId;
       newReservation.reservationStatus = ReservationStatus.ACTIVE;
-      newReservation.startDate = this.format(this.fromDate);
-      newReservation.endDate = this.format(this.toDate);
+      newReservation.startDate = this.formatKum(this.fromDate);
+      newReservation.endDate = this.formatKum(this.toDate);
+      let offerType = "";
+      if(this.ownerType == 'C')
+        offerType ="cottage";
+      else if(this.ownerType == 'B')
+        offerType = "boat";
+      else
+        offerType = "adventure"
 
-      this.reservationService.addNewReservation(newReservation).subscribe(data =>{
+      this.reservationService.addNewReservationWithClient(newReservation,offerType).subscribe(data =>{
         console.log(data);
+        this.dialogRef.close();
+        this.messageService.showMessage(
+          "Uspešno dodata rezervacija.",MessageType.SUCCESS
+        );
       });
        
   } 
@@ -126,7 +139,16 @@ export class ReservationAddNewWithClientComponent implements OnInit {
       stringDate += date.year+"-";
       stringDate += date.month ? date.month<10 ? "0"+date.month +"-": date.month + "-" : "01-";
       stringDate += date.day ? date.day < 10 ? "0"+date.day : date.day : "01";
-      stringDate += "T00:00:01"
+      stringDate += "T00:00:00"
+    }
+    return stringDate;
+  }
+  formatKum(date: NgbDate | null): string {
+    let stringDate: string = ""; 
+    if(date != null) {
+      stringDate += date.day + "-";
+      stringDate += date.month +"-" ;
+      stringDate += date.year;
     }
     return stringDate;
   }

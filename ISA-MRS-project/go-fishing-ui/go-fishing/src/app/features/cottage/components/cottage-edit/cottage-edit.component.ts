@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { MessageService, MessageType } from 'src/app/shared/services/message-service/message.service';
 import { Cottage } from 'src/models/cottage';
 import { CottageService } from '../../services/cottage.service';
 
@@ -21,7 +22,10 @@ export class CottageEditComponent implements OnInit {
   bedCount:number;
   roomCount:number;
 
-  constructor(private cottageService:CottageService,private route: ActivatedRoute,private router:Router) { }
+  constructor(private cottageService:CottageService,
+    private route: ActivatedRoute,
+    private router:Router,
+    private messageService:MessageService) { }
 
   ngOnInit(): void {
     this.cottageId = Number(this.route.snapshot.paramMap.get('id'));
@@ -49,7 +53,8 @@ export class CottageEditComponent implements OnInit {
     //console.log(this.newCottage);
     
     this.cottageService.editCottage(this.newCottage).subscribe(response => {console.log(response)} );
-
+    this.messageService.showMessage("Uspešno ste izmenili vikendicu",MessageType.SUCCESS);
     this.router.navigateByUrl("/cottageProfile/"+this.cottageId);
+
   }
 }

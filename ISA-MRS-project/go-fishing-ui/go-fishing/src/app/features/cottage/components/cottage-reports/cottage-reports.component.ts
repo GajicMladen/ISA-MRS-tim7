@@ -22,6 +22,7 @@ export class CottageReportsComponent implements OnInit {
   @Input() ownerId:number;
   
   ngOnInit(): void {
+    this.displayCottagesBussy();
   }
 
   displayCottagesBussy(){

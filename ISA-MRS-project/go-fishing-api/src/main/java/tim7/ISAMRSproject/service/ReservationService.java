@@ -162,7 +162,64 @@ public class ReservationService {
 
 		return "Invalid Offer ID";
 	}
-	
+	public String createNewReservationDji(String startDateString, String endDateString, int offerId, String offerType, User user) {
+		LocalDateTime startDate = convertDateString(startDateString);
+		LocalDateTime endDate = convertDateString(endDateString);
+
+		int daysNum = Period.between(startDate.toLocalDate(),endDate.toLocalDate()).getDays();
+
+		Reservation res = new Reservation();
+		res.setStartDateTime(startDate);
+		res.setEndDateTime(endDate);
+		switch (offerType) {
+			case "cottage":
+				Cottage cottage = cottageRepository.getById(offerId);
+				res.setTotalPrice(daysNum * cottage.getPrice());
+				res.setOffer(cottage);
+				break;
+			case "boat":
+				Boat boat = boatRepository.getById(offerId);
+				res.setTotalPrice(daysNum * boat.getPrice());
+				res.setOffer(boat);
+				break;
+			case "adventure":
+				Adventure adventure = adventureRepository.getById(offerId);
+				res.setTotalPrice(daysNum * adventure.getPrice());
+				res.setOffer(adventure);
+				break;
+		}
+		res.setStatus(ReservationStatus.ACTIVE);
+		res.setClient(clientRepository.getById(user.getId()));
+
+		List<FreePeriod> fps = fpRepository.findByOffer_Id(offerId);
+
+
+		for (FreePeriod fp: fps) {
+			if(fp.getStartDateTime().isBefore(startDate) && fp.getEndDateTime().isAfter(endDate)) {
+				FreePeriod before = new FreePeriod();
+				FreePeriod after = new FreePeriod();
+
+				before.setOffer(fp.getOffer());
+				after.setOffer(fp.getOffer());
+				before.setStartDateTime(fp.getStartDateTime());
+				before.setEndDateTime(startDate.minusDays(1));
+				after.setStartDateTime(endDate);
+				after.setEndDateTime(fp.getEndDateTime());
+
+				fpRepository.deleteById(fp.getId());
+				fpRepository.save(before);
+				fpRepository.save(after);
+			} else if (fp.getStartDateTime().equals(startDate) && fp.getEndDateTime().equals(endDate)) {
+				fpRepository.deleteById(fp.getId());
+			}
+		}
+
+		reservationRepository.save(res);
+		emailService.sendReservationConfirmationMail(user, res, res.getOffer().getName());
+		return "Your reservation is successful!";
+
+	}
+
 	public String createNewReservation(String startDateString, String endDateString, int offerId, float totalPrice, String offerType, User user) {
 		LocalDateTime startDate = convertDateString(startDateString);
 		LocalDateTime endDate = convertDateString(endDateString);

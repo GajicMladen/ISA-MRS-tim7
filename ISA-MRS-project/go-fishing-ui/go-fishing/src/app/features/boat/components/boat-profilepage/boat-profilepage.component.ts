@@ -30,6 +30,8 @@ export class BoatProfilepageComponent implements OnInit {
   isSuscribed: boolean;
 
   extraFavors:string[];
+  
+  ownerName:string;
 
   hasFreePeriods: boolean = true;
   constructor(
@@ -48,6 +50,9 @@ export class BoatProfilepageComponent implements OnInit {
       this.boat = data;
       if(this.boat != null && this.boat.extraFavors != null)
         this.extraFavors = this.boat.extraFavors.split("|");
+      this.userService.findById(this.boat.ownerId).subscribe(data=>{
+        this.ownerName = data.name +" "+data.lastName;
+      });
     });
 
     this.actionService.getActionsForOffer(this.boatId).subscribe((data) => {
@@ -63,7 +68,10 @@ export class BoatProfilepageComponent implements OnInit {
     this.userService.isLoggedUserOnlyClient().subscribe((data) => {
       this.clientLoggedIn = data;
     });
+
   }
+
+
 
   public openReservationDialog() {
     this.reservationService

@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Boat } from 'src/models/boat';
 import { BoatService } from '../../services/boat.service';
 import { FormsModule } from '@angular/forms';
+import { MessageService, MessageType } from 'src/app/shared/services/message-service/message.service';
 
 @Component({
   selector: 'app-boat-edit',
@@ -19,8 +20,12 @@ export class BoatEditComponent implements OnInit {
   price:number;
   capacity:number;
   promoDescription : string;
+  extraFavorsString:string;
 
-  constructor(private boatService:BoatService,private route: ActivatedRoute,private router:Router) { }
+  constructor(private boatService:BoatService,
+    private route: ActivatedRoute,
+    private router:Router,
+    private messageService:MessageService) { }
 
   ngOnInit(): void {
     this.boatId = Number(this.route.snapshot.paramMap.get('id'));
@@ -43,7 +48,7 @@ export class BoatEditComponent implements OnInit {
 
     
     this.boatService.editBoat(this.newBoat).subscribe(response => {
-      console.log(response);
+      this.messageService.showMessage("Uspešno ste izmenili brod.",MessageType.SUCCESS);
       this.router.navigateByUrl("/boatProfile/"+this.boatId);
     });
 

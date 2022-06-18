@@ -1,15 +1,18 @@
-<div [ngSwitch]="ownerType">
-    <span *ngSwitchCase="'C'">Odaberite vikendicu:</span>
-    <span *ngSwitchCase="'B'">Odaberite brod:</span>
-</div>
 
-<select [ngModel]="selectedOffer" *ngIf="offers != null && offers.length > 0" (ngModelChange)="onChange($event)">
-    
-    <option value="all" selected="selected">
-        Sve
-    </option>
-    <option *ngFor="let offer of offers" [value]="offer.id">    
-        {{offer.name}}
-    </option>
-</select>
+<mat-form-field appearance="fill" [ngSwitch]="ownerType">
+
+    <mat-label *ngSwitchCase="'C'">Vikendice:</mat-label>
+    <mat-label *ngSwitchCase="'B'">Brodovi:</mat-label>
+    <mat-label *ngSwitchCase="'A'">Avanture:</mat-label> 
+
+    <mat-select  [ngModel]="selectedOffer" *ngIf="offers != null && offers.length > 0" (ngModelChange)="onChange($event)">
+        
+        <mat-option value="all" selected="selected">
+            Sve
+        </mat-option>
+        <mat-option *ngFor="let offer of offers" [value]="offer.id">    
+            {{offer.name}}
+        </mat-option>
+    </mat-select>
+</mat-form-field>
 <app-reservations-list-view [reservations]="reservations" [ownerType]="ownerType"></app-reservations-list-view>

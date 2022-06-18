@@ -20,6 +20,10 @@
                                         
                                     </div>
                                     <div class="mb-3 d-flex">
+                                        <span class="mr-2 d-block d-sm-inline-block mb-2 mb-sm-0">Ponuda:</span>
+                                        <span class="bg-light-blue ml-auto">{{reservation.offerId}}</span>
+                                    </div>
+                                    <div class="mb-3 d-flex">
                                         <span class="mr-2 d-block d-sm-inline-block mb-2 mb-sm-0">Datum rezervacije:</span>
                                         <span class="bg-light-blue ml-auto">{{reservation.getStartDateString()}} - {{reservation.getEndDateString()}}</span>
                                     </div>
@@ -29,11 +33,13 @@
                                     </div>
                                     <div class="mb-5 d-flex">
                                         <span class="mr-2 d-block d-sm-inline-block mb-1 mb-sm-0">Klijent:</span>
-                                        <span class="bg-light-blue ml-auto">{{reservation.clientId}}</span>
+                                        <span class="bg-light-blue ml-auto" id="lblR{{reservation.clientId}}" 
+                                         (click)="getClientName(reservation.clientId,reservation.id)" *ngIf="clientNames.length != undefined">
+                                            {{clientNames[reservation.id]}}
+                                        </span>
                                     </div>
                                     <div  [ngSwitch]="reservation.reservationStatus">
                                         <div *ngSwitchCase="'ACTIVE'"  >
-                                            <div class="btn-gray">Otkaži</div>
                                             <div class="btn-gray" (click)="addNewReservation(reservation.offerId,reservation.clientId)">Dodaj novu rezervaciju</div>
                                         </div>
                                         <div *ngSwitchCase="'IN_PROCESS'" class="btn-gray" (click)="addNewReservation(reservation.offerId,reservation.clientId)" >

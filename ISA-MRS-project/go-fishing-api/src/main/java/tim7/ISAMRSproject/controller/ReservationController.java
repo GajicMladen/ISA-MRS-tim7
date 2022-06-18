@@ -321,6 +321,21 @@ public class ReservationController {
     	String status = reservationService.createNewReservation(dateRangeDTO.getStartDateString(), dateRangeDTO.getEndDateString(), dateRangeDTO.getOfferId(), dateRangeDTO.getTotalPrice(), dateRangeDTO.getOfferType(), u);
     	return ResponseEntity.status(HttpStatus.CREATED).body("{\"status\":\"" + status + "\"}");
     }
+
+    @PostMapping(value = "/newReservation/{clientId}")
+    public ResponseEntity<?> addNewReservation(@RequestBody DateRangeStringDTO dateRangeDTO,
+                                               @PathVariable int clientId,
+                                               Principal user){
+        User owner = userService.findByEmail(user.getName());
+        if(userService.isUserOnlyClient(owner))
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("{\"status\":\""+"Morate biti ulogovani kao vlasnik!"+"\"}");
+        Optional<Client> u = clientService.getClientById(clientId);
+        if(!u.isPresent())
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("{\"status\":\""+"Klijent ID nije validan!"+"\"}");
+        String status = reservationService.createNewReservationDji(dateRangeDTO.getStartDateString(),
+                dateRangeDTO.getEndDateString(), dateRangeDTO.getOfferId(), dateRangeDTO.getOfferType(), u.get());
+        return ResponseEntity.status(HttpStatus.CREATED).body("{\"status\":\"" + status + "\"}");
+    }
     
     @PostMapping(value = "/getReservationsByDateRange")
     public ResponseEntity<?> getReservationsByDateRange(@RequestBody DateRangeDTO dateRange) {
