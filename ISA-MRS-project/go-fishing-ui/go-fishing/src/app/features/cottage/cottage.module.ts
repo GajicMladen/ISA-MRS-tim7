@@ -14,6 +14,7 @@ import { CottageReportsComponent } from './components/cottage-reports/cottage-re
 import { SharedModule } from 'src/app/shared/shared.module';
 import { CottageClientReservationDialogComponent } from './components/cottage-client-reservation-dialog/cottage-client-reservation-dialog.component';
 import { CottageGalleryVisitorComponent } from './components/cottage-gallery-visitor/cottage-gallery-visitor.component';
+import { CottageActionConfirmDialogComponent } from './components/cottage-action-confirm-dialog/cottage-action-confirm-dialog.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { CottageGalleryVisitorComponent } from './components/cottage-gallery-vis
     CottageReportsComponent,
     CottageClientReservationDialogComponent,
     CottageGalleryVisitorComponent,
+    CottageActionConfirmDialogComponent,
   ],
   imports: [
     CommonModule,
