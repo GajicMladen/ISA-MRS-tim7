@@ -3,6 +3,7 @@ package tim7.ISAMRSproject.controller;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -248,5 +249,16 @@ public class ReservationController {
     		dtos.add(dto);
     	}
     	return new ResponseEntity<List<ReservationDTO>>(dtos, HttpStatus.OK);
+    }
+    
+    @GetMapping(value = "/getReservation/{id}")
+    public ResponseEntity<?> getReservationById(@PathVariable int id) {
+    	Optional<Reservation> reservation = this.reservationService.getReservationById(id);
+    	if (reservation.isPresent()) {
+    		return new ResponseEntity<>(new ReservationDTO(reservation.get()), HttpStatus.OK);
+    	}
+    	else {
+    		return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+    	}
     }
 }

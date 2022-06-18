@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { User } from 'src/app/shared/classes/user';
 import { Boat } from 'src/models/boat';
+import { ComplaintDTO } from 'src/models/complaint';
 import { Cottage } from 'src/models/cottage';
 import { Admin } from './classes/Admin';
 import { DeletionRequest } from './classes/DeletionRequest';
@@ -108,5 +109,5 @@ export class AdminService {
   public setNewEarningPercentage(percentage: number) :Observable<EarningsPercentage> {
     return this.http.post<EarningsPercentage>(this.adminUrl + "/setEarningPercentage", percentage);
   }
-
+  
 }

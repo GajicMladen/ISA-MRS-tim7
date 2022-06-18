@@ -32,13 +32,6 @@ public class Adventure extends Offer {
 	@Column(nullable = true, columnDefinition = "TEXT")
 	private String rulesOfCancelation;
 	
-	
-
-	/*
-	 * Kada vrsim update insturktorovih podataka moram da koristim Lazy fetch type,
-	 * a kada mi je potreban instruktor iz tabele moze samo da se izvrsi ako je fetch type Eager
-	 * 
-	 * */
 	@ManyToOne(fetch = FetchType.EAGER)
 	//@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "instruktor_id")

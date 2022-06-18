@@ -11,6 +11,8 @@ import { AdminAddAdminComponent } from './components/admin-add-admin/admin-add-a
 import { AdminService } from './admin.service';
 import { AdminEntityOverviewComponent } from './components/admin-entity-overview/admin-entity-overview.component';
 import { AdminReportComponent } from './components/admin-report/admin-report.component';
+import { AdminComplaintsComponent } from './components/admin-complaints/admin-complaints.component';
+import { AdminComplaintComponent } from './components/admin-complaints/admin-complaint/admin-complaint.component';
 
 
 
@@ -21,7 +23,9 @@ import { AdminReportComponent } from './components/admin-report/admin-report.com
     AdminDeletionRequestsComponent,
     AdminAddAdminComponent,
     AdminEntityOverviewComponent,
-    AdminReportComponent
+    AdminReportComponent,
+    AdminComplaintsComponent,
+    AdminComplaintComponent
   ],
   imports: [
     CommonModule,

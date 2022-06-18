@@ -24,4 +24,6 @@ public interface AdventureRepository extends JpaRepository<Adventure, Integer> {
             "where upper(c.name) like upper(?1) and c.price <= ?2 and c.price >= ?3 and c.rating >= ?4 and upper(c.address.city) like ?5 and c.capacity >= ?6 and freePeriods.startDateTime < ?7 and freePeriods.endDateTime > ?8")
     public int getAdventuresSearchCount(String name, float price, float price1, float rating, String city, int capacity, LocalDateTime startDateTime, LocalDateTime endDateTime);
 
+	@Query("select a.fishingInstructor.id from Adventure a where a.id = ?1")
+	public Integer getFishingInstrucorByOfferId(Integer id);
 }

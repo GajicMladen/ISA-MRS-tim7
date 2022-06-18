@@ -23,5 +23,17 @@ export class ComplaintService {
   getComplaintForReservationFromOwner(reservationId:number):Observable<ComplaintDTO>{
     return this.http.get<ComplaintDTO>(this.complaintsUrl+"/getComplaintFromOwner/"+reservationId);
   }
+
+  public getComplaints(): Observable<ComplaintDTO[]> {
+    return this.http.get<ComplaintDTO[]>(this.complaintsUrl + "/getComplaints");
+  }
+
+  public refuseComplaint(id: number) {
+    return this.http.post(this.complaintsUrl + "/refuseComplaint", id);
+  }
+
+  public sendResponse(complaintId: number, response: string) {
+    return this.http.post(this.complaintsUrl + "/sendResponse/" + complaintId, response);
+  }
   
 }

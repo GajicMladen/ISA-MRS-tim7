@@ -2,11 +2,13 @@ package tim7.ISAMRSproject.service;
 
 import java.time.LocalDateTime;
 import java.time.Period;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import tim7.ISAMRSproject.dto.ActionDTO;
 import tim7.ISAMRSproject.dto.ReservationDTO;
@@ -23,12 +25,9 @@ import tim7.ISAMRSproject.repository.CottageRepository;
 import tim7.ISAMRSproject.repository.FreePeriodRepository;
 import tim7.ISAMRSproject.repository.ReservationRepository;
 
-import java.time.Period;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
 @Service
+@Transactional
 public class ReservationService {
 	
 	@Autowired
@@ -81,8 +80,8 @@ public class ReservationService {
 
 	}
 
-	public Reservation getReservationById(int id){
-		return reservationRepository.getById(id);
+	public Optional<Reservation> getReservationById(int id){
+		return reservationRepository.findById(id);
 	}
 
 	public List<Reservation> getReservationsForOffer(int offerId){

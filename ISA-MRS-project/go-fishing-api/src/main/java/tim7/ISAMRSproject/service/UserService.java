@@ -24,8 +24,11 @@ import tim7.ISAMRSproject.model.Role;
 import tim7.ISAMRSproject.model.User;
 import tim7.ISAMRSproject.repository.AddressRepository;
 import tim7.ISAMRSproject.repository.AdminRepository;
+import tim7.ISAMRSproject.repository.AdventureRepository;
 import tim7.ISAMRSproject.repository.BoatOwnerRepository;
+import tim7.ISAMRSproject.repository.BoatRepository;
 import tim7.ISAMRSproject.repository.CottageOwnerRepository;
+import tim7.ISAMRSproject.repository.CottageRepository;
 import tim7.ISAMRSproject.repository.DeletionRequestRepository;
 import tim7.ISAMRSproject.repository.InstructorRepository;
 import tim7.ISAMRSproject.repository.UserRepository;
@@ -57,6 +60,12 @@ public class UserService implements UserDetailsService {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 	
+	@Autowired
+	private AdventureRepository adventureRepository;
+	@Autowired
+	private BoatRepository boatRepository;
+	@Autowired
+	private CottageRepository cottageRepository;
 	
 	@Autowired
 	private RoleService roleService;
@@ -193,6 +202,18 @@ public class UserService implements UserDetailsService {
 		this.adminRepository.save(admin);
 		
 		return (User)admin;
+	}
+
+	public User findServiceProviderByOfferId(Integer id) {
+		Integer userId = this.adventureRepository.getFishingInstrucorByOfferId(id);
+		if (userId == null) {
+			userId = this.boatRepository.getBoatOwnerByOfferId(id);
+			if (userId == null) {
+				userId = this.cottageRepository.getCottageOwnerByOfferId(id);
+			}
+		}
+		Optional<User> user = userRepository.findById(userId);
+		return user.get();
 	}
 	
 }
