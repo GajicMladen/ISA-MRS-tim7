@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
+import { LoyaltyService } from 'src/app/shared/services/loyalty-service/loyalty.service';
+import { MessageService, MessageType } from 'src/app/shared/services/message-service/message.service';
 
 @Component({
   selector: 'app-add-loyalty',
@@ -9,7 +11,9 @@ import { MatDialogRef } from '@angular/material/dialog';
 })
 export class AddLoyaltyComponent implements OnInit {
 
-  constructor(public dialogRef: MatDialogRef<AddLoyaltyComponent>) { }
+  constructor(public dialogRef: MatDialogRef<AddLoyaltyComponent>,
+              private loyaltyService: LoyaltyService,
+              private messageService: MessageService) { }
 
   form: FormGroup = this.generateForm();
 
@@ -28,8 +32,19 @@ export class AddLoyaltyComponent implements OnInit {
   }
 
   onNoClick(): void {
-    this.dialogRef.close();
+    this.dialogRef.close(null);
   }
-
+  
+  add() {
+    if (this.form.valid) {
+      this.loyaltyService.addLoyalty(this.form.getRawValue()).subscribe(res => {
+        this.messageService.showMessage('Loyalty program uspešno dodat!', MessageType.SUCCESS);
+        this.dialogRef.close(this.form.getRawValue());
+      });
+    }
+    else {
+      this.messageService.showMessage('Forma nije popunjena ispravno!', MessageType.WARNING);
+    }
+  }
 
 }
