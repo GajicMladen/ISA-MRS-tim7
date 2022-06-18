@@ -1,6 +1,7 @@
 import { Offer } from './offer';
 
 export class Boat implements Offer {
+  extraFavors: string;
   id: number;
   name: string;
   description: string;

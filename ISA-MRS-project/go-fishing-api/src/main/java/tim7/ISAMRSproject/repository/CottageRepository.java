@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 import org.springframework.transaction.annotation.Transactional;
+import tim7.ISAMRSproject.model.Client;
 import tim7.ISAMRSproject.model.Cottage;
 
 
@@ -32,6 +33,9 @@ public interface CottageRepository extends JpaRepository<Cottage,Integer>{
 	@Query("select COUNT(c) from Cottage c inner join c.freePeriods freePeriods " +
             "where upper(c.name) like ?1 and c.price <= ?2 and c.price >= ?3 and c.rating >= ?4 and upper(c.address.city) like ?5 and c.capacity >= ?6 and freePeriods.startDateTime < ?7 and freePeriods.endDateTime > ?8")
     public int getCottagesSearchCount(String name, float price, float price1, float rating, String city, int capacity, LocalDateTime startDateTime, LocalDateTime endDateTime);
+
+	  @Query("select a.cottageOwner.id from Cottage a where a.id = ?1")
+	  public Integer getCottageOwnerByOfferId(Integer id);
 	
 	List<Cottage> findBySubscribers_IdEquals(Integer id);
 

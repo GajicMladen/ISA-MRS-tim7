@@ -33,7 +33,6 @@ export class CottageService {
   }
 
   public addNewCottage(cottage: Cottage): Observable<string> {
-    console.log(JSON.stringify(cottage));
     return this.http.post(
       this.cottagesUrl + '/newCottage',
       JSON.stringify(cottage),
@@ -45,7 +44,6 @@ export class CottageService {
   }
 
   public editCottage(cottage: Cottage) {
-    console.log(cottage);
     return this.http.put(this.cottagesUrl + '/updateCottage', cottage, {
       headers: new HttpHeaders({ dataType: 'json' }),
     });

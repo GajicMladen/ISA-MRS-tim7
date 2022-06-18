@@ -20,14 +20,25 @@ export class ReservationService {
     this.reservationsUrl = 'http://localhost:8080/api/reservations';
   }
 
-  public addNewReservation(
-    reservation: ReservationSendDTO
+  public addNewReservationWithClient(
+    reservation: ReservationSendDTO,offerType:string
   ): Observable<string> {
+    
+    let startDateString = reservation.startDate;
+    let endDateString = reservation.endDate;
+    let offerId = reservation.offerId;
+    let totalPrice = 0;
     return this.http.post(
-      this.reservationsUrl + '/addNewReservation',
-      JSON.stringify(reservation),
+      this.reservationsUrl + '/newReservation/'+reservation.clientId,
       {
-        headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+        startDateString,
+        endDateString,
+        totalPrice,
+        offerId,
+        offerType
+      },
+      {
+        headers: new HttpHeaders({ 'Content-Type': 'application/json',"Access-Control-Allow-Origin": "*"  }),
         responseType: 'text',
       }
     );
@@ -182,5 +193,52 @@ export class ReservationService {
       return this.http.get<DataForChart[]>(this.reservationsUrl + "/getGradeChartDataForInstructor/"+ownerId);
   
     return new Observable();
+  }
+
+  public getReservationsByDateRange(dateRange: any): Observable<ReservationDTO[]> {
+    let data: Observable<ReservationReciveDTO[]> = this.http.post<ReservationReciveDTO[]>(this.reservationsUrl+"/getReservationsByDateRange", dateRange);
+
+    let res: ReservationDTO[] = [];
+
+    data.subscribe(dat => {
+      dat.forEach(d => {  
+        let reservation = new ReservationDTO();
+        reservation.startDate = new NgbDate(d.startDate[0],d.startDate[1],d.startDate[2]);  
+        reservation.endDate = new NgbDate(d.endDate[0],d.endDate[1],d.endDate[2]);
+        reservation.offerId = d.offerId;
+        reservation.totalPrice = d.totalPrice;
+        reservation.id = d.id;
+        reservation.clientId = d.clientId;
+        reservation.reservationStatus = d.reservationStatus;
+        reservation.clientName = d.clientName;
+        reservation.clientLastName = d.clientLastName;
+        res.push(reservation);
+      });
+    });
+
+    return of(res);
+  }
+
+  public getReservationById(id: number): Observable<ReservationDTO> {
+    let res: Observable<ReservationReciveDTO> = this.http.get<ReservationReciveDTO>(this.reservationsUrl + "/getReservation/" + id);
+    let reservation: ReservationDTO = new ReservationDTO();
+    
+    res.subscribe(d => {
+      reservation.startDate = new NgbDate(d.startDate[0],d.startDate[1],d.startDate[2]);  
+      reservation.endDate = new NgbDate(d.endDate[0],d.endDate[1],d.endDate[2]);
+      reservation.offerId = d.offerId;
+      reservation.totalPrice = d.totalPrice;
+      reservation.id = d.id;
+      reservation.clientId = d.clientId;
+      reservation.reservationStatus = d.reservationStatus;
+      reservation.clientName = d.clientName;
+      reservation.clientLastName = d.clientLastName;
+    });
+
+    return of(reservation);
+  }
+
+  public getClientByReservationId(id: number): Observable<string> {
+    return this.http.get<string>(this.reservationsUrl + "/getClientByReservationId/" + id);
   }
 }

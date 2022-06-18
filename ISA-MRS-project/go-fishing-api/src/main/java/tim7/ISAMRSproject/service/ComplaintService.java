@@ -10,6 +10,9 @@ import tim7.ISAMRSproject.model.Complaint;
 import tim7.ISAMRSproject.model.Reservation;
 import tim7.ISAMRSproject.repository.ComplaintRepository;
 
+import java.util.List;
+import java.util.Optional;
+
 @Service
 @Transactional
 public class ComplaintService {
@@ -21,18 +24,32 @@ public class ComplaintService {
     private ReservationService resService;
     
     public void addNewComplaint(Complaint c){
+    	
         complaintRepository.save(c);
     }
     
     public void addNewComplaint(Complaint c, int reservationId){
-    	Reservation res = resService.getReservationById(reservationId);
-    	c.setReservation(res);
-    	c.setOffenderId(res.getOffer().getId());
+    	Optional<Reservation> res = resService.getReservationById(reservationId);
+    	c.setReservation(res.get());
+    	c.setOffenderId(res.get().getOffer().getId());
         complaintRepository.save(c);
     }
 
     public Optional<Complaint> findByReservationAndFromOwner(int id){
         return complaintRepository.findByReservation_IdEqualsAndFormOwnerIsTrue(id);
     }
+
+	public List<Complaint> findComplaintsOnWait() {
+		return this.complaintRepository.findOnWait();
+	}
+	
+	public Optional<Complaint> getComplaintById(int id) {
+		return this.complaintRepository.findById(id);
+	}
+
+	public void save(Complaint complaint) {
+		this.complaintRepository.save(complaint);
+		
+	}
 }
 

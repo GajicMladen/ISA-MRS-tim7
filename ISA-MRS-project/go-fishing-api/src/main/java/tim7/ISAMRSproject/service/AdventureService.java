@@ -226,4 +226,8 @@ public class AdventureService {
 		LocalDateTime retVal = LocalDateTime.of(Integer.parseInt(tokens[2]), Integer.parseInt(tokens[1]), Integer.parseInt(tokens[0]), 0, 0);
 		return retVal;
 	}
+	
+	public Integer getFishingInstructorByOfferId(Integer id) {
+		return this.adventureRepository.getFishingInstrucorByOfferId(id);
+	}
 }

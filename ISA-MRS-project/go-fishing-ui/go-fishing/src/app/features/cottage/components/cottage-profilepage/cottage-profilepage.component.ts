@@ -36,6 +36,8 @@ export class CottageProfilepageComponent implements OnInit {
 
   clientLoggedIn: boolean;
 
+  extraFavors:string[];
+
   constructor(
     private route: ActivatedRoute,
     private cottageService: CottageService,
@@ -54,13 +56,18 @@ export class CottageProfilepageComponent implements OnInit {
         .findCottageById(this.cottageId)
         .subscribe((cottage) => {
           this.cottage = cottage;
+          if( this.cottage!= null && this.cottage.extraFavors != null)
+            this.extraFavors = this.cottage.extraFavors.split("|");
+            
+          this.userService.findById(this.cottage.ownerId).subscribe(data=>{
+            this.ownerName = data.name+" "+data.lastName;
+          });
         });
-
+      
       this.userService.isLoggedUserOnlyClient().subscribe((data) => {
         console.log(data);
         this.clientLoggedIn = data;
       });
-    }
 
     this.actionService
       .getActionsForOffer(this.cottageId)
@@ -75,8 +82,9 @@ export class CottageProfilepageComponent implements OnInit {
       .subscribe((res: any) => {
         this.hasFreePeriods = res.length > 0;
       });
-  }
 
+  }
+  ownerName:string;
   getIsSuscribed() {
     this.clientService.isSuscribedToOffer(this.cottageId).subscribe((data) => {
       console.log(data);

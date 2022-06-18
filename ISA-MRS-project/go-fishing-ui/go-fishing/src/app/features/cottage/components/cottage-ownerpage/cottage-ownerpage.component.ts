@@ -27,8 +27,6 @@ export class CottageOwnerpageComponent implements OnInit {
 
       this.userService.isThisLoggedUser(this.ownerId).subscribe(
         data=>{
-          console.log("===========");
-          console.log(data);
           this.ownerLoggedIn = data;
         }
       )

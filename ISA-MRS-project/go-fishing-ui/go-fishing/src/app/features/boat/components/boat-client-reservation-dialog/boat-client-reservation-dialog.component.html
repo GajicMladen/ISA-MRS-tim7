@@ -21,7 +21,7 @@
 
         <br>
         <p style="margin-top:5px">Cumulative price: <b>{{totalPrice | currency:'USD'}}</b></p>
-        <p>Loyalty discount: <b>{{loyaltyDiscount}}</b></p>
+        <p>Loyalty discount: <b>{{1 - loyaltyDiscount | percent}}</b></p>
         <mat-divider></mat-divider>
         <br>
         <br>

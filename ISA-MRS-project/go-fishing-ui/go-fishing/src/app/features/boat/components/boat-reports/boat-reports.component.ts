@@ -28,7 +28,9 @@ export class BoatReportsComponent implements OnInit {
   displayChart:boolean = true;
   
   ngOnInit(): void {
+    this.displayCottagesBussy();
   }
+
 
   displayCottagesBussy(){
 

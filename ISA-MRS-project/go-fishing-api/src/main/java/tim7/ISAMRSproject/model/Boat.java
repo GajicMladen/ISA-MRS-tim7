@@ -43,7 +43,8 @@ public class Boat extends Offer {
 	}
 
 	public Boat(BoatDTO boatDTO){
-		super(boatDTO.getId(), boatDTO.getName(), boatDTO.getDescription(), boatDTO.getPrice(),boatDTO.getCapacity());
+		super(boatDTO.getId(), boatDTO.getName(), boatDTO.getDescription(), boatDTO.getPrice(),
+				boatDTO.getCapacity(), boatDTO.getExtraFavors());
 		this.cancelConditions = boatDTO.getReservationCancellationTerms();
 		this.length = boatDTO.getLength();
 		this.maxSpeed = boatDTO.getMaxSpeed();

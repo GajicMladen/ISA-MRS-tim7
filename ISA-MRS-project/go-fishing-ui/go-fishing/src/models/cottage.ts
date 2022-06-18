@@ -1,6 +1,7 @@
 import { Offer } from './offer';
 
 export class Cottage implements Offer {
+    extraFavors: string;
     id: number;
     name: string;
     description: string;

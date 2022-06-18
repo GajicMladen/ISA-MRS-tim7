@@ -40,6 +40,9 @@ import { AdventureReportsComponent } from './features/adventure/components/adven
 import { ReservationListComponent } from './features/homepage/components/reservation-list/reservation-list.component';
 import { SubscriptionListComponent } from './features/homepage/components/subscription-list/subscription-list.component';
 import { AdventureReservationsComponent } from './features/adventure/components/adventure-reservations/adventure-reservations.component';
+import { AdminReportComponent } from './features/admin/components/admin-report/admin-report.component';
+import { AdminComplaintsComponent } from './features/admin/components/admin-complaints/admin-complaints.component';
+import { AdminLoyaltyProgramComponent } from './features/admin/components/admin-loyalty-program/admin-loyalty-program.component';
 
 const routes: Routes = [
   { path: '', component: StartpagePreviewListComponent },
@@ -49,7 +52,10 @@ const routes: Routes = [
   { path: 'cottageProfile/:id', component: CottageProfilepageComponent },
   { path: 'reservationStart', component: ReservationStartpageComponent },
   { path: 'adventureProfile/:id', component: AdventureProfilpageComponent },
-  { path: 'adventureReservations/:id', component: AdventureReservationsComponent },
+  {
+    path: 'adventureReservations/:id',
+    component: AdventureReservationsComponent,
+  },
 
   { path: 'adventureCard', component: AdventureCardComponent },
   { path: 'cottageOwner/:id', component: CottageOwnerpageComponent },
@@ -61,6 +67,7 @@ const routes: Routes = [
   { path: 'editProfile', component: UserprofileComponent },
   { path: 'addNewCottage', component: CottageAddNewComponent },
   { path: 'editCottage/:id', component: CottageEditComponent },
+  { path: 'home', component: HomepageComponent },
 
   { path: 'addNewBoat', component: BoatAddNewComponent },
   { path: 'editBoat/:id', component: BoatEditComponent },
@@ -75,7 +82,7 @@ const routes: Routes = [
       { path: 'activeReservations', component: ReservationListComponent },
       { path: 'pastReservations', component: ReservationListComponent },
       { path: 'subscriptions', component: SubscriptionListComponent },
-      { path: '', redirectTo: 'userProfile', pathMatch: 'full' },
+      { path: '**', redirectTo: 'userProfile', pathMatch: 'full' },
     ],
   },
   { path: 'adventureAddNew/:id', component: AdventureAddNewComponent },
@@ -98,8 +105,9 @@ const routes: Routes = [
     component: AdminRegistrationRequestsComponent,
   },
   { path: 'deletionRequests/:id', component: AdminDeletionRequestsComponent },
+  { path: 'complaints/:id', component: AdminComplaintsComponent},
   { path: 'addAdmin/:id', component: AdminAddAdminComponent },
-
+  { path: 'adminReport/:id', component: AdminReportComponent },
   { path: 'editInstructor/:id', component: AdventureInstructorEditComponent },
   { path: 'boatProfile/:id', component: BoatProfilepageComponent },
   { path: 'boatOwner/:id', component: BoatOwnerpageComponent },
@@ -107,6 +115,7 @@ const routes: Routes = [
 
   { path: 'entityOverview/:id', component: AdminEntityOverviewComponent },
   { path: 'adminProfile/:id', component: AdminProfilpageComponent },
+  { path: 'loyaltyProgram/:id', component: AdminLoyaltyProgramComponent },
 
   //Ubaciti komponentu za not found
   { path: '**', redirectTo: '', pathMatch: 'full' },

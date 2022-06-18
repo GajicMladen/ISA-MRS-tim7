@@ -3,22 +3,20 @@ package tim7.ISAMRSproject.controller;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import tim7.ISAMRSproject.dto.ActionDTO;
 import tim7.ISAMRSproject.dto.ClientComplaintDTO;
 import tim7.ISAMRSproject.dto.DataForChartDTO;
+
+import tim7.ISAMRSproject.dto.DateRangeDTO;
+
 import tim7.ISAMRSproject.dto.DateRangeStringDTO;
 import tim7.ISAMRSproject.dto.GradeDTO;
 import tim7.ISAMRSproject.dto.ReservationDTO;
@@ -39,6 +37,7 @@ import tim7.ISAMRSproject.utils.EmailServiceImpl;
 
 @RestController
 @RequestMapping(value = "api/reservations")
+@CrossOrigin(origins = "http://localhost:4200")
 public class ReservationController {
 
     @Autowired
@@ -315,7 +314,55 @@ public class ReservationController {
     	String status = reservationService.createNewReservation(dateRangeDTO.getStartDateString(), dateRangeDTO.getEndDateString(), dateRangeDTO.getOfferId(), dateRangeDTO.getTotalPrice(), dateRangeDTO.getOfferType(), u);
     	return ResponseEntity.status(HttpStatus.CREATED).body("{\"status\":\"" + status + "\"}");
     }
+
+    @PostMapping(value = "/newReservation/{clientId}")
+    public ResponseEntity<?> addNewReservationFromOwner(@RequestBody DateRangeStringDTO dateRangeDTO,
+                                               @PathVariable int clientId,
+                                               Principal user){
+        User owner = userService.findByEmail(user.getName());
+        if(userService.isUserOnlyClient(owner))
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("{\"status\":\""+"Morate biti ulogovani kao vlasnik!"+"\"}");
+        Optional<Client> u = clientService.getClientById(clientId);
+        if(!u.isPresent())
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("{\"status\":\""+"Klijent ID nije validan!"+"\"}");
+        String status = reservationService.createNewReservationDji(dateRangeDTO.getStartDateString(),
+                dateRangeDTO.getEndDateString(), dateRangeDTO.getOfferId(), dateRangeDTO.getOfferType(), u.get());
+        return ResponseEntity.status(HttpStatus.CREATED).body("{\"status\":\"" + status + "\"}");
+    }
     
+    @PostMapping(value = "/getReservationsByDateRange")
+    public ResponseEntity<?> getReservationsByDateRange(@RequestBody DateRangeDTO dateRange) {
+    	List<Reservation> reservations = this.reservationService.getReservationsByDataRange( dateRange.getStart(), dateRange.getEnd());
+    	List<ReservationDTO> dtos = new ArrayList<ReservationDTO>();
+    	for (Reservation r : reservations) {
+    		ReservationDTO dto = new ReservationDTO(r);
+    		dtos.add(dto);
+    	}
+    	return new ResponseEntity<List<ReservationDTO>>(dtos, HttpStatus.OK);
+    }
+    
+    @GetMapping(value = "/AllReservations")
+    public ResponseEntity<List<ReservationDTO>> getAllReservations() {
+    	List<Reservation> reservations = this.reservationService.getAllReservations();
+    	List<ReservationDTO> dtos = new ArrayList<ReservationDTO>();
+    	for (Reservation r : reservations) {
+    		ReservationDTO dto = new ReservationDTO(r);
+    		dtos.add(dto);
+    	}
+    	return new ResponseEntity<List<ReservationDTO>>(dtos, HttpStatus.OK);
+    }
+    
+    @GetMapping(value = "/getReservation/{id}")
+    public ResponseEntity<?> getReservationById(@PathVariable int id) {
+    	Optional<Reservation> reservation = this.reservationService.getReservationById(id);
+    	if (reservation.isPresent()) {
+    		return new ResponseEntity<>(new ReservationDTO(reservation.get()), HttpStatus.OK);
+    	}
+    	else {
+    		return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+    	}
+    }
+  
     @GetMapping(value = "/activeReservations")
     public ResponseEntity<?> getActiveReservations(Principal user){
     	User u = userService.findByEmail(user.getName());
@@ -365,5 +412,14 @@ public class ReservationController {
     	
     	complaintService.addNewComplaint(complaint, complaintDTO.getId());
 		return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/buyAction/{idAction}")
+    public ResponseEntity<?> buyAction(Principal user,@PathVariable int idAction){
+        User u = userService.findByEmail(user.getName());
+
+        reservationService.buyAction(u.getId(),idAction);
+
+        return ResponseEntity.status(200).body("Success");
     }
 }

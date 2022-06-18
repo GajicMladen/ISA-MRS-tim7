@@ -220,6 +220,18 @@ public class UserService implements UserDetailsService {
 		
 		return (User)admin;
 	}
+
+	public User findServiceProviderByOfferId(Integer id) {
+		Integer userId = this.adventureRepository.getFishingInstrucorByOfferId(id);
+		if (userId == null) {
+			userId = this.boatRepository.getBoatOwnerByOfferId(id);
+			if (userId == null) {
+				userId = this.cottageRepository.getCottageOwnerByOfferId(id);
+			}
+		}
+		Optional<User> user = userRepository.findById(userId);
+		return user.get();
+	}
 	
 	public List<SubscriptionDTO> getAllSubscriptions(User u){
 		List<SubscriptionDTO> subs = new ArrayList<SubscriptionDTO>();
@@ -257,5 +269,11 @@ public class UserService implements UserDetailsService {
 			subs.add(subDTO);
 		}
 		return subs;
-	}	
+	}
+
+	public boolean isUserOnlyClient(User requestUser){
+		return !(requestUser.hasRole("ROLE_ADMIN") || requestUser.hasRole("ROLE_COTTAGE_OWNER")
+				||requestUser.hasRole("ROLE_BOAT_OWNER")||requestUser.hasRole("ROLE_INSTRUCTOR")
+				||requestUser.hasRole("ROLE_SYSADMIN"));
+	}
 }

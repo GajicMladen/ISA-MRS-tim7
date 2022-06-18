@@ -10,6 +10,12 @@ import { AdminDeletionRequestsComponent } from './components/admin-deletion-requ
 import { AdminAddAdminComponent } from './components/admin-add-admin/admin-add-admin.component';
 import { AdminService } from './admin.service';
 import { AdminEntityOverviewComponent } from './components/admin-entity-overview/admin-entity-overview.component';
+import { AdminReportComponent } from './components/admin-report/admin-report.component';
+import { AdminComplaintsComponent } from './components/admin-complaints/admin-complaints.component';
+import { AdminComplaintComponent } from './components/admin-complaints/admin-complaint/admin-complaint.component';
+import { AdminLoyaltyProgramComponent } from './components/admin-loyalty-program/admin-loyalty-program.component';
+import { EditLoyaltyComponent } from './components/admin-loyalty-program/edit-loyalty/edit-loyalty.component';
+import { AddLoyaltyComponent } from './components/admin-loyalty-program/add-loyalty/add-loyalty.component';
 
 
 
@@ -19,7 +25,13 @@ import { AdminEntityOverviewComponent } from './components/admin-entity-overview
     AdminRegistrationRequestsComponent,
     AdminDeletionRequestsComponent,
     AdminAddAdminComponent,
-    AdminEntityOverviewComponent
+    AdminEntityOverviewComponent,
+    AdminReportComponent,
+    AdminComplaintsComponent,
+    AdminComplaintComponent,
+    AdminLoyaltyProgramComponent,
+    EditLoyaltyComponent,
+    AddLoyaltyComponent
   ],
   imports: [
     CommonModule,

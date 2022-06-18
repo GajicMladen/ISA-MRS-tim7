@@ -148,8 +148,6 @@ public class UserController {
 	public boolean isLoggedUserHasRole(Principal user){
 
 		User requestUser = userService.findByEmail(user.getName());
-		return !(requestUser.hasRole("ROLE_ADMIN") || requestUser.hasRole("ROLE_COTTAGE_OWNER")
-				||requestUser.hasRole("ROLE_BOAT_OWNER")||requestUser.hasRole("ROLE_INSTRUCTOR")
-				||requestUser.hasRole("ROLE_SYSADMIN"));
+		return userService.isUserOnlyClient(requestUser);
 	}
 }
