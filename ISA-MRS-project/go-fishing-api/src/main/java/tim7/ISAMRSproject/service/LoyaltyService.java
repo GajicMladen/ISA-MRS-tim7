@@ -1,6 +1,7 @@
 package tim7.ISAMRSproject.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -29,5 +30,13 @@ public class LoyaltyService {
 				return l.getDiscountRate();
 		}
 		return 1;
+	}
+	
+	public Optional<LoyaltyDefinition> findLoyaltyById(Integer id) {
+		return this.loyaltyRepository.findById(id);
+	}
+	
+	public void save(LoyaltyDefinition loyalty) {
+		this.loyaltyRepository.save(loyalty);
 	}
 }

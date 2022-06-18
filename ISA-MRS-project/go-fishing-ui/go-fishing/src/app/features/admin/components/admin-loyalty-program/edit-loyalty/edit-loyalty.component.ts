@@ -2,6 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { LoyaltyService } from 'src/app/shared/services/loyalty-service/loyalty.service';
+import { MessageService, MessageType } from 'src/app/shared/services/message-service/message.service';
 
 export interface DialogData {
   id: number
@@ -21,7 +22,8 @@ export class EditLoyaltyComponent implements OnInit {
 
   constructor(public dialogRef: MatDialogRef<EditLoyaltyComponent>,
               private loyaltyService: LoyaltyService,
-              @Inject(MAT_DIALOG_DATA) public data: DialogData,) { }
+              @Inject(MAT_DIALOG_DATA) public data: DialogData,
+              private messageService: MessageService) { }
 
   form: FormGroup = this.generateForm();
   
@@ -41,7 +43,20 @@ export class EditLoyaltyComponent implements OnInit {
   }
 
   onNoClick(): void {
-    this.dialogRef.close();
+    this.dialogRef.close(null);
+  }
+
+  edit() {
+    if (this.form.valid) {
+      this.loyaltyService.editLoyalty(this.form.getRawValue()).subscribe(res => {
+        this.messageService.showMessage('Loyalty program uspešno izmenjen!', MessageType.SUCCESS);
+        this.dialogRef.close(this.form.getRawValue());
+      });
+    }
+    else {
+      this.messageService.showMessage('Forma nije popunjena ispravno!', MessageType.WARNING);
+    }
+
   }
 
 }
