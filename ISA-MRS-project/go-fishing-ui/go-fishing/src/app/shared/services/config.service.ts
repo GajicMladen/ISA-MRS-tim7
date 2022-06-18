@@ -10,9 +10,9 @@ export class ConfigService {
   private _login_url = this._server_address + '/login';
   private _user_controller_url = this._server_address + '/api/users';
   private _entity_controller_url = this._server_address + '/api/entity';
-
   private _reservation_controller_url =
     this._server_address + '/api/reservations';
+  private _client_controller_url = this._server_address + '/api/clients';
 
   get loginUrl(): string {
     return this._login_url;
@@ -124,5 +124,41 @@ export class ConfigService {
 
   get newReservationUrl(): string {
     return this._reservation_controller_url + '/newReservation';
+  }
+
+  get activeReservationsUrl(): string {
+    return this._reservation_controller_url + '/activeReservations';
+  }
+
+  get pastReservationsUrl(): string {
+    return this._reservation_controller_url + '/pastReservations';
+  }
+
+  get cancelReservationUrl(): string {
+    return this._reservation_controller_url + '/cancelReservation/';
+  }
+
+  get addReviewUrl(): string {
+    return this._reservation_controller_url + '/addReview';
+  }
+
+  get addComplaintUrl(): string {
+    return this._reservation_controller_url + '/addComplaint';
+  }
+
+  /*
+   *
+   *   CLIENT CONTROLLER
+   *
+   */
+
+  get subscriptionsUrl(): string {
+    return this._client_controller_url + '/subscriptions';
+  }
+  get unsubscribeUrl(): string {
+    return this._client_controller_url + '/unsubscribe';
+  }
+  get resubscribeUrl(): string {
+    return this._client_controller_url + '/resubscribe';
   }
 }

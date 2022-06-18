@@ -2,23 +2,27 @@ package tim7.ISAMRSproject.service;
 
 import java.time.LocalDateTime;
 import java.time.Period;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import tim7.ISAMRSproject.dto.ActionDTO;
 import tim7.ISAMRSproject.dto.ReservationDTO;
+
+import tim7.ISAMRSproject.dto.ReservationListItemDTO;
+import tim7.ISAMRSproject.repository.ReservationRepository;
+import tim7.ISAMRSproject.utils.EmailServiceImpl;
+
 import tim7.ISAMRSproject.model.*;
 import tim7.ISAMRSproject.repository.*;
 
-import java.time.Period;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
 @Service
+@Transactional
 public class ReservationService {
 	
 	@Autowired
@@ -36,6 +40,12 @@ public class ReservationService {
 	
 	@Autowired
 	private FreePeriodRepository fpRepository;
+
+	@Autowired
+	private GradeRepository gradeRepository;
+	
+	@Autowired
+	private EmailServiceImpl emailService;
 
 	public boolean AdventureHasReservations(Integer id) {
 		for (Reservation r : reservationRepository.findAll()) {
@@ -76,8 +86,8 @@ public class ReservationService {
 
 	}
 
-	public Reservation getReservationById(int id){
-		return reservationRepository.getById(id);
+	public Optional<Reservation> getReservationById(int id){
+		return reservationRepository.findById(id);
 	}
 
 	public List<Reservation> getReservationsForOffer(int offerId){
@@ -153,7 +163,7 @@ public class ReservationService {
 		return "Invalid Offer ID";
 	}
 	
-	public String createNewReservation(String startDateString, String endDateString, int offerId, float totalPrice, User user) {
+	public String createNewReservation(String startDateString, String endDateString, int offerId, float totalPrice, String offerType, User user) {
 		LocalDateTime startDate = convertDateString(startDateString);
 		LocalDateTime endDate = convertDateString(endDateString);
 		
@@ -161,8 +171,13 @@ public class ReservationService {
 		res.setStartDateTime(startDate);
 		res.setEndDateTime(endDate);
 		res.setTotalPrice(totalPrice);
-		res.setOffer(cottageRepository.getById(offerId));
-		res.setStatus(ReservationStatus.ON_WAIT);
+		if (offerType.equals("cottage"))
+			res.setOffer(cottageRepository.getById(offerId));
+		else if (offerType.equals("boat"))
+			res.setOffer(boatRepository.getById(offerId));
+		else if (offerType.equals("adventure"))
+			res.setOffer(adventureRepository.getById(offerId));
+		res.setStatus(ReservationStatus.ACTIVE);
 		res.setClient(clientRepository.getById(user.getId()));
 		
 		List<FreePeriod> fps = fpRepository.findByOffer_Id(offerId);
@@ -173,8 +188,8 @@ public class ReservationService {
 				FreePeriod before = new FreePeriod();
 				FreePeriod after = new FreePeriod();
 				
-				before.setOffer(cottageRepository.getById(offerId));
-				after.setOffer(cottageRepository.getById(offerId));
+				before.setOffer(fp.getOffer());
+				after.setOffer(fp.getOffer());
 				before.setStartDateTime(fp.getStartDateTime());
 				before.setEndDateTime(startDate.minusDays(1));
 				after.setStartDateTime(endDate);
@@ -189,13 +204,100 @@ public class ReservationService {
 		}
 		
 		reservationRepository.save(res);
+		emailService.sendReservationConfirmationMail(user, res, res.getOffer().getName());
 		return "Your reservation is successful!";
 		
+	}
+	
+	public List<ReservationListItemDTO> getActiveReservations(User u) {
+		List<ReservationListItemDTO> retVal = new ArrayList<ReservationListItemDTO>();
+		for(Reservation r: reservationRepository.findByClient_IdEquals(u.getId())) {
+			if (r.getStartDateTime().isAfter(LocalDateTime.now())) {
+				ReservationListItemDTO rli = new ReservationListItemDTO();
+				rli.setId(r.getId());
+				rli.setStartDate(r.getStartDateTime());
+				rli.setEndDate(r.getEndDateTime());
+				rli.setClientId(u.getId());
+				rli.setOfferId(r.getOffer().getId());
+				rli.setOfferName(r.getOffer().getName());
+				rli.setTotalPrice(r.getTotalPrice());
+				rli.setOfferAddress(r.getOffer().getAddress().toString());
+				if(LocalDateTime.now().plusDays(3).isAfter(r.getStartDateTime()))
+					rli.setCanCancel(false);
+				else
+					rli.setCanCancel(true);
+				retVal.add(rli);
+			}
+		}
+		return retVal;
+	}
+	
+	public List<ReservationListItemDTO> getPastReservations(User u) {
+		List<ReservationListItemDTO> retVal = new ArrayList<ReservationListItemDTO>();
+		for(Reservation r: reservationRepository.findByClient_IdEquals(u.getId())) {
+			if (r.getStartDateTime().isBefore(LocalDateTime.now())) {
+				ReservationListItemDTO rli = new ReservationListItemDTO();
+				rli.setId(r.getId());
+				rli.setStartDate(r.getStartDateTime());
+				rli.setEndDate(r.getEndDateTime());
+				rli.setClientId(u.getId());
+				rli.setOfferId(r.getOffer().getId());
+				rli.setOfferName(r.getOffer().getName());
+				rli.setTotalPrice(r.getTotalPrice());
+				rli.setOfferAddress(r.getOffer().getAddress().toString());
+				if(r.getGrade() == null)
+					rli.setCanCancel(true);
+				else
+					rli.setCanCancel(false);
+				boolean canComplain = true;
+				for (Complaint c: r.getComplaints()) {
+					if (r.getId() == c.getReservation().getId() && !c.isFormOwner())
+						canComplain = false;
+				}
+				rli.setCanComplain(canComplain);
+				retVal.add(rli);
+			}
+		}
+		return retVal;
+	}
+	
+	public boolean cancelReservation(int id) {
+		Reservation res = reservationRepository.getById(id);
+		if (res == null) return false;
+		else {
+			FreePeriod fp = new FreePeriod();
+			fp.setStartDateTime(res.getStartDateTime());
+			fp.setEndDateTime(res.getEndDateTime());
+			fp.setOffer(res.getOffer());
+			reservationRepository.cancelReservationById(id);
+			fpRepository.save(fp);
+			return true;
+		}
+	}
+	
+	public boolean addReview(Grade grade, int reservationId) {
+		Reservation res = reservationRepository.getById(reservationId);
+		if (res != null) {
+			res.setGrade(grade);
+			grade.setReservation(res);
+			gradeRepository.save(grade);
+			return true;
+		} else return false;
+
 	}
 	
 	private LocalDateTime convertDateString(String s) {
 		String[] tokens = s.split("-");
 		LocalDateTime retVal = LocalDateTime.of(Integer.parseInt(tokens[2]), Integer.parseInt(tokens[1]), Integer.parseInt(tokens[0]), 0, 0);
 		return retVal;
+	}
+	
+	
+	public List<Reservation> getAllReservations() {
+		return this.reservationRepository.findAll();
+	}
+
+	public List<Reservation> getReservationsByDataRange(LocalDateTime start, LocalDateTime end) {
+		return this.reservationRepository.findAllByDateRange(start, end);
 	}
 }

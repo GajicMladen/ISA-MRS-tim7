@@ -55,7 +55,8 @@ public class RegistrationController {
 		}
 		
 		User newUser = userService.save(userRegisterDTO);
-		mailService.sendConfirmationMail(newUser);
+		if (userRegisterDTO.getRole().equals("ROLE_USER"))
+			mailService.sendConfirmationMail(newUser);
 		
 		return ResponseEntity.status(HttpStatus.CREATED).body(newUser);
 	}

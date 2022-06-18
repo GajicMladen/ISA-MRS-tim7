@@ -13,19 +13,27 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import tim7.ISAMRSproject.dto.ChangePasswordDTO;
+import tim7.ISAMRSproject.dto.SubscriptionDTO;
 import tim7.ISAMRSproject.dto.UserRegisterDTO;
 import tim7.ISAMRSproject.model.Address;
 import tim7.ISAMRSproject.model.Admin;
+import tim7.ISAMRSproject.model.Adventure;
+import tim7.ISAMRSproject.model.Boat;
 import tim7.ISAMRSproject.model.BoatOwner;
+import tim7.ISAMRSproject.model.Cottage;
 import tim7.ISAMRSproject.model.CottageOwner;
 import tim7.ISAMRSproject.model.DeletionRequest;
 import tim7.ISAMRSproject.model.FishingInstructor;
+import tim7.ISAMRSproject.model.RegistrationRequest;
+import tim7.ISAMRSproject.model.RegistrationRequest.RegistrationRequestStatus;
 import tim7.ISAMRSproject.model.Role;
 import tim7.ISAMRSproject.model.User;
-import tim7.ISAMRSproject.repository.AddressRepository;
 import tim7.ISAMRSproject.repository.AdminRepository;
+import tim7.ISAMRSproject.repository.AdventureRepository;
 import tim7.ISAMRSproject.repository.BoatOwnerRepository;
+import tim7.ISAMRSproject.repository.BoatRepository;
 import tim7.ISAMRSproject.repository.CottageOwnerRepository;
+import tim7.ISAMRSproject.repository.CottageRepository;
 import tim7.ISAMRSproject.repository.DeletionRequestRepository;
 import tim7.ISAMRSproject.repository.InstructorRepository;
 import tim7.ISAMRSproject.repository.UserRepository;
@@ -46,9 +54,6 @@ public class UserService implements UserDetailsService {
 	private InstructorRepository instructorRepository;
 	
 	@Autowired
-	private AddressRepository addressRepository;
-	
-	@Autowired
 	private AdminRepository adminRepository;
 
 	@Autowired
@@ -57,6 +62,14 @@ public class UserService implements UserDetailsService {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 	
+	@Autowired
+	private CottageRepository cottageRepository;
+	
+	@Autowired
+	private BoatRepository boatRepository;
+	
+	@Autowired
+	private AdventureRepository adventureRepository;
 	
 	@Autowired
 	private RoleService roleService;
@@ -90,7 +103,15 @@ public class UserService implements UserDetailsService {
 	
 	public User save(UserRegisterDTO userRegisterDTO) {
 		
-		User newUser = new User();
+		User newUser;
+		if (userRegisterDTO.getRole().equals("ROLE_COTTAGE_OWNER")) {
+			newUser = new CottageOwner();
+		} else if (userRegisterDTO.getRole().equals("ROLE_BOAT_OWNER")) {
+			newUser = new BoatOwner();
+		} else if (userRegisterDTO.getRole().equals("ROLE_INSTRUCTOR")) {
+			newUser = new FishingInstructor();
+		} else newUser = new User();
+		
 		Address address = new Address();
 		
 		address.setCountry(userRegisterDTO.getCountry());
@@ -110,19 +131,24 @@ public class UserService implements UserDetailsService {
 		newUser.setActive(false);
 		List<Role> roles = new ArrayList<Role>();
 		roles.add(roleService.findByName("ROLE_USER"));
-		if (!userRegisterDTO.getRole().equals("ROLE_USER"))
+		RegistrationRequest rr = new RegistrationRequest();
+		if (!userRegisterDTO.getRole().equals("ROLE_USER")) {
 			roles.add(roleService.findByName(userRegisterDTO.getRole()));
+			rr.setRegistrationReason(userRegisterDTO.getReason());
+			rr.setRequestStatus(RegistrationRequestStatus.PENDING);
+			rr.setUser(newUser);
+			newUser.setRegistrationRequest(rr);		
+		}
 		newUser.setRoles(roles);
-		
 		switch(userRegisterDTO.getRole()) {
 			case("ROLE_USER"):
 				return (User)(this.userRepository.save(newUser));
 			case("ROLE_BOAT_OWNER"):
-				return (User)(this.boatOwnerRepository.save(new BoatOwner(newUser)));
+				return (User)(this.boatOwnerRepository.save((BoatOwner)newUser));
 			case("ROLE_COTTAGE_OWNER"):
-				return (User)(this.cottageOwnerRepository.save(new CottageOwner(newUser)));
+				return (User)(this.cottageOwnerRepository.save((CottageOwner)newUser));
 			case("ROLE_INSTRUCTOR"):
-				return (User)(this.instructorRepository.save(new FishingInstructor(newUser)));
+				return (User)(this.instructorRepository.save((FishingInstructor)(newUser)));
 		}
 		return null;
 	}
@@ -194,5 +220,54 @@ public class UserService implements UserDetailsService {
 		
 		return (User)admin;
 	}
+
+	public User findServiceProviderByOfferId(Integer id) {
+		Integer userId = this.adventureRepository.getFishingInstrucorByOfferId(id);
+		if (userId == null) {
+			userId = this.boatRepository.getBoatOwnerByOfferId(id);
+			if (userId == null) {
+				userId = this.cottageRepository.getCottageOwnerByOfferId(id);
+			}
+		}
+		Optional<User> user = userRepository.findById(userId);
+		return user.get();
+	}
 	
+	public List<SubscriptionDTO> getAllSubscriptions(User u){
+		List<SubscriptionDTO> subs = new ArrayList<SubscriptionDTO>();
+		for(Cottage c: cottageRepository.findBySubscribers_IdEquals(u.getId())) {
+			SubscriptionDTO subDTO = new SubscriptionDTO();
+			subDTO.setId(c.getId());
+			subDTO.setOfferName(c.getName());
+			subDTO.setOfferAddress(c.getAddress().toString());
+			subDTO.setSubscribed(true);
+			subDTO.setPrice(c.getPrice());
+			subDTO.setOwnerName(c.getCottageOwner().getName() + " " + c.getCottageOwner().getLastName());
+			subDTO.setInstructor(false);
+			subs.add(subDTO);
+		}
+		for(Boat b: boatRepository.findBySubscribers_IdEquals(u.getId())){
+			SubscriptionDTO subDTO = new SubscriptionDTO();
+			subDTO.setId(b.getId());
+			subDTO.setOfferName(b.getName());
+			subDTO.setOfferAddress(b.getAddress().toString());
+			subDTO.setSubscribed(true);
+			subDTO.setPrice(b.getPrice());
+			subDTO.setOwnerName(b.getBoatOwner().getName() + " " + b.getBoatOwner().getLastName());
+			subDTO.setInstructor(false);
+			subs.add(subDTO);
+		}
+		for(Adventure a: adventureRepository.findByInstructorId(u.getId())){
+			SubscriptionDTO subDTO = new SubscriptionDTO();
+			subDTO.setId(a.getId());
+			subDTO.setOfferName(a.getName());
+			subDTO.setOfferAddress(a.getAddress().toString());
+			subDTO.setSubscribed(true);
+			subDTO.setPrice(a.getPrice());
+			subDTO.setOwnerName(a.getFishingInstructor().getName() + " " + a.getFishingInstructor().getLastName());
+			subDTO.setInstructor(true);
+			subs.add(subDTO);
+		}
+		return subs;
+	}	
 }

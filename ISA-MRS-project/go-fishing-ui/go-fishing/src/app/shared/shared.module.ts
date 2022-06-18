@@ -23,6 +23,7 @@ import { ReservationListView } from './components/reservations/reservations-list
 import { ReservationsOwnerpageComponent } from './components/reservations/reservations-ownerpage/reservations-ownerpage.component';
 import { ReservationEndReportComponent } from './components/reservations/reservation-end-report/reservation-end-report.component';
 import { ReservationAddNewWithClientComponent } from './components/reservations/reservation-add-new-with-clent/reservation-add-new-with-client.component';
+import { NoEntitiesFoundComponent } from './components/no-entities-found/no-entities-found.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { ReservationAddNewWithClientComponent } from './components/reservations/
     ReservationListView,
     ReservationsOwnerpageComponent,
     ReservationEndReportComponent,
-    ReservationAddNewWithClientComponent
+    ReservationAddNewWithClientComponent,
+    NoEntitiesFoundComponent,
   ],
   imports: [
     CommonModule,
@@ -51,7 +53,7 @@ import { ReservationAddNewWithClientComponent } from './components/reservations/
     FormsModule,
     NgxChartsModule,
     BrowserAnimationsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   exports: [
     NavbarComponent,
@@ -63,6 +65,7 @@ import { ReservationAddNewWithClientComponent } from './components/reservations/
     ChartComponent,
     ChartPieComponent,
     ReservationsOwnerpageComponent,
+    NoEntitiesFoundComponent,
     ReservationListView
   ],
 })

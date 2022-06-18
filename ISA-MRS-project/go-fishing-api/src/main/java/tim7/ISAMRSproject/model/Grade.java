@@ -16,7 +16,7 @@ public class Grade {
     private Long id;
 
 	@Column(name = "grade",nullable = false)
-	private int grade;
+	private float grade;
 	
 	@Column(name= "revision" ,nullable = false)
 	private String revision;
@@ -35,12 +35,12 @@ public class Grade {
 		this.id = id;
 	}
 
-	public int getGrade() {
+	public float getGrade() {
 		return grade;
 	}
 
-	public void setGrade(int grade) {
-		this.grade = grade;
+	public void setGrade(float f) {
+		this.grade = f;
 	}
 
 	public String getRevision() {

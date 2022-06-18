@@ -30,6 +30,9 @@
         <p class="bottom-text">Price: {{item.price | currency:'USD'}}</p>
     </mat-card-actions>
 </mat-card>
+<div *ngIf="totalItems === 0">
+    <app-no-entities-found></app-no-entities-found>
+</div>
 
 <div class="footer">
     <mat-paginator #paginator [length]="totalItems"
