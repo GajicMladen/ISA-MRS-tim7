@@ -120,6 +120,8 @@ public class ReservationService {
 		this.reservationRepository.deleteById(id);
 	}
 
+
+
 	public String addNewReservation(ReservationDTO reservationDTO){
 		Reservation newReservation = new Reservation();
 		newReservation.setEndDateTime(reservationDTO.getEndDate());
@@ -356,5 +358,19 @@ public class ReservationService {
 
 	public List<Reservation> getReservationsByDataRange(LocalDateTime start, LocalDateTime end) {
 		return this.reservationRepository.findAllByDateRange(start, end);
+	}
+
+
+	public void buyAction(int clientId,int reservationId){
+		Optional<Reservation> res = reservationRepository.getReservationByIdAndStatus(reservationId,ReservationStatus.FOR_ACTION);
+		Optional<Client> client = clientRepository.findById(clientId);
+
+		if(res.isPresent() && client.isPresent()){
+			res.get().setClient(client.get());
+			res.get().setStatus(ReservationStatus.ACTIVE);
+
+			reservationRepository.save(res.get());
+		}
+
 	}
 }
