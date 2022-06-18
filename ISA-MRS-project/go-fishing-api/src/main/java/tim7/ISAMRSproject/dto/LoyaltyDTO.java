@@ -2,10 +2,28 @@ package tim7.ISAMRSproject.dto;
 
 public class LoyaltyDTO {
 
+	int id;
 	String rankName;
 	int minPoints;
 	int maxPoints;
 	float discountRate;
+	int pointsPerReservation;
+	
+	
+	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	public int getPointsPerReservation() {
+		return pointsPerReservation;
+	}
+	public void setPointsPerReservation(int pointsPerReservation) {
+		this.pointsPerReservation = pointsPerReservation;
+	}
+	
 	public String getRankName() {
 		return rankName;
 	}

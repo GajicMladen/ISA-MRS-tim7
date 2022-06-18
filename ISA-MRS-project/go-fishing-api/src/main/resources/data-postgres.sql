@@ -404,14 +404,14 @@ INSERT INTO public.subscribers(client_id, offer_id) VALUES (1, 2);
 
 --LOYALTY
 INSERT INTO public.loyalty_definition(
-	discount_rate, max_points, min_points, rank_name)
-	VALUES (1, 249, 0, 'Bronze');
+	discount_rate, max_points, min_points, rank_name, points_per_reservation)
+	VALUES (1, 249, 0, 'Bronze', 2);
 INSERT INTO public.loyalty_definition(
-	discount_rate, max_points, min_points, rank_name)
-	VALUES (0.95, 499, 250, 'Silver');
+	discount_rate, max_points, min_points, rank_name, points_per_reservation)
+	VALUES (0.95, 499, 250, 'Silver', 4);
 INSERT INTO public.loyalty_definition(
-	discount_rate, max_points, min_points, rank_name)
-	VALUES (0.9, 999, 500, 'Gold');
+	discount_rate, max_points, min_points, rank_name, points_per_reservation)
+	VALUES (0.9, 999, 500, 'Gold', 5);
 INSERT INTO public.loyalty_definition(
-	discount_rate, max_points, min_points, rank_name)
-	VALUES (0.8, 99999, 1000, 'Platinum');
+	discount_rate, max_points, min_points, rank_name, points_per_reservation)
+	VALUES (0.8, 99999, 1000, 'Platinum', 6);

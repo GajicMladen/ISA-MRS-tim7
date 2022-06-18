@@ -30,10 +30,12 @@ public class LoyaltyController {
 		ArrayList<LoyaltyDTO> loyalties = new ArrayList<LoyaltyDTO>();
 		for(LoyaltyDefinition l: loyaltyService.getLoyalties()) {
 			LoyaltyDTO dto = new LoyaltyDTO();
+			dto.setId(l.getId());
 			dto.setRankName(l.getRankName());
 			dto.setMaxPoints(l.getMaxPoints());
 			dto.setMinPoints(l.getMinPoints());
 			dto.setDiscountRate(l.getDiscountRate());
+			dto.setPointsPerReservation(l.getPointsPerReservation());
 			loyalties.add(dto);
 		}
 		return new ResponseEntity<>(loyalties, HttpStatus.OK);
