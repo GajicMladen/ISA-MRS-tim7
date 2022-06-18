@@ -1,17 +1,30 @@
 package tim7.ISAMRSproject.controller;
 
+import java.security.Principal;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-import tim7.ISAMRSproject.model.Client;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import tim7.ISAMRSproject.dto.SubscriptionDTO;
+import tim7.ISAMRSproject.dto.UnsubscribeDTO;
 import tim7.ISAMRSproject.model.User;
 import tim7.ISAMRSproject.service.ClientService;
 import tim7.ISAMRSproject.service.SubscribeService;
 import tim7.ISAMRSproject.service.UserService;
 
-import java.security.Principal;
-
 @RestController
 @RequestMapping(value = "api/clients")
+@Transactional
 public class ClientController {
 
     @Autowired
@@ -48,5 +61,18 @@ public class ClientController {
         return clientService.isClinetSubscribedToOffer(reqUser.getId(),offerId);
 
     }
+    @GetMapping(value="/subscriptions")
+	public ResponseEntity<?> getClientSubscriptions(Principal user){
+		User u = this.userService.findByEmail(user.getName());
+		List<SubscriptionDTO> subs = userService.getAllSubscriptions(u);
+		return new ResponseEntity<>(subs, HttpStatus.OK);
+	}
+    @PutMapping(value="/unsubscribe")
+    public ResponseEntity<?> unsubscribeOffer(@RequestBody UnsubscribeDTO unsubDTO, Principal user){
+    	User u = this.userService.findByEmail(user.getName());
+    	//userService.unsubscribe(u, unsubDTO.getId());
+    	return new ResponseEntity<>(HttpStatus.OK);
+    }
+    
 
 }

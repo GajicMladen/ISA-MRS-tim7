@@ -38,6 +38,7 @@ import { AdminAddAdminComponent } from './features/admin/components/admin-add-ad
 import { AdminEntityOverviewComponent } from './features/admin/components/admin-entity-overview/admin-entity-overview.component';
 import { AdventureReportsComponent } from './features/adventure/components/adventure-reports/adventure-reports.component';
 import { ReservationListComponent } from './features/homepage/components/reservation-list/reservation-list.component';
+import { SubscriptionListComponent } from './features/homepage/components/subscription-list/subscription-list.component';
 
 const routes: Routes = [
   { path: '', component: StartpagePreviewListComponent },
@@ -71,6 +72,7 @@ const routes: Routes = [
       { path: 'adventureList', component: EntityListComponent },
       { path: 'activeReservations', component: ReservationListComponent },
       { path: 'pastReservations', component: ReservationListComponent },
+      { path: 'subscriptions', component: SubscriptionListComponent },
       { path: '', redirectTo: 'userProfile', pathMatch: 'full' },
     ],
   },

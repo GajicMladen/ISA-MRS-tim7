@@ -369,5 +369,5 @@ INSERT INTO public.complaint(for_offer, from_owner, offender_id, pusnih_offender
 
 
 --SUBSCRIBES
---INSERT INTO public.subscribers(client_id, offer_id) VALUES (9, 1);
---INSERT INTO public.subscribers(client_id, offer_id) VALUES (10, 1);
+INSERT INTO public.subscribers(client_id, offer_id) VALUES (1, 1);
+INSERT INTO public.subscribers(client_id, offer_id) VALUES (1, 2);

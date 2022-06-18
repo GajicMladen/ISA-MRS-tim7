@@ -19,11 +19,11 @@ public interface BoatRepository extends JpaRepository<Boat,Integer>{
   public List<Boat> findByOwnerId(Integer ownerId);
   
   @Query("select c from Boat c inner join c.freePeriods freePeriods " +
-          "where upper(c.name) like ?1 and c.price <= ?2 and c.price >= ?3 and c.rating >= ?4 and upper(c.address.city) like ?5 and c.capacity >= ?6 and freePeriods.startDateTime < ?7 and freePeriods.endDateTime > ?8")
+  "where upper(c.name) like ?1 and c.price <= ?2 and c.price >= ?3 and c.rating >= ?4 and upper(c.address.city) like ?5 and c.capacity >= ?6 and freePeriods.startDateTime < ?7 and freePeriods.endDateTime > ?8")
   public List<Boat> getBoatsPageSearch(String name, float price, float price1, float rating, String city, int capacity, LocalDateTime startDateTime, LocalDateTime endDateTime, Pageable pageable);
 
   @Query("select COUNT(c) from Boat c inner join c.freePeriods freePeriods " +
-      "where upper(c.name) like ?1 and c.price <= ?2 and c.price >= ?3 and c.rating >= ?4 and upper(c.address.city) like ?5 and c.capacity >= ?6 and freePeriods.startDateTime < ?7 and freePeriods.endDateTime > ?8")
+  "where upper(c.name) like ?1 and c.price <= ?2 and c.price >= ?3 and c.rating >= ?4 and upper(c.address.city) like ?5 and c.capacity >= ?6 and freePeriods.startDateTime < ?7 and freePeriods.endDateTime > ?8")
   public int getBoatsSearchCount(String name, float price, float price1, float rating, String city, int capacity, LocalDateTime startDateTime, LocalDateTime endDateTime);
 
   @Transactional
@@ -31,5 +31,6 @@ public interface BoatRepository extends JpaRepository<Boat,Integer>{
   @Query(value = "update Boat b set b.name = ?2 , b.promoDescription = ?3 , b.price = ?4, b.capacity = ?5 where b.id = ?1")
   public void updateBoat(Integer boatId,String name,String promoDescription,float price, int capacity);
 
+  List<Boat> findBySubscribers_IdEquals(Integer id);
 }
 
