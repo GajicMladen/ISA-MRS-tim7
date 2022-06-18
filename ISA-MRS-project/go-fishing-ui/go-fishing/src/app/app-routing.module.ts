@@ -40,6 +40,8 @@ import { AdventureReportsComponent } from './features/adventure/components/adven
 import { ReservationListComponent } from './features/homepage/components/reservation-list/reservation-list.component';
 import { SubscriptionListComponent } from './features/homepage/components/subscription-list/subscription-list.component';
 import { AdventureReservationsComponent } from './features/adventure/components/adventure-reservations/adventure-reservations.component';
+import { AdminReportComponent } from './features/admin/components/admin-report/admin-report.component';
+import { AdminComplaintsComponent } from './features/admin/components/admin-complaints/admin-complaints.component';
 
 const routes: Routes = [
   { path: '', component: StartpagePreviewListComponent },
@@ -98,8 +100,9 @@ const routes: Routes = [
     component: AdminRegistrationRequestsComponent,
   },
   { path: 'deletionRequests/:id', component: AdminDeletionRequestsComponent },
+  { path: 'complaints/:id', component: AdminComplaintsComponent},
   { path: 'addAdmin/:id', component: AdminAddAdminComponent },
-
+  { path: 'adminReport/:id', component: AdminReportComponent },
   { path: 'editInstructor/:id', component: AdventureInstructorEditComponent },
   { path: 'boatProfile/:id', component: BoatProfilepageComponent },
   { path: 'boatOwner/:id', component: BoatOwnerpageComponent },

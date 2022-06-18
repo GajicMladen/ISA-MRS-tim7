@@ -31,6 +31,11 @@ public interface BoatRepository extends JpaRepository<Boat,Integer>{
   @Query(value = "update Boat b set b.name = ?2 , b.promoDescription = ?3 , b.price = ?4, b.capacity = ?5 where b.id = ?1")
   public void updateBoat(Integer boatId,String name,String promoDescription,float price, int capacity);
 
+  @Query("select a.boatOwner.id from Boat a where a.id = ?1")
+  public Integer getBoatOwnerByOfferId(Integer id);
+  
+
   List<Boat> findBySubscribers_IdEquals(Integer id);
+  
 }
 

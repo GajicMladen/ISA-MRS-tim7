@@ -10,6 +10,9 @@ import { AdminDeletionRequestsComponent } from './components/admin-deletion-requ
 import { AdminAddAdminComponent } from './components/admin-add-admin/admin-add-admin.component';
 import { AdminService } from './admin.service';
 import { AdminEntityOverviewComponent } from './components/admin-entity-overview/admin-entity-overview.component';
+import { AdminReportComponent } from './components/admin-report/admin-report.component';
+import { AdminComplaintsComponent } from './components/admin-complaints/admin-complaints.component';
+import { AdminComplaintComponent } from './components/admin-complaints/admin-complaint/admin-complaint.component';
 
 
 
@@ -19,7 +22,10 @@ import { AdminEntityOverviewComponent } from './components/admin-entity-overview
     AdminRegistrationRequestsComponent,
     AdminDeletionRequestsComponent,
     AdminAddAdminComponent,
-    AdminEntityOverviewComponent
+    AdminEntityOverviewComponent,
+    AdminReportComponent,
+    AdminComplaintsComponent,
+    AdminComplaintComponent
   ],
   imports: [
     CommonModule,

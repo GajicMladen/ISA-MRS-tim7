@@ -1,13 +1,18 @@
-<div *ngIf="registrationRequests.length === 0">
+<div *ngIf="complaints.length === 0">
     <mat-card>
-        <mat-card-title>Nema zahteva za registraciju</mat-card-title>
+        <mat-card-title>Trenutno nema novih žalbi</mat-card-title>
     </mat-card>
     <button style="float: right; margin-right: 350px;" mat-raised-button color="warn" routerLink="/adminProfile/{{adminId}}" routerLinkActive="active">Nazad</button>
 </div>
-<div *ngIf="registrationRequests.length !== 0">
+<div *ngIf="complaints.length !== 0">
+    <div *ngFor="let c of complaints">
+        <app-admin-complaint [complaint]="c"></app-admin-complaint>
+    </div>
+        <!--
         <div class="main-div">
-            <mat-card class="main-entity-card" style="overflow-y: hidden" *ngFor="let r of registrationRequests; index as i">
-                    <mat-card-title>Zahtev za registraciju</mat-card-title>
+            <mat-card class="main-entity-card" style="overflow-y: hidden" *ngFor="let c of complaints; index as i">
+                    <mat-card-title style="text-align: center;">Žalba {{c.id}}</mat-card-title>
+                    
                     <div class="data">
                         <b>Zahtev podnosi: </b>{{r.name + " " + r.lastName}}                                        
                         <br>
@@ -15,14 +20,15 @@
                         <br>
                         <br>
                     </div>
+                    
                     <mat-card-actions style="text-align: center">
-                        <span><button mat-raised-button (click)="RequestBeingRefused(r.userId)" data-toggle="modal" data-target="#exampleModalCenter" color="warn">Odbij</button><button mat-raised-button (click)="AcceptRequest(r.userId)" class="success">Prihvati</button></span>
+                        <span><button mat-raised-button data-toggle="modal" data-target="#exampleModalCenter" color="warn">Odbij</button><button mat-raised-button class="success">Prihvati</button></span>
                     </mat-card-actions>
             </mat-card>
         <br>
         <button style="float: right; margin-right: 350px;" mat-raised-button color="warn" routerLink="/adminProfile/{{adminId}}" routerLinkActive="active">Nazad</button>
 
-        <!-- Modal -->
+        
         <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
@@ -40,11 +46,13 @@
                 </div>
                 <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Nazad</button>
-                <button type="button" class="btn btn-primary" (click)="RefuseRequest()" >Pošalji</button>
+                <button type="button" class="btn btn-primary" >Pošalji</button>
                 </div>
             </div>
             </div>
         </div>
     </div>
+        -->
 
 </div>
+

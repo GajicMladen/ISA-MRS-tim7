@@ -3,8 +3,11 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { User } from 'src/app/shared/classes/user';
 import { Boat } from 'src/models/boat';
+import { ComplaintDTO } from 'src/models/complaint';
 import { Cottage } from 'src/models/cottage';
+import { Admin } from './classes/Admin';
 import { DeletionRequest } from './classes/DeletionRequest';
+import { EarningsPercentage } from './classes/EarningPercentage';
 import { RegistrationRequest } from './classes/RegistrationRequest';
 
 @Injectable({
@@ -16,6 +19,14 @@ export class AdminService {
 
   constructor(private http: HttpClient) {
     this.adminUrl = "http://localhost:8080/admin"
+  }
+
+  public getAdminById(adminId: number) : Observable<Admin> {
+    return this.http.get<Admin>(this.adminUrl + '/getAdmin/' + adminId);
+  }
+
+  public setAdminPassword(adminId: number, password: string) {
+    return this.http.post(this.adminUrl + "/setPassword/" + adminId, password);
   }
 
   public updateAdminData(admin: User) {
@@ -91,4 +102,12 @@ export class AdminService {
     return this.http.delete(this.adminUrl + "/deleteCottage/" + id);
   }
 
+  public getEarningPercentage() :Observable<EarningsPercentage> {
+    return this.http.get<EarningsPercentage>(this.adminUrl + "/getEarningPercentage");
+  }
+
+  public setNewEarningPercentage(percentage: number) :Observable<EarningsPercentage> {
+    return this.http.post<EarningsPercentage>(this.adminUrl + "/setEarningPercentage", percentage);
+  }
+  
 }

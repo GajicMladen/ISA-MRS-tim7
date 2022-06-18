@@ -55,7 +55,6 @@ public class AdventureController {
 	public ResponseEntity<AdventureDTO> getAdventureById(@PathVariable Integer id){
 		Optional<Adventure> adventure = adventureService.findById(id);
 		if (adventure.isPresent()) {
-			System.out.println(adventure.get().getName());
 			return new ResponseEntity<AdventureDTO>(new AdventureDTO(adventure.get()), HttpStatus.OK);
 		}
 		return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);

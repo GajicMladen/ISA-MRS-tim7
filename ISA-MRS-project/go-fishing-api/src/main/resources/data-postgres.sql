@@ -19,6 +19,8 @@ INSERT INTO public.address(city, country, street, latitude, longitude) VALUES
 						('Ljubovija', 'Srbija', 'Vrhpolje 8', '44.131974', '19.447603');
 INSERT INTO public.address(city, country, street, latitude, longitude) VALUES
 						('Ljubovija', 'Srbija', 'Karadjordjeva 10', '44.188249', '19.377129');
+INSERT INTO public.address(city, country, street, latitude, longitude) VALUES
+						('Ljubovija', 'Srbija', 'Karadjordjeva 1', '44.188249', '19.377129');
 
 
             
@@ -47,7 +49,9 @@ INSERT INTO public.users(active, deleted, email, lastname, name, password, phone
                 (true, false, 'niko.nikic093+test1@gmail.com', 'Klijentovic', 'Klijent', '$2a$10$XeS1WZloSVVq2Z2dJd3L7ePADJy51sWu/oLqcy.Qcmppr6VcUtcr6', '+381659997778', 600, 1);
 INSERT INTO public.users(active, deleted, email, lastname, name, password, phone, loyalty_points, address_id) VALUES
                 (true, false, 'niko.nikic093+test2@gmail.com', 'Klijentovic2', 'Klijent2', '$2a$10$XeS1WZloSVVq2Z2dJd3L7ePADJy51sWu/oLqcy.Qcmppr6VcUtcr6', '+381659997778', 600, 1);
-
+INSERT INTO public.users(active, deleted, email, lastname, name, password, phone, loyalty_points, address_id) VALUES
+				(true, false, 'max.verstappen@gmail.com', 'Verstappen', 'Max', '$2a$10$XeS1WZloSVVq2Z2dJd3L7ePADJy51sWu/oLqcy.Qcmppr6VcUtcr6', '+381612345678', 0, 11);
+                
 --KLIJENTI
 INSERT INTO public.client(penal_count, suspended, id) VALUES (0, FALSE, 9);
 INSERT INTO public.client(penal_count, suspended, id) VALUES (0, FALSE, 10);
@@ -71,6 +75,10 @@ INSERT INTO public.boat_owner(id) VALUES (8);
 INSERT INTO public.fishing_instructor (id) VALUES (3);
 INSERT INTO public.fishing_instructor (id) VALUES (4);
 
+--ADMINI
+INSERT INTO public.admin (id, is_first_login) VALUES (10, false);
+INSERT INTO public.admin (id, is_first_login) VALUES (13, true);
+
 -- ROLE	
 INSERT INTO ROLE (name) VALUES ('ROLE_USER');
 INSERT INTO ROLE (name) VALUES ('ROLE_ADMIN');
@@ -90,9 +98,11 @@ INSERT INTO USER_ROLE(user_id, role_id) VALUES (4, 5);
 INSERT INTO USER_ROLE(user_id, role_id) VALUES (10, 6);
 
 INSERT INTO USER_ROLE(user_id, role_id) VALUES (9, 1);
-INSERT INTO USER_ROLE(user_id, role_id) VALUES (10, 1);
 INSERT INTO USER_ROLE(user_id, role_id) VALUES (11, 1);
 INSERT INTO USER_ROLE(user_id, role_id) VALUES (12, 1);
+
+INSERT INTO USER_ROLE(user_id, role_id) VALUES (13, 2);
+
 
 -- OFFER - KOLIBE
 INSERT INTO public.offer(
@@ -349,14 +359,43 @@ INSERT INTO public.reservation(end_date_time, start_date_time, status, total_pri
 INSERT INTO public.reservation(end_date_time, start_date_time, status, total_price, client_id, grade, offer_id)
     	VALUES ('2022-07-10T00:00:00', '2022-07-05T00:00:00', 0, 120.5, 1, null, 2);
 INSERT INTO public.reservation(end_date_time, start_date_time, status, total_price, client_id, grade, offer_id)
-    	VALUES ('2022-08-01T00:00:00', '2022-07-20T00:00:00', 2, 120.5, 1, null, 1);
-      
+    	VALUES ('2022-06-27T00:00:01', '2022-06-26T00:00:01', 1, 129.99, 9, null, 23);
+INSERT INTO public.reservation(end_date_time, start_date_time, status, total_price, client_id, grade, offer_id)
+    	VALUES ('2022-06-29T00:00:01', '2022-06-28T00:00:01', 1, 199.99, 9, null, 24);
+INSERT INTO public.reservation(end_date_time, start_date_time, status, total_price, client_id, grade, offer_id)
+    	VALUES ('2022-07-01T00:00:01', '2022-06-30T00:00:01', 1, 79.99, 9, null, 25);
+INSERT INTO public.reservation(end_date_time, start_date_time, status, total_price, client_id, grade, offer_id)
+    	VALUES ('2022-07-03T00:00:01', '2022-07-02T00:00:01', 1, 49.99, 9, null, 26);
+INSERT INTO public.reservation(end_date_time, start_date_time, status, total_price, client_id, grade, offer_id)
+    	VALUES ('2022-05-25T00:00:01', '2022-05-24T00:00:01', 3, 120.5, 9,  null, 20);
+INSERT INTO public.reservation(end_date_time, start_date_time, status, total_price, client_id, grade, offer_id)
+    	VALUES ('2022-05-25T00:00:01', '2022-05-24T00:00:01', 2, 120.5, 9,  null, 19);
+INSERT INTO public.reservation(end_date_time, start_date_time, status, total_price, client_id, grade, offer_id)
+	    VALUES ('2022-05-31T00:00:01', '2022-05-30T00:00:01', 0, 365.36, 9, null, 1);
+INSERT INTO public.reservation(end_date_time, start_date_time, status, total_price, client_id, grade, offer_id)
+    	VALUES ('2022-05-25T00:00:01', '2022-05-24T00:00:01', 1, 120.5, 9, null, 1);
+INSERT INTO public.reservation(end_date_time, start_date_time, status, total_price, client_id, grade, offer_id)
+    	VALUES ('2022-05-25T00:00:01', '2022-05-24T00:00:01', 3, 120.5, 9, null, 1);
+INSERT INTO public.reservation(end_date_time, start_date_time, status, total_price, client_id, grade, offer_id)
+    	VALUES ('2022-04-25T00:00:01', '2022-04-24T00:00:01', 3, 99.99, 9, null, 22);
+INSERT INTO public.reservation(end_date_time, start_date_time, status, total_price, client_id, grade, offer_id)
+    	VALUES ('2022-04-27T00:00:01', '2022-04-26T00:00:01', 3, 129.99, 9, null, 23);
+INSERT INTO public.reservation(end_date_time, start_date_time, status, total_price, client_id, grade, offer_id)
+    	VALUES ('2022-05-29T00:00:01', '2022-05-28T00:00:01', 3, 199.99, 9, null, 24);
+INSERT INTO public.reservation(end_date_time, start_date_time, status, total_price, client_id, grade, offer_id)
+    	VALUES ('2022-06-01T00:00:01', '2022-05-30T00:00:01', 3, 79.99, 9, null, 25);
+INSERT INTO public.reservation(end_date_time, start_date_time, status, total_price, client_id, grade, offer_id)
+    	VALUES ('2022-07-08T00:00:01', '2022-08-02T00:00:01', 1, 49.99, 9, null, 26);
+
 --ZALBE
 INSERT INTO public.complaint(for_offer, from_owner, offender_id, pusnih_offender, status, text, reservation_id)
 	VALUES (false, true, 1, true, 0, 'zalim se na klijenta indijanca, ostavio je haos!',1);
 INSERT INTO public.complaint(for_offer, from_owner, offender_id, pusnih_offender, status, text, reservation_id)
 	VALUES (false, true, 1, true, 0, 'zalim se na klijenta indijanca, ostavio je haos!',2);
 
+--PROCENAT ZARADE
+INSERT INTO public.earnings_percentage(percentage, date_of_setting)
+	VALUES (5, '2022-06-17T00:00:01');
 
 
 --SUBSCRIBES

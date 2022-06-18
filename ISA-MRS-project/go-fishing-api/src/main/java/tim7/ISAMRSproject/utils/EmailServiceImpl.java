@@ -82,6 +82,22 @@ public class EmailServiceImpl {
 		sendSimpleMessage("djordjejovanovic27@gmail.com", "Go fishing admin", confirmationBody);
 	}
 	
+	public void sendComplaintResponse(User accuser, User offender, String response) {
+		System.out.println(accuser.getEmail());
+		System.out.println(offender.getEmail());
+		String confirmationBodyAccuser = "Dear " + accuser.getName() + " " + accuser.getLastName() + ", \n";	
+		confirmationBodyAccuser += "Complaint that you have filed against " + offender.getName() + " " + offender.getLastName();
+		confirmationBodyAccuser += " has reached out admin team and it has been accepted.";
+		confirmationBodyAccuser += "\nAdmin's response: " + response;
+		sendSimpleMessage(accuser.getEmail(), "Go fishing admin", confirmationBodyAccuser);
+		
+		String confirmationBodyOffender = "Dear " + offender.getName() + " " + offender.getLastName() + ", \n";	
+		confirmationBodyOffender += "User " + accuser.getName() + " " + accuser.getLastName() + " has filed complaint against you.\n";
+		confirmationBodyOffender += "Complaint has been accepted!";
+		confirmationBodyOffender += "\nAdmin's response: " + response;
+		sendSimpleMessage(offender.getEmail(), "Go fishing admin", confirmationBodyOffender);
+  }
+  
 	public void sendReservationConfirmationMail(User user, Reservation res, String offerName) {
 		String confirmationBody = "Dear " + user.getName() + " " + user.getLastName() + ",\n";
 		confirmationBody += "You have successfully made a reservation for " + offerName + "!\n";

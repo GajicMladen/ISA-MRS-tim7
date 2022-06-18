@@ -20,10 +20,6 @@ import tim7.ISAMRSproject.utils.EmailServiceImpl;
 import tim7.ISAMRSproject.model.*;
 import tim7.ISAMRSproject.repository.*;
 
-import java.time.Period;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
 @Service
 @Transactional
@@ -90,8 +86,8 @@ public class ReservationService {
 
 	}
 
-	public Reservation getReservationById(int id){
-		return reservationRepository.getById(id);
+	public Optional<Reservation> getReservationById(int id){
+		return reservationRepository.findById(id);
 	}
 
 	public List<Reservation> getReservationsForOffer(int offerId){
@@ -294,5 +290,14 @@ public class ReservationService {
 		String[] tokens = s.split("-");
 		LocalDateTime retVal = LocalDateTime.of(Integer.parseInt(tokens[2]), Integer.parseInt(tokens[1]), Integer.parseInt(tokens[0]), 0, 0);
 		return retVal;
+	}
+	
+	
+	public List<Reservation> getAllReservations() {
+		return this.reservationRepository.findAll();
+	}
+
+	public List<Reservation> getReservationsByDataRange(LocalDateTime start, LocalDateTime end) {
+		return this.reservationRepository.findAllByDateRange(start, end);
 	}
 }
