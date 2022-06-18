@@ -13,6 +13,7 @@ import { BoatEntityService } from './services/boat-entity.service';
 import { CottageReportsComponent } from './components/cottage-reports/cottage-reports.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { CottageClientReservationDialogComponent } from './components/cottage-client-reservation-dialog/cottage-client-reservation-dialog.component';
+import { CottageGalleryVisitorComponent } from './components/cottage-gallery-visitor/cottage-gallery-visitor.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { CottageClientReservationDialogComponent } from './components/cottage-cl
     CottageEditComponent,
     CottageReportsComponent,
     CottageClientReservationDialogComponent,
+    CottageGalleryVisitorComponent,
   ],
   imports: [
     CommonModule,

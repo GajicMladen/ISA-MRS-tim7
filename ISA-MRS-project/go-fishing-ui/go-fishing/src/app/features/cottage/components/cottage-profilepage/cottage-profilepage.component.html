@@ -92,11 +92,11 @@
                 <div class="buttons">
                     <span [matTooltip]="reservationTooltipText" [matTooltipDisabled]="hasFreePeriods">
                         <button class="btn btn-outline-warning btn-long cart mr-2" (click)="openReservationDialog()"
-                            [disabled]="!hasFreePeriods">Rezerviši</button>
+                            [disabled]="!hasFreePeriods" *ngIf="clientLoggedIn">Rezerviši</button>
                     </span>                      
                         <button class="btn btn-warning btn-long buy mr-1" routerLink="/calendar/{{cottageId}}"><i class="fa fa-calendar-check-o"></i> Proveri dostupnost </button> 
-                        <button class="btn btn-light wishlist" (click)="addSubscription()" *ngIf="!isSuscribed"> <i class="fa fa-bell"></i> Pretplati se </button> 
-                        <button class="btn btn-light wishlist" (click)="removeSubscription()" *ngIf="isSuscribed"> <i class="fa fa-bell-slash"></i> Odjavi se </button> 
+                        <button class="btn btn-light wishlist" (click)="addSubscription()" *ngIf="!isSuscribed && clientLoggedIn"> <i class="fa fa-bell"></i> Pretplati se </button> 
+                        <button class="btn btn-light wishlist" (click)="removeSubscription()" *ngIf="isSuscribed && clientLoggedIn"> <i class="fa fa-bell-slash"></i> Odjavi se </button> 
                 </div>
                 <hr>
                 <div class="product-description">

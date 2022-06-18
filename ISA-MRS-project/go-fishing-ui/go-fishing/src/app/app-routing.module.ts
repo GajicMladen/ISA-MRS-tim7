@@ -39,6 +39,7 @@ import { AdminEntityOverviewComponent } from './features/admin/components/admin-
 import { AdventureReportsComponent } from './features/adventure/components/adventure-reports/adventure-reports.component';
 import { ReservationListComponent } from './features/homepage/components/reservation-list/reservation-list.component';
 import { SubscriptionListComponent } from './features/homepage/components/subscription-list/subscription-list.component';
+import { AdventureReservationsComponent } from './features/adventure/components/adventure-reservations/adventure-reservations.component';
 
 const routes: Routes = [
   { path: '', component: StartpagePreviewListComponent },
@@ -48,6 +49,7 @@ const routes: Routes = [
   { path: 'cottageProfile/:id', component: CottageProfilepageComponent },
   { path: 'reservationStart', component: ReservationStartpageComponent },
   { path: 'adventureProfile/:id', component: AdventureProfilpageComponent },
+  { path: 'adventureReservations/:id', component: AdventureReservationsComponent },
 
   { path: 'adventureCard', component: AdventureCardComponent },
   { path: 'cottageOwner/:id', component: CottageOwnerpageComponent },

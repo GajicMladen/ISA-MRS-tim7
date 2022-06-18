@@ -12,24 +12,18 @@ import org.springframework.transaction.annotation.Transactional;
 
 import tim7.ISAMRSproject.dto.ActionDTO;
 import tim7.ISAMRSproject.dto.ReservationDTO;
+
 import tim7.ISAMRSproject.dto.ReservationListItemDTO;
-import tim7.ISAMRSproject.model.Boat;
-import tim7.ISAMRSproject.model.Client;
-import tim7.ISAMRSproject.model.Complaint;
-import tim7.ISAMRSproject.model.Cottage;
-import tim7.ISAMRSproject.model.FreePeriod;
-import tim7.ISAMRSproject.model.Grade;
-import tim7.ISAMRSproject.model.Reservation;
-import tim7.ISAMRSproject.model.ReservationStatus;
-import tim7.ISAMRSproject.model.User;
-import tim7.ISAMRSproject.repository.AdventureRepository;
-import tim7.ISAMRSproject.repository.BoatRepository;
-import tim7.ISAMRSproject.repository.ClientRepository;
-import tim7.ISAMRSproject.repository.CottageRepository;
-import tim7.ISAMRSproject.repository.FreePeriodRepository;
-import tim7.ISAMRSproject.repository.GradeRepository;
 import tim7.ISAMRSproject.repository.ReservationRepository;
 import tim7.ISAMRSproject.utils.EmailServiceImpl;
+
+import tim7.ISAMRSproject.model.*;
+import tim7.ISAMRSproject.repository.*;
+
+import java.time.Period;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -75,7 +69,7 @@ public class ReservationService {
 		newAction.setStatus(ReservationStatus.FOR_ACTION);
 		Optional<Cottage> cottage = cottageRepository.findById(actionDTO.getOfferId());
 		Optional<Boat> boat = boatRepository.findById(actionDTO.getOfferId());
-		//instructor
+		Optional<Adventure> adventure = adventureRepository.findById(actionDTO.getOfferId());
 
 		if(cottage.isPresent()) {
 			newAction.setOffer(cottage.get());
@@ -87,8 +81,11 @@ public class ReservationService {
 			return reservationRepository.save(newAction);
 
 		}
+		if(adventure.isPresent()){
+			newAction.setOffer(adventure.get());
+			return reservationRepository.save(newAction);
+		}
 
-		//instructor
 		return null;
 
 	}
@@ -146,7 +143,7 @@ public class ReservationService {
 
 		Optional<Cottage> cottage = cottageRepository.findById(reservationDTO.getOfferId());
 		Optional<Boat> boat = boatRepository.findById(reservationDTO.getOfferId());
-		//instructor
+		Optional<Adventure> adventure = adventureRepository.findById(reservationDTO.getOfferId());
 
 		if(cottage.isPresent()) {
 			newReservation.setOffer(cottage.get());
@@ -160,8 +157,12 @@ public class ReservationService {
 			reservationRepository.save(newReservation);
 			return "OK";
 		}
-
-		//instructor
+		if(adventure.isPresent()){
+			newReservation.setOffer(adventure.get());
+			newReservation.setTotalPrice( daysNum * adventure.get().getPrice() );
+			reservationRepository.save(newReservation);
+			return "OK";
+		}
 
 		return "Invalid Offer ID";
 	}

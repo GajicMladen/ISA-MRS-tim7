@@ -1,12 +1,12 @@
 <mat-card class="card" >
     <h1 class="title">Dodavanje nove rezervacije u dogovoru sa klijentom</h1>
 
-    <div [ngSwitch]="ownerType">
+    <div [ngSwitch]="ownerType" *ngIf="offer != undefined">
         <p *ngSwitchCase="'C'">Vikendica: <b>{{offer.name}} </b> </p>
         <p *ngSwitchCase="'B'">Brod: <b>{{offer.name}} </b> </p>
     
     </div>
-    <p>Klijent: <b>{{client.name }} {{client.lastName}} </b></p>
+    <p>Klijent: <b *ngIf="client != undefined">{{client.name }} {{client.lastName}} </b></p>
     <p style="font-weight: bold;">Molimo Vas, odaberite datume:</p>
    
     <form class="row row-cols-sm-auto" style="display: grid;grid-template-columns: 30% 30% 30%">

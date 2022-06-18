@@ -9,6 +9,7 @@ import {
   MessageService,
   MessageType,
 } from 'src/app/shared/services/message-service/message.service';
+import { UserService } from 'src/app/shared/services/users-services/user.service';
 import { AdventureService } from '../../adventure.service';
 import { Adventure } from '../../classes/adventure';
 import { AdventureClientReservationDialogComponent } from '../adventure-client-reservation-dialog/adventure-client-reservation-dialog.component';
@@ -22,6 +23,11 @@ export class AdventureProfilpageComponent implements OnInit {
   adventureId: number;
   instructorId: number;
   instructorName: string;
+  
+  clientLoggedIn:boolean;
+  
+  isSuscribed:boolean;
+
   adventure = new Adventure({
     id: 0,
     name: '',
@@ -91,7 +97,8 @@ export class AdventureProfilpageComponent implements OnInit {
     private dialog: MatDialog,
     private reservationService: CottageReservationService,
     private messageService: MessageService,
-    private clientService: ClientService
+    private clientService: ClientService,
+    private userService: UserService)
   ) {}
 
   ngOnInit(): void {
@@ -115,6 +122,12 @@ export class AdventureProfilpageComponent implements OnInit {
       .subscribe((res: any) => {
         this.hasFreePeriods = res.length > 0;
       });
+    
+    this.userService.isLoggedUserOnlyClient().subscribe(
+      data=>{
+        this.clientLoggedIn= data;
+      }
+    );
   }
 
   LoadMap(loader: Loader) {
@@ -225,5 +238,30 @@ export class AdventureProfilpageComponent implements OnInit {
 
   get reservationTooltipText() {
     return 'No free periods are available!';
+  }
+
+  getIsSuscribed(){
+
+    this.clientService.isSuscribedToOffer(this.adventureId).subscribe(
+      data=>{
+        console.log(data);
+        this.isSuscribed = data;
+      }
+    )
+  }
+
+  addSubscription(){
+    this.clientService.addSubscription(this.adventureId).subscribe(
+      data=>{
+        this.getIsSuscribed()
+      }
+    );
+  }
+  removeSubscription(){
+    this.clientService.removeSubscription(this.adventureId).subscribe(
+      data=>{
+        this.getIsSuscribed();
+      }
+    );
   }
 }

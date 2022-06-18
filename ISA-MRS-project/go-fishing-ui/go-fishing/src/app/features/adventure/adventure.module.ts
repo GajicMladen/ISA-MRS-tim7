@@ -16,6 +16,7 @@ import { AdventureInstructorCalendarComponent } from './components/adventure-ins
 import { AdventureActionComponent } from './components/adventure-action/adventure-action.component';
 import { AdventureReportsComponent } from './components/adventure-reports/adventure-reports.component';
 import { AdventureClientReservationDialogComponent } from './components/adventure-client-reservation-dialog/adventure-client-reservation-dialog.component';
+import { AdventureReservationsComponent } from './components/adventure-reservations/adventure-reservations.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { AdventureClientReservationDialogComponent } from './components/adventur
     AdventureActionComponent,
     AdventureReportsComponent,
     AdventureClientReservationDialogComponent,
+    AdventureReservationsComponent
   ],
   imports: [
     CommonModule,

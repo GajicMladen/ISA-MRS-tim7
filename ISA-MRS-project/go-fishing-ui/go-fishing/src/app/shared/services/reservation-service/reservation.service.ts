@@ -63,6 +63,7 @@ export class ReservationService {
         res.push(reservation);
       });
     });
+    console.log(res);
 
     return of(res);
   }
@@ -108,6 +109,8 @@ export class ReservationService {
         reservation.id = d.id;
         reservation.clientId = d.clientId;
         reservation.reservationStatus = d.reservationStatus;
+        reservation.clientName = d.clientName;
+        reservation.clientLastName = d.clientLastName;
         res.push(reservation);
       });
     });
@@ -157,5 +160,27 @@ export class ReservationService {
 
   public addComplaint(data: any) {
     return this.http.post(this.config.addComplaintUrl, data);
+  }
+  public getVisitChartDataForReservations(ownerId:number,ownerType:string):Observable<DataForChart[]>{
+    if(ownerType == "C")
+      return this.http.get<DataForChart[]>(this.reservationsUrl + "/getVisitChartDataForCottageOwner/"+ownerId);
+    if(ownerType == "B")
+      return this.http.get<DataForChart[]>(this.reservationsUrl + "/getVisitChartDataForBoatOwner/"+ownerId);
+    if(ownerType == "I")
+      return this.http.get<DataForChart[]>(this.reservationsUrl + "/getVisitChartDataForInstructor/"+ownerId);
+  
+    return new Observable();
+  }
+  
+
+  public getGradeChartDataForReservations(ownerId:number,ownerType:string):Observable<DataForChart[]>{
+    if(ownerType == "C")
+      return this.http.get<DataForChart[]>(this.reservationsUrl + "/getGradeChartDataForCottageOwner/"+ownerId);
+    if(ownerType == "B")
+      return this.http.get<DataForChart[]>(this.reservationsUrl + "/getGradeChartDataForBoatOwner/"+ownerId);
+    if(ownerType == "I")
+      return this.http.get<DataForChart[]>(this.reservationsUrl + "/getGradeChartDataForInstructor/"+ownerId);
+  
+    return new Observable();
   }
 }

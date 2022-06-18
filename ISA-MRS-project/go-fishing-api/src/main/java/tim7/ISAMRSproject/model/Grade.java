@@ -66,7 +66,4 @@ public class Grade {
 	public void setReservation(Reservation reservation) {
 		this.reservation = reservation;
 	}
-	
-	
-	
 }

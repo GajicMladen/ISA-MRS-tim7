@@ -23,18 +23,11 @@ import tim7.ISAMRSproject.dto.DataForChartDTO;
 import tim7.ISAMRSproject.dto.DateRangeStringDTO;
 import tim7.ISAMRSproject.dto.GradeDTO;
 import tim7.ISAMRSproject.dto.ReservationDTO;
+
 import tim7.ISAMRSproject.dto.ReservationListItemDTO;
-import tim7.ISAMRSproject.model.Adventure;
-import tim7.ISAMRSproject.model.ApprovalStatus;
-import tim7.ISAMRSproject.model.Boat;
-import tim7.ISAMRSproject.model.Client;
-import tim7.ISAMRSproject.model.Complaint;
-import tim7.ISAMRSproject.model.Cottage;
-import tim7.ISAMRSproject.model.FreePeriod;
-import tim7.ISAMRSproject.model.Grade;
-import tim7.ISAMRSproject.model.Reservation;
-import tim7.ISAMRSproject.model.ReservationStatus;
-import tim7.ISAMRSproject.model.User;
+
+import tim7.ISAMRSproject.model.*;
+
 import tim7.ISAMRSproject.service.AdventureService;
 import tim7.ISAMRSproject.service.BoatService;
 import tim7.ISAMRSproject.service.ClientService;
@@ -160,7 +153,7 @@ public class ReservationController {
     	for (Adventure a : adventures) {
     		List<Reservation> reservations = this.reservationService.getReservationsForOffer(a.getId());
     		for (Reservation r : reservations) {
-    			reservationsDTO.add(new ReservationDTO(r));
+    			reservationsDTO.add(new ReservationDTO(r));    			
     		}
     	}
     	return reservationsDTO;
@@ -187,6 +180,52 @@ public class ReservationController {
 
     }
 
+    @GetMapping(value = "/getVisitChartDataForCottageOwner/{id}")
+    public List<DataForChartDTO> getVisitDataForChartCottageOwner(@PathVariable int id){
+        List<DataForChartDTO> retVal = new ArrayList<>();
+
+        List<Cottage> offers = cottageService.getCottagesByOwnerId(id);
+        for (Cottage cottage:offers) {
+            DataForChartDTO newData = new DataForChartDTO();
+            newData.setName(cottage.getName());
+            float value = 0;
+            List<Reservation> reservations =  reservationService.getReservationsForOffer(cottage.getId());
+            value += reservations.size();
+            newData.setValue(value);
+            retVal.add(newData);
+        }
+
+        return retVal;
+
+    }
+
+    @GetMapping(value = "/getGradeChartDataForCottageOwner/{id}")
+    public List<DataForChartDTO> getGradeDataForChartCottageOwner(@PathVariable int id){
+        List<DataForChartDTO> retVal = new ArrayList<>();
+
+        List<Cottage> offers = cottageService.getCottagesByOwnerId(id);
+        for (Cottage cottage:offers) {
+            DataForChartDTO newData = new DataForChartDTO();
+            newData.setName(cottage.getName());
+            float value = 0;
+            List<Reservation> reservations =  reservationService.getReservationsForOffer(cottage.getId());
+            for (Reservation reservation: reservations) {
+                if (reservation.getGrade() != null)
+                    value += reservation.getGrade().getGrade();
+            }
+            if(reservations.size() > 0 )
+                value = value/reservations.size();
+            else
+                value = 0;
+            newData.setValue(value);
+            retVal.add(newData);
+        }
+
+        return retVal;
+
+    }
+
+
     @GetMapping(value = "/getProfitChartDataForBoatOwner/{id}")
     public List<DataForChartDTO> getDataForChartBoatOwner(@PathVariable int id){
         List<DataForChartDTO> retVal = new ArrayList<>();
@@ -200,6 +239,49 @@ public class ReservationController {
             for (Reservation reservation: reservations) {
                 value += reservation.getTotalPrice();
             }
+            newData.setValue(value);
+            retVal.add(newData);
+        }
+
+        return retVal;
+
+    }
+    @GetMapping(value = "/getVisitChartDataForBoatOwner/{id}")
+    public List<DataForChartDTO> getVisitDataForChartBoatOwner(@PathVariable int id){
+        List<DataForChartDTO> retVal = new ArrayList<>();
+
+        List<Boat> offers = boatService.getBoatsByOwnerId(id);
+        for (Boat boat:offers) {
+            DataForChartDTO newData = new DataForChartDTO();
+            newData.setName(boat.getName());
+            float value = 0;
+            List<Reservation> reservations =  reservationService.getReservationsForOffer(boat.getId());
+            value += reservations.size();
+            newData.setValue(value);
+            retVal.add(newData);
+        }
+
+        return retVal;
+
+    }
+    @GetMapping(value = "/getGradeChartDataForBoatOwner/{id}")
+    public List<DataForChartDTO> getGradeDataForChartBoatOwner(@PathVariable int id){
+        List<DataForChartDTO> retVal = new ArrayList<>();
+
+        List<Boat> offers = boatService.getBoatsByOwnerId(id);
+        for (Boat boat:offers) {
+            DataForChartDTO newData = new DataForChartDTO();
+            newData.setName(boat.getName());
+            float value = 0;
+            List<Reservation> reservations =  reservationService.getReservationsForOffer(boat.getId());
+            for (Reservation reservation: reservations) {
+                if(reservation.getGrade() != null)
+                    value += reservation.getGrade().getGrade();
+            }
+            if(reservations.size() > 0 )
+                value = value/reservations.size();
+            else
+                value = 0;
             newData.setValue(value);
             retVal.add(newData);
         }

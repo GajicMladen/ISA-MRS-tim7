@@ -66,6 +66,7 @@ import { NoEntitiesFoundComponent } from './components/no-entities-found/no-enti
     ChartPieComponent,
     ReservationsOwnerpageComponent,
     NoEntitiesFoundComponent,
+    ReservationListView
   ],
 })
 export class SharedModule {}

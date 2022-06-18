@@ -12,6 +12,7 @@ import { BoatEditComponent } from './components/boat-edit/boat-edit.component';
 import { BoatReportsComponent } from './components/boat-reports/boat-reports.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { BoatClientReservationDialogComponent } from './components/boat-client-reservation-dialog/boat-client-reservation-dialog.component';
+import { BoatGalleryVisitorComponent } from './components/boat-gallery-visitor/boat-gallery-visitor.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { BoatClientReservationDialogComponent } from './components/boat-client-r
     BoatEditComponent,
     BoatReportsComponent,
     BoatClientReservationDialogComponent,
+    BoatGalleryVisitorComponent
   ],
   imports: [
     CommonModule,

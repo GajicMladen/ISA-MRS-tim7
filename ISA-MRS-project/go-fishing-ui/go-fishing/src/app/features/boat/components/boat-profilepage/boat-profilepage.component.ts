@@ -12,6 +12,7 @@ import {
 } from 'src/app/shared/services/message-service/message.service';
 import { ClientService } from 'src/app/shared/services/client-service/client.service';
 import { BoatClientReservationDialogComponent } from '../boat-client-reservation-dialog/boat-client-reservation-dialog.component';
+import { UserService } from 'src/app/shared/services/users-services/user.service';
 
 @Component({
   selector: 'app-boat-profilepage',
@@ -23,6 +24,12 @@ export class BoatProfilepageComponent implements OnInit {
   boat: Boat;
 
   actions: ActionDTO[];
+  
+  actions :ActionDTO[];
+  
+  clientLoggedIn:boolean;
+  
+  isSuscribed:boolean;
 
   hasFreePeriods: boolean = true;
   constructor(
@@ -32,9 +39,9 @@ export class BoatProfilepageComponent implements OnInit {
     private dialog: MatDialog,
     private reservationService: BoatReservationService,
     private messageService: MessageService,
-    private clientService: ClientService
+    private clientService: ClientService,
+    private userService:UserService,
   ) {}
-
   ngOnInit(): void {
     this.boatId = Number(this.route.snapshot.paramMap.get('id'));
     this.boatService.findBoatById(this.boatId).subscribe((data) => {
@@ -50,6 +57,12 @@ export class BoatProfilepageComponent implements OnInit {
       .subscribe((res: any) => {
         this.hasFreePeriods = res.length > 0;
       });
+    
+    this.userService.isLoggedUserOnlyClient().subscribe(
+      data=>{
+        this.clientLoggedIn= data;
+      }
+    );
   }
 
   public openReservationDialog() {
@@ -104,7 +117,7 @@ export class BoatProfilepageComponent implements OnInit {
         });
       });
   }
-
+  
   convertDateRangeString(str: string): any {
     let date1String = str.split(' ')[0];
     let date2String = str.split(' ')[1];
@@ -134,5 +147,29 @@ export class BoatProfilepageComponent implements OnInit {
 
   get reservationTooltipText() {
     return 'No free periods are available!';
+  }
+
+  getIsSuscribed(){
+    this.clientService.isSuscribedToOffer(this.boatId).subscribe(
+      data=>{
+        console.log(data);
+        this.isSuscribed = data;
+      }
+    )
+  }
+
+  addSubscription(){
+    this.clientService.addSubscription(this.boatId).subscribe(
+      data=>{
+        this.getIsSuscribed()
+      }
+    );
+  }
+  removeSubscription(){
+    this.clientService.removeSubscription(this.boatId).subscribe(
+      data=>{
+        this.getIsSuscribed();
+      }
+    );
   }
 }

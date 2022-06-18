@@ -8,15 +8,24 @@ export enum ReservationStatus {
   FOR_ACTION,
 }
 
-export class ReservationDTO {
-  id: number;
-  offerId: number;
-  startDate: NgbDate;
-  endDate: NgbDate;
-  totalPrice: number;
-  reservationStatus: ReservationStatus;
-  clientId: number;
-  //add more reservation atributes
+export class ReservationDTO{
+    id:number;
+    offerId: number;
+    startDate: NgbDate;
+    endDate: NgbDate;
+    totalPrice: number;
+    reservationStatus:ReservationStatus;
+    clientId: number;
+    clientName: string;
+    clientLastName: string;
+    //add more reservation atributes
+    
+    getStartDateString():string {
+        return this.startDate.day +"."+ this.startDate.month+"."+this.startDate.year;
+    }
+    getEndDateString():string {
+        return this.endDate.day +"."+ this.endDate.month+"."+this.endDate.year;
+    }
 
   getStartDateString(): string {
     return (
@@ -43,15 +52,17 @@ export class ReservationSendDTO {
   clientId: number;
   //add more reservation atributes
 }
-export class ReservationReciveDTO {
-  id: number;
-  offerId: number;
-  startDate: number[];
-  endDate: number[];
-  totalPrice: number;
-  reservationStatus: ReservationStatus;
-  clientId: number;
-  //add more reservation atributes
+export class ReservationReciveDTO{
+    id:number;
+    offerId: number;
+    startDate: number[];
+    endDate: number[];
+    totalPrice: number;
+    reservationStatus:ReservationStatus;
+    clientId: number;
+    clientName: string;
+    clientLastName: string;
+    //add more reservation atributes
 }
 
 export class ActionDTO {
