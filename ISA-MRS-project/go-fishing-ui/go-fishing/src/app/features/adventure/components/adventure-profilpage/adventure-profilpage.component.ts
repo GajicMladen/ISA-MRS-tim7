@@ -23,10 +23,10 @@ export class AdventureProfilpageComponent implements OnInit {
   adventureId: number;
   instructorId: number;
   instructorName: string;
-  
-  clientLoggedIn:boolean;
-  
-  isSuscribed:boolean;
+
+  clientLoggedIn: boolean;
+
+  isSuscribed: boolean;
 
   adventure = new Adventure({
     id: 0,
@@ -98,7 +98,7 @@ export class AdventureProfilpageComponent implements OnInit {
     private reservationService: CottageReservationService,
     private messageService: MessageService,
     private clientService: ClientService,
-    private userService: UserService)
+    private userService: UserService
   ) {}
 
   ngOnInit(): void {
@@ -122,12 +122,10 @@ export class AdventureProfilpageComponent implements OnInit {
       .subscribe((res: any) => {
         this.hasFreePeriods = res.length > 0;
       });
-    
-    this.userService.isLoggedUserOnlyClient().subscribe(
-      data=>{
-        this.clientLoggedIn= data;
-      }
-    );
+
+    this.userService.isLoggedUserOnlyClient().subscribe((data) => {
+      this.clientLoggedIn = data;
+    });
   }
 
   LoadMap(loader: Loader) {
@@ -240,28 +238,25 @@ export class AdventureProfilpageComponent implements OnInit {
     return 'No free periods are available!';
   }
 
-  getIsSuscribed(){
-
-    this.clientService.isSuscribedToOffer(this.adventureId).subscribe(
-      data=>{
+  getIsSuscribed() {
+    this.clientService
+      .isSuscribedToOffer(this.adventureId)
+      .subscribe((data) => {
         console.log(data);
         this.isSuscribed = data;
-      }
-    )
+      });
   }
 
-  addSubscription(){
-    this.clientService.addSubscription(this.adventureId).subscribe(
-      data=>{
-        this.getIsSuscribed()
-      }
-    );
+  addSubscription() {
+    this.clientService.addSubscription(this.adventureId).subscribe((data) => {
+      this.getIsSuscribed();
+    });
   }
-  removeSubscription(){
-    this.clientService.removeSubscription(this.adventureId).subscribe(
-      data=>{
+  removeSubscription() {
+    this.clientService
+      .removeSubscription(this.adventureId)
+      .subscribe((data) => {
         this.getIsSuscribed();
-      }
-    );
+      });
   }
 }
