@@ -414,7 +414,7 @@ public class ReservationController {
 		return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PutMapping(value = "/buyAction/{idAction}")
+    @GetMapping(value = "/buyAction/{idAction}")
     public ResponseEntity<?> buyAction(Principal user,@PathVariable int idAction){
         User u = userService.findByEmail(user.getName());
 
