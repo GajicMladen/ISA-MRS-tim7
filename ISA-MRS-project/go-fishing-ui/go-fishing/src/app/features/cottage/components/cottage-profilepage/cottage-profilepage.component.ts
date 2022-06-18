@@ -101,7 +101,7 @@ export class CottageProfilepageComponent implements OnInit {
       name: this.cottage.name,
       startDate: item.getStartDateString(),
       endDate: item.getEndDateString(),
-      price: item.totalPrice,
+      totalPrice: item.totalPrice,
     };
     const dialogRef = this.dialog.open(CottageActionConfirmDialogComponent, {
       data: data,
