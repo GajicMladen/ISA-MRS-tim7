@@ -15,4 +15,12 @@ export class LoyaltyService {
   public getLoyaltyForUser() {
     return this.http.get(this.config.userLoyaltyUrl);
   }
+
+  public editLoyalty(data: any) {
+    return this.http.post(this.config.editLoyaltyUrl, data);
+  }
+
+  public addLoyalty(data: any) {
+    return this.http.post(this.config.addLoyaltyUrl, data);
+  }
 }

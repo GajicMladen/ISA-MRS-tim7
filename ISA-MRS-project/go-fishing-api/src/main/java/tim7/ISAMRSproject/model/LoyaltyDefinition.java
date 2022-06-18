@@ -25,6 +25,9 @@ public class LoyaltyDefinition {
 	
 	@Column(name = "discount_rate", nullable = false)
 	private Float discountRate;
+	
+	@Column(name = "points_per_reservation", nullable = false)
+	private int pointsPerReservation;
 
 	public Integer getId() {
 		return id;
@@ -65,6 +68,15 @@ public class LoyaltyDefinition {
 	public void setDiscountRate(Float discountRate) {
 		this.discountRate = discountRate;
 	}
+
+	public int getPointsPerReservation() {
+		return pointsPerReservation;
+	}
+
+	public void setPointsPerReservation(int pointsPerReservation) {
+		this.pointsPerReservation = pointsPerReservation;
+	}
+	
 	
 	
 }

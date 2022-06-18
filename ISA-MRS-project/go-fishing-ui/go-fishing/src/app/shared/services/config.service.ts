@@ -176,4 +176,12 @@ export class ConfigService {
   get userLoyaltyUrl(): string {
     return this._loyalty_controller_url + '/getLoyalty';
   }
+
+  get editLoyaltyUrl(): string {
+    return this._loyalty_controller_url + '/editLoyalty';
+  }
+
+  get addLoyaltyUrl(): string {
+    return this._loyalty_controller_url + '/addLoyalty';
+  }
 }
