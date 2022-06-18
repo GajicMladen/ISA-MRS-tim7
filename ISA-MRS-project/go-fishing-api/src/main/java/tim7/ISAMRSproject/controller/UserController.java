@@ -21,9 +21,11 @@ import tim7.ISAMRSproject.dto.ChangePasswordDTO;
 import tim7.ISAMRSproject.dto.DeletionRequestDTO;
 import tim7.ISAMRSproject.dto.UserDTO;
 import tim7.ISAMRSproject.dto.UserRegisterDTO;
-import tim7.ISAMRSproject.model.DeletionRequest;
+import tim7.ISAMRSproject.model.*;
 import tim7.ISAMRSproject.model.DeletionRequest.DeletionRequestStatus;
-import tim7.ISAMRSproject.model.User;
+import tim7.ISAMRSproject.service.AdventureService;
+import tim7.ISAMRSproject.service.BoatService;
+import tim7.ISAMRSproject.service.CottageService;
 import tim7.ISAMRSproject.service.UserService;
 
 
@@ -33,6 +35,14 @@ public class UserController {
 
 	@Autowired
 	private UserService userService;
+
+	@Autowired
+	private CottageService cottageService;
+	@Autowired
+	private BoatService boatService;
+
+	@Autowired
+	private AdventureService adventureService;
 
 	@GetMapping(value = "/all")
 	public ResponseEntity<List<UserDTO>> getAllKorisnici() {
@@ -108,5 +118,38 @@ public class UserController {
 		requestUser.setDeletionRequest(deletionRequest);
 		userService.save(requestUser);
 		return ResponseEntity.status(HttpStatus.ACCEPTED).body(requestUser);
+	}
+
+	@GetMapping(value = "/isThisLoggedUser/{id}")
+	public boolean checkLoggedUser(Principal user,@PathVariable int id){
+		User requestUser = userService.findByEmail(user.getName());
+		return  requestUser.getId() == id;
+	}
+	@GetMapping(value = "/isLoggedUserOfferOwner/{offerId}")
+	public boolean checkLoggedUserOfferOwner(Principal user,@PathVariable int offerId){
+		User requestUser = userService.findByEmail(user.getName());
+		Optional<Cottage> cottage = cottageService.getCottageById(offerId);
+		Optional<Boat> boat = boatService.getBoat(offerId);
+		Optional<Adventure> adventure =  adventureService.findById(offerId);
+
+		if(cottage.isPresent()){
+			return cottage.get().getCottageOwnerId() == requestUser.getId();
+		}
+		if(boat.isPresent()){
+			return boat.get().getBoatOwner().getId() == requestUser.getId();
+		}
+		if(adventure.isPresent()){
+			return adventure.get().getInstructorId() == requestUser.getId();
+		}
+		return false;
+	}
+
+	@GetMapping(value = "/isLoggedUserOnlyClient")
+	public boolean isLoggedUserHasRole(Principal user){
+
+		User requestUser = userService.findByEmail(user.getName());
+		return !(requestUser.hasRole("ROLE_ADMIN") || requestUser.hasRole("ROLE_COTTAGE_OWNER")
+				||requestUser.hasRole("ROLE_BOAT_OWNER")||requestUser.hasRole("ROLE_INSTRUCTOR")
+				||requestUser.hasRole("ROLE_SYSADMIN"));
 	}
 }

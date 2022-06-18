@@ -36,5 +36,6 @@ public interface CottageRepository extends JpaRepository<Cottage,Integer>{
 	  @Query("select a.cottageOwner.id from Cottage a where a.id = ?1")
 	  public Integer getCottageOwnerByOfferId(Integer id);
 	
-	
+	List<Cottage> findBySubscribers_IdEquals(Integer id);
+
 }

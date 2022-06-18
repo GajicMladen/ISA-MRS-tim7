@@ -108,11 +108,17 @@
                         </div>
                     </div>
                 </div>
+               
                 <div class="buttons">
-                    <a routerLink="/adventureReservation" routerLinkActive="active">
-                        <button class="btn btn-outline-warning btn-long cart" id="button">Rezerviši</button>
-                    </a>
-                        <button class="btn btn-warning btn-long buy" id="button"><i class="fa fa-calendar-check-o"></i> Proveri dostupnost </button> <button class="btn btn-light wishlist" id="button"> <i class="fa fa-heart"></i> </button> </div>
+                    <span [matTooltip]="reservationTooltipText" [matTooltipDisabled]="hasFreePeriods">
+                    <button class="btn btn-outline-warning btn-long cart mr-2" (click)="openReservationDialog()"
+                    [disabled]="!hasFreePeriods" *ngIf="clientLoggedIn">Rezerviši</button>
+                    </span>
+                    <button class="btn btn-warning btn-long buy" routerLink="/calendar/{{adventure.id}}"><i class="fa fa-calendar-check-o"></i> Proveri dostupnost </button> 
+                    
+                    <button class="btn btn-light wishlist" (click)="addSubscription()" *ngIf="!isSuscribed && clientLoggedIn"> <i class="fa fa-bell"></i> Pretplati se </button> 
+                    <button class="btn btn-light wishlist" (click)="removeSubscription()" *ngIf="isSuscribed && clientLoggedIn"> <i class="fa fa-bell-slash"></i> Odjavi se </button> 
+                </div>
                 <hr>
                 <div class="product-description">
                     <div><span class="font-weight-bold">Maksimalan broj osoba na avanturi:</span><span> {{adventure.capacity}}</span></div>

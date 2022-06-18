@@ -9,6 +9,7 @@ import {
   MessageService,
   MessageType,
 } from 'src/app/shared/services/message-service/message.service';
+import { UserService } from 'src/app/shared/services/users-services/user.service';
 
 import { Cottage } from 'src/models/cottage';
 import { ActionDTO } from 'src/models/reservation';
@@ -27,7 +28,12 @@ export class CottageProfilepageComponent implements OnInit {
 
   actions: ActionDTO[];
 
-  isSuscribed:boolean;
+  isSuscribed: boolean;
+
+  hasFreePeriods: boolean = true;
+
+
+  clientLoggedIn:boolean;
 
   constructor(
     private route: ActivatedRoute,
@@ -36,7 +42,8 @@ export class CottageProfilepageComponent implements OnInit {
     private dialog: MatDialog,
     private reservationService: CottageReservationService,
     private messageService: MessageService,
-    private clientService:ClientService 
+    private clientService:ClientService ,
+    private userService:UserService
   ) {}
 
   ngOnInit(): void {
@@ -47,6 +54,14 @@ export class CottageProfilepageComponent implements OnInit {
         .subscribe((cottage) => {
           this.cottage = cottage;
         });
+
+        
+      this.userService.isLoggedUserOnlyClient().subscribe(
+        data =>{
+          console.log(data);
+          this.clientLoggedIn = data;
+        }
+      );
     }
 
     this.actionService
@@ -56,33 +71,32 @@ export class CottageProfilepageComponent implements OnInit {
       });
 
     this.getIsSuscribed();
+
+    this.reservationService
+      .getFreePeriodsById(this.cottageId)
+      .subscribe((res: any) => {
+        this.hasFreePeriods = res.length > 0;
+      });
   }
 
-  getIsSuscribed(){
-
-    this.clientService.isSuscribedToOffer(this.cottageId).subscribe(
-      data=>{
-        console.log(data);
-        this.isSuscribed = data;
-      }
-    )
+  getIsSuscribed() {
+    this.clientService.isSuscribedToOffer(this.cottageId).subscribe((data) => {
+      console.log(data);
+      this.isSuscribed = data;
+    });
   }
 
-  addSubscription(){
-    this.clientService.addSubscription(this.cottageId).subscribe(
-      data=>{
-        this.getIsSuscribed()
-      }
-    );
+  addSubscription() {
+    this.clientService.addSubscription(this.cottageId).subscribe((data) => {
+      this.getIsSuscribed();
+    });
   }
-  removeSubscription(){
-    this.clientService.removeSubscription(this.cottageId).subscribe(
-      data=>{
-        this.getIsSuscribed();
-      }
-    );
+  removeSubscription() {
+    this.clientService.removeSubscription(this.cottageId).subscribe((data) => {
+      this.getIsSuscribed();
+    });
   }
-  
+
   public openReservationDialog() {
     this.reservationService
       .getFreePeriodsById(this.cottage.id)
@@ -161,5 +175,9 @@ export class CottageProfilepageComponent implements OnInit {
     date2.setSeconds(0);
 
     return [date1, date2];
+  }
+
+  get reservationTooltipText() {
+    return 'No free periods are available!';
   }
 }

@@ -19,21 +19,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import tim7.ISAMRSproject.dto.ActionDTO;
+import tim7.ISAMRSproject.dto.ClientComplaintDTO;
 import tim7.ISAMRSproject.dto.DataForChartDTO;
+
 import tim7.ISAMRSproject.dto.DateRangeDTO;
+
 import tim7.ISAMRSproject.dto.DateRangeStringDTO;
+import tim7.ISAMRSproject.dto.GradeDTO;
 import tim7.ISAMRSproject.dto.ReservationDTO;
-import tim7.ISAMRSproject.model.Adventure;
-import tim7.ISAMRSproject.model.Boat;
-import tim7.ISAMRSproject.model.Client;
-import tim7.ISAMRSproject.model.Cottage;
-import tim7.ISAMRSproject.model.FreePeriod;
-import tim7.ISAMRSproject.model.Reservation;
-import tim7.ISAMRSproject.model.ReservationStatus;
-import tim7.ISAMRSproject.model.User;
+
+import tim7.ISAMRSproject.dto.ReservationListItemDTO;
+
+import tim7.ISAMRSproject.model.*;
+
 import tim7.ISAMRSproject.service.AdventureService;
 import tim7.ISAMRSproject.service.BoatService;
 import tim7.ISAMRSproject.service.ClientService;
+import tim7.ISAMRSproject.service.ComplaintService;
 import tim7.ISAMRSproject.service.CottageService;
 import tim7.ISAMRSproject.service.FreePeriodService;
 import tim7.ISAMRSproject.service.ReservationService;
@@ -63,6 +65,8 @@ public class ReservationController {
     @Autowired
     private FreePeriodService freePeriodService;
 
+    @Autowired
+    private ComplaintService complaintService;
 
     @Autowired
     private UserService userService;
@@ -181,6 +185,52 @@ public class ReservationController {
 
     }
 
+    @GetMapping(value = "/getVisitChartDataForCottageOwner/{id}")
+    public List<DataForChartDTO> getVisitDataForChartCottageOwner(@PathVariable int id){
+        List<DataForChartDTO> retVal = new ArrayList<>();
+
+        List<Cottage> offers = cottageService.getCottagesByOwnerId(id);
+        for (Cottage cottage:offers) {
+            DataForChartDTO newData = new DataForChartDTO();
+            newData.setName(cottage.getName());
+            float value = 0;
+            List<Reservation> reservations =  reservationService.getReservationsForOffer(cottage.getId());
+            value += reservations.size();
+            newData.setValue(value);
+            retVal.add(newData);
+        }
+
+        return retVal;
+
+    }
+
+    @GetMapping(value = "/getGradeChartDataForCottageOwner/{id}")
+    public List<DataForChartDTO> getGradeDataForChartCottageOwner(@PathVariable int id){
+        List<DataForChartDTO> retVal = new ArrayList<>();
+
+        List<Cottage> offers = cottageService.getCottagesByOwnerId(id);
+        for (Cottage cottage:offers) {
+            DataForChartDTO newData = new DataForChartDTO();
+            newData.setName(cottage.getName());
+            float value = 0;
+            List<Reservation> reservations =  reservationService.getReservationsForOffer(cottage.getId());
+            for (Reservation reservation: reservations) {
+                if (reservation.getGrade() != null)
+                    value += reservation.getGrade().getGrade();
+            }
+            if(reservations.size() > 0 )
+                value = value/reservations.size();
+            else
+                value = 0;
+            newData.setValue(value);
+            retVal.add(newData);
+        }
+
+        return retVal;
+
+    }
+
+
     @GetMapping(value = "/getProfitChartDataForBoatOwner/{id}")
     public List<DataForChartDTO> getDataForChartBoatOwner(@PathVariable int id){
         List<DataForChartDTO> retVal = new ArrayList<>();
@@ -194,6 +244,49 @@ public class ReservationController {
             for (Reservation reservation: reservations) {
                 value += reservation.getTotalPrice();
             }
+            newData.setValue(value);
+            retVal.add(newData);
+        }
+
+        return retVal;
+
+    }
+    @GetMapping(value = "/getVisitChartDataForBoatOwner/{id}")
+    public List<DataForChartDTO> getVisitDataForChartBoatOwner(@PathVariable int id){
+        List<DataForChartDTO> retVal = new ArrayList<>();
+
+        List<Boat> offers = boatService.getBoatsByOwnerId(id);
+        for (Boat boat:offers) {
+            DataForChartDTO newData = new DataForChartDTO();
+            newData.setName(boat.getName());
+            float value = 0;
+            List<Reservation> reservations =  reservationService.getReservationsForOffer(boat.getId());
+            value += reservations.size();
+            newData.setValue(value);
+            retVal.add(newData);
+        }
+
+        return retVal;
+
+    }
+    @GetMapping(value = "/getGradeChartDataForBoatOwner/{id}")
+    public List<DataForChartDTO> getGradeDataForChartBoatOwner(@PathVariable int id){
+        List<DataForChartDTO> retVal = new ArrayList<>();
+
+        List<Boat> offers = boatService.getBoatsByOwnerId(id);
+        for (Boat boat:offers) {
+            DataForChartDTO newData = new DataForChartDTO();
+            newData.setName(boat.getName());
+            float value = 0;
+            List<Reservation> reservations =  reservationService.getReservationsForOffer(boat.getId());
+            for (Reservation reservation: reservations) {
+                if(reservation.getGrade() != null)
+                    value += reservation.getGrade().getGrade();
+            }
+            if(reservations.size() > 0 )
+                value = value/reservations.size();
+            else
+                value = 0;
             newData.setValue(value);
             retVal.add(newData);
         }
@@ -225,7 +318,7 @@ public class ReservationController {
     @PostMapping(value = "/newReservation")
     public ResponseEntity<?> addNewReservation(@RequestBody DateRangeStringDTO dateRangeDTO, Principal user){
     	User u = userService.findByEmail(user.getName());
-    	String status = reservationService.createNewReservation(dateRangeDTO.getStartDateString(), dateRangeDTO.getEndDateString(), dateRangeDTO.getOfferId(), dateRangeDTO.getTotalPrice(), u);
+    	String status = reservationService.createNewReservation(dateRangeDTO.getStartDateString(), dateRangeDTO.getEndDateString(), dateRangeDTO.getOfferId(), dateRangeDTO.getTotalPrice(), dateRangeDTO.getOfferType(), u);
     	return ResponseEntity.status(HttpStatus.CREATED).body("{\"status\":\"" + status + "\"}");
     }
     
@@ -260,5 +353,56 @@ public class ReservationController {
     	else {
     		return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
     	}
+    }
+  
+    @GetMapping(value = "/activeReservations")
+    public ResponseEntity<?> getActiveReservations(Principal user){
+    	User u = userService.findByEmail(user.getName());
+    	List<ReservationListItemDTO> activeReservations = reservationService.getActiveReservations(u);
+    	return new ResponseEntity<>(activeReservations, HttpStatus.OK);
+    }
+    
+    @DeleteMapping(value = "/cancelReservation/{id}")
+    public ResponseEntity<?> cancelReservation(@PathVariable int id){
+    	boolean status = reservationService.cancelReservation(id);
+    	if (status)
+    		return new ResponseEntity<>(HttpStatus.OK);
+    	else
+    		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+    
+    @GetMapping(value = "/pastReservations")
+    public ResponseEntity<?> getPastReservations(Principal user){
+    	User u = userService.findByEmail(user.getName());
+    	List<ReservationListItemDTO> pastReservations = reservationService.getPastReservations(u);
+    	return new ResponseEntity<>(pastReservations, HttpStatus.OK);
+    }
+    
+    @PostMapping(value = "/addReview")
+    public ResponseEntity<?> addReview(@RequestBody GradeDTO gradeDTO){
+    	Grade grade = new Grade();
+    	grade.setGrade(gradeDTO.getGrade());
+    	grade.setRevision(gradeDTO.getReviewText());
+    	grade.setStatus(ApprovalStatus.ON_WAIT);
+    	
+    	boolean status = reservationService.addReview(grade, gradeDTO.getId());
+    	if (status)
+    		return new ResponseEntity<>(HttpStatus.OK);
+    	else
+    		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+    
+    @PostMapping(value = "/addComplaint")
+    public ResponseEntity<?> addReview(@RequestBody ClientComplaintDTO complaintDTO){
+    	Complaint complaint = new Complaint();
+    	
+    	complaint.setFormOwner(false);
+    	complaint.setForOffer(true);
+    	complaint.setPunishOffender(false);
+    	complaint.setText(complaintDTO.getComplaintText());
+    	complaint.setStatus(ApprovalStatus.ON_WAIT);
+    	
+    	complaintService.addNewComplaint(complaint, complaintDTO.getId());
+		return new ResponseEntity<>(HttpStatus.OK);
     }
 }

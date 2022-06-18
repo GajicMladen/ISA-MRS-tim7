@@ -15,8 +15,8 @@ import { AdventureFreePeriodComponent } from './components/adventure-free-period
 import { AdventureInstructorCalendarComponent } from './components/adventure-instructor-calendar/adventure-instructor-calendar.component';
 import { AdventureActionComponent } from './components/adventure-action/adventure-action.component';
 import { AdventureReportsComponent } from './components/adventure-reports/adventure-reports.component';
+import { AdventureClientReservationDialogComponent } from './components/adventure-client-reservation-dialog/adventure-client-reservation-dialog.component';
 import { AdventureReservationsComponent } from './components/adventure-reservations/adventure-reservations.component';
-
 
 @NgModule({
   declarations: [
@@ -30,6 +30,7 @@ import { AdventureReservationsComponent } from './components/adventure-reservati
     AdventureInstructorCalendarComponent,
     AdventureActionComponent,
     AdventureReportsComponent,
+    AdventureClientReservationDialogComponent,
     AdventureReservationsComponent
   ],
   imports: [
@@ -38,9 +39,8 @@ import { AdventureReservationsComponent } from './components/adventure-reservati
     BrowserModule,
     FormsModule,
     RouterModule,
-    ReactiveFormsModule
-    //ReactiveFormsModule.withConfig({warnOnNgModelWithFormControl: 'never'})
+    ReactiveFormsModule,
   ],
-  providers: [AdventureService]
+  providers: [AdventureService],
 })
-export class AdventureModule { }
+export class AdventureModule {}

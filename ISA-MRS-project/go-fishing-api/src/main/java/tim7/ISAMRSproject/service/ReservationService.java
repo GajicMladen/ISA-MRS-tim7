@@ -12,18 +12,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import tim7.ISAMRSproject.dto.ActionDTO;
 import tim7.ISAMRSproject.dto.ReservationDTO;
-import tim7.ISAMRSproject.model.Boat;
-import tim7.ISAMRSproject.model.Client;
-import tim7.ISAMRSproject.model.Cottage;
-import tim7.ISAMRSproject.model.FreePeriod;
-import tim7.ISAMRSproject.model.Reservation;
-import tim7.ISAMRSproject.model.ReservationStatus;
-import tim7.ISAMRSproject.model.User;
-import tim7.ISAMRSproject.repository.BoatRepository;
-import tim7.ISAMRSproject.repository.ClientRepository;
-import tim7.ISAMRSproject.repository.CottageRepository;
-import tim7.ISAMRSproject.repository.FreePeriodRepository;
+
+import tim7.ISAMRSproject.dto.ReservationListItemDTO;
 import tim7.ISAMRSproject.repository.ReservationRepository;
+import tim7.ISAMRSproject.utils.EmailServiceImpl;
+
+import tim7.ISAMRSproject.model.*;
+import tim7.ISAMRSproject.repository.*;
 
 
 @Service
@@ -37,12 +32,20 @@ public class ReservationService {
 	private CottageRepository cottageRepository;
 	@Autowired
 	private BoatRepository boatRepository;
+	@Autowired
+	private AdventureRepository adventureRepository;
 
 	@Autowired
 	private ClientRepository clientRepository;
 	
 	@Autowired
 	private FreePeriodRepository fpRepository;
+
+	@Autowired
+	private GradeRepository gradeRepository;
+	
+	@Autowired
+	private EmailServiceImpl emailService;
 
 	public boolean AdventureHasReservations(Integer id) {
 		for (Reservation r : reservationRepository.findAll()) {
@@ -62,7 +65,7 @@ public class ReservationService {
 		newAction.setStatus(ReservationStatus.FOR_ACTION);
 		Optional<Cottage> cottage = cottageRepository.findById(actionDTO.getOfferId());
 		Optional<Boat> boat = boatRepository.findById(actionDTO.getOfferId());
-		//instructor
+		Optional<Adventure> adventure = adventureRepository.findById(actionDTO.getOfferId());
 
 		if(cottage.isPresent()) {
 			newAction.setOffer(cottage.get());
@@ -74,8 +77,11 @@ public class ReservationService {
 			return reservationRepository.save(newAction);
 
 		}
+		if(adventure.isPresent()){
+			newAction.setOffer(adventure.get());
+			return reservationRepository.save(newAction);
+		}
 
-		//instructor
 		return null;
 
 	}
@@ -133,7 +139,7 @@ public class ReservationService {
 
 		Optional<Cottage> cottage = cottageRepository.findById(reservationDTO.getOfferId());
 		Optional<Boat> boat = boatRepository.findById(reservationDTO.getOfferId());
-		//instructor
+		Optional<Adventure> adventure = adventureRepository.findById(reservationDTO.getOfferId());
 
 		if(cottage.isPresent()) {
 			newReservation.setOffer(cottage.get());
@@ -147,13 +153,17 @@ public class ReservationService {
 			reservationRepository.save(newReservation);
 			return "OK";
 		}
-
-		//instructor
+		if(adventure.isPresent()){
+			newReservation.setOffer(adventure.get());
+			newReservation.setTotalPrice( daysNum * adventure.get().getPrice() );
+			reservationRepository.save(newReservation);
+			return "OK";
+		}
 
 		return "Invalid Offer ID";
 	}
 	
-	public String createNewReservation(String startDateString, String endDateString, int offerId, float totalPrice, User user) {
+	public String createNewReservation(String startDateString, String endDateString, int offerId, float totalPrice, String offerType, User user) {
 		LocalDateTime startDate = convertDateString(startDateString);
 		LocalDateTime endDate = convertDateString(endDateString);
 		
@@ -161,8 +171,13 @@ public class ReservationService {
 		res.setStartDateTime(startDate);
 		res.setEndDateTime(endDate);
 		res.setTotalPrice(totalPrice);
-		res.setOffer(cottageRepository.getById(offerId));
-		res.setStatus(ReservationStatus.ON_WAIT);
+		if (offerType.equals("cottage"))
+			res.setOffer(cottageRepository.getById(offerId));
+		else if (offerType.equals("boat"))
+			res.setOffer(boatRepository.getById(offerId));
+		else if (offerType.equals("adventure"))
+			res.setOffer(adventureRepository.getById(offerId));
+		res.setStatus(ReservationStatus.ACTIVE);
 		res.setClient(clientRepository.getById(user.getId()));
 		
 		List<FreePeriod> fps = fpRepository.findByOffer_Id(offerId);
@@ -173,8 +188,8 @@ public class ReservationService {
 				FreePeriod before = new FreePeriod();
 				FreePeriod after = new FreePeriod();
 				
-				before.setOffer(cottageRepository.getById(offerId));
-				after.setOffer(cottageRepository.getById(offerId));
+				before.setOffer(fp.getOffer());
+				after.setOffer(fp.getOffer());
 				before.setStartDateTime(fp.getStartDateTime());
 				before.setEndDateTime(startDate.minusDays(1));
 				after.setStartDateTime(endDate);
@@ -189,8 +204,86 @@ public class ReservationService {
 		}
 		
 		reservationRepository.save(res);
+		emailService.sendReservationConfirmationMail(user, res, res.getOffer().getName());
 		return "Your reservation is successful!";
 		
+	}
+	
+	public List<ReservationListItemDTO> getActiveReservations(User u) {
+		List<ReservationListItemDTO> retVal = new ArrayList<ReservationListItemDTO>();
+		for(Reservation r: reservationRepository.findByClient_IdEquals(u.getId())) {
+			if (r.getStartDateTime().isAfter(LocalDateTime.now())) {
+				ReservationListItemDTO rli = new ReservationListItemDTO();
+				rli.setId(r.getId());
+				rli.setStartDate(r.getStartDateTime());
+				rli.setEndDate(r.getEndDateTime());
+				rli.setClientId(u.getId());
+				rli.setOfferId(r.getOffer().getId());
+				rli.setOfferName(r.getOffer().getName());
+				rli.setTotalPrice(r.getTotalPrice());
+				rli.setOfferAddress(r.getOffer().getAddress().toString());
+				if(LocalDateTime.now().plusDays(3).isAfter(r.getStartDateTime()))
+					rli.setCanCancel(false);
+				else
+					rli.setCanCancel(true);
+				retVal.add(rli);
+			}
+		}
+		return retVal;
+	}
+	
+	public List<ReservationListItemDTO> getPastReservations(User u) {
+		List<ReservationListItemDTO> retVal = new ArrayList<ReservationListItemDTO>();
+		for(Reservation r: reservationRepository.findByClient_IdEquals(u.getId())) {
+			if (r.getStartDateTime().isBefore(LocalDateTime.now())) {
+				ReservationListItemDTO rli = new ReservationListItemDTO();
+				rli.setId(r.getId());
+				rli.setStartDate(r.getStartDateTime());
+				rli.setEndDate(r.getEndDateTime());
+				rli.setClientId(u.getId());
+				rli.setOfferId(r.getOffer().getId());
+				rli.setOfferName(r.getOffer().getName());
+				rli.setTotalPrice(r.getTotalPrice());
+				rli.setOfferAddress(r.getOffer().getAddress().toString());
+				if(r.getGrade() == null)
+					rli.setCanCancel(true);
+				else
+					rli.setCanCancel(false);
+				boolean canComplain = true;
+				for (Complaint c: r.getComplaints()) {
+					if (r.getId() == c.getReservation().getId() && !c.isFormOwner())
+						canComplain = false;
+				}
+				rli.setCanComplain(canComplain);
+				retVal.add(rli);
+			}
+		}
+		return retVal;
+	}
+	
+	public boolean cancelReservation(int id) {
+		Reservation res = reservationRepository.getById(id);
+		if (res == null) return false;
+		else {
+			FreePeriod fp = new FreePeriod();
+			fp.setStartDateTime(res.getStartDateTime());
+			fp.setEndDateTime(res.getEndDateTime());
+			fp.setOffer(res.getOffer());
+			reservationRepository.cancelReservationById(id);
+			fpRepository.save(fp);
+			return true;
+		}
+	}
+	
+	public boolean addReview(Grade grade, int reservationId) {
+		Reservation res = reservationRepository.getById(reservationId);
+		if (res != null) {
+			res.setGrade(grade);
+			grade.setReservation(res);
+			gradeRepository.save(grade);
+			return true;
+		} else return false;
+
 	}
 	
 	private LocalDateTime convertDateString(String s) {

@@ -1,8 +1,10 @@
 package tim7.ISAMRSproject.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
-import tim7.ISAMRSproject.model.Offer;
+import org.springframework.transaction.annotation.Transactional;
+
 import tim7.ISAMRSproject.model.Reservation;
 
 import java.time.LocalDateTime;
@@ -14,5 +16,10 @@ public interface ReservationRepository extends JpaRepository<Reservation, Intege
     @Query("select r from Reservation r where r.startDateTime >= ?1 and r.startDateTime <= ?2")
 	List<Reservation> findAllByDateRange(LocalDateTime start, LocalDateTime end);
 
-
+    List<Reservation> findByClient_IdEquals(Integer id);
+    
+    @Transactional
+    @Modifying
+    @Query("DELETE FROM Reservation WHERE id = ?1")
+    void cancelReservationById(Integer id);
 }

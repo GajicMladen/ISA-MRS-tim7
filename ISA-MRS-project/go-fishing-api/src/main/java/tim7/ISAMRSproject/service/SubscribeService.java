@@ -3,10 +3,8 @@ package tim7.ISAMRSproject.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import tim7.ISAMRSproject.model.Boat;
-import tim7.ISAMRSproject.model.Client;
-import tim7.ISAMRSproject.model.Cottage;
-import tim7.ISAMRSproject.model.Offer;
+import tim7.ISAMRSproject.model.*;
+import tim7.ISAMRSproject.repository.AdventureRepository;
 import tim7.ISAMRSproject.repository.BoatRepository;
 import tim7.ISAMRSproject.repository.ClientRepository;
 import tim7.ISAMRSproject.repository.CottageRepository;
@@ -25,6 +23,9 @@ public class SubscribeService {
 
     @Autowired
     private BoatRepository boatRepository;
+
+    @Autowired
+    private AdventureRepository adventureRepository;
 
 
     public void addSubsription(int clinetnId,int offerId){
@@ -47,6 +48,11 @@ public class SubscribeService {
                 return;
             }
 
+            Optional<Adventure> adventure = adventureRepository.findById(offerId);
+            if(adventure.isPresent() && ! client.get().isSubscribedToOffer(adventure.get().getId())){
+                client.get().addSubscribedOffer(adventure.get());
+                clientRepository.save(client.get());
+            }
 
         }
     }
@@ -70,7 +76,12 @@ public class SubscribeService {
                 return;
             }
 
-
+            Optional<Adventure> adventure = adventureRepository.findById(offerId);
+            if(adventure.isPresent() &&  client.get().isSubscribedToOffer(adventure.get().getId())){
+                client.get().removeSubscribedOffer(adventure.get());
+                clientRepository.save(client.get());
+                return;
+            }
         }
     }
 }

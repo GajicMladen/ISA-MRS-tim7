@@ -1,12 +1,12 @@
 package tim7.ISAMRSproject.utils;
 
+import java.time.format.DateTimeFormatter;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
-import tim7.ISAMRSproject.dto.ActionDTO;
-import tim7.ISAMRSproject.model.Action;
 import tim7.ISAMRSproject.model.Reservation;
 import tim7.ISAMRSproject.model.User;
 
@@ -16,8 +16,8 @@ public class EmailServiceImpl {
 	@Autowired
 	private JavaMailSender mailSender;
 	
-	private String CONFIRMATION_SUBJECT = "Go Fishing Account Verification";
-
+	private String CONFIRMATION_SUBJECT = "GoFishing! Account Verification";
+	private String RESERVATION_CONFIRMATION_SUBJECT = "GoFishing! Reservation Confirmation";
 	private String ACTION_SUBJECT = "Go Fishing AKCIJA!!!";
 
 	public void sendSimpleMessage(String to, String subject, String text) {
@@ -96,5 +96,14 @@ public class EmailServiceImpl {
 		confirmationBodyOffender += "Complaint has been accepted!";
 		confirmationBodyOffender += "\nAdmin's response: " + response;
 		sendSimpleMessage(offender.getEmail(), "Go fishing admin", confirmationBodyOffender);
+  }
+  
+	public void sendReservationConfirmationMail(User user, Reservation res, String offerName) {
+		String confirmationBody = "Dear " + user.getName() + " " + user.getLastName() + ",\n";
+		confirmationBody += "You have successfully made a reservation for " + offerName + "!\n";
+		confirmationBody += "Start date: " + res.getStartDateTime().format(DateTimeFormatter.ofPattern("dd.MM.yyyy."))  + "\n";
+		confirmationBody += "End date: " + res.getEndDateTime().format(DateTimeFormatter.ofPattern("dd.MM.yyyy."))  + "\n";
+		confirmationBody += "GoFishing! Team wishes you a pleasant stay!";
+		sendSimpleMessage(user.getEmail(), RESERVATION_CONFIRMATION_SUBJECT, confirmationBody);
 	}
 }

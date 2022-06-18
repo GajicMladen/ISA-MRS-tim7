@@ -24,7 +24,13 @@ export class CottageReservationService {
     return this.http
       .post(
         this.configService.newReservationUrl,
-        { startDateString, endDateString, totalPrice, offerId },
+        {
+          startDateString,
+          endDateString,
+          totalPrice,
+          offerId,
+          offerType: 'cottage',
+        },
         {
           headers: {
             'Content-Type': 'application/json',

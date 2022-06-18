@@ -30,15 +30,11 @@ export class CottageReportsComponent implements OnInit {
     this.displayChartPie= false;
 
     this.title = "Zauzetost vikendica";
-    
-    this.dataForChar = [
-      { name: "Vikendica Kosmaj", value: 100 },
-      { name: "Vila Raj", value: 55 },
-      { name: "Selo Tur", value: 150 },
-      { name: "Vrhpolje", value: 500 },
-      { name: "Rocevic", value: 200 }
-    ];
-
+    this.reservationService.getVisitChartDataForReservations(this.ownerId,'C').subscribe(
+      data =>{
+        this.dataForChar = data;
+      }
+    );
   }
 
 
@@ -62,13 +58,12 @@ export class CottageReportsComponent implements OnInit {
 
 
     this.title = "Prosecne ocene vikendica";
-    this.dataForChar = [
-      { name: "Vikendica Kosmaj", value: 5.0 },
-      { name: "Vila Raj", value: 3.5 },
-      { name: "Selo Tur", value: 4.0 },
-      { name: "Vrhpolje", value: 2.0 },
-      { name: "Rocevic", value: 4.7 }
-    ];
+    
+    this.reservationService.getGradeChartDataForReservations(this.ownerId,'C').subscribe(
+      data =>{
+        this.dataForChar = data;
+      }
+    );
   }
 
 }

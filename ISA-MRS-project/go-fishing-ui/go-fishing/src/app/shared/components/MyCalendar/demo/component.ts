@@ -13,7 +13,7 @@ import {
 import { MonthViewDay } from 'calendar-utils';
 import { Subject } from 'rxjs';
 import { FreePeriodDTO } from 'src/models/freePeriod';
-import { ActionDTO } from 'src/models/reservation';
+import { ActionDTO, ReservationDTO } from 'src/models/reservation';
 
 @Component({
   selector: 'mwl-demo-component',
@@ -32,6 +32,12 @@ import { ActionDTO } from 'src/models/reservation';
       .cal-day-view .bg-yellow{
         background-color: #f2d748 !important;
       }
+      
+      .cal-month-view .bg-red, 
+      .cal-week-view .cal-day-columns .bg-red,
+      .cal-day-view .bg-red{
+        background-color: #ed3232 !important;
+      }
     `,
   ],
 })
@@ -46,15 +52,11 @@ export class DemoComponent {
 
   @Input() freePeriods: FreePeriodDTO[];
   @Input() actions: ActionDTO[];
+  @Input() reservations : ReservationDTO[];
 
   beforeMonthViewRender(renderEvent: CalendarMonthViewBeforeRenderEvent): void {
     renderEvent.body.forEach((day) => {
       const dayOfMonth = day.date.getDate();
-      
-      console.log(this.freePeriods);
-      console.log(this.freePeriods.length);
-      console.log(this.actions);
-      console.log(this.actions.length);
       
       if (this.isDayInFreePeriods(day) && this.freePeriods.length > 0) {
         day.cssClass = 'bg-green';
@@ -62,6 +64,11 @@ export class DemoComponent {
       if(this.isDayInActions(day) && this.actions.length > 0){
         day.cssClass = 'bg-yellow';
       }
+      if(this.isDayInReservations(day) && this.reservations.length > 0){
+        day.cssClass = 'bg-red';
+      }
+      
+
     });
   }
 
@@ -73,21 +80,13 @@ export class DemoComponent {
   }
   
   isDayInFreePeriods(day:MonthViewDay<any>):boolean{
-    console.log(day);
     let res = false;
     let day_S = day.date.getFullYear()+"-"+this.getFullNumber(day.date.getMonth()+1)+"-"+this.getFullNumber(day.date.getDate());
   
     this.freePeriods.forEach(fp => {
-      //console.log(fp);
-
       let startDate = fp.startDate.year+"-"+this.getFullNumber(fp.startDate.month)+"-"+this.getFullNumber(fp.startDate.day);
       let endDate = fp.endDate.year+"-"+this.getFullNumber(fp.endDate.month)+"-"+this.getFullNumber(fp.endDate.day);
       
-
-      //console.log('************');
-      //console.log(day_S);
-      //console.log(startDate);
-      //console.log(endDate);
 
       if( day_S >= startDate && day_S <= endDate){
         res = true;
@@ -97,13 +96,26 @@ export class DemoComponent {
   }
 
   isDayInActions(day:MonthViewDay<any>):boolean{
-    console.log(day);
     let res = false;
     let day_S = day.date.getFullYear()+"-"+this.getFullNumber(day.date.getMonth()+1)+"-"+this.getFullNumber(day.date.getDate());
   
     this.actions.forEach(action => {
       let startDate = action.startDate.year+"-"+this.getFullNumber(action.startDate.month)+"-"+this.getFullNumber(action.startDate.day);
       let endDate = action.endDate.year+"-"+this.getFullNumber(action.endDate.month)+"-"+this.getFullNumber(action.endDate.day);
+      
+      if( day_S >= startDate && day_S <= endDate){
+        res = true;        
+      }
+    });
+    return res;
+  }
+  isDayInReservations(day:MonthViewDay<any>):boolean{
+    let res = false;
+    let day_S = day.date.getFullYear()+"-"+this.getFullNumber(day.date.getMonth()+1)+"-"+this.getFullNumber(day.date.getDate());
+  
+    this.reservations.forEach(reservation => {
+      let startDate = reservation.startDate.year+"-"+this.getFullNumber(reservation.startDate.month)+"-"+this.getFullNumber(reservation.startDate.day);
+      let endDate = reservation.endDate.year+"-"+this.getFullNumber(reservation.endDate.month)+"-"+this.getFullNumber(reservation.endDate.day);
       
       if( day_S >= startDate && day_S <= endDate){
         res = true;        

@@ -20,7 +20,14 @@ public class UserRegisterDTO {
 	private String address;
 	private String phoneNumber;
 	private String role;
+	private String reason;
 	
+	public String getReason() {
+		return reason;
+	}
+	public void setReason(String reason) {
+		this.reason = reason;
+	}
 	public Long getId() {
 		return id;
 	}

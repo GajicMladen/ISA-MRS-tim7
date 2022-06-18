@@ -6,7 +6,16 @@ public class DateRangeStringDTO {
 	String endDateString;
 	int offerId;
 	float totalPrice;
+	String offerType;
 	
+	public String getOfferType() {
+		return offerType;
+	}
+
+	public void setOfferType(String offerType) {
+		this.offerType = offerType;
+	}
+
 	public float getTotalPrice() {
 		return totalPrice;
 	}

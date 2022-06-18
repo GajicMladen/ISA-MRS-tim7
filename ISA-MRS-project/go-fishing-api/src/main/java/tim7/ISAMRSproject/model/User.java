@@ -67,7 +67,7 @@ public class User implements UserDetails {
 	private DeletionRequest deletionRequest;
 	
 	@JsonIgnore
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = {CascadeType.ALL})
 	@JoinColumn(name = "registration_request", referencedColumnName = "id")
 	private RegistrationRequest registrationRequest;
 	
