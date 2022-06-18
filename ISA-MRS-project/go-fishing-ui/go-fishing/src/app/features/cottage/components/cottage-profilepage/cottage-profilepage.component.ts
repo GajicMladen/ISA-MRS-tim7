@@ -4,7 +4,6 @@ import { ActivatedRoute } from '@angular/router';
 import { ActionService } from 'src/app/shared/services/action-service/action.service';
 
 import { ClientService } from 'src/app/shared/services/client-service/client.service';
-import { ExtraFavorsService } from 'src/app/shared/services/extra-favors-service/extra-favors.service';
 
 import {
   MessageService,
@@ -44,8 +43,7 @@ export class CottageProfilepageComponent implements OnInit {
     private reservationService: CottageReservationService,
     private messageService: MessageService,
     private clientService:ClientService ,
-    private userService:UserService,
-    private extraFavorService:ExtraFavorsService
+    private userService:UserService
   ) {}
 
   ngOnInit(): void {
@@ -55,6 +53,8 @@ export class CottageProfilepageComponent implements OnInit {
         .findCottageById(this.cottageId)
         .subscribe((cottage) => {
           this.cottage = cottage;
+          if( this.cottage!= null && this.cottage.extraFavors != null)
+            this.extraFavors = this.cottage.extraFavors.split("|");
         });
 
         
@@ -65,7 +65,6 @@ export class CottageProfilepageComponent implements OnInit {
         }
       );
 
-      this.extraFavors = this.extraFavorService.getFavorsForCottage(this.cottageId);
     }
 
     this.actionService

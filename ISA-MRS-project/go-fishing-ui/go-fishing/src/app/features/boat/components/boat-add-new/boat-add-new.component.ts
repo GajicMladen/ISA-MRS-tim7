@@ -20,6 +20,8 @@ export class BoatAddNewComponent implements OnInit {
   promoDescription : string;
   bedCount:number;
 
+  extraFavorsString:String;
+
   constructor(private boatService:BoatService,private router: Router) { }
 
   ngOnInit(): void {
@@ -33,7 +35,7 @@ export class BoatAddNewComponent implements OnInit {
     this.newBoat.description = this.promoDescription;
     this.newBoat.ownerId = this.ownerId;
 
-    console.log(this.newBoat);
+    this.newBoat.extraFavors = this.extraFavorsString.split(/\r?\n/).join("|");
     
     this.boatService.addNewBoat(this.newBoat).subscribe(data =>{
       console.log(data);

@@ -40,10 +40,11 @@
                             
                             <span class="font-weight-bold">Dodatne usluge:</span>
                         <div class="bullets">
-                            <div class="d-flex align-items-center" *ngFor="let extraFafor of extraFavors">
-                                 <span class="dot"></span> <input type="checkbox"> 
-                                 <span class="bullet-text">{{extraFafor}}</span> 
-                            </div>
+                        
+                        Dodatne usluge (novi red za svaku dodatnu uslugu):
+                        <textarea matInput [(ngModel)]="extraFavorString" name="equipment" placeholder="Oprema"></textarea>
+
+                        
                         </div>
                     
             </div>            
