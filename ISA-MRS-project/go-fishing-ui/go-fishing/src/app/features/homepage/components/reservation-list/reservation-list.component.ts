@@ -80,16 +80,9 @@ export class ReservationListComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((res: any) => {
-      if (this.mode == 'review') {
-        if (res !== undefined) {
-          res.id = item.id;
-          this.addReview(res);
-        }
-      } else {
-        if (res !== undefined) {
-          res.id = item.id;
-          this.addComplaint(res);
-        }
+      if (res !== undefined) {
+        res.id = item.id;
+        this.addReview(res);
       }
     });
   }

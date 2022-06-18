@@ -70,9 +70,14 @@ public class ClientController {
     @PutMapping(value="/unsubscribe")
     public ResponseEntity<?> unsubscribeOffer(@RequestBody UnsubscribeDTO unsubDTO, Principal user){
     	User u = this.userService.findByEmail(user.getName());
-    	//userService.unsubscribe(u, unsubDTO.getId());
+    	subscribeService.removeSubsription(u.getId(), unsubDTO.getId());
     	return new ResponseEntity<>(HttpStatus.OK);
     }
-    
+    @PutMapping(value="/resubscribe")
+    public ResponseEntity<?> resubscribeOffer(@RequestBody UnsubscribeDTO unsubDTO, Principal user){
+    	User u = this.userService.findByEmail(user.getName());
+    	subscribeService.addSubsription(u.getId(), unsubDTO.getId());
+    	return new ResponseEntity<>(HttpStatus.OK);
+    }
 
 }

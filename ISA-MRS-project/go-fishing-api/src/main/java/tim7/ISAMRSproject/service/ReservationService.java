@@ -255,7 +255,7 @@ public class ReservationService {
 					rli.setCanCancel(false);
 				boolean canComplain = true;
 				for (Complaint c: r.getComplaints()) {
-					if (c.getOffenderId() != u.getId())
+					if (r.getId() == c.getReservation().getId() && !c.isFormOwner())
 						canComplain = false;
 				}
 				rli.setCanComplain(canComplain);

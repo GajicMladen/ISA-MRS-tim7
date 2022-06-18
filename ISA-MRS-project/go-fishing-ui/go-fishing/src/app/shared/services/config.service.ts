@@ -158,4 +158,7 @@ export class ConfigService {
   get unsubscribeUrl(): string {
     return this._client_controller_url + '/unsubscribe';
   }
+  get resubscribeUrl(): string {
+    return this._client_controller_url + '/resubscribe';
+  }
 }

@@ -20,7 +20,6 @@ import tim7.ISAMRSproject.model.Admin;
 import tim7.ISAMRSproject.model.Adventure;
 import tim7.ISAMRSproject.model.Boat;
 import tim7.ISAMRSproject.model.BoatOwner;
-import tim7.ISAMRSproject.model.Client;
 import tim7.ISAMRSproject.model.Cottage;
 import tim7.ISAMRSproject.model.CottageOwner;
 import tim7.ISAMRSproject.model.DeletionRequest;

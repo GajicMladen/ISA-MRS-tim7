@@ -15,4 +15,8 @@ export class SubscriptionService {
   public unsubscribeOffer(id: number) {
     return this.http.put(this.config.unsubscribeUrl, { id });
   }
+
+  public resubscribeOffer(id: number) {
+    return this.http.put(this.config.resubscribeUrl, { id });
+  }
 }
