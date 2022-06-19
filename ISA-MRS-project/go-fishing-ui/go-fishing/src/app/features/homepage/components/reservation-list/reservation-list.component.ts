@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import {
@@ -19,6 +20,7 @@ export class ReservationListComponent implements OnInit {
 
   // 'active' or 'past'
   mode: string = '';
+  sort: FormControl = new FormControl('');
   constructor(
     private reservationService: ReservationService,
     private dialog: MatDialog,
@@ -37,6 +39,51 @@ export class ReservationListComponent implements OnInit {
         this.reservationList = res;
       });
     }
+
+    this.subscribeToSort();
+  }
+
+  subscribeToSort() {
+    this.sort.valueChanges.subscribe((res) => {
+      switch (res) {
+        case 'earliest':
+          this.reservationList = this.reservationList.sort((a, b) => {
+            return this.compareDateArray(a.startDate, b.startDate);
+          });
+          break;
+        case 'latest':
+          this.reservationList = this.reservationList.sort((a, b) => {
+            return this.compareDateArray(b.startDate, a.startDate);
+          });
+          break;
+        case 'longest':
+          this.reservationList = this.reservationList.sort((a, b) => {
+            return (
+              this.compareDateArrayLength(a.startDate, a.endDate) -
+              this.compareDateArrayLength(b.startDate, b.endDate)
+            );
+          });
+          break;
+        case 'shortest':
+          this.reservationList = this.reservationList.sort((a, b) => {
+            return (
+              this.compareDateArrayLength(b.startDate, b.endDate) -
+              this.compareDateArrayLength(a.startDate, a.endDate)
+            );
+          });
+          break;
+        case 'least-expensive':
+          this.reservationList = this.reservationList.sort((a, b) => {
+            return a.totalPrice - b.totalPrice;
+          });
+          break;
+        case 'most-expensive':
+          this.reservationList = this.reservationList.sort((a, b) => {
+            return b.totalPrice - a.totalPrice;
+          });
+          break;
+      }
+    });
   }
 
   setMode(): void {
@@ -140,5 +187,33 @@ export class ReservationListComponent implements OnInit {
 
   getDateString(dateArray: any): String {
     return dateArray[2] + '.' + dateArray[1] + '.' + dateArray[0] + '.';
+  }
+
+  compareDateArray(startDateArray: any, endDateArray: any): number {
+    if (startDateArray[0] > endDateArray[0]) return 1;
+    else if (startDateArray[0] < endDateArray[0]) return -1;
+    else if (startDateArray[1] > endDateArray[1]) return 1;
+    else if (startDateArray[1] < endDateArray[1]) return -1;
+    else if (startDateArray[2] > endDateArray[2]) return 1;
+    else if (startDateArray[2] < endDateArray[2]) return -1;
+    else return 0;
+  }
+
+  compareDateArrayLength(startDateArray: any, endDateArray: any): number {
+    let startDate = new Date(
+      startDateArray[0],
+      startDateArray[1] - 1,
+      startDateArray[2]
+    );
+    let endDate = new Date(
+      endDateArray[0],
+      endDateArray[1] - 1,
+      endDateArray[2]
+    );
+
+    console.log(startDate);
+    console.log(endDate);
+
+    return startDate.getTime() - endDate.getTime();
   }
 }
