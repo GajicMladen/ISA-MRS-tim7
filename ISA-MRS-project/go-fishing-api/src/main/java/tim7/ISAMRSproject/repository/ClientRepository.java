@@ -18,4 +18,7 @@ public interface ClientRepository extends JpaRepository<Client,Integer> {
     @Query("select c from Client c inner join c.subscribedOffers subscribedOffers where subscribedOffers.id = ?1")
     List<Client> getSubscribersForOffer(Integer id);
 
+    Client findByEmail(String email);
+
+
 }

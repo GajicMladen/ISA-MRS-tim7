@@ -10,9 +10,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import tim7.ISAMRSproject.model.*;
 import tim7.ISAMRSproject.repository.ClientRepository;
 import tim7.ISAMRSproject.repository.ReservationRepository;
-import tim7.ISAMRSproject.service.ActionService;
-import tim7.ISAMRSproject.service.ClientService;
-import tim7.ISAMRSproject.service.ReservationService;
+import tim7.ISAMRSproject.service.*;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -23,15 +21,17 @@ import java.util.concurrent.Future;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class ActionsTests {
+public class ReservationTest {
 
 
     @Autowired
-    private ReservationService reservationService;
+    private ReservationServiceOwner reservationServiceOwner;
+    @Autowired
+    private CottageService cottageService;
     @Autowired
     private ClientService clientService;
     @Test(expected = ObjectOptimisticLockingFailureException.class)
-    public void testOptimisticLockingScenario() throws Throwable {
+    public void testMultipleReservationsSametime() throws Throwable {
 
         ExecutorService executor = Executors.newFixedThreadPool(2);
         Future<?> future1 = executor.submit(new Runnable() {
@@ -40,12 +40,15 @@ public class ActionsTests {
             public void run() {
 
                 System.out.println("Startovan Thread 1");
+                Cottage cottage = cottageService.getCottageById(1).get();
                 Client client = clientService.findClientById(9);
-                Reservation res = reservationService.findById(1);
-                reservationService.buyAction(client,res);
+                LocalDateTime startDate = LocalDateTime.now();
+                LocalDateTime endDate = LocalDateTime.now().plusDays(7);
+                Reservation newRes = reservationServiceOwner.reserveCottage(cottage,client,startDate,endDate);
                 try { Thread.sleep(3000); } catch (InterruptedException e) {}
-                reservationService.saveReservation(res);
 
+                reservationServiceOwner.saveReservation(newRes);
+                System.out.println(newRes.getTotalPrice());
             }
         });
 
@@ -56,11 +59,17 @@ public class ActionsTests {
             public void run() {
 
                 System.out.println("Thread 2 start");
+
+                Cottage cottage = cottageService.getCottageById(1).get();
                 Client client = clientService.findClientById(10);
-                Reservation res = reservationService.findById(1);
-                try { Thread.sleep(1000); } catch (InterruptedException e) {}
-                reservationService.buyAction(client,res);
-                reservationService.saveReservation(res);
+                LocalDateTime startDate = LocalDateTime.now();
+                LocalDateTime endDate = LocalDateTime.now().plusDays(7);
+                Reservation newRes = reservationServiceOwner.reserveCottage(cottage,client,startDate,endDate);
+
+
+                reservationServiceOwner.saveReservation(newRes);
+
+
             }
         });
 
@@ -74,5 +83,4 @@ public class ActionsTests {
         }
         executor.shutdown();
     }
-
 }

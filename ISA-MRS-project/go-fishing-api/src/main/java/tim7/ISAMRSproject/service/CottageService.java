@@ -36,6 +36,10 @@ public class CottageService {
 		return cottageRepository.findById(id);
 	}
 
+	public Cottage saveCottage(Cottage cottage){
+		return cottageRepository.save(cottage);
+	}
+
 	public List<Cottage> getCottagesByOwnerId(Integer ownerId){
 		
 		return cottageRepository.findByOwnerId(ownerId);

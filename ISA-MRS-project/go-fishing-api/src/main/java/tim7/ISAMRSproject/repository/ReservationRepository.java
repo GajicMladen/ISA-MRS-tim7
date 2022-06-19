@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ReservationRepository extends JpaRepository<Reservation, Integer> {
+
     List<Reservation> findByOffer_IdEquals(Integer id);
 
     @Query("select r from Reservation r where r.id = ?1 and r.status = ?2")
