@@ -22,7 +22,7 @@ export class UserprofileComponent implements OnInit {
   updatePasswordForm: FormGroup = this.createUpdatePasswordForm();
   deletionForm: FormGroup = this.createDeletionForm();
 
-  currentLoyaltyPoints: number = 0;
+  loyalty: any = { loyaltyPoints: 0, currentRank: '' };
 
   constructor(
     private profileService: UserprofileService,
@@ -38,7 +38,8 @@ export class UserprofileComponent implements OnInit {
     });
 
     this.getLoyaltyPoints().subscribe((res: any) => {
-      this.currentLoyaltyPoints = res.loyaltyPoints;
+      console.log(res);
+      this.loyalty = res;
     });
   }
 

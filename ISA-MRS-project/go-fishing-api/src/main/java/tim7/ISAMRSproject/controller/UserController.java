@@ -21,11 +21,16 @@ import tim7.ISAMRSproject.dto.ChangePasswordDTO;
 import tim7.ISAMRSproject.dto.DeletionRequestDTO;
 import tim7.ISAMRSproject.dto.UserDTO;
 import tim7.ISAMRSproject.dto.UserRegisterDTO;
-import tim7.ISAMRSproject.model.*;
+import tim7.ISAMRSproject.model.Adventure;
+import tim7.ISAMRSproject.model.Boat;
+import tim7.ISAMRSproject.model.Cottage;
+import tim7.ISAMRSproject.model.DeletionRequest;
 import tim7.ISAMRSproject.model.DeletionRequest.DeletionRequestStatus;
+import tim7.ISAMRSproject.model.User;
 import tim7.ISAMRSproject.service.AdventureService;
 import tim7.ISAMRSproject.service.BoatService;
 import tim7.ISAMRSproject.service.CottageService;
+import tim7.ISAMRSproject.service.LoyaltyService;
 import tim7.ISAMRSproject.service.UserService;
 
 
@@ -44,6 +49,9 @@ public class UserController {
 	@Autowired
 	private AdventureService adventureService;
 
+	@Autowired
+	private LoyaltyService loyaltyService;
+	
 	@GetMapping(value = "/all")
 	public ResponseEntity<List<UserDTO>> getAllKorisnici() {
 
@@ -103,7 +111,7 @@ public class UserController {
 	@GetMapping(value = "/loyaltyPoints")
 	public String getLoyaltyPoints(Principal user){
 		User reqUser = this.userService.findByEmail(user.getName());
-		return "{ \"loyaltyPoints\": " + reqUser.getLoyaltyPoints() + "}";
+		return "{ \"loyaltyPoints\": " + reqUser.getLoyaltyPoints() + ", \"currentRank\": \""+ loyaltyService.getRankForUser(reqUser) +"\"}";
 	}
 	
 	@PostMapping(value="/deletionRequest")

@@ -51,7 +51,8 @@
         <h1 class="title">Loyalty Status</h1>
         <mat-card-content class="reg-card">
             <!-- <img [src]='loyaltyBadge' alt="loyalty-badge"  class="loyalty-badge"> -->
-            <h3>Current loyalty points: {{currentLoyaltyPoints}}</h3>
+            <h3>Current loyalty points: {{loyalty.loyaltyPoints}}</h3>
+            <h3>Current loyalty rank: {{loyalty.currentRank}}</h3>
         </mat-card-content>
         <mat-card-actions style="text-align: center;">
             <button mat-button (click)="loyaltyDialog()">ABOUT LOYALTY PROGRAM</button>

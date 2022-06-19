@@ -45,6 +45,10 @@ export class BoatReservationService {
       );
   }
 
+  public confirmAction(id: number) {
+    return this.http.get(this.configService.confirmActionUrl + id);
+  }
+
   convertDateToString(date: any): string {
     if (date.value !== '') {
       date = date as Date;

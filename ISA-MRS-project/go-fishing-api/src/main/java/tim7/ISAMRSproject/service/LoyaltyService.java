@@ -32,6 +32,24 @@ public class LoyaltyService {
 		return 1;
 	}
 	
+	public int getPointsForUser(User u) {
+		List<LoyaltyDefinition> loyalties = loyaltyRepository.findAll();
+		for(LoyaltyDefinition l: loyalties) {
+			if (l.getMinPoints() <= u.getLoyaltyPoints() && u.getLoyaltyPoints() <= l.getMaxPoints())
+				return l.getPointsPerReservation();
+		}
+		return 1;
+	}
+	
+	public String getRankForUser(User u) {
+		List<LoyaltyDefinition> loyalties = loyaltyRepository.findAll();
+		for(LoyaltyDefinition l: loyalties) {
+			if (l.getMinPoints() <= u.getLoyaltyPoints() && u.getLoyaltyPoints() <= l.getMaxPoints())
+				return l.getRankName();
+		}
+		return "";
+	}
+	
 	public Optional<LoyaltyDefinition> findLoyaltyById(Integer id) {
 		return this.loyaltyRepository.findById(id);
 	}
