@@ -1,5 +1,6 @@
 package tim7.ISAMRSproject.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -9,28 +10,30 @@ import org.springframework.stereotype.Service;
 import tim7.ISAMRSproject.dto.ActionDTO;
 import tim7.ISAMRSproject.model.Action;
 import tim7.ISAMRSproject.model.Adventure;
-import tim7.ISAMRSproject.repository.ActionRepository;
+import tim7.ISAMRSproject.model.Reservation;
+import tim7.ISAMRSproject.model.ReservationStatus;
 import tim7.ISAMRSproject.repository.AdventureRepository;
+import tim7.ISAMRSproject.repository.ReservationRepository;
 
 @Service
 public class ActionService {
 	
 	@Autowired
-	private ActionRepository actionRepository;
+	private ReservationRepository reservationRepository;
 	
 	@Autowired AdventureRepository adventureRepository;
 
 	public boolean addAction(ActionDTO actionDTO) {
 		if (checkDate(actionDTO)) {
-			Action action = new Action();
-			action.setStartDate(actionDTO.getStartDate());
-			action.setEndDate(actionDTO.getEndDate());
-			action.setPrice(actionDTO.getTotalPrice());
+			Reservation res = new Reservation();
+			res.setStartDateTime(actionDTO.getStartDate());
+			res.setEndDateTime(actionDTO.getEndDate());
+			res.setTotalPrice(actionDTO.getTotalPrice());
+			res.setStatus(ReservationStatus.FOR_ACTION);
 			Optional<Adventure> adventure = adventureRepository.findById(actionDTO.getOfferId());
 	        if (adventure.isPresent()) {
-	        	action.setOffer(adventure.get());
-	        	action.setMaxPerson(adventure.get().getCapacity());
-	        	actionRepository.save(action);
+	        	res.setOffer(adventure.get());
+	        	reservationRepository.save(res);
 	        	return true;
 	        }
 	        return false;
@@ -44,7 +47,13 @@ public class ActionService {
 		return true;
 	}
 
-	public List<Action> getActionByOfferId(int id) { 
-		return this.actionRepository.findAllByOfferId(id);
+	public List<Reservation> getActionByOfferId(int id) { 
+		List<Reservation> ls = this.reservationRepository.findByOffer_IdEquals(id);
+		List<Reservation> retVal = new ArrayList<Reservation>();
+		for(Reservation r: ls) {
+			if (r.getStatus() == ReservationStatus.FOR_ACTION)
+				retVal.add(r);
+		}
+		return retVal;
 	}
 }

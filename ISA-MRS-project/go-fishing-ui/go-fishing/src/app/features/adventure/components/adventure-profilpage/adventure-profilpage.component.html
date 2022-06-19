@@ -39,7 +39,7 @@
                                 <h3 class="mb-0 font-weight-semibold action-price" ><s>{{adventure.price | currency}}</s></h3>
                                 <h3 class="mb-0 font-weight-semibold action-price" >${{action.totalPrice}}</h3>
                                 
-                                <button type="button" class="btn btn-primary text-white action-btn-r">Rezerviši</button> <!--(click)="openActionConfirmDialog(action)"-->
+                                <button type="button" class="btn btn-primary text-white action-btn-r" (click)="openActionConfirmDialog(action)">Rezerviši</button>
                             </div>
                         </div>
                     </div>
