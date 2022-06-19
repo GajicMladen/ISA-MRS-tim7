@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.persistence.Version;
 
 @Entity
 public class Grade {
@@ -26,6 +27,10 @@ public class Grade {
 
 	@OneToOne(mappedBy = "grade")
     private Reservation reservation;
+	
+	@Version
+	@Column(name = "version", columnDefinition = "integer DEFAULT 0", nullable = false)
+	private Integer version;
 
 	public Integer getId() {
 		return id;
@@ -66,4 +71,14 @@ public class Grade {
 	public void setReservation(Reservation reservation) {
 		this.reservation = reservation;
 	}
+
+	public Integer getVersion() {
+		return version;
+	}
+
+	public void setVersion(Integer version) {
+		this.version = version;
+	}
+	
+	
 }
