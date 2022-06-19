@@ -1,5 +1,5 @@
 
-<mat-form-field appearance="fill" [ngSwitch]="ownerType">
+<div appearance="fill" [ngSwitch]="ownerType">
 
     <mat-label *ngSwitchCase="'C'">Vikendice:</mat-label>
     <mat-label *ngSwitchCase="'B'">Brodovi:</mat-label>
@@ -14,5 +14,5 @@
             {{offer.name}}
         </mat-option>
     </mat-select>
-</mat-form-field>
+</div>
 <app-reservations-list-view [reservations]="reservations" [ownerType]="ownerType"></app-reservations-list-view>

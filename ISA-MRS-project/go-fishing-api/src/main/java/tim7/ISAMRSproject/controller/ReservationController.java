@@ -1,6 +1,7 @@
 package tim7.ISAMRSproject.controller;
 
 import java.security.Principal;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -26,14 +27,7 @@ import tim7.ISAMRSproject.dto.ReservationListItemDTO;
 
 import tim7.ISAMRSproject.model.*;
 
-import tim7.ISAMRSproject.service.AdventureService;
-import tim7.ISAMRSproject.service.BoatService;
-import tim7.ISAMRSproject.service.ClientService;
-import tim7.ISAMRSproject.service.ComplaintService;
-import tim7.ISAMRSproject.service.CottageService;
-import tim7.ISAMRSproject.service.FreePeriodService;
-import tim7.ISAMRSproject.service.ReservationService;
-import tim7.ISAMRSproject.service.UserService;
+import tim7.ISAMRSproject.service.*;
 import tim7.ISAMRSproject.utils.EmailServiceImpl;
 
 @RestController
@@ -316,20 +310,6 @@ public class ReservationController {
     	return ResponseEntity.status(HttpStatus.CREATED).body("{\"status\":\"" + status + "\"}");
     }
 
-    @PostMapping(value = "/newReservation/{clientId}")
-    public ResponseEntity<?> addNewReservationFromOwner(@RequestBody DateRangeStringDTO dateRangeDTO,
-                                               @PathVariable int clientId,
-                                               Principal user){
-        User owner = userService.findByEmail(user.getName());
-        if(userService.isUserOnlyClient(owner))
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("{\"status\":\""+"Morate biti ulogovani kao vlasnik!"+"\"}");
-        Optional<Client> u = clientService.getClientById(clientId);
-        if(!u.isPresent())
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("{\"status\":\""+"Klijent ID nije validan!"+"\"}");
-        String status = reservationService.createNewReservationDji(dateRangeDTO.getStartDateString(),
-                dateRangeDTO.getEndDateString(), dateRangeDTO.getOfferId(), dateRangeDTO.getOfferType(), u.get());
-        return ResponseEntity.status(HttpStatus.CREATED).body("{\"status\":\"" + status + "\"}");
-    }
     
     @PostMapping(value = "/getReservationsByDateRange")
     public ResponseEntity<?> getReservationsByDateRange(@RequestBody DateRangeDTO dateRange) {
@@ -431,5 +411,57 @@ public class ReservationController {
         catch (OptimisticEntityLockException e){
             return new ResponseEntity<>("{message:'Izgleda da je akcija već rezervisana'}",HttpStatus.FORBIDDEN);
         }
+    }
+
+    @Autowired
+    private ReservationServiceOwner reservationServiceOwner;
+
+    @PostMapping(value = "/newReservation/{clientId}")
+    public ResponseEntity<?> addTestReservation( @RequestBody DateRangeStringDTO dateRangeStringDTO,
+                                                 @PathVariable int clientId,
+                                                 Principal user) {
+
+        try {
+            User owner = userService.findByEmail(user.getName());
+            if(userService.isUserOnlyClient(owner))
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).body("{\"message\":\""+"Morate biti ulogovani kao vlasnik!"+"\"}");
+
+            Cottage cottage = cottageService.getCottageById(1).get();
+            Client client = clientService.findClientById(clientId);
+            LocalDateTime startDate =convertDateString(dateRangeStringDTO.getStartDateString());
+            LocalDateTime endDate =convertDateString(dateRangeStringDTO.getEndDateString());
+
+            if (! reservationServiceOwner.isPeriodReserved(cottage,startDate,endDate)) {
+                Reservation newRes = reservationServiceOwner.reserveCottage(cottage, client, startDate, endDate);
+                reservationServiceOwner.saveReservation(newRes);
+
+            } else
+                return new ResponseEntity<>("{message:'Period je rezervisan'}",HttpStatus.FORBIDDEN);
+        }
+        catch ( OptimisticEntityLockException e){
+            return  new ResponseEntity<>("{message:'izgleda da je neko vec rezervisao... :('}",HttpStatus.FORBIDDEN);
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+    /*
+    @PostMapping(value = "/newReservation/{clientId}")
+    public ResponseEntity<?> addNewReservationFromOwner(@RequestBody DateRangeStringDTO dateRangeDTO,
+                                                        @PathVariable int clientId,
+                                                        Principal user){
+        User owner = userService.findByEmail(user.getName());
+        if(userService.isUserOnlyClient(owner))
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("{\"message\":\""+"Morate biti ulogovani kao vlasnik!"+"\"}");
+        Optional<Client> u = clientService.getClientById(clientId);
+        if(!u.isPresent())
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("{\"message\":\""+"Klijent ID nije validan!"+"\"}");
+        String status = reservationServiceOwner.createNewReservationDji(dateRangeDTO.getStartDateString(),
+                dateRangeDTO.getEndDateString(), dateRangeDTO.getOfferId(), dateRangeDTO.getOfferType(), u.get());
+        return ResponseEntity.status(HttpStatus.CREATED).body("{\"status\":\"" + status + "\"}");
+    }
+*/
+    private LocalDateTime convertDateString(String s) {
+        String[] tokens = s.split("-");
+        LocalDateTime retVal = LocalDateTime.of(Integer.parseInt(tokens[2]), Integer.parseInt(tokens[1]), Integer.parseInt(tokens[0]), 0, 0);
+        return retVal;
     }
 }

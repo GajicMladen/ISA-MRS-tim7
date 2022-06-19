@@ -3,19 +3,7 @@ package tim7.ISAMRSproject.model;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
 
 @Entity
@@ -27,7 +15,16 @@ public class Offer {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id", unique=true, nullable=false)
 	private Integer id;
-	
+
+
+	@Version
+	@Column(name = "version", columnDefinition = "integer DEFAULT 0", nullable = false)
+	private Integer version;
+
+	@Column(name = "is_changing",columnDefinition = "boolean DEFAULT false",nullable = false)
+	private boolean isChanging;
+
+
 	@Column(name = "name",unique = true)
 	private String name;
 
@@ -69,7 +66,14 @@ public class Offer {
 	@ManyToMany(mappedBy = "subscribedOffers")
 	private Set<Client> subscribers = new HashSet<Client>();
 
-	
+	public boolean isChanging() {
+		return isChanging;
+	}
+
+	public void setChanging(boolean changing) {
+		isChanging = changing;
+	}
+
 	public Offer() {
 		super();
 	}

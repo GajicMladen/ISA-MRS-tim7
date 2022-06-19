@@ -33,12 +33,12 @@ public class Reservation {
 	private ReservationStatus status;
 
 	@JsonIgnore
-	@ManyToOne(fetch = FetchType.LAZY ,cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.EAGER ,cascade = CascadeType.MERGE)
 	@JoinColumn(name = "client_id",nullable = true)
 	private Client client;
 	
 	@JsonIgnore
-	@ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.MERGE)
 	@JoinColumn(name = "offer_id",nullable = false)
 	private Offer offer;
 	

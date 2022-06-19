@@ -4,10 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tim7.ISAMRSproject.dto.FreePeriodDTO;
-import tim7.ISAMRSproject.model.Adventure;
-import tim7.ISAMRSproject.model.Boat;
-import tim7.ISAMRSproject.model.Cottage;
-import tim7.ISAMRSproject.model.FreePeriod;
+import tim7.ISAMRSproject.model.*;
 import tim7.ISAMRSproject.repository.*;
 
 import java.time.LocalDateTime;
@@ -69,4 +66,24 @@ public class FreePeriodService {
         return false;
 		
 	}
+
+    public boolean inFreePeriodsOfOffer(Offer offer,String startDateString,String endDateString){
+        LocalDateTime startDate = convertDateString(startDateString);
+        LocalDateTime endDate = convertDateString(endDateString);
+
+        for (FreePeriod fp: freePeriodRepository.findByOffer_Id(offer.getId())) {
+            if(startDate.isAfter(fp.getStartDateTime()) && endDate.isBefore(fp.getEndDateTime()))
+                return true;
+        }
+
+        return false;
+    }
+
+
+    private LocalDateTime convertDateString(String s) {
+        String[] tokens = s.split("-");
+        LocalDateTime retVal = LocalDateTime.of(Integer.parseInt(tokens[2]), Integer.parseInt(tokens[1]), Integer.parseInt(tokens[0]), 0, 0);
+        return retVal;
+    }
+
 }
