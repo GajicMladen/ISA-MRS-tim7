@@ -2,17 +2,22 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { Loader } from '@googlemaps/js-api-loader';
+import { CottageActionConfirmDialogComponent } from 'src/app/features/cottage/components/cottage-action-confirm-dialog/cottage-action-confirm-dialog.component';
 import { CottageReservationService } from 'src/app/features/cottage/components/cottage-client-reservation-dialog/cottage-reservation.service';
 import { ActionService } from 'src/app/shared/services/action-service/action.service';
 import { ClientService } from 'src/app/shared/services/client-service/client.service';
+import { GradeService } from 'src/app/shared/services/grade-service/grade-service.service';
 import {
   MessageService,
   MessageType,
 } from 'src/app/shared/services/message-service/message.service';
 import { UserService } from 'src/app/shared/services/users-services/user.service';
+import { Grade } from 'src/models/grade';
+import { ActionDTO } from 'src/models/reservation';
 import { AdventureService } from '../../adventure.service';
 import { Adventure } from '../../classes/adventure';
 import { AdventureClientReservationDialogComponent } from '../adventure-client-reservation-dialog/adventure-client-reservation-dialog.component';
+import { AdventureReservationService } from '../adventure-client-reservation-dialog/adventure-reservation.service';
 
 @Component({
   selector: 'app-adventure-profilpage',
@@ -25,6 +30,9 @@ export class AdventureProfilpageComponent implements OnInit {
   instructorName: string;
 
   clientLoggedIn: boolean;
+
+  actions: ActionDTO[] = [];
+  reviews: Grade[] = [];
 
   isSuscribed: boolean;
 
@@ -95,10 +103,11 @@ export class AdventureProfilpageComponent implements OnInit {
     private adventureService: AdventureService,
     private actionService: ActionService,
     private dialog: MatDialog,
-    private reservationService: CottageReservationService,
+    private reservationService: AdventureReservationService,
     private messageService: MessageService,
     private clientService: ClientService,
-    private userService: UserService
+    private userService: UserService,
+    private gradeService: GradeService
   ) {}
 
   ngOnInit(): void {
@@ -116,6 +125,18 @@ export class AdventureProfilpageComponent implements OnInit {
           this.LoadMap(loader);
         });
     }
+
+    this.adventureService
+      .getActionsForOffer(this.adventureId)
+      .subscribe((actions) => {
+        this.actions = actions;
+      });
+
+    this.gradeService
+      .getReviewsForOffer(this.adventureId)
+      .subscribe((reviews) => {
+        this.reviews = reviews;
+      });
 
     this.reservationService
       .getFreePeriodsById(this.adventureId)
@@ -152,6 +173,35 @@ export class AdventureProfilpageComponent implements OnInit {
     document
       .getElementById('mainImage')
       ?.setAttribute('src', this.adventure1.images[i]);
+  }
+
+  public openActionConfirmDialog(item: any) {
+    let data = {
+      id: item.id,
+      name: this.adventure.name,
+      startDate: item.getStartDateString(),
+      endDate: item.getEndDateString(),
+      totalPrice: item.totalPrice,
+      mode: 'Adventure',
+    };
+    const dialogRef = this.dialog.open(CottageActionConfirmDialogComponent, {
+      data: data,
+    });
+
+    dialogRef.afterClosed().subscribe((res: any) => {
+      if (res !== undefined) {
+        this.actions.splice(
+          this.actions.findIndex((i) => i.id === item.id),
+          1
+        );
+        this.reservationService.confirmAction(item.id).subscribe((res: any) => {
+          this.messageService.showMessage(
+            'Action reserved successfully!',
+            MessageType.SUCCESS
+          );
+        });
+      }
+    });
   }
 
   public openReservationDialog() {

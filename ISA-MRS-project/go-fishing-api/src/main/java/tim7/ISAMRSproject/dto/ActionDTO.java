@@ -14,7 +14,7 @@ public class ActionDTO {
     private Integer id;
     private float totalPrice;
 
-    private ActionDTO(){
+    public ActionDTO(){
 
     }
 

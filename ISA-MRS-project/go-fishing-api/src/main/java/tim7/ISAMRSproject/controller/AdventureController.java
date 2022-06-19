@@ -27,6 +27,8 @@ import tim7.ISAMRSproject.model.Action;
 import tim7.ISAMRSproject.model.Adventure;
 import tim7.ISAMRSproject.model.DeletionRequest;
 import tim7.ISAMRSproject.model.FreePeriod;
+import tim7.ISAMRSproject.model.Reservation;
+import tim7.ISAMRSproject.model.ReservationStatus;
 import tim7.ISAMRSproject.model.DeletionRequest.DeletionRequestStatus;
 import tim7.ISAMRSproject.model.User;
 import tim7.ISAMRSproject.service.ActionService;
@@ -182,12 +184,36 @@ public class AdventureController {
 		String[] offerIds = ids.split(",");
 		for (String i : offerIds) {
 			int id = Integer.parseInt(i);
-			List<Action> ac = this.actionService.getActionByOfferId(id);
-			for (Action a: ac) {
-				actions.add(new ActionDTO(a));
+			List<Reservation> ac = this.actionService.getActionByOfferId(id);
+			for (Reservation a: ac) {
+				ActionDTO actionDTO = new ActionDTO();
+				actionDTO.setEndDate(a.getEndDateTime());
+				actionDTO.setStartDate(a.getStartDateTime());
+				actionDTO.setTotalPrice(a.getTotalPrice());
+				actionDTO.setOfferId(a.getOffer().getId());
+				actionDTO.setId(a.getId());
+				actions.add(actionDTO);
 			}
 		}
-		
 		return actions;
+	}
+	
+	@GetMapping(value = "/getActionsFromId/{id}") 
+	public List<ActionDTO> getActionsFromId(@PathVariable int id) {
+		List<Reservation> actions = this.actionService.getActionByOfferId(id);
+		List<ActionDTO> dtos = new ArrayList<ActionDTO>();
+		for (Reservation a: actions) {
+			System.out.println(a.getId());
+			ActionDTO actionDTO = new ActionDTO();
+			actionDTO.setEndDate(a.getEndDateTime());
+			actionDTO.setStartDate(a.getStartDateTime());
+			actionDTO.setTotalPrice(a.getTotalPrice());
+			actionDTO.setOfferId(a.getOffer().getId());
+			actionDTO.setId(a.getId());
+			dtos.add(actionDTO);
+			
+		}
+		
+		return dtos;
 	}
 }

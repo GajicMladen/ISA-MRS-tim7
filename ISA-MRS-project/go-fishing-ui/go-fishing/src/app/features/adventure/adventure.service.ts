@@ -178,4 +178,31 @@ export class AdventureService {
 
     return of(res);
   }
+
+  public getActionsForOffer(id: number): Observable<ActionDTO[]> {
+    let data = this.http.get<ActionReciveDTO[]>(
+      this.adventureUrl + '/getActionsFromId/' + id
+    );
+
+    let res: ActionDTO[] = [];
+
+    data.subscribe((dat) => {
+      dat.forEach((d) => {
+        console.log(d);
+        let action = new ActionDTO();
+        action.startDate = new NgbDate(
+          d.startDate[0],
+          d.startDate[1],
+          d.startDate[2]
+        );
+        action.endDate = new NgbDate(d.endDate[0], d.endDate[1], d.endDate[2]);
+        action.offerId = d.offerId;
+        action.totalPrice = d.totalPrice;
+        action.id = d.id;
+        res.push(action);
+      });
+    });
+
+    return of(res);
+  }
 }

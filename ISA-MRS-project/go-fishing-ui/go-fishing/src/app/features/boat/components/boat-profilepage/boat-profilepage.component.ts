@@ -13,6 +13,7 @@ import {
 import { ClientService } from 'src/app/shared/services/client-service/client.service';
 import { BoatClientReservationDialogComponent } from '../boat-client-reservation-dialog/boat-client-reservation-dialog.component';
 import { UserService } from 'src/app/shared/services/users-services/user.service';
+import { CottageActionConfirmDialogComponent } from 'src/app/features/cottage/components/cottage-action-confirm-dialog/cottage-action-confirm-dialog.component';
 
 @Component({
   selector: 'app-boat-profilepage',
@@ -29,9 +30,9 @@ export class BoatProfilepageComponent implements OnInit {
 
   isSuscribed: boolean;
 
-  extraFavors:string[];
-  
-  ownerName:string;
+  extraFavors: string[];
+
+  ownerName: string;
 
   hasFreePeriods: boolean = true;
   constructor(
@@ -48,10 +49,10 @@ export class BoatProfilepageComponent implements OnInit {
     this.boatId = Number(this.route.snapshot.paramMap.get('id'));
     this.boatService.findBoatById(this.boatId).subscribe((data) => {
       this.boat = data;
-      if(this.boat != null && this.boat.extraFavors != null)
-        this.extraFavors = this.boat.extraFavors.split("|");
-      this.userService.findById(this.boat.ownerId).subscribe(data=>{
-        this.ownerName = data.name +" "+data.lastName;
+      if (this.boat != null && this.boat.extraFavors != null)
+        this.extraFavors = this.boat.extraFavors.split('|');
+      this.userService.findById(this.boat.ownerId).subscribe((data) => {
+        this.ownerName = data.name + ' ' + data.lastName;
       });
     });
 
@@ -68,10 +69,36 @@ export class BoatProfilepageComponent implements OnInit {
     this.userService.isLoggedUserOnlyClient().subscribe((data) => {
       this.clientLoggedIn = data;
     });
-
   }
 
+  public openActionConfirmDialog(item: any) {
+    let data = {
+      id: item.id,
+      name: this.boat.name,
+      startDate: item.getStartDateString(),
+      endDate: item.getEndDateString(),
+      totalPrice: item.totalPrice,
+      mode: 'Boat',
+    };
+    const dialogRef = this.dialog.open(CottageActionConfirmDialogComponent, {
+      data: data,
+    });
 
+    dialogRef.afterClosed().subscribe((res: any) => {
+      if (res !== undefined) {
+        this.actions.splice(
+          this.actions.findIndex((i) => i.id === item.id),
+          1
+        );
+        this.reservationService.confirmAction(item.id).subscribe((res: any) => {
+          this.messageService.showMessage(
+            'Action reserved successfully!',
+            MessageType.SUCCESS
+          );
+        });
+      }
+    });
+  }
 
   public openReservationDialog() {
     this.reservationService

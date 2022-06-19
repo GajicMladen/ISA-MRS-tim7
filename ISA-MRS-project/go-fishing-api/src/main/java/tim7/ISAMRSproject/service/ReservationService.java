@@ -34,7 +34,8 @@ public class ReservationService {
 	private BoatRepository boatRepository;
 	@Autowired
 	private AdventureRepository adventureRepository;
-
+	@Autowired
+	private UserRepository userRepository;
 	@Autowired
 	private ClientRepository clientRepository;
 	
@@ -165,7 +166,7 @@ public class ReservationService {
 		return "Invalid Offer ID";
 	}
 
-	public String createNewReservation(String startDateString, String endDateString, int offerId, float totalPrice, String offerType, User user) {
+	public String createNewReservation(String startDateString, String endDateString, int offerId, float totalPrice, String offerType, User user, int points) {
 
 		LocalDateTime startDate = convertDateString(startDateString);
 		LocalDateTime endDate = convertDateString(endDateString);
@@ -216,14 +217,9 @@ public class ReservationService {
 		}
 		
 		reservationRepository.save(res);
-		offer.setChanging(false);
-		if(offerType.equals("cottage"))
-			cottageRepository.save((Cottage) offer);
-		else if (offerType.equals("boat"))
-			boatRepository.save((Boat) offer);
-		else
-			adventureRepository.save((Adventure) offer);
 
+		user.setLoyaltyPoints(user.getLoyaltyPoints() + points);
+		userRepository.save(user);
 		emailService.sendReservationConfirmationMail(user, res, res.getOffer().getName());
 		return "Your reservation is successful!";
 		

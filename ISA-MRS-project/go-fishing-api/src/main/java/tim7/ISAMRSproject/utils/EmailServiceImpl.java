@@ -106,4 +106,14 @@ public class EmailServiceImpl {
 		confirmationBody += "GoFishing! Team wishes you a pleasant stay!";
 		sendSimpleMessage(user.getEmail(), RESERVATION_CONFIRMATION_SUBJECT, confirmationBody);
 	}
+	
+	public void sendReviewAcceptedMail(User user, String reviewText, Float grade) {
+		String confirmationBody = "Dear " + user.getName() + " " + user.getLastName() + ",\n";
+		confirmationBody += "New review for one of your services has been approved!\n";
+		confirmationBody += "This is what client had to say about your service: \n";
+		confirmationBody += "\tReview: " + reviewText + "\n";
+		confirmationBody += "\tGrade: " + grade + "/5 \n";
+		confirmationBody += "GoFishing! Team wishes you all the best!";
+		sendSimpleMessage(user.getEmail(), "New review for your service!", confirmationBody);
+	}
 }
