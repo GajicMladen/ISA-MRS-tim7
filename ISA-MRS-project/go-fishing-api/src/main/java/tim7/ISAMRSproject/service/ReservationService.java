@@ -64,27 +64,55 @@ public class ReservationService {
 		newAction.setStartDateTime(actionDTO.getStartDate());
 		newAction.setTotalPrice(actionDTO.getTotalPrice());
 		newAction.setStatus(ReservationStatus.FOR_ACTION);
+
 		Optional<Cottage> cottage = cottageRepository.findById(actionDTO.getOfferId());
 		Optional<Boat> boat = boatRepository.findById(actionDTO.getOfferId());
 		Optional<Adventure> adventure = adventureRepository.findById(actionDTO.getOfferId());
 
 		if(cottage.isPresent()) {
 			newAction.setOffer(cottage.get());
+
+			cottage.get().setChanging(!cottage.get().isChanging());
+			cottageRepository.save(cottage.get());
+
 			return reservationRepository.save(newAction);
 
 		}
 		if(boat.isPresent()){
 			newAction.setOffer(boat.get());
+
+			boat.get().setChanging(!boat.get().isChanging());
+			boatRepository.save(boat.get());
+
 			return reservationRepository.save(newAction);
 
 		}
 		if(adventure.isPresent()){
 			newAction.setOffer(adventure.get());
+
+			adventure.get().setChanging(!adventure.get().isChanging());
+			adventureRepository.save(adventure.get());
+
 			return reservationRepository.save(newAction);
 		}
 
 		return null;
 
+	}
+
+	public Reservation addNewActionCottage(LocalDateTime startDate,LocalDateTime endDate,float totalPrice,Cottage cottage){
+
+		Reservation newAction = new Reservation();
+		newAction.setEndDateTime(endDate);
+		newAction.setStartDateTime(startDate);
+		newAction.setTotalPrice(totalPrice);
+		newAction.setStatus(ReservationStatus.FOR_ACTION);
+		newAction.setOffer(cottage);
+
+		cottage.setChanging(!cottage.isChanging());
+		cottageRepository.save(cottage);
+
+		return reservationRepository.save(newAction);
 	}
 
 	public Optional<Reservation> getReservationById(int id){
@@ -122,49 +150,6 @@ public class ReservationService {
 	}
 
 
-
-	public String addNewReservation(ReservationDTO reservationDTO){
-		Reservation newReservation = new Reservation();
-		newReservation.setEndDateTime(reservationDTO.getEndDate());
-		newReservation.setStartDateTime(reservationDTO.getStartDate());
-		newReservation.setStatus(reservationDTO.getReservationStatus());
-
-		int daysNum = Period.between(reservationDTO.getStartDate().toLocalDate(),reservationDTO.getEndDate().toLocalDate()).getDays();
-
-		Optional<Client> client = clientRepository.findById(reservationDTO.getClientId());
-
-		if(client.isPresent()){
-			newReservation.setClient(client.get());
-		}
-		else{
-			return "invalid Client ID";
-		}
-
-		Optional<Cottage> cottage = cottageRepository.findById(reservationDTO.getOfferId());
-		Optional<Boat> boat = boatRepository.findById(reservationDTO.getOfferId());
-		Optional<Adventure> adventure = adventureRepository.findById(reservationDTO.getOfferId());
-
-		if(cottage.isPresent()) {
-			newReservation.setOffer(cottage.get());
-			newReservation.setTotalPrice( daysNum * cottage.get().getPrice() );
-			reservationRepository.save(newReservation);
-			return "OK";
-		}
-		if(boat.isPresent()){
-			newReservation.setOffer(boat.get());
-			newReservation.setTotalPrice( daysNum * boat.get().getPrice() );
-			reservationRepository.save(newReservation);
-			return "OK";
-		}
-		if(adventure.isPresent()){
-			newReservation.setOffer(adventure.get());
-			newReservation.setTotalPrice( daysNum * adventure.get().getPrice() );
-			reservationRepository.save(newReservation);
-			return "OK";
-		}
-
-		return "Invalid Offer ID";
-	}
 
 	public String createNewReservation(String startDateString, String endDateString, int offerId, float totalPrice, String offerType, User user, int points) {
 

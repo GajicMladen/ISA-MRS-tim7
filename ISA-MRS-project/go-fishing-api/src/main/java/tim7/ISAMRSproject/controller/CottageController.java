@@ -84,7 +84,10 @@ public class CottageController {
 
 	@PutMapping(value = "/updateCottage",consumes = MediaType.APPLICATION_JSON_VALUE)
 	public void updateCottage(@RequestBody CottageDTO cottage){
-		cottageService.editCottage(cottage);
+
+		Cottage cottage1 = cottageService.getCottageById(cottage.getId()).get();
+		cottageService.editCottage(cottage1,cottage.getId(),cottage.getName(),cottage.getDescription(),
+				cottage.getPrice(),cottage.getCapacity());
 	}
 
 }

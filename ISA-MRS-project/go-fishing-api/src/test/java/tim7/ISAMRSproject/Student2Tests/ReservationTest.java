@@ -31,7 +31,7 @@ public class ReservationTest {
     @Autowired
     private ClientService clientService;
     @Test(expected = ObjectOptimisticLockingFailureException.class)
-    public void testMultipleReservationsSametime() throws Throwable {
+    public void testMultipleReservationsFromOwnerAndClientAtSametime() throws Throwable {
 
         ExecutorService executor = Executors.newFixedThreadPool(2);
         Future<?> future1 = executor.submit(new Runnable() {
@@ -45,8 +45,6 @@ public class ReservationTest {
                 LocalDateTime startDate = LocalDateTime.now();
                 LocalDateTime endDate = LocalDateTime.now().plusDays(7);
                 Reservation newRes = reservationServiceOwner.reserveCottage(cottage,client,startDate,endDate);
-                try { Thread.sleep(3000); } catch (InterruptedException e) {}
-
                 reservationServiceOwner.saveReservation(newRes);
                 System.out.println(newRes.getTotalPrice());
             }
@@ -65,8 +63,6 @@ public class ReservationTest {
                 LocalDateTime startDate = LocalDateTime.now();
                 LocalDateTime endDate = LocalDateTime.now().plusDays(7);
                 Reservation newRes = reservationServiceOwner.reserveCottage(cottage,client,startDate,endDate);
-
-
                 reservationServiceOwner.saveReservation(newRes);
 
 

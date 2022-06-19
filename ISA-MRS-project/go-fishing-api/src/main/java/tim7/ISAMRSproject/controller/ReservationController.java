@@ -99,7 +99,7 @@ public class ReservationController {
                     emailService.sendActionEmail(client,newAction);
                 }
                 catch (Exception e){
-                    System.out.println("Exceprion on sending email to : "+client.getEmail());
+                    System.out.println("Exception on sending email to : "+client.getEmail());
                 }
             }
         }
@@ -298,13 +298,16 @@ public class ReservationController {
             DataForChartDTO newData = new DataForChartDTO();
             newData.setName(boat.getName());
             float value = 0;
+            int gradesCount = 0;
             List<Reservation> reservations =  reservationService.getReservationsForOffer(boat.getId());
             for (Reservation reservation: reservations) {
-                if(reservation.getGrade() != null)
+                if(reservation.getGrade() != null) {
                     value += reservation.getGrade().getGrade();
+                    gradesCount ++;
+                }
             }
-            if(reservations.size() > 0 )
-                value = value/reservations.size();
+            if(gradesCount> 0 )
+                value = value/gradesCount;
             else
                 value = 0;
             newData.setValue(value);
@@ -315,16 +318,7 @@ public class ReservationController {
 
     }
 
-    @PostMapping(value = "/addNewReservation")
-    public ResponseEntity<?> addNewReservation(@RequestBody ReservationDTO newReservation){
-    	
-        String msg = reservationService.addNewReservation(newReservation);
-        if(msg.equals("OK")){
-            return new ResponseEntity<>("DONE!",HttpStatus.OK);
-        }
-        return new ResponseEntity<>(msg,HttpStatus.BAD_REQUEST);   
-    }
-    
+
     @GetMapping(value = "/getFreePeriods/{cottageId}")
     public ResponseEntity<List<String>> getCottageFreePeriods(@PathVariable int cottageId){
     	List<String> retVal = new ArrayList<String>();
@@ -429,7 +423,7 @@ public class ReservationController {
     }
 
     @GetMapping(value = "/buyAction/{idAction}")
-    public ResponseEntity<?> buyActionS(Principal user,@PathVariable int idAction){
+    public ResponseEntity<?> buyAction(Principal user,@PathVariable int idAction){
         try {
             Client client = clientService.findByEmail(user.getName());
             Reservation reservation = reservationService.findById(idAction);
@@ -476,22 +470,7 @@ public class ReservationController {
         }
         return new ResponseEntity<>(HttpStatus.OK);
     }
-    /*
-    @PostMapping(value = "/newReservation/{clientId}")
-    public ResponseEntity<?> addNewReservationFromOwner(@RequestBody DateRangeStringDTO dateRangeDTO,
-                                                        @PathVariable int clientId,
-                                                        Principal user){
-        User owner = userService.findByEmail(user.getName());
-        if(userService.isUserOnlyClient(owner))
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("{\"message\":\""+"Morate biti ulogovani kao vlasnik!"+"\"}");
-        Optional<Client> u = clientService.getClientById(clientId);
-        if(!u.isPresent())
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("{\"message\":\""+"Klijent ID nije validan!"+"\"}");
-        String status = reservationServiceOwner.createNewReservationDji(dateRangeDTO.getStartDateString(),
-                dateRangeDTO.getEndDateString(), dateRangeDTO.getOfferId(), dateRangeDTO.getOfferType(), u.get());
-        return ResponseEntity.status(HttpStatus.CREATED).body("{\"status\":\"" + status + "\"}");
-    }
-*/
+
     private LocalDateTime convertDateString(String s) {
         String[] tokens = s.split("-");
         LocalDateTime retVal = LocalDateTime.of(Integer.parseInt(tokens[2]), Integer.parseInt(tokens[1]), Integer.parseInt(tokens[0]), 0, 0);
