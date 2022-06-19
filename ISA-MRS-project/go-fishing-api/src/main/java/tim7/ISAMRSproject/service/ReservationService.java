@@ -34,7 +34,8 @@ public class ReservationService {
 	private BoatRepository boatRepository;
 	@Autowired
 	private AdventureRepository adventureRepository;
-
+	@Autowired
+	private UserRepository userRepository;
 	@Autowired
 	private ClientRepository clientRepository;
 	
@@ -222,7 +223,7 @@ public class ReservationService {
 
 	}
 
-	public String createNewReservation(String startDateString, String endDateString, int offerId, float totalPrice, String offerType, User user) {
+	public String createNewReservation(String startDateString, String endDateString, int offerId, float totalPrice, String offerType, User user, int points) {
 		LocalDateTime startDate = convertDateString(startDateString);
 		LocalDateTime endDate = convertDateString(endDateString);
 		
@@ -263,6 +264,8 @@ public class ReservationService {
 		}
 		
 		reservationRepository.save(res);
+		user.setLoyaltyPoints(user.getLoyaltyPoints() + points);
+		userRepository.save(user);
 		emailService.sendReservationConfirmationMail(user, res, res.getOffer().getName());
 		return "Your reservation is successful!";
 		
