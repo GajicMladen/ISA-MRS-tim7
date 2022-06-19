@@ -25,4 +25,8 @@ export class GradeService {
   public refuseReview(id: number) {
     return this.http.post(this.gradeUrl + '/refuse', id);
   }
+
+  public getReviewsForOffer(id: number): Observable<Grade[]> {
+    return this.http.get<Grade[]>(this.gradeUrl + '/getReviewsByOfferId/' + id);
+  }
 }

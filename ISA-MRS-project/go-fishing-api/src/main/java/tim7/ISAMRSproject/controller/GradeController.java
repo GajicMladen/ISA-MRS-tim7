@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,8 +17,10 @@ import org.springframework.web.bind.annotation.RestController;
 import tim7.ISAMRSproject.dto.GradeDTO;
 import tim7.ISAMRSproject.model.ApprovalStatus;
 import tim7.ISAMRSproject.model.Grade;
+import tim7.ISAMRSproject.model.Reservation;
 import tim7.ISAMRSproject.model.User;
 import tim7.ISAMRSproject.service.GradeService;
+import tim7.ISAMRSproject.service.ReservationService;
 import tim7.ISAMRSproject.service.UserService;
 import tim7.ISAMRSproject.utils.EmailServiceImpl;
 
@@ -27,6 +30,9 @@ public class GradeController {
 	
 	@Autowired
 	private GradeService gradeService;
+	
+	@Autowired
+	private ReservationService reservationService;
 	
 	@Autowired
 	private EmailServiceImpl emailService;
@@ -71,5 +77,22 @@ public class GradeController {
 			this.emailService.sendReviewAcceptedMail(serviceProvider, g.getRevision(), g.getGrade());
 		}
 		return new ResponseEntity<Void>(HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/getReviewsByOfferId/{id}")
+	public ResponseEntity<?> getReviewsByOfferId (@PathVariable int id) {
+		List<Reservation> reservations = this.reservationService.getReservationsForOffer(id);
+		List<GradeDTO> dtos = new ArrayList<GradeDTO>();
+		for (Reservation r : reservations) {
+			if (r.getGrade() != null) {
+				GradeDTO dto = new GradeDTO();
+				dto.setId(r.getGrade().getId());
+				dto.setGrade(r.getGrade().getGrade());
+				dto.setReviewText(r.getGrade().getRevision());
+				dtos.add(dto);
+			}
+		}
+		
+		return new ResponseEntity<>(dtos, HttpStatus.OK);
 	}
 }

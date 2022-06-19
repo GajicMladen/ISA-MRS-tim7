@@ -5,11 +5,13 @@ import { Loader } from '@googlemaps/js-api-loader';
 import { CottageReservationService } from 'src/app/features/cottage/components/cottage-client-reservation-dialog/cottage-reservation.service';
 import { ActionService } from 'src/app/shared/services/action-service/action.service';
 import { ClientService } from 'src/app/shared/services/client-service/client.service';
+import { GradeService } from 'src/app/shared/services/grade-service/grade-service.service';
 import {
   MessageService,
   MessageType,
 } from 'src/app/shared/services/message-service/message.service';
 import { UserService } from 'src/app/shared/services/users-services/user.service';
+import { Grade } from 'src/models/grade';
 import { ActionDTO } from 'src/models/reservation';
 import { AdventureService } from '../../adventure.service';
 import { Adventure } from '../../classes/adventure';
@@ -28,6 +30,7 @@ export class AdventureProfilpageComponent implements OnInit {
   clientLoggedIn: boolean;
 
   actions: ActionDTO[] = [];
+  reviews: Grade[] = [];
 
   isSuscribed: boolean;
 
@@ -101,7 +104,8 @@ export class AdventureProfilpageComponent implements OnInit {
     private reservationService: CottageReservationService,
     private messageService: MessageService,
     private clientService: ClientService,
-    private userService: UserService
+    private userService: UserService,
+    private gradeService: GradeService
   ) {}
 
   ngOnInit(): void {
@@ -118,13 +122,19 @@ export class AdventureProfilpageComponent implements OnInit {
           });
           this.LoadMap(loader);
         });
+    }
 
-      this.adventureService
+    this.adventureService
         .getActionsForOffer(this.adventureId)
         .subscribe((actions) => {
           this.actions = actions;
         });
-    }
+
+    this.gradeService
+        .getReviewsForOffer(this.adventureId)
+        .subscribe((reviews) => {
+          this.reviews = reviews;
+        });
 
     this.reservationService
       .getFreePeriodsById(this.adventureId)

@@ -21,42 +21,6 @@
                     </div>
                 </div>
             </div>
-            
-
-            <!--
-            <div id="demo" class="carousel slide" data-ride="carousel">
-
-                Indicators 
-                <ul class="carousel-indicators">
-                  <div *ngFor="let image of adventure.images; index as i">
-                    <div *ngIf="i === 0">
-                        <li data-target="#demo" data-slide-to="0" class="active"></li>
-                    </div>
-                    <div *ngIf="i !== 0">
-                        <li data-target="#demo" data-slide-to="i"></li>
-                    </div>
-                  </div>
-                </ul>
-                
-                The slideshow
-                <div class="carousel-inner">
-                  <div *ngFor="let image of adventure.images; index as i">
-                    <div class="carousel-item active">
-                        <img src="{{adventure.images[i]}}" alt="...">
-                    </div>
-                  </div>
-                </div>
-              
-                Left and right controls
-                <a class="carousel-control-prev" href="#demo" data-slide="prev">
-                  <span class="carousel-control-prev-icon"></span>
-                </a>
-                <a class="carousel-control-next" href="#demo" data-slide="next">
-                  <span class="carousel-control-next-icon"></span>
-                </a>
-              
-              </div>
-            -->
             <div class="actions">
                 <span class="font-weight-bold">Akcije za avanturu:</span>
                 <div *ngIf="actions.length !== 0">
@@ -85,32 +49,30 @@
                 </div>
             </div>
 
-
+            <br>
+            <br>
             <div class="card mt-2">
                 <span class="font-weight-bold">Recenzije</span>
                 <div class="d-flex flex-row">
-                    <div class="stars"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> </div> <span class="ml-1 font-weight-bold">4.6</span>
+                    <div class="stars"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> </div> <span class="ml-1 font-weight-bold">4.5</span>
                 </div>
                 <hr>
-                <div class="badges"> <span class="badge bg-light ">All (230)</span> <span class="badge bg-light "> <i class="fa fa-image"></i> 23 </span> <span class="badge bg-light "> <i class="fa fa-comments-o"></i> 23 </span> <span class="badge bg-warning"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <span class="ml-1">2,123</span> </span> </div>
-                <hr>
                 <div class="comment-section">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div class="d-flex flex-row align-items-center"> <img src="https://i.imgur.com/o5uMfKo.jpg" class="rounded-circle profile-image">
-                            <div class="d-flex flex-column ml-1 comment-profile">
-                                <div class="comment-ratings"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> </div> <span class="username">Lori Benneth</span>
+                    <div *ngIf="reviews.length !== 0">
+                        <div *ngFor="let r of reviews">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="d-flex flex-row align-items-center">
+                                    <div class="d-flex flex-column ml-1 comment-profile">
+                                        <span class="username">{{r.reviewText}}</span>
+                                    </div>
+                                </div>
+                                <div class="date"> <span class="text-muted">{{r.grade}}/5</span> </div>
                             </div>
+                            <hr>
                         </div>
-                        <div class="date"> <span class="text-muted">2 May</span> </div>
                     </div>
-                    <hr>
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div class="d-flex flex-row align-items-center"> <img src="https://i.imgur.com/tmdHXOY.jpg" class="rounded-circle profile-image">
-                            <div class="d-flex flex-column ml-1 comment-profile">
-                                <div class="comment-ratings"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> </div> <span class="username">Timona Simaung</span>
-                            </div>
-                        </div>
-                        <div class="date"> <span class="text-muted">12 May</span> </div>
+                    <div *ngIf="reviews.length === 0">
+                        <mat-card>Trenutno nema recenzija za ovu avanturu.</mat-card>
                     </div>
                 </div>
             </div>
