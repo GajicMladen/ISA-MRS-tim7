@@ -222,13 +222,16 @@ public class ReservationController {
             DataForChartDTO newData = new DataForChartDTO();
             newData.setName(cottage.getName());
             float value = 0;
+            int gradesCount = 0;
             List<Reservation> reservations =  reservationService.getReservationsForOffer(cottage.getId());
             for (Reservation reservation: reservations) {
-                if (reservation.getGrade() != null)
+                if (reservation.getGrade() != null) {
                     value += reservation.getGrade().getGrade();
+                    gradesCount++;
+                }
             }
-            if(reservations.size() > 0 )
-                value = value/reservations.size();
+            if(gradesCount > 0 )
+                value = value/gradesCount;
             else
                 value = 0;
             newData.setValue(value);
