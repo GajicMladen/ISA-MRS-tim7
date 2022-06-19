@@ -16,6 +16,7 @@ import { AdminComplaintComponent } from './components/admin-complaints/admin-com
 import { AdminLoyaltyProgramComponent } from './components/admin-loyalty-program/admin-loyalty-program.component';
 import { EditLoyaltyComponent } from './components/admin-loyalty-program/edit-loyalty/edit-loyalty.component';
 import { AddLoyaltyComponent } from './components/admin-loyalty-program/add-loyalty/add-loyalty.component';
+import { AdminReviewsComponent } from './components/admin-reviews/admin-reviews.component';
 
 
 
@@ -31,7 +32,8 @@ import { AddLoyaltyComponent } from './components/admin-loyalty-program/add-loya
     AdminComplaintComponent,
     AdminLoyaltyProgramComponent,
     EditLoyaltyComponent,
-    AddLoyaltyComponent
+    AddLoyaltyComponent,
+    AdminReviewsComponent
   ],
   imports: [
     CommonModule,

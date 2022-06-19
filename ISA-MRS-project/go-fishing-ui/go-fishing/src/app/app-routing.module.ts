@@ -43,6 +43,8 @@ import { AdventureReservationsComponent } from './features/adventure/components/
 import { AdminReportComponent } from './features/admin/components/admin-report/admin-report.component';
 import { AdminComplaintsComponent } from './features/admin/components/admin-complaints/admin-complaints.component';
 import { AdminLoyaltyProgramComponent } from './features/admin/components/admin-loyalty-program/admin-loyalty-program.component';
+import { AdminReviewsComponent } from './features/admin/components/admin-reviews/admin-reviews.component';
+
 
 const routes: Routes = [
   { path: '', component: StartpagePreviewListComponent },
@@ -116,6 +118,7 @@ const routes: Routes = [
   { path: 'entityOverview/:id', component: AdminEntityOverviewComponent },
   { path: 'adminProfile/:id', component: AdminProfilpageComponent },
   { path: 'loyaltyProgram/:id', component: AdminLoyaltyProgramComponent },
+  { path: 'reviews/:id', component: AdminReviewsComponent },
 
   //Ubaciti komponentu za not found
   { path: '**', redirectTo: '', pathMatch: 'full' },
