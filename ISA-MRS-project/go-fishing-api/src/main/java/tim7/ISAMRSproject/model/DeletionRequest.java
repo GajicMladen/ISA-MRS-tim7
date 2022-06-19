@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.persistence.Version;
 
 
 @Entity
@@ -30,6 +31,11 @@ public class DeletionRequest {
 	
 	@OneToOne(mappedBy = "deletionRequest", optional = true)
     private User user;
+	
+	@Version
+	@Column(name = "version", columnDefinition = "integer DEFAULT 0", nullable = false)
+	private Integer version;
+    
 	
 	public DeletionRequest() {
 		
@@ -56,6 +62,22 @@ public class DeletionRequest {
 	}
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public Integer getVersion() {
+		return version;
+	}
+
+	public void setVersion(Integer version) {
+		this.version = version;
 	}
 	
 	

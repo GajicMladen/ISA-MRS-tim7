@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import tim7.ISAMRSproject.dto.ChangePasswordDTO;
 import tim7.ISAMRSproject.dto.SubscriptionDTO;
@@ -74,6 +75,7 @@ public class UserService implements UserDetailsService {
 	@Autowired
 	private RoleService roleService;
 	
+	@Transactional
 	public Optional<User> findById(int id) {
 		return userRepository.findById(id);
 	}
@@ -180,6 +182,7 @@ public class UserService implements UserDetailsService {
 		this.userRepository.save(user);
 	}
 	
+	@Transactional
 	public User save(User user) {
 		return this.userRepository.save(user);
 	}
