@@ -23,65 +23,64 @@
             
             <mat-tab label="Cottages">
                 <mat-list role="list" class="inline-list">
-                    <mat-list-item class="mat-list" role="listitem" *ngFor='let i of cottageList.slice(0,5)'>
+                    <mat-list-item class="mat-list" role="listitem" *ngFor='let i of cottageList'>
                         <mat-card class="card-content">
                             <mat-card-header>
                                 <mat-card-title>{{i.name}}</mat-card-title>
                             </mat-card-header>
-                            <img mat-card-image [src]="i.images![0]" alt="Cottage Photo">
+                            <img mat-card-image [src]="i.image" alt="Cottage Photo">
                             <mat-card-content>
-                                <p><b>Description: </b>{{i.description}}</p>
+                                <p><b>Room Count: </b>{{i.roomCount}}</p>
                                 <p><b>Capacity: </b>{{i.capacity}} person(s)</p>
-                                <p><b>Rating: </b>{{i.averageRating}} / 5</p>
+                                <p><b>Rating: </b>{{i.rating}} / 5</p>
                                 <p><b>Price: </b>{{i.price | currency:'USD'}} per day</p>
                             </mat-card-content>
                         </mat-card>
                     </mat-list-item>
-                    <p *ngIf = 'cottageList.length == 0' style="text-align:center"> No cottages found!</p>
+                    <p *ngIf='cottageListEmpty' style="text-align:center"> No cottages found!</p>
                 </mat-list>
             </mat-tab>
 
 
             <mat-tab label="Boats">
                 <mat-list role="list" class="inline-list">
-                    <mat-list-item class="mat-list" role="listitem" *ngFor='let i of boatList.slice(0,5)'>
+                    <mat-list-item class="mat-list" role="listitem" *ngFor='let i of boatList'>
                         <mat-card class="card-content">
                             <mat-card-header>
                                 <mat-card-title>{{i.name}}</mat-card-title>
                             </mat-card-header>
-                            <img mat-card-image [src]="i.images![0]"
+                            <img mat-card-image [src]="i.image"
                                 alt="Boat Photo">
                             <mat-card-content>
-                                <p><b>Boat Type: </b>{{i.boatType}}</p>
+                                <p><b>Max Speed: </b>{{i.maxSpeed}}</p>
                                 <p><b>Boat Length: </b>{{i.length}}m</p>
                                 <p><b>Capacity: </b>{{i.capacity}} person(s)</p>
-                                <p><b>Rating: </b>{{i.averageRating}} / 5</p>
+                                <p><b>Rating: </b>{{i.rating}} / 5</p>
                                 <p><b>Price: </b>{{i.price | currency:'USD'}} per day</p>
                             </mat-card-content>
                         </mat-card>
                     </mat-list-item>
-                    <p *ngIf='boatList.length == 0' style="text-align:center"> No boats found!</p>
+                    <p *ngIf='boatListEmpty' style="text-align:center"> No boats found!</p>
                 </mat-list>
             </mat-tab>
 
             <mat-tab label="Adventures">
                 <mat-list role="list" class="inline-list">
-                    <mat-list-item class="mat-list" role="listitem" *ngFor='let i of adventureList.slice(0,5)'>
+                    <mat-list-item class="mat-list" role="listitem" *ngFor='let i of adventureList'>
                         <mat-card class="card-content">
                             <mat-card-header>
                                 <mat-card-title>{{i.name}}</mat-card-title>
                             </mat-card-header>
-                            <img mat-card-image [src]="i.images![0]"
+                            <img mat-card-image [src]="i.image"
                                 alt="Adventure Photo">
                             <mat-card-content>
-                                <p><b>Description: </b>{{i.description}}</p>
                                 <p><b>Capacity: </b>{{i.capacity}} person(s)</p>
-                                <p><b>Rating: </b>{{i.averageRating}} / 5</p>
+                                <p><b>Rating: </b>{{i.rating}} / 5</p>
                                 <p><b>Price: </b>{{i.price | currency:'USD'}} per day</p>
                             </mat-card-content>
                         </mat-card>
                     </mat-list-item>
-                    <p *ngIf='adventureList.length == 0' style="text-align:center"> No adventures found!</p>
+                    <p *ngIf='adventureListEmpty' style="text-align:center"> No adventures found!</p>
                 </mat-list>
             </mat-tab>
         </mat-tab-group>
