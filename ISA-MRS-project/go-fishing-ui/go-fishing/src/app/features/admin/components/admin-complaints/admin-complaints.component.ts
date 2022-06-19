@@ -16,7 +16,6 @@ export class AdminComplaintsComponent implements OnInit {
 
 
   constructor(private route: ActivatedRoute,
-              private messageService: MessageService,
               private complaintService: ComplaintService) { }
 
   ngOnInit(): void {
