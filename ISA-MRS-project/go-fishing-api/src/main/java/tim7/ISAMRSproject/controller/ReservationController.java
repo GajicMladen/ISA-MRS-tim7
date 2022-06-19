@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.hibernate.dialect.lock.OptimisticEntityLockException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -415,11 +416,20 @@ public class ReservationController {
     }
 
     @GetMapping(value = "/buyAction/{idAction}")
-    public ResponseEntity<?> buyAction(Principal user,@PathVariable int idAction){
-        User u = userService.findByEmail(user.getName());
+    public ResponseEntity<?> buyActionS(Principal user,@PathVariable int idAction){
+        try {
+            Client client = clientService.findByEmail(user.getName());
+            Reservation reservation = reservationService.findById(idAction);
 
-        reservationService.buyAction(u.getId(),idAction);
-
-        return new ResponseEntity<>(HttpStatus.OK);
+            if(reservationService.buyAction(client,reservation)) {
+                reservationService.saveReservation(reservation);
+                return new ResponseEntity<>(HttpStatus.OK);
+            }
+            else
+                return new ResponseEntity<>("{message:'Nismo uspeli da rezervišemo akciju'}",HttpStatus.FORBIDDEN);
+        }
+        catch (OptimisticEntityLockException e){
+            return new ResponseEntity<>("{message:'Izgleda da je akcija već rezervisana'}",HttpStatus.FORBIDDEN);
+        }
     }
 }

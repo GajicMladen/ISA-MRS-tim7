@@ -1,12 +1,14 @@
 package tim7.ISAMRSproject.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tim7.ISAMRSproject.dto.ActionDTO;
 import tim7.ISAMRSproject.model.Action;
 import tim7.ISAMRSproject.model.Client;
 import tim7.ISAMRSproject.model.Offer;
+import tim7.ISAMRSproject.model.User;
 import tim7.ISAMRSproject.repository.ClientRepository;
 
 import java.util.List;
@@ -25,6 +27,16 @@ public class ClientService {
 
     public Optional<Client> getClientById(Integer id){
         return clientRepository.findById(id);
+    }
+
+    @Transactional(readOnly = true)
+    public Client findClientById(Integer id){
+        return clientRepository.findById(id).get();
+    }
+
+    @Transactional(readOnly = true)
+    public Client findByEmail(String email) throws AccessDeniedException {
+        return clientRepository.findByEmail(email);
     }
 
 

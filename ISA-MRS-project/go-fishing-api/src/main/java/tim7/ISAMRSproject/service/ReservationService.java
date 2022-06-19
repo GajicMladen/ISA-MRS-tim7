@@ -361,16 +361,23 @@ public class ReservationService {
 	}
 
 
-	public void buyAction(int clientId,int reservationId){
-		Optional<Reservation> res = reservationRepository.getReservationByIdAndStatus(reservationId,ReservationStatus.FOR_ACTION);
-		Optional<Client> client = clientRepository.findById(clientId);
+	@Transactional
+	public Reservation findById(int id){
+		return reservationRepository.findById(id).get();
+	}
+	@Transactional(readOnly = false)
+	public Reservation saveReservation(Reservation res){
+		return reservationRepository.save(res);
+	}
 
-		if(res.isPresent() && client.isPresent()){
-			res.get().setClient(client.get());
-			res.get().setStatus(ReservationStatus.ACTIVE);
 
-			reservationRepository.save(res.get());
+	@Transactional(readOnly = false)
+	public boolean buyAction(Client client,Reservation res){
+		if( res.getStatus() == ReservationStatus.FOR_ACTION){
+			res.setClient(client);
+			res.setStatus(ReservationStatus.ACTIVE);
+			return true;
 		}
-
+		return false;
 	}
 }
