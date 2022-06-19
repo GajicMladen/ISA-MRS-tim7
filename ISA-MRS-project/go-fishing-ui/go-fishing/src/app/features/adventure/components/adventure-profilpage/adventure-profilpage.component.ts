@@ -10,6 +10,7 @@ import {
   MessageType,
 } from 'src/app/shared/services/message-service/message.service';
 import { UserService } from 'src/app/shared/services/users-services/user.service';
+import { ActionDTO } from 'src/models/reservation';
 import { AdventureService } from '../../adventure.service';
 import { Adventure } from '../../classes/adventure';
 import { AdventureClientReservationDialogComponent } from '../adventure-client-reservation-dialog/adventure-client-reservation-dialog.component';
@@ -25,6 +26,8 @@ export class AdventureProfilpageComponent implements OnInit {
   instructorName: string;
 
   clientLoggedIn: boolean;
+
+  actions: ActionDTO[] = [];
 
   isSuscribed: boolean;
 
@@ -114,6 +117,12 @@ export class AdventureProfilpageComponent implements OnInit {
             apiKey: 'AIzaSyAPNK7vqFqOCb5Lu1B0j--zFj4ws4czwGQ',
           });
           this.LoadMap(loader);
+        });
+
+      this.adventureService
+        .getActionsForOffer(this.adventureId)
+        .subscribe((actions) => {
+          this.actions = actions;
         });
     }
 

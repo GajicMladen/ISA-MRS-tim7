@@ -57,10 +57,37 @@
               
               </div>
             -->
+            <div class="actions">
+                <span class="font-weight-bold">Akcije za avanturu:</span>
+                <div *ngIf="actions.length !== 0">
+                    <div *ngFor="let action of actions" class="card action-card-body">
+                        <div  class="media align-items-center align-items-lg-start text-center text-lg-left flex-column flex-lg-row">
+                            <div class="action-img"> <img src="https://i.imgur.com/xtoLyW2.jpeg" alt=""> </div>
+        
+                            <div class="media-body">
+                                <h4 class="media-title font-weight-semibold">{{adventure.name}}</h4>
+                                <div class="action-info">
+                                    <span class="text-muted">Početak:</span><span class="action-info-d">{{action.getStartDateString()}}</span>
+                                    <span class="text-muted">Kraj:</span><span class="action-info-d">{{action.getEndDateString()}}</span>
+                                </div>
+                            </div>
+                            <div class="mt-3 mt-lg-0 ml-lg-3 text-center">
+                                <h3 class="mb-0 font-weight-semibold action-price" ><s>{{adventure.price | currency}}</s></h3>
+                                <h3 class="mb-0 font-weight-semibold action-price" >${{action.totalPrice}}</h3>
+                                
+                                <button type="button" class="btn btn-primary text-white action-btn-r">Rezerviši</button> <!--(click)="openActionConfirmDialog(action)"-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="actions.length === 0">
+                    <mat-card>Trenutno nema akcija za ovu avanturu.</mat-card>
+                </div>
+            </div>
 
 
             <div class="card mt-2">
-                <h6>Utisci</h6>
+                <span class="font-weight-bold">Recenzije</span>
                 <div class="d-flex flex-row">
                     <div class="stars"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> </div> <span class="ml-1 font-weight-bold">4.6</span>
                 </div>
