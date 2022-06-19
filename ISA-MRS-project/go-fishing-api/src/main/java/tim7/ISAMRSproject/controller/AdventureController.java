@@ -190,4 +190,15 @@ public class AdventureController {
 		
 		return actions;
 	}
+	
+	@GetMapping(value = "/getActionsFromId/{id}") 
+	public List<ActionDTO> getActionsFromId(@PathVariable int id) {
+		List<Action> actions = this.actionService.getActionByOfferId(id);
+		List<ActionDTO> dtos = new ArrayList<ActionDTO>();
+		for (Action a: actions) {
+			dtos.add(new ActionDTO(a));
+		}
+		
+		return dtos;
+	}
 }
