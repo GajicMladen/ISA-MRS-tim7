@@ -41,6 +41,7 @@ export class CottageProfilepageComponent implements OnInit {
   extraFavors: string[];
 
   canReserve: boolean = true;
+
   constructor(
     private route: ActivatedRoute,
     private cottageService: CottageService,
@@ -54,9 +55,6 @@ export class CottageProfilepageComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.profileService.getPenaltyCount().subscribe((res) => {
-      if (res >= 3) this.canReserve = false;
-    });
     this.cottageId = Number(this.route.snapshot.paramMap.get('id'));
     if (!isNaN(this.cottageId)) {
       this.cottageService
@@ -71,22 +69,28 @@ export class CottageProfilepageComponent implements OnInit {
           });
         });
 
-      this.userService.isLoggedUserOnlyClient().subscribe((data) => {
-        this.clientLoggedIn = data;
-      });
+      if (this.isAuthentified) {
+        this.userService.isLoggedUserOnlyClient().subscribe((data) => {
+          this.clientLoggedIn = data;
+        });
 
+        this.getIsSuscribed();
+
+        this.reservationService
+          .getFreePeriodsById(this.cottageId)
+          .subscribe((res: any) => {
+            this.hasFreePeriods = res.length > 0;
+          });
+      }
+      if (localStorage.getItem('user-role') === 'ROLE_USER') {
+        this.profileService.getPenaltyCount().subscribe((res) => {
+          if (res >= 3) this.canReserve = false;
+        });
+      }
       this.actionService
         .getActionsForOffer(this.cottageId)
         .subscribe((actions) => {
           this.actions = actions;
-        });
-
-      this.getIsSuscribed();
-
-      this.reservationService
-        .getFreePeriodsById(this.cottageId)
-        .subscribe((res: any) => {
-          this.hasFreePeriods = res.length > 0;
         });
     }
   }
@@ -221,5 +225,9 @@ export class CottageProfilepageComponent implements OnInit {
   get reservationTooltipText() {
     if (!this.canReserve) return 'Your reservation privileges are disabled!';
     return 'No free periods are available!';
+  }
+
+  get isAuthentified() {
+    return localStorage.getItem('jwt') !== null;
   }
 }

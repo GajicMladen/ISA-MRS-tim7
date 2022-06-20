@@ -116,9 +116,7 @@ export class AdventureProfilpageComponent implements OnInit {
 
   ngOnInit(): void {
     this.adventureId = Number(this.route.snapshot.paramMap.get('id'));
-    this.profileService.getPenaltyCount().subscribe((res) => {
-      if (res >= 3) this.canReserve = false;
-    });
+
     if (!isNaN(this.adventureId)) {
       this.adventureService
         .getAdventureById(this.adventureId)
@@ -131,7 +129,21 @@ export class AdventureProfilpageComponent implements OnInit {
           this.LoadMap(loader);
         });
     }
-
+    if (localStorage.getItem('user-role') === 'ROLE_USER') {
+      this.profileService.getPenaltyCount().subscribe((res) => {
+        if (res >= 3) this.canReserve = false;
+      });
+    }
+    if (this.isAuthentified) {
+      this.reservationService
+        .getFreePeriodsById(this.adventureId)
+        .subscribe((res: any) => {
+          this.hasFreePeriods = res.length > 0;
+        });
+      this.userService.isLoggedUserOnlyClient().subscribe((data) => {
+        this.clientLoggedIn = data;
+      });
+    }
     this.adventureService
       .getActionsForOffer(this.adventureId)
       .subscribe((actions) => {
@@ -143,16 +155,6 @@ export class AdventureProfilpageComponent implements OnInit {
       .subscribe((reviews) => {
         this.reviews = reviews;
       });
-
-    this.reservationService
-      .getFreePeriodsById(this.adventureId)
-      .subscribe((res: any) => {
-        this.hasFreePeriods = res.length > 0;
-      });
-
-    this.userService.isLoggedUserOnlyClient().subscribe((data) => {
-      this.clientLoggedIn = data;
-    });
   }
 
   LoadMap(loader: Loader) {
@@ -315,5 +317,9 @@ export class AdventureProfilpageComponent implements OnInit {
       .subscribe((data) => {
         this.getIsSuscribed();
       });
+  }
+
+  get isAuthentified() {
+    return localStorage.getItem('jwt') !== null;
   }
 }

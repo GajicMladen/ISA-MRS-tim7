@@ -289,3 +289,7 @@ a {
     border-radius: 0 0 15px 15px;
 
 }
+
+.clickable {
+    pointer-events: none;
+}

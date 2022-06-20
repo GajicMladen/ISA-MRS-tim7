@@ -1,7 +1,7 @@
 <mat-card style="margin-bottom: 8px">
     <mat-card-title class="title">Welcome to GoFishing!</mat-card-title>
     <mat-card-subtitle class="title">Your number one site for all things fishing</mat-card-subtitle>
-    <img class="center-align" src="../../../../../assets/images/goFishing.jpg" alt="GoFishingLogo">
+    <img style="max-height: 300px !important" class="center-align" src="../../../../../assets/images/goFishing.jpg" alt="GoFishingLogo">
 </mat-card>
 
 <mat-divider></mat-divider>
@@ -23,7 +23,7 @@
             
             <mat-tab label="Cottages">
                 <mat-list role="list" class="inline-list">
-                    <mat-list-item class="mat-list" role="listitem" *ngFor='let i of cottageList'>
+                    <mat-list-item class="mat-list offer-card" role="listitem" *ngFor='let i of cottageList' (click)="redirectCottage(i.id)">
                         <mat-card class="card-content">
                             <mat-card-header>
                                 <mat-card-title>{{i.name}}</mat-card-title>
@@ -44,7 +44,7 @@
 
             <mat-tab label="Boats">
                 <mat-list role="list" class="inline-list">
-                    <mat-list-item class="mat-list" role="listitem" *ngFor='let i of boatList'>
+                    <mat-list-item class="mat-list offer-card" role="listitem" *ngFor='let i of boatList' (click)="redirectBoat(i.id)">
                         <mat-card class="card-content">
                             <mat-card-header>
                                 <mat-card-title>{{i.name}}</mat-card-title>
@@ -66,7 +66,7 @@
 
             <mat-tab label="Adventures">
                 <mat-list role="list" class="inline-list">
-                    <mat-list-item class="mat-list" role="listitem" *ngFor='let i of adventureList'>
+                    <mat-list-item class="mat-list offer-card" role="listitem" *ngFor='let i of adventureList' (click)="redirectAdventure(i.id)">
                         <mat-card class="card-content">
                             <mat-card-header>
                                 <mat-card-title>{{i.name}}</mat-card-title>

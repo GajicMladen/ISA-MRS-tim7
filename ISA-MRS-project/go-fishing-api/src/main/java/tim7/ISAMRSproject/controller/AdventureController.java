@@ -215,6 +215,7 @@ public class AdventureController {
     	List<Adventure> adventures = adventureService.getAdventuresPreview();
 		for(Adventure a: adventures) {
 			AdventureDTO dto = new AdventureDTO();
+			dto.setId(a.getId());
 			dto.setRating(a.getRating());
 			dto.setPrice(a.getPrice());
 			dto.setCapacity(a.getCapacity());
@@ -230,6 +231,7 @@ public class AdventureController {
     	List<Adventure> adventures = adventureService.getAdventuresPreviewParam(param);
 		for(Adventure a: adventures) {
 			AdventureDTO dto = new AdventureDTO();
+			dto.setId(a.getId());
 			dto.setRating(a.getRating());
 			dto.setPrice(a.getPrice());
 			dto.setCapacity(a.getCapacity());

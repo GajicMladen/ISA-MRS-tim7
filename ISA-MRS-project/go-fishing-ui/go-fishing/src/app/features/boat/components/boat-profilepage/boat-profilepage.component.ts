@@ -50,9 +50,6 @@ export class BoatProfilepageComponent implements OnInit {
     private profileService: UserprofileService
   ) {}
   ngOnInit(): void {
-    this.profileService.getPenaltyCount().subscribe((res) => {
-      if (res >= 3) this.canReserve = false;
-    });
     this.boatId = Number(this.route.snapshot.paramMap.get('id'));
     this.boatService.findBoatById(this.boatId).subscribe((data) => {
       this.boat = data;
@@ -63,18 +60,25 @@ export class BoatProfilepageComponent implements OnInit {
       });
     });
 
+    if (localStorage.getItem('user-role') === 'ROLE_USER') {
+      this.profileService.getPenaltyCount().subscribe((res) => {
+        if (res >= 3) this.canReserve = false;
+      });
+    }
+    if (this.isAuthentified) {
+      this.reservationService
+        .getFreePeriodsById(this.boatId)
+        .subscribe((res: any) => {
+          this.hasFreePeriods = res.length > 0;
+        });
+
+      this.userService.isLoggedUserOnlyClient().subscribe((data) => {
+        this.clientLoggedIn = data;
+      });
+    }
+
     this.actionService.getActionsForOffer(this.boatId).subscribe((data) => {
       this.actions = data;
-    });
-
-    this.reservationService
-      .getFreePeriodsById(this.boatId)
-      .subscribe((res: any) => {
-        this.hasFreePeriods = res.length > 0;
-      });
-
-    this.userService.isLoggedUserOnlyClient().subscribe((data) => {
-      this.clientLoggedIn = data;
     });
   }
 
@@ -208,5 +212,9 @@ export class BoatProfilepageComponent implements OnInit {
     this.clientService.removeSubscription(this.boatId).subscribe((data) => {
       this.getIsSuscribed();
     });
+  }
+
+  get isAuthentified() {
+    return localStorage.getItem('jwt') !== null;
   }
 }
