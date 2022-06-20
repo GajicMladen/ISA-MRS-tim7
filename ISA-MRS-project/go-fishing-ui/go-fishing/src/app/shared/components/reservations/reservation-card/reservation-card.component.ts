@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ClientService } from 'src/app/shared/services/client-service/client.service';
@@ -16,6 +16,7 @@ export class ReservationCardComponent implements OnInit {
 
   @Input() reservation:ReservationDTO;
   @Input() ownerType:string;
+  @Output() newReservation= new EventEmitter<number>();
   clientName:String;
 
   constructor(
@@ -45,9 +46,14 @@ export class ReservationCardComponent implements OnInit {
   }
 
   addNewReservation(offerId:number,clientId:number){
-    this.dialog.open(ReservationAddNewWithClientComponent,{
+    let dialogRef = this.dialog.open(ReservationAddNewWithClientComponent,{
       data:[offerId,clientId,this.ownerType]
     })
+    dialogRef.afterClosed().subscribe(
+      res =>{
+        this.newReservation.emit(offerId);
+      }
+    )
   }
 
 }

@@ -91,6 +91,9 @@ export class NewActionComponent implements OnInit {
         this.router.navigate(["/calendar/"+this.offerId]);
         this._pData.callParentMethod();
         this.messageService.showMessage("Uspešno ste dodali akciju.",MessageType.SUCCESS);
+      },
+      error=>{
+        this.messageService.showMessage(error.error,MessageType.ERROR);   
       });
     }
     else{

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ClientService } from 'src/app/shared/services/client-service/client.service';
@@ -18,6 +18,8 @@ export class ReservationListView implements OnInit {
   
   @Input() ownerType:string;
 
+  @Output() changed = new EventEmitter<number>()
+
   clientNames:any[] = [];
 
   constructor(
@@ -25,18 +27,10 @@ export class ReservationListView implements OnInit {
     private userService: UserService) { }
 
   ngOnInit(): void {
-    this.reservations.forEach(res => {
-      console.log(res.clientId);
-      this.clientNames.push(res.clientId);
-    });
   }
 
-  getClientName(clientId:number,resId:number){
-     this.userService.findById(clientId).subscribe(
-      data=>{
-         this.clientNames[resId] = data.name +" "+ data.lastName;
-      }
-     );
 
+  addReservationDTO(id:number) {
+    this.changed.emit(id);
   }
 }

@@ -5,14 +5,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import tim7.ISAMRSproject.dto.FreePeriodDTO;
-import tim7.ISAMRSproject.model.FreePeriod;
+import tim7.ISAMRSproject.model.*;
+import tim7.ISAMRSproject.service.BoatService;
+import tim7.ISAMRSproject.service.CottageService;
 import tim7.ISAMRSproject.service.FreePeriodService;
+import tim7.ISAMRSproject.service.UserService;
 
+import java.security.Principal;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "api/freePeriods")
@@ -21,6 +28,12 @@ public class FreePeriodController {
     @Autowired
     private FreePeriodService freePeriodService;
 
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private CottageService cottageService;
+    @Autowired
+    private BoatService boatService;
 
     @GetMapping(value = "/getFreePeriods/{id}")
     public List<FreePeriodDTO> getFreePeriods(@PathVariable int id){
@@ -50,8 +63,32 @@ public class FreePeriodController {
 
 
     @PostMapping(value = "/addFreePeriod",consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void addFreePeriod(@RequestBody FreePeriodDTO freePeriodDTO){
-        freePeriodService.addFreePeriod(freePeriodDTO);
+    @PreAuthorize("hasRole('ROLE_COTTAGE_OWNER')"+
+                "|| hasRole('ROLE_BOAT_OWNER')"+
+                "|| hasRole('ROLE_INSTRUCTOR')")
+    public ResponseEntity<?> addFreePeriod(@RequestBody FreePeriodDTO freePeriodDTO, Principal user){
+        User u = userService.findByEmail(user.getName());
+
+        LocalDateTime startDate = freePeriodDTO.getStartDate();
+        LocalDateTime endDate = freePeriodDTO.getEndDate();
+
+        Optional<Cottage> cottage = cottageService.getCottageById(freePeriodDTO.getOfferId());
+        Optional<Boat> boat = boatService.getBoat(freePeriodDTO.getOfferId());
+
+        if(cottage.isPresent()){
+            if(cottage.get().getCottageOwnerId() != u.getId())
+                return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+            freePeriodService.addFreePeriod(startDate,endDate,cottage.get());
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+        if(boat.isPresent()){
+            if(boat.get().getBoatOwner().getId() != u.getId())
+                return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+            freePeriodService.addFreePeriod(startDate,endDate,boat.get());
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+
+        return new ResponseEntity<>(HttpStatus.FORBIDDEN);
     }
     
     @PostMapping(value = "/addPeriodAdventure",consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -65,6 +102,9 @@ public class FreePeriodController {
     }
 
     @DeleteMapping(value = "/delete/{id}")
+    @PreAuthorize("hasRole('ROLE_COTTAGE_OWNER')"+
+            "|| hasRole('ROLE_BOAT_OWNER')"+
+            "|| hasRole('ROLE_INSTRUCTOR')")
     public void deleteFreePeriod(@PathVariable int id){
         freePeriodService.deleteFreePeriod(id);
     }

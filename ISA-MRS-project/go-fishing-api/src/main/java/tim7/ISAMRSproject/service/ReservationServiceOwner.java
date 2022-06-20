@@ -47,6 +47,38 @@ public class ReservationServiceOwner {
 
             return newRes;
         }
+    public Reservation reserveBoat(Boat boat, Client client, LocalDateTime startDate,LocalDateTime endDate){
+        int daysNum = Period.between(startDate.toLocalDate(),endDate.toLocalDate()).getDays();
+
+        Reservation newRes = new Reservation();
+        newRes.setClient(client);
+        newRes.setStatus(ReservationStatus.ACTIVE);
+        newRes.setTotalPrice(daysNum*boat.getPrice());
+        newRes.setOffer(boat);
+        newRes.setStartDateTime(startDate);
+        newRes.setEndDateTime(endDate);
+
+        boat.setChanging(!boat.isChanging());
+        boatRepository.save(boat);
+
+        return newRes;
+    }
+    public Reservation reserveAdventure(Adventure adventure, Client client, LocalDateTime startDate,LocalDateTime endDate){
+        int daysNum = Period.between(startDate.toLocalDate(),endDate.toLocalDate()).getDays();
+
+        Reservation newRes = new Reservation();
+        newRes.setClient(client);
+        newRes.setStatus(ReservationStatus.ACTIVE);
+        newRes.setTotalPrice(daysNum*adventure.getPrice());
+        newRes.setOffer(adventure);
+        newRes.setStartDateTime(startDate);
+        newRes.setEndDateTime(endDate);
+
+        adventure.setChanging(!adventure.isChanging());
+        adventureRepository.save(adventure);
+
+        return newRes;
+    }
 
         public void saveReservation(Reservation res){
             reservationRepository.save(res);
@@ -64,21 +96,27 @@ public class ReservationServiceOwner {
             return false;
         }
 
-    public Reservation addNewAction(ActionDTO actionDTO){
+    public Reservation addNewAction(ActionDTO actionDTO,User user){
 
         Optional<Cottage> cottage = cottageRepository.findById(actionDTO.getOfferId());
         Optional<Boat> boat = boatRepository.findById(actionDTO.getOfferId());
         Optional<Adventure> adventure = adventureRepository.findById(actionDTO.getOfferId());
 
         if(cottage.isPresent()) {
+            if( cottage.get().getCottageOwnerId() != user.getId())
+                return null;
             if(! isPeriodReserved(cottage.get(),actionDTO.getStartDate(),actionDTO.getEndDate()))
                 return addNewActionCottage(actionDTO.getStartDate(),actionDTO.getEndDate(),actionDTO.getTotalPrice(),cottage.get());
         }
         if(boat.isPresent()){
+            if( boat.get().getBoatOwner().getId() != user.getId())
+                return null;
             if(! isPeriodReserved(boat.get(),actionDTO.getStartDate(),actionDTO.getEndDate()))
                 return addNewActionBoat(actionDTO.getStartDate(),actionDTO.getEndDate(),actionDTO.getTotalPrice(),boat.get());
         }
         if(adventure.isPresent()){
+            if( adventure.get().getInstructorId() != user.getId())
+                return null;
             if(! isPeriodReserved(adventure.get(),actionDTO.getStartDate(),actionDTO.getEndDate()))
                 return addNewActionCottage(actionDTO.getStartDate(),actionDTO.getEndDate(),actionDTO.getTotalPrice(),cottage.get());
         }

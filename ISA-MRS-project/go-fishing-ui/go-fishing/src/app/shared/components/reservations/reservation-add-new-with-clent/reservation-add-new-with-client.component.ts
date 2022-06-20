@@ -96,13 +96,11 @@ export class ReservationAddNewWithClientComponent implements OnInit {
         offerType = "adventure"
 
       this.reservationService.addNewReservationWithClient(newReservation,offerType).subscribe(data =>{
-        console.log(data);
-        this.dialogRef.close();
+        this.dialogRef.close({newReservation});
         this.messageService.showMessage(
           "Uspešno dodata rezervacija.",MessageType.SUCCESS
         );
       },(error:any )=>{
-        console.log(error);
         this.messageService.showMessage(error.error,MessageType.ERROR);
       });
        

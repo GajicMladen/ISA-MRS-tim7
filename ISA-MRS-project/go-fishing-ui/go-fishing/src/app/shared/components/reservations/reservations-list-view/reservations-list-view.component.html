@@ -6,7 +6,7 @@
                 <div class="card-body" style="overflow-y: scroll; height:600px;">
                     <ul class="list-unstyled reservations-list" *ngIf="reservations != undefined && reservations.length > 0; else elseblock">
                         <li class="position-relative booking reservation-card" *ngFor="let reservation of reservations">
-                            <app-reservation-card [reservation]="reservation" [ownerType]="ownerType"></app-reservation-card>
+                            <app-reservation-card [reservation]="reservation" [ownerType]="ownerType" (newReservation)="addReservationDTO($event)"></app-reservation-card>
                         </li>
     
                     </ul>

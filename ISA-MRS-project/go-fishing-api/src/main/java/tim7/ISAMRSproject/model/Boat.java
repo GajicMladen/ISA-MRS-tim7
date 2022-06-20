@@ -13,7 +13,7 @@ import javax.persistence.ManyToOne;
 @Entity
 public class Boat extends Offer {
 
-	@Column(name = "type",nullable = false)
+	@Column(name = "type",nullable = true)
 	private String type;
 	
 	@Column(name = "length",nullable = false)
