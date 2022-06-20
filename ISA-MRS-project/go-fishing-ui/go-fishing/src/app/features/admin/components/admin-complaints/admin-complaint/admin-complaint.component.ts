@@ -28,7 +28,8 @@ export class AdminComplaintComponent implements OnInit {
   
     this.reservationService.getReservationById(this.complaint.reservationId).subscribe(async r => {
       this.reservation = r;
-      await this.delay(500);
+      console.log(this.reservation);
+      await this.delay(1000);
       if (this.complaint.fromOwner) {
         this.complaint_text = 'Oglašivač se žali na klijenta ' + this.reservation.clientName + ' ' + this.reservation.clientLastName;
       }

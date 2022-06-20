@@ -79,17 +79,21 @@ public class GradeController {
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 	
+	//Returns only accepted reviews
 	@GetMapping(value = "/getReviewsByOfferId/{id}")
 	public ResponseEntity<?> getReviewsByOfferId (@PathVariable int id) {
 		List<Reservation> reservations = this.reservationService.getReservationsForOffer(id);
 		List<GradeDTO> dtos = new ArrayList<GradeDTO>();
 		for (Reservation r : reservations) {
 			if (r.getGrade() != null) {
-				GradeDTO dto = new GradeDTO();
-				dto.setId(r.getGrade().getId());
-				dto.setGrade(r.getGrade().getGrade());
-				dto.setReviewText(r.getGrade().getRevision());
-				dtos.add(dto);
+				if (r.getGrade().getStatus() == ApprovalStatus.ACCEPT)
+				{
+					GradeDTO dto = new GradeDTO();
+					dto.setId(r.getGrade().getId());
+					dto.setGrade(r.getGrade().getGrade());
+					dto.setReviewText(r.getGrade().getRevision());
+					dtos.add(dto);
+				}
 			}
 		}
 		

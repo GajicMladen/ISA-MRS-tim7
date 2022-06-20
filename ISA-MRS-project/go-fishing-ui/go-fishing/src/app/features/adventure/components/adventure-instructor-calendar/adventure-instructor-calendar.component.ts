@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FreePeriodService } from 'src/app/shared/services/free-period-service/free-period.service';
 import { MessageService, MessageType } from 'src/app/shared/services/message-service/message.service';
+import { ReservationService } from 'src/app/shared/services/reservation-service/reservation.service';
 import { UserService } from 'src/app/shared/services/users-services/user.service';
 import { FreePeriodDTO } from 'src/models/freePeriod';
-import { ActionDTO } from 'src/models/reservation';
+import { ActionDTO, ReservationDTO } from 'src/models/reservation';
 import { AdventureService } from '../../adventure.service';
 
 @Component({
@@ -17,13 +18,15 @@ export class AdventureInstructorCalendarComponent implements OnInit {
   constructor(private route: ActivatedRoute,
               private freePeriodService: FreePeriodService,
               private adventureService: AdventureService,
-              private messageService: MessageService) { }
+              private messageService: MessageService,
+              private reservationService: ReservationService) { }
 
   //freePeriods.length > 0 || actions.length > 0
   renderCalendar: number = 0;
   instructorId: number;
   freePeriods: FreePeriodDTO[];
   actions: ActionDTO[];
+  reservations: ReservationDTO[] = [];
   adventureIds: number[] = [];
 
   ngOnInit(): void {
@@ -33,6 +36,7 @@ export class AdventureInstructorCalendarComponent implements OnInit {
         this.adventureIds = ids as number[];
         this.getFreePeriods();
         this.getActions();
+        this.getReservations();
         await this.delay(1000);
         this.renderCalendar = 3;
       });
@@ -50,6 +54,13 @@ export class AdventureInstructorCalendarComponent implements OnInit {
       this.actions = data;
     });
   }
+
+  getReservations(){
+    this.reservationService.getReservationsForOwner(this.instructorId, 'I').subscribe(data=>{
+      this.reservations = data;
+    });
+  }
+
 
   deletePeriod(id:number){
 

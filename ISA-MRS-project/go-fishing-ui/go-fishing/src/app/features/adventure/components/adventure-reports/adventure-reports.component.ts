@@ -124,7 +124,7 @@ export class AdventureReportsComponent implements OnInit {
     console.log(t);
     console.log(t.getFullYear());
     console.log(this.yearData[5]);
-
+    /*
     this.reservations.forEach(reservation => {
       if (reservation.startDate.year === t.getFullYear()) {
         this.yearData[reservation.startDate.month-1].value += 1;
@@ -138,10 +138,39 @@ export class AdventureReportsComponent implements OnInit {
         this.weekData[6-(t.getDay()-reservation.startDate.day)].value += 1;
       }
     });
+    setTimeout(function(){
+      console.log("P");
+    }, 2000);
     this.showYear = true;
     this.showMonth = true;
     this.showWeek = true;
+    */
+    var bar = new Promise<void>((resolve, reject) => {
+      this.reservations.forEach(reservation => {
+        if (reservation.startDate.year === t.getFullYear()) {
+          this.yearData[reservation.startDate.month-1].value += 1;
+        }
+        //this.showYear = true;
+        if (reservation.startDate.month === t.getMonth()+1) {
+          this.monthData[reservation.startDate.day-1].value += 1;
+        }
+        //this.showMonth = true;
+        if(reservation.startDate.day >= t.getDay()-7 && reservation.startDate.day <= t.getDay() && (reservation.startDate.month === t.getMonth()+1)) {
+          this.weekData[6-(t.getDay()-reservation.startDate.day)].value += 1;
+        }
+      });
+      resolve();
+    });
+  
+    bar.then(() => {
+      this.showYear = true;
+      this.showMonth = true;
+      this.showWeek = true;
+    });
+
+
   }
+  
 
   generateMonthData() : any {
     var retVal = [];

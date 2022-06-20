@@ -1,6 +1,6 @@
 <div>
   <div style="padding: 50px;">
-    <mwl-demo-component [freePeriods]="freePeriods" [actions]="actions" *ngIf="renderCalendar === 3; else elseBlock;" >Loading...</mwl-demo-component>
+    <mwl-demo-component [freePeriods]="freePeriods" [actions]="actions" [reservations]="reservations" *ngIf="renderCalendar === 3; else elseBlock;" >Loading...</mwl-demo-component>
     
     <ng-template #elseBlock>
         <h2>Trenutno nema slobodnih termina i akcija za avanture.</h2>

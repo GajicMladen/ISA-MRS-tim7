@@ -13,7 +13,7 @@ export class AdminRegistrationRequestsComponent implements OnInit {
 
   adminId: number;
   beingRefused: number = -1;
-  registrationRequests: RegistrationRequest[];
+  registrationRequests: RegistrationRequest[] = [];
 
   constructor(private route: ActivatedRoute,
               private messageService: MessageService,
@@ -36,6 +36,10 @@ export class AdminRegistrationRequestsComponent implements OnInit {
     this.adminService.refuseRegistration(this.beingRefused, reasonInput.value).subscribe(data => {
       this.messageService.showMessage('Zahtev za registraciju odbijen!', MessageType.SUCCESS);
       this.registrationRequests.forEach((element, index) => {if(element.userId === this.beingRefused.toString()) this.registrationRequests.splice(index, 1)});
+      if (!this.registrationRequests) {
+        console.log('sds')
+        this.registrationRequests = [];
+      }
     });
   }
 

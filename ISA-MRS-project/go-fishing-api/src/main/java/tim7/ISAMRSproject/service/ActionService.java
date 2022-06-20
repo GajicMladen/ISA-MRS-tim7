@@ -23,7 +23,7 @@ public class ActionService {
 	@Autowired
 	private AdventureRepository adventureRepository;
 
-	public boolean addAction(ActionDTO actionDTO) {
+	public Reservation addAction(ActionDTO actionDTO) {
 		if (checkDate(actionDTO)) {
 			Reservation res = new Reservation();
 			res.setStartDateTime(actionDTO.getStartDate());
@@ -33,13 +33,12 @@ public class ActionService {
 			Optional<Adventure> adventure = adventureRepository.findById(actionDTO.getOfferId());
 	        if (adventure.isPresent()) {
 	        	res.setOffer(adventure.get());
-	        	reservationRepository.save(res);
-	        	return true;
+	        	return reservationRepository.save(res);	        	
 	        }
-	        return false;
+	        return null;
 		}
 		else {
-			return false;
+			return null;
 		}
 	}
 

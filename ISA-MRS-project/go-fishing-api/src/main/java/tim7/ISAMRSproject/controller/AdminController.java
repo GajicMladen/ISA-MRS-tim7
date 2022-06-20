@@ -177,6 +177,7 @@ public class AdminController {
 		Optional<User> user = this.userService.findById(id);
 		if (user.isPresent()) {
 			User u = user.get();
+			u.getRegistrationRequest().setRequestStatus(RegistrationRequestStatus.ACCEPTED);
 			u.setActive(true);
 			this.userService.save(u);
 			this.mailService.sendRegistrationEmail(u, true, "");
@@ -189,6 +190,7 @@ public class AdminController {
 		Optional<User> user = this.userService.findById(id);
 		if (user.isPresent()) {
 			User u = user.get();
+			u.getRegistrationRequest().setRequestStatus(RegistrationRequestStatus.DECLINED);
 			u.setActive(false);
 			this.userService.save(u);
 			this.mailService.sendRegistrationEmail(u, false, reason);
