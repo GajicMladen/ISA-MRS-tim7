@@ -3,6 +3,8 @@ package tim7.ISAMRSproject.Student2Tests;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.orm.ObjectOptimisticLockingFailureException;
@@ -10,15 +12,20 @@ import org.springframework.test.context.junit4.SpringRunner;
 import tim7.ISAMRSproject.dto.ActionDTO;
 import tim7.ISAMRSproject.model.*;
 import tim7.ISAMRSproject.repository.ClientRepository;
+import tim7.ISAMRSproject.repository.CottageRepository;
 import tim7.ISAMRSproject.repository.ReservationRepository;
 import tim7.ISAMRSproject.service.*;
 
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+
+import static org.mockito.Mockito.when;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -37,7 +44,10 @@ public class ActionsTests {
     private ReservationServiceOwner reservationServiceOwner;
 
     @Test(expected = ObjectOptimisticLockingFailureException.class)
+    @Transactional
     public void testBuySameActionAtSametime() throws Throwable {
+
+
 
         ExecutorService executor = Executors.newFixedThreadPool(2);
         Future<?> future1 = executor.submit(new Runnable() {
@@ -81,6 +91,7 @@ public class ActionsTests {
         executor.shutdown();
     }
     @Test(expected = ObjectOptimisticLockingFailureException.class)
+    @Transactional
     public void testAddNewActionWhenClientReserveSameOffer() throws Throwable {
 
         ExecutorService executor = Executors.newFixedThreadPool(2);
@@ -94,7 +105,7 @@ public class ActionsTests {
                 LocalDateTime endDate = LocalDateTime.now().plusDays(7);
                 float totalPrice =1000;
                 try { Thread.sleep(1000); } catch (InterruptedException e) { }
-                reservationService.addNewActionCottage(startDate,endDate,totalPrice,cottage);
+                reservationServiceOwner.addNewActionCottage(startDate,endDate,totalPrice,cottage);
             }
         });
 
@@ -127,6 +138,7 @@ public class ActionsTests {
         executor.shutdown();
     }
     @Test(expected = ObjectOptimisticLockingFailureException.class)
+    @Transactional
     public void testReserveOfferWhenOwnerDefinedAction() throws Throwable {
 
         ExecutorService executor = Executors.newFixedThreadPool(2);
@@ -159,7 +171,7 @@ public class ActionsTests {
                 LocalDateTime endDate = LocalDateTime.now().plusDays(7);
                 float totalPrice =1000;
                 Cottage cottage = cottageService.getCottageById(1).get();
-                reservationService.addNewActionCottage(startDate,endDate,totalPrice,cottage);
+                reservationServiceOwner.addNewActionCottage(startDate,endDate,totalPrice,cottage);
             }
         });
 

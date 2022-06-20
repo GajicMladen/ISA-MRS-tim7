@@ -89,20 +89,29 @@ public class ReservationController {
     private LoyaltyService loyaltyService;
     
     @PostMapping(value = "/addNewAction",consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void getAllCottages(@RequestBody ActionDTO actionDTO){
+    public ResponseEntity<?> addNewAction(@RequestBody ActionDTO actionDTO){
 
-        Reservation newAction = reservationService.addNewAction(actionDTO);
-        if(newAction != null){
-            List<Client> subscribers = clientService.getSubscribersForOffer(newAction.getOffer().getId());
-            for(Client client: subscribers ) {
-                try {
-                    emailService.sendActionEmail(client,newAction);
-                }
-                catch (Exception e){
-                    System.out.println("Exception on sending email to : "+client.getEmail());
+        try{
+            Reservation newAction = reservationServiceOwner.addNewAction(actionDTO);
+            if(newAction != null){
+                List<Client> subscribers = clientService.getSubscribersForOffer(newAction.getOffer().getId());
+                for(Client client: subscribers ) {
+                    try {
+                        emailService.sendActionEmail(client,newAction);
+                    }
+                    catch (Exception e){
+                        System.out.println("Exception on sending email to : "+client.getEmail());
+                    }
                 }
             }
+            else {
+             return new ResponseEntity<>("Period je rezervisan!",HttpStatus.FORBIDDEN);
+            }
+        }catch (OptimisticEntityLockException e){
+            return  new ResponseEntity<>("Izgleda da je neko pokusao da rezervise...Probajte ponovo.",HttpStatus.FORBIDDEN);
+
         }
+        return  new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping(value = "/getActions/{id}")
@@ -433,10 +442,10 @@ public class ReservationController {
                 return new ResponseEntity<>(HttpStatus.OK);
             }
             else
-                return new ResponseEntity<>("{message:'Nismo uspeli da rezervišemo akciju'}",HttpStatus.FORBIDDEN);
+                return new ResponseEntity<>("Nismo uspeli da rezervišemo akciju,pokusajte ponovo.",HttpStatus.FORBIDDEN);
         }
         catch (OptimisticEntityLockException e){
-            return new ResponseEntity<>("{message:'Izgleda da je akcija već rezervisana'}",HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>("Izgleda da je akcija već rezervisana",HttpStatus.FORBIDDEN);
         }
     }
 
@@ -451,9 +460,9 @@ public class ReservationController {
         try {
             User owner = userService.findByEmail(user.getName());
             if(userService.isUserOnlyClient(owner))
-                return ResponseEntity.status(HttpStatus.FORBIDDEN).body("{\"message\":\""+"Morate biti ulogovani kao vlasnik!"+"\"}");
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Morate biti ulogovani kao vlasnik!");
 
-            Cottage cottage = cottageService.getCottageById(1).get();
+            Cottage cottage = cottageService.getCottageById(dateRangeStringDTO.getOfferId()).get();
             Client client = clientService.findClientById(clientId);
             LocalDateTime startDate =convertDateString(dateRangeStringDTO.getStartDateString());
             LocalDateTime endDate =convertDateString(dateRangeStringDTO.getEndDateString());
@@ -463,10 +472,10 @@ public class ReservationController {
                 reservationServiceOwner.saveReservation(newRes);
 
             } else
-                return new ResponseEntity<>("{message:'Period je rezervisan'}",HttpStatus.FORBIDDEN);
+                return new ResponseEntity<>("Period je rezervisan",HttpStatus.FORBIDDEN);
         }
         catch ( OptimisticEntityLockException e){
-            return  new ResponseEntity<>("{message:'izgleda da je neko vec rezervisao... :('}",HttpStatus.FORBIDDEN);
+            return  new ResponseEntity<>("Izgleda da je neko vec rezervisao... :(",HttpStatus.FORBIDDEN);
         }
         return new ResponseEntity<>(HttpStatus.OK);
     }

@@ -21,7 +21,8 @@ public class ActionService {
 	@Autowired
 	private ReservationRepository reservationRepository;
 	
-	@Autowired AdventureRepository adventureRepository;
+	@Autowired
+	private AdventureRepository adventureRepository;
 
 	public boolean addAction(ActionDTO actionDTO) {
 		if (checkDate(actionDTO)) {

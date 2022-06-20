@@ -27,6 +27,12 @@ public class Grade {
 	@OneToOne(mappedBy = "grade")
     private Reservation reservation;
 
+	public Grade(){}
+
+	public Grade(float grade) {
+		this.grade = grade;
+	}
+
 	public Integer getId() {
 		return id;
 	}

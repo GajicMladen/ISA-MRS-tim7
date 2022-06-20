@@ -81,6 +81,10 @@ export class ReservationAddNewWithClientComponent implements OnInit {
       newReservation.clientId = this.clientId;
       newReservation.offerId = this.offerId;
       newReservation.reservationStatus = ReservationStatus.ACTIVE;
+      if(this.fromDate == undefined || this.toDate == undefined){
+        this.messageService.showMessage("Odaberite datume!",MessageType.ERROR);
+        return;
+      }
       newReservation.startDate = this.formatKum(this.fromDate);
       newReservation.endDate = this.formatKum(this.toDate);
       let offerType = "";
@@ -97,6 +101,9 @@ export class ReservationAddNewWithClientComponent implements OnInit {
         this.messageService.showMessage(
           "Uspešno dodata rezervacija.",MessageType.SUCCESS
         );
+      },(error:any )=>{
+        console.log(error);
+        this.messageService.showMessage(error.error,MessageType.ERROR);
       });
        
   } 

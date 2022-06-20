@@ -51,7 +51,7 @@ public class Boat extends Offer {
 		this.motorPower = boatDTO.getPowerOfEngines();
 		this.motorsCount = boatDTO.getNumOfMotors();
 	}
-	public Boat(Integer id, String naziv, String promoOpis, List<String> slike, List<String> pravilaPonasanja, float cena,
+	public Boat(Integer id, String naziv, String promoOpis, float cena,
 				int kapacitet) {
 		super(id, naziv, promoOpis, cena, kapacitet);
 	}

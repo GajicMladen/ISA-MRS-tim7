@@ -67,6 +67,8 @@ public class BoatController {
 
     @PutMapping(value = "/updateBoat",consumes = MediaType.APPLICATION_JSON_VALUE)
     public void updateBoat(@RequestBody BoatDTO boat){
-        boatService.editBoat(boat);
+
+        Boat boat1 = boatService.getBoat(boat.getId()).get();
+        boatService.editBoat(boat1,boat.getId(),boat.getName(),boat.getDescription(),boat.getPrice(),boat.getCapacity());
     }
 }

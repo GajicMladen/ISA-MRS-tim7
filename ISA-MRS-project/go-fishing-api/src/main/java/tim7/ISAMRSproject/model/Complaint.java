@@ -46,6 +46,10 @@ public class Complaint {
     private boolean punishOffender;
     public Complaint(){}
 
+    public Complaint(String text) {
+        this.text = text;
+    }
+
     public Complaint(ComplaintDTO complaintDTO){
 
         this.id = complaintDTO.getId();

@@ -31,27 +31,6 @@ export class ReservationListView implements OnInit {
     });
   }
 
-
-  createDeletionForm(): FormGroup {
-    return new FormGroup({
-      reservationReport: new FormControl({ value: '' }, Validators.required),
-    });
-  }
-
-  deletionForm: FormGroup = this.createDeletionForm();
-
-  sendReservationReport(reservationId:number,clientId:number){
-      this.dialog.open(ReservationEndReportComponent,{
-        data: [reservationId,clientId]
-      })
-  }
-
-  addNewReservation(offerId:number,clientId:number){
-    this.dialog.open(ReservationAddNewWithClientComponent,{
-      data:[offerId,clientId,this.ownerType]
-    })
-  }
-
   getClientName(clientId:number,resId:number){
      this.userService.findById(clientId).subscribe(
       data=>{
