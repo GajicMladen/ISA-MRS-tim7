@@ -356,16 +356,17 @@ INSERT INTO public.free_period (
 
 --REVIEWS
 INSERT INTO public.grade (grade, revision, status) VALUES (3, 'Nije lose kakvih ima. Moze bolje.', 0);
-INSERT INTO public.grade (grade, revision, status) VALUES (3.5, 'Uozbiljite se', 0);
+INSERT INTO public.grade (grade, revision, status) VALUES (3.5, 'Uozbiljite se', 1);
 INSERT INTO public.grade (grade, revision, status) VALUES (1, 'Jako lose iskustvo sam imao sa ovim covekom', 0);
 INSERT INTO public.grade (grade, revision, status) VALUES (4.5, 'Sve pohvale gazda! Samo sabijaj!', 0);
 INSERT INTO public.grade (grade, revision, status) VALUES (5, 'Sve je bilo top! Najjaci provod!', 1);
 INSERT INTO public.grade (grade, revision, status) VALUES (4, 'Nije za mene ali treba probati!', 1);
 INSERT INTO public.grade (grade, revision, status) VALUES (4.5, 'Ja sam se lepo provela.', 1);
-	
+INSERT INTO public.grade (grade, revision, status) VALUES (4.5, 'Ide gas.', 1);
+
 --REZERVACIJE
 INSERT INTO public.reservation(end_date_time, start_date_time, status, total_price, client_id, grade, offer_id)
-	VALUES ('2022-05-31T00:00:01', '2022-05-30T00:00:01', 4, 365.36, 1, 1, 1);
+	VALUES ('2022-05-31T00:00:01', '2022-05-30T00:00:01', 0, 365.36, 1, 8, 1);
 
 INSERT INTO public.reservation(end_date_time, start_date_time, status, total_price, client_id, grade, offer_id)
     	VALUES ('2022-05-25T00:00:01', '2022-05-24T00:00:01', 0, 120.5, 1, 2, 1);

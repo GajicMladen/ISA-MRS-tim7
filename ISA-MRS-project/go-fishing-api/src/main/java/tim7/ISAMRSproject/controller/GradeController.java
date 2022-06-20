@@ -7,6 +7,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -56,6 +57,8 @@ public class GradeController {
 	}
 	
 	@PostMapping(value = "/refuse")
+	@PreAuthorize("hasRole('ROLE_ADMIN')"+
+			"|| hasRole('ROLE_SYSADMIN')")
 	public ResponseEntity<Void> refuseReview(@RequestBody int id) {
 		Optional<Grade> grade = this.gradeService.getGradeById(id);
 		if (grade.isPresent()) {
@@ -67,6 +70,8 @@ public class GradeController {
 	}
 	
 	@PostMapping(value = "/accept")
+	@PreAuthorize("hasRole('ROLE_ADMIN')"+
+			"|| hasRole('ROLE_SYSADMIN')")
 	public ResponseEntity<Void> acceptReview(@RequestBody int id) {
 		Optional<Grade> grade = this.gradeService.getGradeById(id);
 		if (grade.isPresent()) {

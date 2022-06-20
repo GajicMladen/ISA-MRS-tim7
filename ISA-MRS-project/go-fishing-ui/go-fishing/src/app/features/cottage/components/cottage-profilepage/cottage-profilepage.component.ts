@@ -6,6 +6,7 @@ import { UserprofileService } from 'src/app/features/homepage/components/userpro
 import { ActionService } from 'src/app/shared/services/action-service/action.service';
 
 import { ClientService } from 'src/app/shared/services/client-service/client.service';
+import { GradeService } from 'src/app/shared/services/grade-service/grade-service.service';
 
 import {
   MessageService,
@@ -14,6 +15,7 @@ import {
 import { UserService } from 'src/app/shared/services/users-services/user.service';
 
 import { Cottage } from 'src/models/cottage';
+import { Grade } from 'src/models/grade';
 import { ActionDTO } from 'src/models/reservation';
 import { CottageService } from '../../services/cottage.service';
 import { CottageActionConfirmDialogComponent } from '../cottage-action-confirm-dialog/cottage-action-confirm-dialog.component';
@@ -39,6 +41,7 @@ export class CottageProfilepageComponent implements OnInit {
   clientLoggedIn: boolean;
 
   extraFavors: string[];
+  grades:Grade[];
 
   canReserve: boolean = true;
   constructor(
@@ -50,7 +53,8 @@ export class CottageProfilepageComponent implements OnInit {
     private messageService: MessageService,
     private clientService: ClientService,
     private userService: UserService,
-    private profileService: UserprofileService
+    private profileService: UserprofileService,
+    private gradeService:GradeService
   ) {}
 
   ngOnInit(): void {
@@ -88,6 +92,13 @@ export class CottageProfilepageComponent implements OnInit {
         .subscribe((res: any) => {
           this.hasFreePeriods = res.length > 0;
         });
+
+      this.gradeService.getReviewsForOffer(this.cottageId).subscribe(
+        res =>{
+          console.log(res);
+          this.grades = res;
+        }
+      )
     }
   }
 

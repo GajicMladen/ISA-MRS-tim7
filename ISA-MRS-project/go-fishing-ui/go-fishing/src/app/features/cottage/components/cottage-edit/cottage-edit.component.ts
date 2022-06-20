@@ -42,6 +42,11 @@ export class CottageEditComponent implements OnInit {
   }
 
   editCottage() {
+
+    if(this.price < 10 ){
+            this.messageService.showMessage("Unesite neku normalnu cenu",MessageType.ERROR);
+    }
+
     this.newCottage.name = this.name;
     this.newCottage.price = this.price;
     this.newCottage.capacity = this.capacity;

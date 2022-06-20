@@ -9,10 +9,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import tim7.ISAMRSproject.dto.FreePeriodDTO;
 import tim7.ISAMRSproject.model.*;
-import tim7.ISAMRSproject.service.BoatService;
-import tim7.ISAMRSproject.service.CottageService;
-import tim7.ISAMRSproject.service.FreePeriodService;
-import tim7.ISAMRSproject.service.UserService;
+import tim7.ISAMRSproject.service.*;
 
 import java.security.Principal;
 import java.time.LocalDateTime;
@@ -33,6 +30,12 @@ public class FreePeriodController {
     private CottageService cottageService;
     @Autowired
     private BoatService boatService;
+
+    @Autowired
+    private AdventureService adventureService;
+
+    @Autowired
+    private ReservationServiceOwner reservationServiceOwner;
 
     @GetMapping(value = "/getFreePeriods/{id}")
     public List<FreePeriodDTO> getFreePeriods(@PathVariable int id){
@@ -91,7 +94,15 @@ public class FreePeriodController {
     }
     
     @PostMapping(value = "/addPeriodAdventure",consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasRole('ROLE_INSTRUCTOR')")
     public ResponseEntity<?> addFreePeriodAdventure(@RequestBody FreePeriodDTO freePeriodDTO){
+
+        int instructorId = adventureService.getFishingInstructorByOfferId(freePeriodDTO.getOfferId());
+        for (Offer offer: adventureService.getAdventuresByInstructorId(instructorId) ) {
+            if(reservationServiceOwner.isPeriodReserved(offer,freePeriodDTO.getStartDate(),freePeriodDTO.getEndDate()))
+                return new ResponseEntity<>("Period je vec rezervisan.",HttpStatus.FORBIDDEN);
+        }
+
         boolean correct = freePeriodService.addFreePeriodAdventure(freePeriodDTO);
         if (correct) {
         	return ResponseEntity.status(HttpStatus.ACCEPTED).body(correct);

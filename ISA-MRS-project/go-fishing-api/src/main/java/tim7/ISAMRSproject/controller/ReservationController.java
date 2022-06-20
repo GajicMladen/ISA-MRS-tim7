@@ -137,6 +137,9 @@ public class ReservationController {
     }
 
     @DeleteMapping(value = "/delete/{id}")
+    @PreAuthorize("hasRole('ROLE_COTTAGE_OWNER')"+
+            "|| hasRole('ROLE_BOAT_OWNER')"+
+            "|| hasRole('ROLE_INSTRUCTOR')")
     public void deleteFreePeriod(@PathVariable int id){
         reservationService.deleteAction(id);
     }
@@ -345,6 +348,10 @@ public class ReservationController {
     }  
     
     @PostMapping(value = "/newReservation")
+    @PreAuthorize("hasRole('ROLE_COTTAGE_OWNER')"+
+            "|| hasRole('ROLE_BOAT_OWNER')"+
+            "|| hasRole('ROLE_INSTRUCTOR')" +
+            "|| hasRole('ROLE_USER')")
     public ResponseEntity<?> addNewReservation(@RequestBody DateRangeStringDTO dateRangeDTO, Principal user){
     	User u = userService.findByEmail(user.getName());
     	int points = loyaltyService.getPointsForUser(u);
@@ -533,6 +540,7 @@ public class ReservationController {
                         return new ResponseEntity<>(HttpStatus.FORBIDDEN);
                 }
                 reservationServiceOwner.saveReservation(newRes);
+                emailService.sendReservationConfirmationMail(client,newRes, offer.getName());
 
             } else
                 return new ResponseEntity<>("Period je rezervisan",HttpStatus.FORBIDDEN);

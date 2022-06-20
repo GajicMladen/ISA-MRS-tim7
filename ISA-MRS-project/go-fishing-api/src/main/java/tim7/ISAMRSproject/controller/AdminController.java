@@ -8,6 +8,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -82,6 +83,8 @@ public class AdminController {
 	}
 	
 	@PostMapping(value = "/setPassword/{id}")
+	@PreAuthorize("hasRole('ROLE_ADMIN')"+
+			"|| hasRole('ROLE_SYSADMIN')")
 	public ResponseEntity<Void> setAdminPassword(@PathVariable int id, @RequestBody String password) {
 		Optional<User> admin = this.userService.findById(id);
 		if (admin.isPresent()) {
@@ -95,12 +98,15 @@ public class AdminController {
 	}
 	
 	@PutMapping(value = "/update")
+	@PreAuthorize("hasRole('ROLE_ADMIN')"+
+			"|| hasRole('ROLE_SYSADMIN')")
 	public ResponseEntity<Void> updateAdminData(@RequestBody UserDTO i) {
 		this.adminService.updateAdminData(i);
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 	
 	@PostMapping(value = "/add")
+	@PreAuthorize("hasRole('ROLE_SYSADMIN')")
 	public ResponseEntity<?> addAdmin(@RequestBody UserRegisterDTO userRegisterDTO) {
 		User existingUser = userService.findByEmail(userRegisterDTO.getEmail());	
 		if (existingUser != null) {
@@ -114,6 +120,8 @@ public class AdminController {
 	}
 	
 	@GetMapping(value = "/deletionRequests")
+	@PreAuthorize("hasRole('ROLE_ADMIN')"+
+			"|| hasRole('ROLE_SYSADMIN')")
 	public ResponseEntity<?> getDeletionRequests() {
 		List<User> users = userService.findAll();
 		List<DeletionRequestOutDTO> deletionRequests = new ArrayList<DeletionRequestOutDTO>();
@@ -131,6 +139,8 @@ public class AdminController {
 	}
 	
 	@GetMapping(value = "/registrationRequests")
+	@PreAuthorize("hasRole('ROLE_ADMIN')"+
+			"|| hasRole('ROLE_SYSADMIN')")
 	public ResponseEntity<?> getRegistrationRequests() {
 		List<User> users = userService.findAll();
 		List<RegistrationRequestOutDTO> registrationRequests = new ArrayList<RegistrationRequestOutDTO>();
@@ -148,6 +158,8 @@ public class AdminController {
 	}
 	
 	@PostMapping(value = "/deleteUser/{id}")
+	@PreAuthorize("hasRole('ROLE_ADMIN')"+
+			"|| hasRole('ROLE_SYSADMIN')")
 	public ResponseEntity<Void> deleteUser(@PathVariable int id) {
 		Optional<User> user = this.userService.findById(id);
 		if (user.isPresent()) {
@@ -161,6 +173,8 @@ public class AdminController {
 	}
 	
 	@PostMapping(value = "/refuseDeletion/{id}")
+	@PreAuthorize("hasRole('ROLE_ADMIN')"+
+			"|| hasRole('ROLE_SYSADMIN')")
 	public ResponseEntity<Void> refuseDeletion(@PathVariable int id, @RequestBody String adminReason) {
 		Optional<User> user = this.userService.findById(id);
 		if (user.isPresent()) {
@@ -173,6 +187,8 @@ public class AdminController {
 	}
 	
 	@PostMapping(value = "/registerUser/{id}")
+	@PreAuthorize("hasRole('ROLE_ADMIN')"+
+			"|| hasRole('ROLE_SYSADMIN')")
 	public ResponseEntity<Void> registerUser(@PathVariable int id) {
 		Optional<User> user = this.userService.findById(id);
 		if (user.isPresent()) {
@@ -185,7 +201,9 @@ public class AdminController {
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 	
-	@PostMapping(value = "/refuseRegistration/{id}") 
+	@PostMapping(value = "/refuseRegistration/{id}")
+	@PreAuthorize("hasRole('ROLE_ADMIN')"+
+			"|| hasRole('ROLE_SYSADMIN')")
 	public ResponseEntity<Void> refuseRegistration(@PathVariable int id, @RequestBody String reason) {
 		Optional<User> user = this.userService.findById(id);
 		if (user.isPresent()) {
@@ -273,6 +291,8 @@ public class AdminController {
 	}
 	
 	@DeleteMapping(value = "/deleteUser/{id}")
+	@PreAuthorize("hasRole('ROLE_ADMIN')"+
+			"|| hasRole('ROLE_SYSADMIN')")
 	public ResponseEntity<Void> deleteUserById(@PathVariable int id) {
 		Optional<User> user = this.userService.findById(id);
 		if (user.isPresent()) {
@@ -284,18 +304,24 @@ public class AdminController {
 	}
 	
 	@DeleteMapping(value = "/deleteCottage/{id}")
+	@PreAuthorize("hasRole('ROLE_ADMIN')"+
+			"|| hasRole('ROLE_SYSADMIN')")
 	public ResponseEntity<Void> deleteCottageById(@PathVariable int id) {
 		this.cottageService.deleteCottage(id);
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 	
 	@DeleteMapping(value = "/deleteBoat/{id}")
+	@PreAuthorize("hasRole('ROLE_ADMIN')"+
+			"|| hasRole('ROLE_SYSADMIN')")
 	public ResponseEntity<Void> deleteBoatById(@PathVariable int id) {
 		this.boatService.deleteBoat(id);
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/getEarningPercentage")
+	@PreAuthorize("hasRole('ROLE_ADMIN')"+
+			"|| hasRole('ROLE_SYSADMIN')")
 	public ResponseEntity<?> getEarningsPercentage() {
 		EarningsPercentage ep = this.earningsPercentageService.getLastEntry();
 		if (ep != null) {
@@ -307,6 +333,8 @@ public class AdminController {
 	}
 	
 	@PostMapping(value = "/setEarningPercentage")
+	@PreAuthorize("hasRole('ROLE_ADMIN')"+
+			"|| hasRole('ROLE_SYSADMIN')")
 	public ResponseEntity<?> setEarningsPercentage(@RequestBody int percentage) {
 		this.earningsPercentageService.save(percentage);
 		return new ResponseEntity<>(new EarningsPercentageDTO(this.earningsPercentageService.getLastEntry()), HttpStatus.OK);

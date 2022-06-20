@@ -50,6 +50,7 @@ public class FreePeriodService {
         LocalDateTime endDate = freePeriodDTO.getEndDate();
         Optional<Adventure> adventure = adventureRepository.findById(freePeriodDTO.getOfferId());
         if (adventure.isPresent()) {
+
         	freePeriodRepository.save(new FreePeriod(startDate, endDate, adventure.get()));
         	return true;
         }

@@ -82,8 +82,11 @@ export class StartpageLoginComponent implements OnInit {
     else if (this.loginService.getRole() == 'ROLE_BOAT_OWNER')
       this.router.navigateByUrl('boatOwner/' + this.loginService.getId());
     else if (this.loginService.getRole() == 'ROLE_INSTRUCTOR')
-      this.router.navigateByUrl(
-        'instructorProfile/' + this.loginService.getId()
-      );
+      this.router.navigateByUrl('instructorProfile/' + this.loginService.getId());
+    else if (this.loginService.getRole() == 'ROLE_ADMIN')
+      this.router.navigateByUrl('adminProfile/' + this.loginService.getId());
+    else if (this.loginService.getRole() == 'ROLE_SYSADMIN')
+      this.router.navigateByUrl('adminProfile/' + this.loginService.getId());
+    
   }
 }

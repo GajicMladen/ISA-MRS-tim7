@@ -99,6 +99,9 @@ export class AdventureFreePeriodComponent implements OnInit {
       this.freePeriodService.addFreePeriodAdventure(freePeriod).subscribe(response =>{
         console.log(response);
         this.messageService.showMessage('Novi slobodan termin je uspešno dodat!', MessageType.SUCCESS);
+      },
+      error=>{
+        this.messageService.showMessage(error.error,MessageType.ERROR);
       });
     } else {
       this.messageService.showMessage('Unesite ispravne datume!', MessageType.WARNING);
