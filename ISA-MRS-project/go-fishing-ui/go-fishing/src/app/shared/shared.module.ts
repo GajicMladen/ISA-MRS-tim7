@@ -24,6 +24,7 @@ import { ReservationsOwnerpageComponent } from './components/reservations/reserv
 import { ReservationEndReportComponent } from './components/reservations/reservation-end-report/reservation-end-report.component';
 import { ReservationAddNewWithClientComponent } from './components/reservations/reservation-add-new-with-clent/reservation-add-new-with-client.component';
 import { NoEntitiesFoundComponent } from './components/no-entities-found/no-entities-found.component';
+import { ReservationCardComponent } from './components/reservations/reservation-card/reservation-card.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import { NoEntitiesFoundComponent } from './components/no-entities-found/no-enti
     ReservationEndReportComponent,
     ReservationAddNewWithClientComponent,
     NoEntitiesFoundComponent,
+    ReservationCardComponent,
   ],
   imports: [
     CommonModule,

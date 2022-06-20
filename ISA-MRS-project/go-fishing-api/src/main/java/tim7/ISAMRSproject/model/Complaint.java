@@ -50,6 +50,10 @@ public class Complaint {
     @Column(name = "version", columnDefinition = "integer DEFAULT 0", nullable = false)
 	private Integer version;
 
+    public Complaint(String text) {
+        this.text = text;
+    }
+
     public Complaint(ComplaintDTO complaintDTO){
 
         this.id = complaintDTO.getId();

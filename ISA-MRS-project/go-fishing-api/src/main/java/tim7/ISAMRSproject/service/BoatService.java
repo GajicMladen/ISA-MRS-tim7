@@ -143,8 +143,12 @@ public class BoatService {
 
       Boat boat = new Boat(boatDTO);
       boat.setBoatOwner((BoatOwner) user);
-      return boatRepository.save(boat);
+      return saveBoat(boat);
 
+  }
+
+  public Boat saveBoat(Boat boat){
+		return boatRepository.save(boat);
   }
 
   public boolean deleteBoat(Integer id){
@@ -158,10 +162,16 @@ public class BoatService {
       }
   }
 
-  public void editBoat(BoatDTO boatDTO){
-      boatRepository.updateBoat(boatDTO.getId(), boatDTO.getName(),
-              boatDTO.getDescription(), boatDTO.getPrice(),boatDTO.getCapacity());
-  }
+
+	public void editBoat(Boat boat,Integer id,String name,String description,float price,int capacity){
+
+		boat.setChanging(!boat.isChanging());
+		boatRepository.save(boat);
+
+		boatRepository.updateBoat(id, name,
+				description,price,capacity);
+	}
+
   
   public List<Boat> getBoatsPreview(){
 	  return boatRepository.findAll(PageRequest.of(0, 5)).getContent();

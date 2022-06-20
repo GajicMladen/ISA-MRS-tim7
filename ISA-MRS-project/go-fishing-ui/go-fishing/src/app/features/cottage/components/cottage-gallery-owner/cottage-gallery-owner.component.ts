@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { MessageService, MessageType } from 'src/app/shared/services/message-service/message.service';
 import { Cottage } from 'src/models/cottage';
 import { CottageService } from '../../services/cottage.service';
 
@@ -14,7 +15,7 @@ export class CottageGalleryOwnerComponent implements OnInit {
 
   cottages:Cottage[];
 
-  constructor(private cottageService:CottageService,private router:Router) { }
+  constructor(private cottageService:CottageService,private router:Router,private messageService:MessageService) { }
 
   ngOnInit(): void {
     
@@ -32,13 +33,16 @@ export class CottageGalleryOwnerComponent implements OnInit {
       this.cottageService.deleteCottage(cottageId).subscribe(
         deleted =>{
           if(deleted){
-            alert("Izbrisali ste je!"); 
+            this.messageService.showMessage("Uspešno ste obrisali vikendicu",MessageType.SUCCESS);
           
             this.cottages.splice(this.cottages.findIndex(cottage => cottage.id === cottageId),1);
           }
           else
-            alert("Nismo uspeli da izbrisemo vikendicu.")
+            this.messageService.showMessage("Nismo uspeli da obrišemo vikendicu",MessageType.ERROR);
         
+        },
+        err=>{
+          this.messageService.showMessage("Niste u mogućnosti da obrišete vikendicu.",MessageType.ERROR);  
         }
       )
     }

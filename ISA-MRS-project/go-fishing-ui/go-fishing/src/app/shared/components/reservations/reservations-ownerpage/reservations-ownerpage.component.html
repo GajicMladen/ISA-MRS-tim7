@@ -5,7 +5,7 @@
     <mat-label *ngSwitchCase="'B'">Brodovi:</mat-label>
     <mat-label *ngSwitchCase="'A'">Avanture:</mat-label> 
 
-    <mat-select  [ngModel]="selectedOffer" *ngIf="offers != null && offers.length > 0" (ngModelChange)="onChange($event)">
+    <mat-select class="select" [ngModel]="selectedOffer" *ngIf="offers != null && offers.length > 0" (ngModelChange)="onChange($event)">
         
         <mat-option value="all" selected="selected">
             Sve
@@ -15,4 +15,4 @@
         </mat-option>
     </mat-select>
 </div>
-<app-reservations-list-view [reservations]="reservations" [ownerType]="ownerType"></app-reservations-list-view>
+<app-reservations-list-view [reservations]="reservations" [ownerType]="ownerType" (changed)="onChange($event)"></app-reservations-list-view>

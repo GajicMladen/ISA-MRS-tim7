@@ -48,6 +48,8 @@ public class ReservationService {
 	@Autowired
 	private EmailServiceImpl emailService;
 
+
+
 	public boolean AdventureHasReservations(Integer id) {
 		for (Reservation r : reservationRepository.findAll()) {
 			if (r.getOffer().getId() == id) {
@@ -58,34 +60,6 @@ public class ReservationService {
 		
 	}
 
-	public Reservation addNewAction(ActionDTO actionDTO){
-		Reservation newAction = new Reservation();
-		newAction.setEndDateTime(actionDTO.getEndDate());
-		newAction.setStartDateTime(actionDTO.getStartDate());
-		newAction.setTotalPrice(actionDTO.getTotalPrice());
-		newAction.setStatus(ReservationStatus.FOR_ACTION);
-		Optional<Cottage> cottage = cottageRepository.findById(actionDTO.getOfferId());
-		Optional<Boat> boat = boatRepository.findById(actionDTO.getOfferId());
-		Optional<Adventure> adventure = adventureRepository.findById(actionDTO.getOfferId());
-
-		if(cottage.isPresent()) {
-			newAction.setOffer(cottage.get());
-			return reservationRepository.save(newAction);
-
-		}
-		if(boat.isPresent()){
-			newAction.setOffer(boat.get());
-			return reservationRepository.save(newAction);
-
-		}
-		if(adventure.isPresent()){
-			newAction.setOffer(adventure.get());
-			return reservationRepository.save(newAction);
-		}
-
-		return null;
-
-	}
 
 	public Optional<Reservation> getReservationById(int id){
 		return reservationRepository.findById(id);
