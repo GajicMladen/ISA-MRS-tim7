@@ -30,18 +30,8 @@ import tim7.ISAMRSproject.dto.GradeDTO;
 import tim7.ISAMRSproject.dto.ReservationDTO;
 import tim7.ISAMRSproject.dto.ReservationListItemDTO;
 
+import tim7.ISAMRSproject.model.*;
 import tim7.ISAMRSproject.service.*;
-import tim7.ISAMRSproject.model.Adventure;
-import tim7.ISAMRSproject.model.ApprovalStatus;
-import tim7.ISAMRSproject.model.Boat;
-import tim7.ISAMRSproject.model.Client;
-import tim7.ISAMRSproject.model.Complaint;
-import tim7.ISAMRSproject.model.Cottage;
-import tim7.ISAMRSproject.model.FreePeriod;
-import tim7.ISAMRSproject.model.Grade;
-import tim7.ISAMRSproject.model.Reservation;
-import tim7.ISAMRSproject.model.ReservationStatus;
-import tim7.ISAMRSproject.model.User;
 import tim7.ISAMRSproject.service.AdventureService;
 import tim7.ISAMRSproject.service.BoatService;
 import tim7.ISAMRSproject.service.ClientService;
@@ -358,10 +348,26 @@ public class ReservationController {
     public ResponseEntity<?> addNewReservation(@RequestBody DateRangeStringDTO dateRangeDTO, Principal user){
     	User u = userService.findByEmail(user.getName());
     	int points = loyaltyService.getPointsForUser(u);
-    	Reservation res = reservationService.createReservationFromData(dateRangeDTO.getStartDateString(), dateRangeDTO.getEndDateString(), dateRangeDTO.getOfferId(), dateRangeDTO.getTotalPrice(), dateRangeDTO.getOfferType(), u);
+
+        Offer offer;
+        switch (dateRangeDTO.getOfferType()){
+            case "cottage":
+                offer = cottageService.getCottageById(dateRangeDTO.getOfferId()).get();
+                break;
+            case "boat":
+                offer = boatService.getBoat(dateRangeDTO.getOfferId()).get();
+                break;
+            case "adventure":
+                offer = adventureService.findById(dateRangeDTO.getOfferId()).get();
+                break;
+            default:
+                return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+
+    	Reservation res = reservationService.createReservationFromData(dateRangeDTO.getStartDateString(), dateRangeDTO.getEndDateString(),offer, dateRangeDTO.getTotalPrice(), dateRangeDTO.getOfferType(), u);
     	reservationService.reserveFreePeriods(res);
     	try {
-    		boolean status = reservationService.saveReservation(res, u, points, dateRangeDTO.getOfferType());    		
+    		boolean status = reservationService.saveReservation(res, u, points);
     		if (status)
         		return ResponseEntity.status(HttpStatus.CREATED).body("{\"status\":\"Reservation created successfully!\"}");
 
