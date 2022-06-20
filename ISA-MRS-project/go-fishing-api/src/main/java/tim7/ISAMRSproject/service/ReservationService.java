@@ -48,6 +48,8 @@ public class ReservationService {
 	@Autowired
 	private EmailServiceImpl emailService;
 
+
+
 	public boolean AdventureHasReservations(Integer id) {
 		for (Reservation r : reservationRepository.findAll()) {
 			if (r.getOffer().getId() == id) {
@@ -58,34 +60,6 @@ public class ReservationService {
 		
 	}
 
-	public Reservation addNewAction(ActionDTO actionDTO){
-		Reservation newAction = new Reservation();
-		newAction.setEndDateTime(actionDTO.getEndDate());
-		newAction.setStartDateTime(actionDTO.getStartDate());
-		newAction.setTotalPrice(actionDTO.getTotalPrice());
-		newAction.setStatus(ReservationStatus.FOR_ACTION);
-		Optional<Cottage> cottage = cottageRepository.findById(actionDTO.getOfferId());
-		Optional<Boat> boat = boatRepository.findById(actionDTO.getOfferId());
-		Optional<Adventure> adventure = adventureRepository.findById(actionDTO.getOfferId());
-
-		if(cottage.isPresent()) {
-			newAction.setOffer(cottage.get());
-			return reservationRepository.save(newAction);
-
-		}
-		if(boat.isPresent()){
-			newAction.setOffer(boat.get());
-			return reservationRepository.save(newAction);
-
-		}
-		if(adventure.isPresent()){
-			newAction.setOffer(adventure.get());
-			return reservationRepository.save(newAction);
-		}
-
-		return null;
-
-	}
 
 	public Optional<Reservation> getReservationById(int id){
 		return reservationRepository.findById(id);
@@ -107,7 +81,6 @@ public class ReservationService {
 
 	public List<Reservation> getActionsForOffer(int offerId){
 		List<Reservation> ret = new ArrayList<>();
-
 		List<Reservation> allReservations =  reservationRepository.findByOffer_IdEquals(offerId);
 		for (Reservation reservation:allReservations) {
 			if(reservation.getStatus().equals(ReservationStatus.FOR_ACTION))
@@ -166,63 +139,66 @@ public class ReservationService {
 		return "Invalid Offer ID";
 	}
 
-	public String createNewReservation(String startDateString, String endDateString, int offerId, float totalPrice, String offerType, User user, int points) {
-
+	public Reservation createReservationFromData(String startDateString, String endDateString, Offer offer, float totalPrice, String offerType, User user) {
 		LocalDateTime startDate = convertDateString(startDateString);
 		LocalDateTime endDate = convertDateString(endDateString);
-		Offer offer;
 		Reservation res = new Reservation();
 		res.setStartDateTime(startDate);
 		res.setEndDateTime(endDate);
 		res.setTotalPrice(totalPrice);
+
+		offer.setChanging(true);
 		if (offerType.equals("cottage")){
-			offer = cottageRepository.getById(offerId);
-			offer.setChanging(true);
 			cottageRepository.save((Cottage) offer);
 			res.setOffer(offer);
 		}
 		else if (offerType.equals("boat")) {
-
-			offer = boatRepository.getById(offerId);
-			res.setOffer(boatRepository.getById(offerId));
+			boatRepository.save((Boat) offer);
+			res.setOffer(offer);
 		}else {
-			offer = adventureRepository.getById(offerId);
-			res.setOffer(adventureRepository.getById(offerId));
-
+			adventureRepository.save((Adventure) offer);
+			res.setOffer(offer);
 		}
 		res.setStatus(ReservationStatus.ACTIVE);
 		res.setClient(clientRepository.getById(user.getId()));
+		return res;
+	}
+	
+	public void reserveFreePeriods(Reservation res) {
+	
+		List<FreePeriod> fps = fpRepository.findByOffer_Id(res.getOffer().getId());
 		
-		List<FreePeriod> fps = fpRepository.findByOffer_Id(offerId);
-		
-
 		for (FreePeriod fp: fps) {
-			if(fp.getStartDateTime().isBefore(startDate) && fp.getEndDateTime().isAfter(endDate)) {
+			if(fp.getStartDateTime().isBefore(res.getStartDateTime()) && fp.getEndDateTime().isAfter(res.getEndDateTime())) {
 				FreePeriod before = new FreePeriod();
 				FreePeriod after = new FreePeriod();
 				
 				before.setOffer(fp.getOffer());
 				after.setOffer(fp.getOffer());
 				before.setStartDateTime(fp.getStartDateTime());
-				before.setEndDateTime(startDate.minusDays(1));
-				after.setStartDateTime(endDate);
+				before.setEndDateTime(res.getStartDateTime().minusDays(1));
+				after.setStartDateTime(res.getEndDateTime());
 				after.setEndDateTime(fp.getEndDateTime());
 				
 				fpRepository.deleteById(fp.getId());
 				fpRepository.save(before);
 				fpRepository.save(after);
-			} else if (fp.getStartDateTime().equals(startDate) && fp.getEndDateTime().equals(endDate)) {
+			} else if (fp.getStartDateTime().equals(res.getStartDateTime()) && fp.getEndDateTime().equals(res.getEndDateTime())) {
 				fpRepository.deleteById(fp.getId());
 			}
 		}
+
 		
+	}
+	
+	public boolean saveReservation(Reservation res, User user, int points) {
+
 		reservationRepository.save(res);
 
 		user.setLoyaltyPoints(user.getLoyaltyPoints() + points);
 		userRepository.save(user);
 		emailService.sendReservationConfirmationMail(user, res, res.getOffer().getName());
-		return "Your reservation is successful!";
-		
+		return true;
 	}
 	
 	public List<ReservationListItemDTO> getActiveReservations(User u) {

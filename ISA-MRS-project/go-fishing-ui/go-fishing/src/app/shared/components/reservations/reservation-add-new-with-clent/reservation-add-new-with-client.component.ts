@@ -81,6 +81,10 @@ export class ReservationAddNewWithClientComponent implements OnInit {
       newReservation.clientId = this.clientId;
       newReservation.offerId = this.offerId;
       newReservation.reservationStatus = ReservationStatus.ACTIVE;
+      if(this.fromDate == undefined || this.toDate == undefined){
+        this.messageService.showMessage("Odaberite datume!",MessageType.ERROR);
+        return;
+      }
       newReservation.startDate = this.formatKum(this.fromDate);
       newReservation.endDate = this.formatKum(this.toDate);
       let offerType = "";
@@ -92,11 +96,12 @@ export class ReservationAddNewWithClientComponent implements OnInit {
         offerType = "adventure"
 
       this.reservationService.addNewReservationWithClient(newReservation,offerType).subscribe(data =>{
-        console.log(data);
-        this.dialogRef.close();
+        this.dialogRef.close({newReservation});
         this.messageService.showMessage(
           "Uspešno dodata rezervacija.",MessageType.SUCCESS
         );
+      },(error:any )=>{
+        this.messageService.showMessage(error.error,MessageType.ERROR);
       });
        
   } 

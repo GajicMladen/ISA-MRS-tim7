@@ -21,6 +21,13 @@ export class BoatAddNewComponent implements OnInit {
   promoDescription : string;
   bedCount:number;
 
+  boatType: string;
+  length: number;
+  numOfEngines: number;
+  powerOfEngines: number;
+  maxSpeed: number;
+  reservationCancellationTerms?: string;
+
   extraFavorsString:String;
 
   constructor(private boatService:BoatService,
@@ -37,8 +44,14 @@ export class BoatAddNewComponent implements OnInit {
     this.newBoat.capacity = this.capacity;
     this.newBoat.description = this.promoDescription;
     this.newBoat.ownerId = this.ownerId;
-
+    this.newBoat.boatType = this.boatType;
+    this.newBoat.length = this.length;
+    this.newBoat.numOfMotors = this.numOfEngines;
+    this.newBoat.powerOfEngines = this.powerOfEngines;
+    this.newBoat.reservationCancellationTerms = this.reservationCancellationTerms;
     this.newBoat.extraFavors = this.extraFavorsString.split(/\r?\n/).join("|");
+    this.newBoat.maxSpeed = this.maxSpeed;
+
     
     this.boatService.addNewBoat(this.newBoat).subscribe(data =>{
       this.messageService.showMessage("Uspešno ste dodali novi brod.",MessageType.SUCCESS);

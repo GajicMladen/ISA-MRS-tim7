@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import tim7.ISAMRSproject.dto.ActionDTO;
-import tim7.ISAMRSproject.model.Action;
 import tim7.ISAMRSproject.model.Adventure;
 import tim7.ISAMRSproject.model.Reservation;
 import tim7.ISAMRSproject.model.ReservationStatus;
@@ -21,7 +20,8 @@ public class ActionService {
 	@Autowired
 	private ReservationRepository reservationRepository;
 	
-	@Autowired AdventureRepository adventureRepository;
+	@Autowired
+	private AdventureRepository adventureRepository;
 
 	public Reservation addAction(ActionDTO actionDTO) {
 		if (checkDate(actionDTO)) {

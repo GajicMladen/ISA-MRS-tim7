@@ -31,21 +31,11 @@ public class FreePeriodService {
         return freePeriodRepository.findByOffer_Id(id);
     }
 
-    public void addFreePeriod(FreePeriodDTO freePeriodDTO){
-
-        LocalDateTime startDate = freePeriodDTO.getStartDate();
-        LocalDateTime endDate = freePeriodDTO.getEndDate();
-
-        Optional<Cottage> cottage = cottageRepository.findById(freePeriodDTO.getOfferId());
-        Optional<Boat> boat = boatRepository.findById(freePeriodDTO.getOfferId());
-        //Optional<Instructor> instructor = instructorRepository.findById(freePeriodDTO.getOfferId());
+    public void addFreePeriod(LocalDateTime startDate,LocalDateTime endDate,Offer offer){
 
 
-        cottage.ifPresent(value -> freePeriodRepository.save(new FreePeriod(startDate, endDate, value)));
-        boat.ifPresent(value -> freePeriodRepository.save(new FreePeriod(startDate, endDate, value)));
-        /*
-        * elif( instuctor.isPresent()) ....
-        * */
+        freePeriodRepository.save(new FreePeriod(startDate,endDate,offer));
+
 
     }
 

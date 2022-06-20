@@ -23,7 +23,7 @@ export class UserprofileComponent implements OnInit {
   deletionForm: FormGroup = this.createDeletionForm();
 
   loyalty: any = { loyaltyPoints: 0, currentRank: '' };
-  penaltyCount: number = 0;
+  penaltyCount: number = -1;
   constructor(
     private profileService: UserprofileService,
     private messageService: MessageService,
@@ -32,18 +32,26 @@ export class UserprofileComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.getUserData().subscribe((res: any) => {
-      this.oldForm.patchValue(res);
-      this.form.patchValue(res);
-    });
+    this.getUserData().subscribe(
+      (res: any) => {
+        this.oldForm.patchValue(res);
+        this.form.patchValue(res);
+      },
+      (err: any) => {
+        console.log(err);
+        console.log('GRESKA');
+      }
+    );
 
     this.getLoyaltyPoints().subscribe((res: any) => {
       this.loyalty = res;
     });
 
-    this.getPenaltyCount().subscribe((res: any) => {
-      this.penaltyCount = res;
-    });
+    if (localStorage.getItem('user-role') === 'ROLE_USER') {
+      this.getPenaltyCount().subscribe((res: any) => {
+        this.penaltyCount = res;
+      });
+    }
   }
 
   createProfileForm(): FormGroup {

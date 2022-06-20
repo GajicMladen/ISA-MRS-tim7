@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,21 +30,8 @@ import tim7.ISAMRSproject.dto.GradeDTO;
 import tim7.ISAMRSproject.dto.ReservationDTO;
 import tim7.ISAMRSproject.dto.ReservationListItemDTO;
 
-
 import tim7.ISAMRSproject.model.*;
-
 import tim7.ISAMRSproject.service.*;
-import tim7.ISAMRSproject.model.Adventure;
-import tim7.ISAMRSproject.model.ApprovalStatus;
-import tim7.ISAMRSproject.model.Boat;
-import tim7.ISAMRSproject.model.Client;
-import tim7.ISAMRSproject.model.Complaint;
-import tim7.ISAMRSproject.model.Cottage;
-import tim7.ISAMRSproject.model.FreePeriod;
-import tim7.ISAMRSproject.model.Grade;
-import tim7.ISAMRSproject.model.Reservation;
-import tim7.ISAMRSproject.model.ReservationStatus;
-import tim7.ISAMRSproject.model.User;
 import tim7.ISAMRSproject.service.AdventureService;
 import tim7.ISAMRSproject.service.BoatService;
 import tim7.ISAMRSproject.service.ClientService;
@@ -85,24 +73,43 @@ public class ReservationController {
     @Autowired
     private UserService userService;
     
+
+    @Autowired
+    private ReservationServiceOwner reservationServiceOwner;
+    
     @Autowired
     private LoyaltyService loyaltyService;
     
     @PostMapping(value = "/addNewAction",consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void getAllCottages(@RequestBody ActionDTO actionDTO){
+    @PreAuthorize("hasRole('ROLE_COTTAGE_OWNER')"+
+            "|| hasRole('ROLE_BOAT_OWNER')"+
+            "|| hasRole('ROLE_INSTRUCTOR')")
+    public ResponseEntity<?> addNewAction(@RequestBody ActionDTO actionDTO,Principal user){
 
-        Reservation newAction = reservationService.addNewAction(actionDTO);
-        if(newAction != null){
-            List<Client> subscribers = clientService.getSubscribersForOffer(newAction.getOffer().getId());
-            for(Client client: subscribers ) {
-                try {
-                    emailService.sendActionEmail(client,newAction);
-                }
-                catch (Exception e){
-                    System.out.println("Exceprion on sending email to : "+client.getEmail());
+        try{
+            User u = userService.findByEmail(user.getName());
+            Reservation newAction = reservationServiceOwner.addNewAction(actionDTO,u);
+            if(newAction != null){
+                List<Client> subscribers = clientService.getSubscribersForOffer(newAction.getOffer().getId());
+                for(Client client: subscribers ) {
+                    try {
+                        emailService.sendActionEmail(client,newAction);
+                    }
+                    catch (Exception e){
+                        System.out.println("Exception on sending email to : "+client.getEmail());
+                    }
                 }
             }
+            else {
+             return new ResponseEntity<>("Niste u mogucnosti napraviti akciju!\n" +
+                     "Period je rezervisan ili već postoji akcija!\n" +
+                     "(ili niste vlasnik ovog entiteta)",HttpStatus.FORBIDDEN);
+            }
+        }catch (OptimisticEntityLockException e){
+            return  new ResponseEntity<>("Izgleda da je neko pokusao da rezervise...Probajte ponovo.",HttpStatus.FORBIDDEN);
+
         }
+        return  new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping(value = "/getActions/{id}")
@@ -182,6 +189,7 @@ public class ReservationController {
     }
 
     @GetMapping(value = "/getProfitChartDataForCottageOwner/{id}")
+    @PreAuthorize("hasRole('ROLE_COTTAGE_OWNER')")
     public List<DataForChartDTO> getDataForChartCottageOwner(@PathVariable int id){
         List<DataForChartDTO> retVal = new ArrayList<>();
 
@@ -203,6 +211,7 @@ public class ReservationController {
     }
 
     @GetMapping(value = "/getVisitChartDataForCottageOwner/{id}")
+    @PreAuthorize("hasRole('ROLE_COTTAGE_OWNER')")
     public List<DataForChartDTO> getVisitDataForChartCottageOwner(@PathVariable int id){
         List<DataForChartDTO> retVal = new ArrayList<>();
 
@@ -222,6 +231,7 @@ public class ReservationController {
     }
 
     @GetMapping(value = "/getGradeChartDataForCottageOwner/{id}")
+    @PreAuthorize("hasRole('ROLE_COTTAGE_OWNER')")
     public List<DataForChartDTO> getGradeDataForChartCottageOwner(@PathVariable int id){
         List<DataForChartDTO> retVal = new ArrayList<>();
 
@@ -252,6 +262,7 @@ public class ReservationController {
 
 
     @GetMapping(value = "/getProfitChartDataForBoatOwner/{id}")
+    @PreAuthorize("hasRole('ROLE_BOAT_OWNER')")
     public List<DataForChartDTO> getDataForChartBoatOwner(@PathVariable int id){
         List<DataForChartDTO> retVal = new ArrayList<>();
 
@@ -271,7 +282,9 @@ public class ReservationController {
         return retVal;
 
     }
+
     @GetMapping(value = "/getVisitChartDataForBoatOwner/{id}")
+    @PreAuthorize("hasRole('ROLE_BOAT_OWNER')")
     public List<DataForChartDTO> getVisitDataForChartBoatOwner(@PathVariable int id){
         List<DataForChartDTO> retVal = new ArrayList<>();
 
@@ -289,7 +302,9 @@ public class ReservationController {
         return retVal;
 
     }
+
     @GetMapping(value = "/getGradeChartDataForBoatOwner/{id}")
+    @PreAuthorize("hasRole('ROLE_BOAT_OWNER')")
     public List<DataForChartDTO> getGradeDataForChartBoatOwner(@PathVariable int id){
         List<DataForChartDTO> retVal = new ArrayList<>();
 
@@ -298,13 +313,16 @@ public class ReservationController {
             DataForChartDTO newData = new DataForChartDTO();
             newData.setName(boat.getName());
             float value = 0;
+            int gradesCount = 0;
             List<Reservation> reservations =  reservationService.getReservationsForOffer(boat.getId());
             for (Reservation reservation: reservations) {
-                if(reservation.getGrade() != null)
+                if(reservation.getGrade() != null) {
                     value += reservation.getGrade().getGrade();
+                    gradesCount ++;
+                }
             }
-            if(reservations.size() > 0 )
-                value = value/reservations.size();
+            if(gradesCount> 0 )
+                value = value/gradesCount;
             else
                 value = 0;
             newData.setValue(value);
@@ -315,16 +333,7 @@ public class ReservationController {
 
     }
 
-    @PostMapping(value = "/addNewReservation")
-    public ResponseEntity<?> addNewReservation(@RequestBody ReservationDTO newReservation){
-    	
-        String msg = reservationService.addNewReservation(newReservation);
-        if(msg.equals("OK")){
-            return new ResponseEntity<>("DONE!",HttpStatus.OK);
-        }
-        return new ResponseEntity<>(msg,HttpStatus.BAD_REQUEST);   
-    }
-    
+
     @GetMapping(value = "/getFreePeriods/{cottageId}")
     public ResponseEntity<List<String>> getCottageFreePeriods(@PathVariable int cottageId){
     	List<String> retVal = new ArrayList<String>();
@@ -339,8 +348,34 @@ public class ReservationController {
     public ResponseEntity<?> addNewReservation(@RequestBody DateRangeStringDTO dateRangeDTO, Principal user){
     	User u = userService.findByEmail(user.getName());
     	int points = loyaltyService.getPointsForUser(u);
-    	String status = reservationService.createNewReservation(dateRangeDTO.getStartDateString(), dateRangeDTO.getEndDateString(), dateRangeDTO.getOfferId(), dateRangeDTO.getTotalPrice(), dateRangeDTO.getOfferType(), u, points);
-    	return ResponseEntity.status(HttpStatus.CREATED).body("{\"status\":\"" + status + "\"}");
+
+        Offer offer;
+        switch (dateRangeDTO.getOfferType()){
+            case "cottage":
+                offer = cottageService.getCottageById(dateRangeDTO.getOfferId()).get();
+                break;
+            case "boat":
+                offer = boatService.getBoat(dateRangeDTO.getOfferId()).get();
+                break;
+            case "adventure":
+                offer = adventureService.findById(dateRangeDTO.getOfferId()).get();
+                break;
+            default:
+                return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+
+    	Reservation res = reservationService.createReservationFromData(dateRangeDTO.getStartDateString(), dateRangeDTO.getEndDateString(),offer, dateRangeDTO.getTotalPrice(), dateRangeDTO.getOfferType(), u);
+    	reservationService.reserveFreePeriods(res);
+    	try {
+    		boolean status = reservationService.saveReservation(res, u, points);
+    		if (status)
+        		return ResponseEntity.status(HttpStatus.CREATED).body("{\"status\":\"Reservation created successfully!\"}");
+
+    	} catch (OptimisticEntityLockException e) {
+    		return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+    	}
+    	return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    	
     }
 
     
@@ -429,7 +464,7 @@ public class ReservationController {
     }
 
     @GetMapping(value = "/buyAction/{idAction}")
-    public ResponseEntity<?> buyActionS(Principal user,@PathVariable int idAction){
+    public ResponseEntity<?> buyAction(Principal user,@PathVariable int idAction){
         try {
             Client client = clientService.findByEmail(user.getName());
             Reservation reservation = reservationService.findById(idAction);
@@ -439,59 +474,75 @@ public class ReservationController {
                 return new ResponseEntity<>(HttpStatus.OK);
             }
             else
-                return new ResponseEntity<>("{message:'Nismo uspeli da rezervišemo akciju'}",HttpStatus.FORBIDDEN);
+                return new ResponseEntity<>("Nismo uspeli da rezervišemo akciju,pokusajte ponovo.",HttpStatus.FORBIDDEN);
         }
         catch (OptimisticEntityLockException e){
-            return new ResponseEntity<>("{message:'Izgleda da je akcija već rezervisana'}",HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>("Izgleda da je akcija već rezervisana",HttpStatus.FORBIDDEN);
         }
     }
 
-    @Autowired
-    private ReservationServiceOwner reservationServiceOwner;
-
     @PostMapping(value = "/newReservation/{clientId}")
+    @PreAuthorize("hasRole('ROLE_COTTAGE_OWNER')"+
+            "|| hasRole('ROLE_BOAT_OWNER')"+
+            "|| hasRole('ROLE_INSTRUCTOR')")
     public ResponseEntity<?> addTestReservation( @RequestBody DateRangeStringDTO dateRangeStringDTO,
                                                  @PathVariable int clientId,
                                                  Principal user) {
 
         try {
             User owner = userService.findByEmail(user.getName());
-            if(userService.isUserOnlyClient(owner))
-                return ResponseEntity.status(HttpStatus.FORBIDDEN).body("{\"message\":\""+"Morate biti ulogovani kao vlasnik!"+"\"}");
 
-            Cottage cottage = cottageService.getCottageById(1).get();
+            String type;
+            Offer offer;
+
+            Optional<Cottage> cottage = cottageService.getCottageById(dateRangeStringDTO.getOfferId());
+            Optional<Boat> boat = boatService.getBoat(dateRangeStringDTO.getOfferId());
+            Optional<Adventure> adventure = adventureService.findById(dateRangeStringDTO.getOfferId());
+
+            if(cottage.isPresent()){ type = "cottage"; offer = cottage.get();
+                if(cottage.get().getCottageOwnerId() != owner.getId())
+                    return new ResponseEntity<>("Niste vlasnik entiteta",HttpStatus.FORBIDDEN);
+            }
+            else if(boat.isPresent()) {type = "boat"; offer = boat.get();
+                if(boat.get().getBoatOwner().getId() != owner.getId())
+                    return new ResponseEntity<>("Niste vlasnik entiteta",HttpStatus.FORBIDDEN);
+            }
+            else if(adventure.isPresent()) {type = "adventure"; offer = adventure.get();
+                if(adventure.get().getInstructorId() != owner.getId())
+                    return new ResponseEntity<>("Niste vlasnik entiteta",HttpStatus.FORBIDDEN);
+            }
+            else return new ResponseEntity<>("Nepostojeci entitet!",HttpStatus.FORBIDDEN);
+
             Client client = clientService.findClientById(clientId);
             LocalDateTime startDate =convertDateString(dateRangeStringDTO.getStartDateString());
             LocalDateTime endDate =convertDateString(dateRangeStringDTO.getEndDateString());
 
-            if (! reservationServiceOwner.isPeriodReserved(cottage,startDate,endDate)) {
-                Reservation newRes = reservationServiceOwner.reserveCottage(cottage, client, startDate, endDate);
+            if (! reservationServiceOwner.isPeriodReserved(offer,startDate,endDate)) {
+                Reservation newRes;
+                switch (type){
+                    case "cottage":
+                        newRes = reservationServiceOwner.reserveCottage(cottage.get(), client, startDate, endDate);
+                        break;
+                    case "boat":
+                        newRes = reservationServiceOwner.reserveBoat(boat.get(),client,startDate,endDate);
+                        break;
+                    case "adventure":
+                        newRes = reservationServiceOwner.reserveAdventure(adventure.get(),client,startDate,endDate);
+                        break;
+                    default:
+                        return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+                }
                 reservationServiceOwner.saveReservation(newRes);
 
             } else
-                return new ResponseEntity<>("{message:'Period je rezervisan'}",HttpStatus.FORBIDDEN);
+                return new ResponseEntity<>("Period je rezervisan",HttpStatus.FORBIDDEN);
         }
         catch ( OptimisticEntityLockException e){
-            return  new ResponseEntity<>("{message:'izgleda da je neko vec rezervisao... :('}",HttpStatus.FORBIDDEN);
+            return  new ResponseEntity<>("Izgleda da je neko vec rezervisao... :(",HttpStatus.FORBIDDEN);
         }
         return new ResponseEntity<>(HttpStatus.OK);
     }
-    /*
-    @PostMapping(value = "/newReservation/{clientId}")
-    public ResponseEntity<?> addNewReservationFromOwner(@RequestBody DateRangeStringDTO dateRangeDTO,
-                                                        @PathVariable int clientId,
-                                                        Principal user){
-        User owner = userService.findByEmail(user.getName());
-        if(userService.isUserOnlyClient(owner))
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("{\"message\":\""+"Morate biti ulogovani kao vlasnik!"+"\"}");
-        Optional<Client> u = clientService.getClientById(clientId);
-        if(!u.isPresent())
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("{\"message\":\""+"Klijent ID nije validan!"+"\"}");
-        String status = reservationServiceOwner.createNewReservationDji(dateRangeDTO.getStartDateString(),
-                dateRangeDTO.getEndDateString(), dateRangeDTO.getOfferId(), dateRangeDTO.getOfferType(), u.get());
-        return ResponseEntity.status(HttpStatus.CREATED).body("{\"status\":\"" + status + "\"}");
-    }
-*/
+
     private LocalDateTime convertDateString(String s) {
         String[] tokens = s.split("-");
         LocalDateTime retVal = LocalDateTime.of(Integer.parseInt(tokens[2]), Integer.parseInt(tokens[1]), Integer.parseInt(tokens[0]), 0, 0);

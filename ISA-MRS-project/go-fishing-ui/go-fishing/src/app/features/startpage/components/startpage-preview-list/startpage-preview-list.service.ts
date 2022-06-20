@@ -8,8 +8,10 @@ import { ConfigService } from 'src/app/shared/services/config.service';
 export class StartpagePreviewListService {
   constructor(private http: HttpClient, private config: ConfigService) {}
 
+
   getBoatPreviewList(): any {
     return this.http.get(this.config.previewBoatListUrl);
+
   }
 
   getBoatPreviewListParam(param: string): any {

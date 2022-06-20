@@ -1,9 +1,6 @@
 package tim7.ISAMRSproject.dto;
 
-import tim7.ISAMRSproject.model.Role;
 import tim7.ISAMRSproject.model.User;
-
-import java.util.List;
 
 public class UserDTO {
 
@@ -21,6 +18,14 @@ public class UserDTO {
 
 	private String userRole;
 	
+	public String getUserRole() {
+		return userRole;
+	}
+
+	public void setUserRole(String userRole) {
+		this.userRole = userRole;
+	}
+
 	public UserDTO() {
 		
 	}

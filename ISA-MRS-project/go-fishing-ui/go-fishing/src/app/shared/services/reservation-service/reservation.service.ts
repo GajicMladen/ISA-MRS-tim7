@@ -22,7 +22,7 @@ export class ReservationService {
 
   public addNewReservationWithClient(
     reservation: ReservationSendDTO,offerType:string
-  ): Observable<string> {
+    ): Observable<string> {
     
     let startDateString = reservation.startDate;
     let endDateString = reservation.endDate;

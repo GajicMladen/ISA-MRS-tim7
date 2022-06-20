@@ -8,8 +8,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-import org.springframework.security.access.event.PublicInvocationEvent;
-
 @Entity
 public class EarningsPercentage {
 	

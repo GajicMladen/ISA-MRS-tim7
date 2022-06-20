@@ -53,7 +53,7 @@
             <!-- <img [src]='loyaltyBadge' alt="loyalty-badge"  class="loyalty-badge"> -->
             <h3>Current loyalty points: {{loyalty.loyaltyPoints}}</h3>
             <h3>Current loyalty rank: {{loyalty.currentRank}}</h3>
-            <h3>Current penalty count: <span style="color:red">{{penaltyCount}}</span></h3>
+            <h3 *ngIf="penaltyCount !== -1">Current penalty count: <span style="color:red">{{penaltyCount}}</span></h3>
             <h4 style="color:gray" *ngIf="penaltyCount >= 3">Your reservation privileges have been suspended!</h4>
         </mat-card-content>
         <mat-card-actions style="text-align: center;">

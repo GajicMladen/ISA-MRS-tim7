@@ -43,6 +43,12 @@ public class Client extends User {
 		super(id, email, password, name, lastName, phone);
 		
 	}
+	
+	public Client(User u) {
+		super(u);
+		this.suspended = false;
+		this.penalCount = 0;
+	}
 
 	public int getPenalCount() {
 		return penalCount;
