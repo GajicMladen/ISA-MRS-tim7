@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import javax.swing.RepaintManager;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,7 +17,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import tim7.ISAMRSproject.dto.AdminDTO;
@@ -29,7 +27,6 @@ import tim7.ISAMRSproject.dto.EarningsPercentageDTO;
 import tim7.ISAMRSproject.dto.RegistrationRequestOutDTO;
 import tim7.ISAMRSproject.dto.UserDTO;
 import tim7.ISAMRSproject.dto.UserRegisterDTO;
-import tim7.ISAMRSproject.model.Admin;
 import tim7.ISAMRSproject.model.Boat;
 import tim7.ISAMRSproject.model.Cottage;
 import tim7.ISAMRSproject.model.DeletionRequest.DeletionRequestStatus;

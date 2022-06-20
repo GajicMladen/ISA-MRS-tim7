@@ -1,6 +1,5 @@
 package tim7.ISAMRSproject.dto;
 
-import tim7.ISAMRSproject.model.User;
 
 public class InstructorDTO {
 	private Integer id;

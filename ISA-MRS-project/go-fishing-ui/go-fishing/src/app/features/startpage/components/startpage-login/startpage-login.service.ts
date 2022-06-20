@@ -43,6 +43,8 @@ export class StartpageLoginService {
           this.currentUser = res.user;
           localStorage.setItem('jwt', res.accessToken);
           localStorage.setItem('user-name', res.user.name);
+          localStorage.setItem('user-id', res.user.id);
+          localStorage.setItem('user-role', res.user.roleString);
         }),
         catchError(this.handleError)
       );
@@ -67,5 +69,23 @@ export class StartpageLoginService {
 
   public getToken(): string | null {
     return this.accessTokenStorage;
+  }
+
+  public getRole(): string | null {
+    return localStorage.getItem('user-role');
+  }
+
+  public setRole(val: string | null): void {
+    localStorage.removeItem('user-role');
+    localStorage.setItem('user-role', val!);
+  }
+
+  public getId(): string | null {
+    return localStorage.getItem('user-id');
+  }
+
+  public setId(val: string | null): void {
+    localStorage.removeItem('user-id');
+    localStorage.setItem('user-id', val!);
   }
 }

@@ -225,4 +225,8 @@ export class ConfigService {
   get previewAdventureListParamUrl(): string {
     return this._adventure_controller_url + '/getAdventuresPreviewParam/';
   }
+
+  get roleUrl(): string {
+    return this._user_controller_url + '/getUserRole';
+  }
 }

@@ -11,7 +11,6 @@ import tim7.ISAMRSproject.model.FreePeriod;
 import tim7.ISAMRSproject.service.FreePeriodService;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 @RestController
