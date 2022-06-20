@@ -23,13 +23,17 @@ import tim7.ISAMRSproject.dto.ChangePasswordDTO;
 import tim7.ISAMRSproject.dto.DeletionRequestDTO;
 import tim7.ISAMRSproject.dto.UserDTO;
 import tim7.ISAMRSproject.model.Adventure;
+import tim7.ISAMRSproject.model.Client;
 import tim7.ISAMRSproject.model.DeletionRequest;
-import tim7.ISAMRSproject.model.Reservation;
 import tim7.ISAMRSproject.model.DeletionRequest.DeletionRequestStatus;
+import tim7.ISAMRSproject.model.Reservation;
 import tim7.ISAMRSproject.model.User;
 import tim7.ISAMRSproject.service.ActionService;
 import tim7.ISAMRSproject.service.AdventureService;
+import tim7.ISAMRSproject.service.ClientService;
+import tim7.ISAMRSproject.service.ReservationService;
 import tim7.ISAMRSproject.service.UserService;
+import tim7.ISAMRSproject.utils.EmailServiceImpl;
 
 @RestController
 @RequestMapping(value = "adventure")
@@ -44,6 +48,15 @@ public class AdventureController {
 	
 	@Autowired
 	private ActionService actionService;
+	
+	@Autowired
+	private ClientService clientService;
+	
+	@Autowired
+	private EmailServiceImpl emailService;
+	
+	@Autowired
+	private ReservationService reservationService;
 	
 	@GetMapping(value = "/get/{id}")
 	public ResponseEntity<AdventureDTO> getAdventureById(@PathVariable Integer id){
@@ -62,7 +75,9 @@ public class AdventureController {
 		
 	
 		for (Adventure a : adventures) {
-			adventuresDTO.add(new AdventureDTO(a));
+			if (!a.isDeleted()) {
+				adventuresDTO.add(new AdventureDTO(a));
+			}
 		}
 		
 		return new ResponseEntity<>(adventuresDTO, HttpStatus.OK);
@@ -154,7 +169,9 @@ public class AdventureController {
 		
 	
 		for (Adventure a : adventures) {
-			adventuresId.add(a.getId());
+			if (!a.isDeleted()) {
+				adventuresId.add(a.getId());
+			}
 		}
 		
 		return new ResponseEntity<>(adventuresId, HttpStatus.OK);
@@ -162,7 +179,17 @@ public class AdventureController {
 	
 	@PostMapping(value = "/addAction")
 	public ResponseEntity<Void> addAction(@RequestBody ActionDTO actionDTO) {
-		if (this.actionService.addAction(actionDTO)) {
+		Reservation action = this.actionService.addAction(actionDTO);
+		if (action != null) {
+			List<Client> subscribers = clientService.getSubscribersForOffer(actionDTO.getOfferId());
+            for(Client client: subscribers ) {
+                try {
+                    emailService.sendActionEmail(client, action);
+                }
+                catch (Exception e){
+                    System.out.println("Exceprion on sending email to : "+client.getEmail());
+                }
+            }
 			return new ResponseEntity<Void>(HttpStatus.OK);
 		} 
 		else {
