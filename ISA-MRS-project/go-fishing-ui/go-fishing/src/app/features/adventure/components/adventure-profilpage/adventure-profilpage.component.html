@@ -99,9 +99,9 @@
                 </div>
                
                 <div class="buttons">
-                    <span [matTooltip]="reservationTooltipText" [matTooltipDisabled]="hasFreePeriods">
+                    <span [matTooltip]="reservationTooltipText" [matTooltipDisabled]="hasFreePeriods && canReserve">
                     <button class="btn btn-outline-warning btn-long cart mr-2" (click)="openReservationDialog()"
-                    [disabled]="!hasFreePeriods" *ngIf="clientLoggedIn">Rezerviši</button>
+                    [disabled]="!hasFreePeriods || !canReserve" *ngIf="clientLoggedIn">Rezerviši</button>
                     </span>
                     <button class="btn btn-warning btn-long buy" routerLink="/calendar/{{adventure.id}}"><i class="fa fa-calendar-check-o"></i> Proveri dostupnost </button> 
                     

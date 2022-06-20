@@ -170,6 +170,9 @@ export class ConfigService {
   get resubscribeUrl(): string {
     return this._client_controller_url + '/resubscribe';
   }
+  get penaltyCountUrl(): string {
+    return this._client_controller_url + '/penalties';
+  }
 
   /*
    *

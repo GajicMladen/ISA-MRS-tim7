@@ -23,6 +23,10 @@ export class UserprofileService {
     return this.http.get(this.configService.loyaltyPointsUrl);
   }
 
+  public getPenaltyCount() {
+    return this.http.get(this.configService.penaltyCountUrl);
+  }
+
   public validateNewUserData(data: any): string {
     if (data.name.length === 0) return 'Invalid name!';
     else if (data.lastName.length === 0) return 'Invalid surname!';
