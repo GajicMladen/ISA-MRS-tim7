@@ -42,10 +42,12 @@ public class ComplaintService {
 		return this.complaintRepository.findOnWait();
 	}
 	
+	@Transactional
 	public Optional<Complaint> getComplaintById(int id) {
 		return this.complaintRepository.findById(id);
 	}
 
+	@Transactional
 	public void save(Complaint complaint) {
 		this.complaintRepository.save(complaint);
 		

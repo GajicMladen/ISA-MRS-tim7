@@ -18,6 +18,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Version;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -81,6 +82,10 @@ public class User implements UserDetails {
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
     protected List<Role> roles;
+    
+    @Version
+	@Column(name = "version", columnDefinition = "integer DEFAULT 0", nullable = false)
+	private Integer version;
     
     public User() {
     	
@@ -230,14 +235,22 @@ public class User implements UserDetails {
         return roles;
      }
     
-    public void setRoles(List<Role> roles) {
-    	this.roles = roles;
-    }
+  public void setRoles(List<Role> roles) {
+    this.roles = roles;
+  }
+
+  public String getRoleString() {
+    return this.roles.get(0).getName();
+  }
     
-    public String getRoleString() {
-    	return this.roles.get(0).getName();
-    }
-    
+	public Integer getVersion() {
+		return version;
+	}
+
+	public void setVersion(Integer version) {
+		this.version = version;
+	}
+
 	@JsonIgnore
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {

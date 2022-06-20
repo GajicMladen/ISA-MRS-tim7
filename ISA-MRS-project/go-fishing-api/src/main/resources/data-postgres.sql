@@ -20,7 +20,11 @@ INSERT INTO public.address(city, country, street, latitude, longitude) VALUES
 INSERT INTO public.address(city, country, street, latitude, longitude) VALUES
 						('Ljubovija', 'Srbija', 'Karadjordjeva 10', '44.188249', '19.377129');
 INSERT INTO public.address(city, country, street, latitude, longitude) VALUES
-						('Ljubovija', 'Srbija', 'Karadjordjeva 1', '44.188249', '19.377129');
+						('Ljubovija', 'Srbija', 'Karadjordjeva 33', '44.188249', '19.377129');
+INSERT INTO public.address(city, country, street, latitude, longitude) VALUES
+						('Ljubovija', 'Srbija', 'Karadjordjeva 11', '44.188259', '19.387129');
+INSERT INTO public.address(city, country, street, latitude, longitude) VALUES
+						('Ljubovija', 'Srbija', 'Vojvode Misica 11', '44.100259', '19.387129');
 
 
             
@@ -51,6 +55,11 @@ INSERT INTO public.users(active, deleted, email, lastname, name, password, phone
                 (true, false, 'niko.nikic093+test2@gmail.com', 'Klijentovic2', 'Klijent2', '$2a$10$XeS1WZloSVVq2Z2dJd3L7ePADJy51sWu/oLqcy.Qcmppr6VcUtcr6', '+381659997778', 600, 1);
 INSERT INTO public.users(active, deleted, email, lastname, name, password, phone, loyalty_points, address_id) VALUES
 				(true, false, 'max.verstappen@gmail.com', 'Verstappen', 'Max', '$2a$10$XeS1WZloSVVq2Z2dJd3L7ePADJy51sWu/oLqcy.Qcmppr6VcUtcr6', '+381612345678', 0, 11);
+
+INSERT INTO public.users(active, deleted, email, lastname, name, password, phone, loyalty_points, address_id) VALUES
+				(true, false, 'sergio.perez@gmail.com', 'Perez', 'Sergio', '$2a$10$XeS1WZloSVVq2Z2dJd3L7ePADJy51sWu/oLqcy.Qcmppr6VcUtcr6', '+381688345678', 0, 12);
+INSERT INTO public.users(active, deleted, email, lastname, name, password, phone, loyalty_points, address_id) VALUES
+				(false, false, 'carlos.sainz@gmail.com', 'Sainz', 'Carlos', '$2a$10$XeS1WZloSVVq2Z2dJd3L7ePADJy51sWu/oLqcy.Qcmppr6VcUtcr6', '+381612345678', 0, 13);				
                 
 --KLIJENTI
 INSERT INTO public.client(penal_count, suspended, id) VALUES (0, FALSE, 9);
@@ -58,7 +67,6 @@ INSERT INTO public.client(penal_count, suspended, id) VALUES (0, FALSE, 10);
 INSERT INTO public.client(penal_count, suspended, id) VALUES (0, FALSE, 11);
 INSERT INTO public.client(penal_count, suspended, id) VALUES (0, FALSE, 12);
 INSERT INTO public.client(penal_count, suspended, id) VALUES (2, FALSE, 1);
-
 
 -- VLASNICI KOLIBA				
 INSERT INTO public.cottage_owners(id) VALUES(2);
@@ -74,6 +82,8 @@ INSERT INTO public.boat_owner(id) VALUES (8);
 -- INSTRUKTORI
 INSERT INTO public.fishing_instructor (id) VALUES (3);
 INSERT INTO public.fishing_instructor (id) VALUES (4);
+INSERT INTO public.fishing_instructor (id) VALUES (14);
+INSERT INTO public.fishing_instructor (id) VALUES (15);
 
 --ADMINI
 INSERT INTO public.admin (id, is_first_login) VALUES (10, false);
@@ -422,4 +432,15 @@ INSERT INTO public.loyalty_definition(
 INSERT INTO public.loyalty_definition(
 	discount_rate, max_points, min_points, rank_name, points_per_reservation)
 	VALUES (0.8, 99999, 1000, 'Platinum', 6);
+
+--ZAHTEV ZA BRISANJE
+INSERT INTO public.deletion_request (deletion_reason, deletion_request_status)
+	VALUES ('Prestajem da se bavim ovim poslom i postajem programer.', 0);
 	
+UPDATE public.users SET deletion_request = 1 WHERE id = 14;
+
+--ZAHTEV ZA REGISTRACIJU
+INSERT INTO public.registration_request (registration_reason, registration_request_status)
+	VALUES ('Hocu da postanem instruktor pecanja!', 0);
+
+UPDATE public.users SET registration_request = 1 WHERE id = 15;
