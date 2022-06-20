@@ -18,6 +18,10 @@ public class ClientService {
     @Autowired
     private ClientRepository clientRepository;
 
+    public boolean clientExists(Integer id) {
+    	return clientRepository.existsById(id);
+    }
+    
     public void addPenatlToClient(Integer id){
         clientRepository.addPenalToClient(id);
     }

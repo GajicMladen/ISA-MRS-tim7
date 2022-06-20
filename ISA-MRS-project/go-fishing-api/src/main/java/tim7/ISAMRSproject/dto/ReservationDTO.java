@@ -18,7 +18,7 @@ public class ReservationDTO {
 
     private ReservationStatus reservationStatus;
 
-    private ReservationDTO(){
+    public ReservationDTO(){
 
     }
 

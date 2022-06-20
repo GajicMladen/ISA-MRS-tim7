@@ -29,9 +29,6 @@ import tim7.ISAMRSproject.dto.GradeDTO;
 import tim7.ISAMRSproject.dto.ReservationDTO;
 import tim7.ISAMRSproject.dto.ReservationListItemDTO;
 
-
-import tim7.ISAMRSproject.model.*;
-
 import tim7.ISAMRSproject.service.*;
 import tim7.ISAMRSproject.model.Adventure;
 import tim7.ISAMRSproject.model.ApprovalStatus;
@@ -84,6 +81,10 @@ public class ReservationController {
 
     @Autowired
     private UserService userService;
+    
+
+    @Autowired
+    private ReservationServiceOwner reservationServiceOwner;
     
     @Autowired
     private LoyaltyService loyaltyService;
@@ -339,8 +340,18 @@ public class ReservationController {
     public ResponseEntity<?> addNewReservation(@RequestBody DateRangeStringDTO dateRangeDTO, Principal user){
     	User u = userService.findByEmail(user.getName());
     	int points = loyaltyService.getPointsForUser(u);
-    	String status = reservationService.createNewReservation(dateRangeDTO.getStartDateString(), dateRangeDTO.getEndDateString(), dateRangeDTO.getOfferId(), dateRangeDTO.getTotalPrice(), dateRangeDTO.getOfferType(), u, points);
-    	return ResponseEntity.status(HttpStatus.CREATED).body("{\"status\":\"" + status + "\"}");
+    	Reservation res = reservationService.createReservationFromData(dateRangeDTO.getStartDateString(), dateRangeDTO.getEndDateString(), dateRangeDTO.getOfferId(), dateRangeDTO.getTotalPrice(), dateRangeDTO.getOfferType(), u);
+    	reservationService.reserveFreePeriods(res);
+    	try {
+    		boolean status = reservationService.saveReservation(res, u, points, dateRangeDTO.getOfferType());    		
+    		if (status)
+        		return ResponseEntity.status(HttpStatus.CREATED).body("{\"status\":\"Reservation created successfully!\"}");
+
+    	} catch (OptimisticEntityLockException e) {
+    		return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+    	}
+    	return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    	
     }
 
     
@@ -446,9 +457,6 @@ public class ReservationController {
         }
     }
 
-    @Autowired
-    private ReservationServiceOwner reservationServiceOwner;
-
     @PostMapping(value = "/newReservation/{clientId}")
     public ResponseEntity<?> addTestReservation( @RequestBody DateRangeStringDTO dateRangeStringDTO,
                                                  @PathVariable int clientId,
@@ -476,22 +484,7 @@ public class ReservationController {
         }
         return new ResponseEntity<>(HttpStatus.OK);
     }
-    /*
-    @PostMapping(value = "/newReservation/{clientId}")
-    public ResponseEntity<?> addNewReservationFromOwner(@RequestBody DateRangeStringDTO dateRangeDTO,
-                                                        @PathVariable int clientId,
-                                                        Principal user){
-        User owner = userService.findByEmail(user.getName());
-        if(userService.isUserOnlyClient(owner))
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("{\"message\":\""+"Morate biti ulogovani kao vlasnik!"+"\"}");
-        Optional<Client> u = clientService.getClientById(clientId);
-        if(!u.isPresent())
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("{\"message\":\""+"Klijent ID nije validan!"+"\"}");
-        String status = reservationServiceOwner.createNewReservationDji(dateRangeDTO.getStartDateString(),
-                dateRangeDTO.getEndDateString(), dateRangeDTO.getOfferId(), dateRangeDTO.getOfferType(), u.get());
-        return ResponseEntity.status(HttpStatus.CREATED).body("{\"status\":\"" + status + "\"}");
-    }
-*/
+
     private LocalDateTime convertDateString(String s) {
         String[] tokens = s.split("-");
         LocalDateTime retVal = LocalDateTime.of(Integer.parseInt(tokens[2]), Integer.parseInt(tokens[1]), Integer.parseInt(tokens[0]), 0, 0);

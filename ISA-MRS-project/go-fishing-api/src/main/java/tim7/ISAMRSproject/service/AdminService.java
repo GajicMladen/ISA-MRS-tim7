@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import tim7.ISAMRSproject.dto.UserDTO;
-import tim7.ISAMRSproject.model.Admin;
 import tim7.ISAMRSproject.model.User;
 import tim7.ISAMRSproject.repository.AdminRepository;
 

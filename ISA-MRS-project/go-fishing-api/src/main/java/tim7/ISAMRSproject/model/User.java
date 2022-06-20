@@ -72,7 +72,7 @@ public class User implements UserDetails {
 	private RegistrationRequest registrationRequest;
 	
 	@JsonIgnore
-    @OneToOne(cascade = {CascadeType.ALL})
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id", referencedColumnName = "id")
 	private Address livingAddress;
 	
@@ -80,7 +80,7 @@ public class User implements UserDetails {
     @JoinTable(name = "user_role",
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
-    private List<Role> roles;
+    protected List<Role> roles;
     
     public User() {
     	
@@ -123,8 +123,8 @@ public class User implements UserDetails {
 		this.active = user.active;
 		this.deleted = user.deleted;
 		this.loyaltyPoints = user.loyaltyPoints;
-		System.out.println(user.livingAddress.getCountry() + "**************");
 		this.livingAddress = user.livingAddress;
+		this.roles = user.roles;
 	}
 
 	public Integer getId() {
@@ -233,7 +233,11 @@ public class User implements UserDetails {
     public void setRoles(List<Role> roles) {
     	this.roles = roles;
     }
-
+    
+    public String getRoleString() {
+    	return this.roles.get(0).getName();
+    }
+    
 	@JsonIgnore
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
