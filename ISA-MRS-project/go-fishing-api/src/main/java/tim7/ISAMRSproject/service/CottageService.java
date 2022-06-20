@@ -17,7 +17,6 @@ import tim7.ISAMRSproject.dto.CottageDTO;
 import tim7.ISAMRSproject.dto.OfferShortDTO;
 import tim7.ISAMRSproject.model.Cottage;
 import tim7.ISAMRSproject.model.CottageOwner;
-import tim7.ISAMRSproject.model.FreePeriod;
 import tim7.ISAMRSproject.model.User;
 import tim7.ISAMRSproject.repository.CottageRepository;
 
@@ -168,5 +167,14 @@ public class CottageService {
 		String[] tokens = s.split("-");
 		LocalDateTime retVal = LocalDateTime.of(Integer.parseInt(tokens[2]), Integer.parseInt(tokens[1]), Integer.parseInt(tokens[0]), 0, 0);
 		return retVal;
+	}
+	
+	public List<Cottage> getCottagesPreview(){
+	  return cottageRepository.findAll(PageRequest.of(0, 5)).getContent();
+	}
+	  
+	public List<Cottage> getCottagesPreviewParam(String param){
+		String paramSql = "%" + param.toUpperCase() + "%";
+		return cottageRepository.getCottagesPreviewParam(paramSql, PageRequest.of(0, 5));
 	}
 }

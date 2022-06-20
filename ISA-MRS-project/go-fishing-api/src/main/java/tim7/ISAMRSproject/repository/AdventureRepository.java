@@ -29,5 +29,8 @@ public interface AdventureRepository extends JpaRepository<Adventure, Integer> {
 
   
 	List<Adventure> findBySubscribers_IdEquals(Integer id);
+	
+    @Query("select a from Adventure a where upper(a.name) like ?1 or str(a.rating) like ?1 or str(a.price) like ?1 or str(a.capacity) like ?1")
+    public List<Adventure> getAdventurePreviewParam(String param, Pageable pageable);
 
 }

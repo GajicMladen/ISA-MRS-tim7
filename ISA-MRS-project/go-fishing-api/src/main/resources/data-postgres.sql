@@ -66,7 +66,7 @@ INSERT INTO public.client(penal_count, suspended, id) VALUES (0, FALSE, 9);
 INSERT INTO public.client(penal_count, suspended, id) VALUES (0, FALSE, 10);
 INSERT INTO public.client(penal_count, suspended, id) VALUES (0, FALSE, 11);
 INSERT INTO public.client(penal_count, suspended, id) VALUES (0, FALSE, 12);
-INSERT INTO public.client(penal_count, suspended, id) VALUES (0, FALSE, 1);
+INSERT INTO public.client(penal_count, suspended, id) VALUES (2, FALSE, 1);
 
 -- VLASNICI KOLIBA				
 INSERT INTO public.cottage_owners(id) VALUES(2);

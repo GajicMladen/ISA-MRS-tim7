@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { iif } from 'rxjs';
+import { UserprofileService } from 'src/app/features/homepage/components/userprofile/userprofile.service';
 import { ActionService } from 'src/app/shared/services/action-service/action.service';
 
 import { ClientService } from 'src/app/shared/services/client-service/client.service';
@@ -27,6 +28,7 @@ import { CottageReservationService } from '../cottage-client-reservation-dialog/
 export class CottageProfilepageComponent implements OnInit {
   cottageId: number;
   cottage: Cottage;
+  ownerName: string;
 
   actions: ActionDTO[];
 
@@ -38,6 +40,7 @@ export class CottageProfilepageComponent implements OnInit {
 
   extraFavors: string[];
 
+  canReserve: boolean = true;
   constructor(
     private route: ActivatedRoute,
     private cottageService: CottageService,
@@ -46,10 +49,14 @@ export class CottageProfilepageComponent implements OnInit {
     private reservationService: CottageReservationService,
     private messageService: MessageService,
     private clientService: ClientService,
-    private userService: UserService
+    private userService: UserService,
+    private profileService: UserprofileService
   ) {}
 
   ngOnInit(): void {
+    this.profileService.getPenaltyCount().subscribe((res) => {
+      if (res >= 3) this.canReserve = false;
+    });
     this.cottageId = Number(this.route.snapshot.paramMap.get('id'));
     if (!isNaN(this.cottageId)) {
       this.cottageService
@@ -65,7 +72,6 @@ export class CottageProfilepageComponent implements OnInit {
         });
 
       this.userService.isLoggedUserOnlyClient().subscribe((data) => {
-        console.log(data);
         this.clientLoggedIn = data;
       });
 
@@ -84,7 +90,7 @@ export class CottageProfilepageComponent implements OnInit {
         });
     }
   }
-  ownerName: string;
+
   getIsSuscribed() {
     this.clientService.isSuscribedToOffer(this.cottageId).subscribe((data) => {
       console.log(data);
@@ -213,6 +219,7 @@ export class CottageProfilepageComponent implements OnInit {
   }
 
   get reservationTooltipText() {
+    if (!this.canReserve) return 'Your reservation privileges are disabled!';
     return 'No free periods are available!';
   }
 }

@@ -1,7 +1,6 @@
 package tim7.ISAMRSproject.model;
 
 import java.util.List;
-import java.util.Optional;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

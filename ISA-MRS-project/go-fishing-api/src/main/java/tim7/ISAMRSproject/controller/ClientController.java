@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import tim7.ISAMRSproject.dto.SubscriptionDTO;
 import tim7.ISAMRSproject.dto.UnsubscribeDTO;
+import tim7.ISAMRSproject.model.Client;
 import tim7.ISAMRSproject.model.User;
 import tim7.ISAMRSproject.service.ClientService;
 import tim7.ISAMRSproject.service.SubscribeService;
@@ -78,6 +79,15 @@ public class ClientController {
     	User u = this.userService.findByEmail(user.getName());
     	subscribeService.addSubsription(u.getId(), unsubDTO.getId());
     	return new ResponseEntity<>(HttpStatus.OK);
+    }
+    
+    @GetMapping(value="/penalties")
+    public ResponseEntity<?> getPenaltiesForClient(Principal user){
+    	Client c = this.clientService.findByEmail(user.getName());
+    	if (c == null)
+    		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    	else
+    		return new ResponseEntity<>(c.getPenalCount(), HttpStatus.OK);
     }
 
 }

@@ -23,7 +23,7 @@ export class UserprofileComponent implements OnInit {
   deletionForm: FormGroup = this.createDeletionForm();
 
   loyalty: any = { loyaltyPoints: 0, currentRank: '' };
-
+  penaltyCount: number = 0;
   constructor(
     private profileService: UserprofileService,
     private messageService: MessageService,
@@ -38,8 +38,11 @@ export class UserprofileComponent implements OnInit {
     });
 
     this.getLoyaltyPoints().subscribe((res: any) => {
-      console.log(res);
       this.loyalty = res;
+    });
+
+    this.getPenaltyCount().subscribe((res: any) => {
+      this.penaltyCount = res;
     });
   }
 
@@ -82,6 +85,10 @@ export class UserprofileComponent implements OnInit {
 
   getLoyaltyPoints() {
     return this.profileService.getLoyaltyPoints();
+  }
+
+  getPenaltyCount() {
+    return this.profileService.getPenaltyCount();
   }
 
   updateProfileInfo() {

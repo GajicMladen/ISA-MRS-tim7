@@ -14,6 +14,7 @@ import { ClientService } from 'src/app/shared/services/client-service/client.ser
 import { BoatClientReservationDialogComponent } from '../boat-client-reservation-dialog/boat-client-reservation-dialog.component';
 import { UserService } from 'src/app/shared/services/users-services/user.service';
 import { CottageActionConfirmDialogComponent } from 'src/app/features/cottage/components/cottage-action-confirm-dialog/cottage-action-confirm-dialog.component';
+import { UserprofileService } from 'src/app/features/homepage/components/userprofile/userprofile.service';
 
 @Component({
   selector: 'app-boat-profilepage',
@@ -35,6 +36,8 @@ export class BoatProfilepageComponent implements OnInit {
   ownerName: string;
 
   hasFreePeriods: boolean = true;
+
+  canReserve: boolean = true;
   constructor(
     private route: ActivatedRoute,
     private boatService: BoatService,
@@ -43,9 +46,13 @@ export class BoatProfilepageComponent implements OnInit {
     private reservationService: BoatReservationService,
     private messageService: MessageService,
     private clientService: ClientService,
-    private userService: UserService
+    private userService: UserService,
+    private profileService: UserprofileService
   ) {}
   ngOnInit(): void {
+    this.profileService.getPenaltyCount().subscribe((res) => {
+      if (res >= 3) this.canReserve = false;
+    });
     this.boatId = Number(this.route.snapshot.paramMap.get('id'));
     this.boatService.findBoatById(this.boatId).subscribe((data) => {
       this.boat = data;
@@ -181,6 +188,7 @@ export class BoatProfilepageComponent implements OnInit {
   }
 
   get reservationTooltipText() {
+    if (!this.canReserve) return 'Your reservation privileges are disabled!';
     return 'No free periods are available!';
   }
 

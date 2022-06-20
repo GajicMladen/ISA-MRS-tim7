@@ -230,4 +230,13 @@ public class AdventureService {
 	public Integer getFishingInstructorByOfferId(Integer id) {
 		return this.adventureRepository.getFishingInstrucorByOfferId(id);
 	}
+	
+	public List<Adventure> getAdventuresPreview(){
+		return adventureRepository.findAll(PageRequest.of(0, 5)).getContent();
+	}
+	
+	public List<Adventure> getAdventuresPreviewParam(String param){
+	  String paramSql = "%" + param.toUpperCase() + "%";
+	  return adventureRepository.getAdventurePreviewParam(paramSql, PageRequest.of(0, 5));
+	}
 }
