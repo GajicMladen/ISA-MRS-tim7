@@ -4,11 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import tim7.ISAMRSproject.dto.ActionDTO;
-import tim7.ISAMRSproject.model.Action;
 import tim7.ISAMRSproject.model.Client;
 import tim7.ISAMRSproject.model.Offer;
-import tim7.ISAMRSproject.model.User;
 import tim7.ISAMRSproject.repository.ClientRepository;
 
 import java.util.List;
@@ -21,6 +18,10 @@ public class ClientService {
     @Autowired
     private ClientRepository clientRepository;
 
+    public boolean clientExists(Integer id) {
+    	return clientRepository.existsById(id);
+    }
+    
     public void addPenatlToClient(Integer id){
         clientRepository.addPenalToClient(id);
     }
@@ -53,5 +54,13 @@ public class ClientService {
             }
         }
         return false;
+    }
+    
+    public List<Client> findAll(){
+    	return this.clientRepository.findAll();
+    }
+    
+    public Client save(Client c) {
+    	return this.clientRepository.save(c);
     }
 }

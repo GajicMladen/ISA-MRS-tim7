@@ -1,6 +1,5 @@
 package tim7.ISAMRSproject.dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import tim7.ISAMRSproject.model.FreePeriod;
 
 import java.time.LocalDateTime;

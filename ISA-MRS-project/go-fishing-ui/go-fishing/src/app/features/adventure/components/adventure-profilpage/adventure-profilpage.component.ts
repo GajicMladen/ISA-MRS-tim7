@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Loader } from '@googlemaps/js-api-loader';
 import { CottageActionConfirmDialogComponent } from 'src/app/features/cottage/components/cottage-action-confirm-dialog/cottage-action-confirm-dialog.component';
 import { CottageReservationService } from 'src/app/features/cottage/components/cottage-client-reservation-dialog/cottage-reservation.service';
+import { UserprofileService } from 'src/app/features/homepage/components/userprofile/userprofile.service';
 import { ActionService } from 'src/app/shared/services/action-service/action.service';
 import { ClientService } from 'src/app/shared/services/client-service/client.service';
 import { GradeService } from 'src/app/shared/services/grade-service/grade-service.service';
@@ -98,6 +99,8 @@ export class AdventureProfilpageComponent implements OnInit {
 
   hasFreePeriods: boolean = true;
 
+  canReserve: boolean = true;
+
   constructor(
     private route: ActivatedRoute,
     private adventureService: AdventureService,
@@ -107,12 +110,15 @@ export class AdventureProfilpageComponent implements OnInit {
     private messageService: MessageService,
     private clientService: ClientService,
     private userService: UserService,
-    private gradeService: GradeService
+    private gradeService: GradeService,
+    private profileService: UserprofileService
   ) {}
 
   ngOnInit(): void {
     this.adventureId = Number(this.route.snapshot.paramMap.get('id'));
-
+    this.profileService.getPenaltyCount().subscribe((res) => {
+      if (res >= 3) this.canReserve = false;
+    });
     if (!isNaN(this.adventureId)) {
       this.adventureService
         .getAdventureById(this.adventureId)
@@ -285,6 +291,7 @@ export class AdventureProfilpageComponent implements OnInit {
   }
 
   get reservationTooltipText() {
+    if (!this.canReserve) return 'Your reservation privileges are disabled!';
     return 'No free periods are available!';
   }
 

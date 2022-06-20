@@ -45,6 +45,10 @@ public class Complaint {
     @Column(name="pusnih_offender", nullable = false)
     private boolean punishOffender;
     public Complaint(){}
+    
+    @Version
+    @Column(name = "version", columnDefinition = "integer DEFAULT 0", nullable = false)
+	private Integer version;
 
     public Complaint(String text) {
         this.text = text;
@@ -125,4 +129,14 @@ public class Complaint {
     public void setOffenderId(Integer offenderId) {
         this.offenderId = offenderId;
     }
+
+	public Integer getVersion() {
+		return version;
+	}
+
+	public void setVersion(Integer version) {
+		this.version = version;
+	}
+    
+    
 }

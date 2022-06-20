@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -65,6 +66,15 @@ public class UserController {
 		return new ResponseEntity<>(userDTOS, HttpStatus.OK);
 	}
 
+	@GetMapping(value = "/getUserRole")
+	public ResponseEntity<?> getUserRole(Principal user){
+		User u = this.userService.findByEmail(user.getName());
+		if (u == null)
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		String ret = "{\"role\":\"" + u.getRoleString() +"\", \"id\": \""+ u.getId() + "\"}";
+		return new ResponseEntity<>(ret, HttpStatus.OK);
+	}
+	
 	@GetMapping(value = "/getUser/{id}")
 	public ResponseEntity<UserDTO> getUserById(@PathVariable int id){
 
@@ -78,6 +88,7 @@ public class UserController {
 	
 	
 	@GetMapping(value = "/getUserData")
+	@PreAuthorize("hasRole('ROLE_USER')")
 	public UserRegisterDTO user(Principal user){
 		
 		return UserRegisterDTO.getUserDTOFromUser(userService.findByEmail(user.getName()));

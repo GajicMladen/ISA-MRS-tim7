@@ -21,19 +21,14 @@ import tim7.ISAMRSproject.dto.ActionDTO;
 import tim7.ISAMRSproject.dto.AdventureDTO;
 import tim7.ISAMRSproject.dto.ChangePasswordDTO;
 import tim7.ISAMRSproject.dto.DeletionRequestDTO;
-import tim7.ISAMRSproject.dto.FreePeriodDTO;
 import tim7.ISAMRSproject.dto.UserDTO;
-import tim7.ISAMRSproject.model.Action;
 import tim7.ISAMRSproject.model.Adventure;
 import tim7.ISAMRSproject.model.DeletionRequest;
-import tim7.ISAMRSproject.model.FreePeriod;
 import tim7.ISAMRSproject.model.Reservation;
-import tim7.ISAMRSproject.model.ReservationStatus;
 import tim7.ISAMRSproject.model.DeletionRequest.DeletionRequestStatus;
 import tim7.ISAMRSproject.model.User;
 import tim7.ISAMRSproject.service.ActionService;
 import tim7.ISAMRSproject.service.AdventureService;
-import tim7.ISAMRSproject.service.ReservationService;
 import tim7.ISAMRSproject.service.UserService;
 
 @RestController
@@ -43,10 +38,7 @@ public class AdventureController {
 
 	@Autowired
 	private AdventureService adventureService;
-	
-	@Autowired
-	private ReservationService reservationService;
-	
+		
 	@Autowired
 	private UserService userService;
 	
@@ -216,4 +208,34 @@ public class AdventureController {
 		
 		return dtos;
 	}
+	
+	@GetMapping(value = "/getAdventuresPreview")
+    public ResponseEntity<?> getAdventuresPreview(){
+    	List<AdventureDTO> dtos = new ArrayList<AdventureDTO>();
+    	List<Adventure> adventures = adventureService.getAdventuresPreview();
+		for(Adventure a: adventures) {
+			AdventureDTO dto = new AdventureDTO();
+			dto.setRating(a.getRating());
+			dto.setPrice(a.getPrice());
+			dto.setCapacity(a.getCapacity());
+			dto.setName(a.getName());
+			dtos.add(dto);
+		}
+		return new ResponseEntity<>(dtos, HttpStatus.OK);    	
+    }
+    
+    @GetMapping(value = "/getAdventuresPreviewParam/{param}")
+    public ResponseEntity<?> getBoatsPreviewParam(@PathVariable String param){
+    	List<AdventureDTO> dtos = new ArrayList<AdventureDTO>();
+    	List<Adventure> adventures = adventureService.getAdventuresPreviewParam(param);
+		for(Adventure a: adventures) {
+			AdventureDTO dto = new AdventureDTO();
+			dto.setRating(a.getRating());
+			dto.setPrice(a.getPrice());
+			dto.setCapacity(a.getCapacity());
+			dto.setName(a.getName());
+			dtos.add(dto);
+		}
+		return new ResponseEntity<>(dtos, HttpStatus.OK);    
+    }
 }

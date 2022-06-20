@@ -12,11 +12,9 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import tim7.ISAMRSproject.dto.CottageDTO;
-import tim7.ISAMRSproject.dto.FreePeriodDTO;
 import tim7.ISAMRSproject.model.Cottage;
 import tim7.ISAMRSproject.model.User;
 import tim7.ISAMRSproject.service.CottageService;
-import tim7.ISAMRSproject.service.RoleService;
 import tim7.ISAMRSproject.service.UserService;
 
 //import javax.jws.soap.SOAPBinding;
@@ -93,5 +91,27 @@ public class CottageController {
 		cottageService.editCottage(cottage1,cottage.getId(),cottage.getName(),cottage.getDescription(),
 				cottage.getPrice(),cottage.getCapacity());
 	}
+	
+    @GetMapping(value = "/getCottagesPreview")
+    public ResponseEntity<?> getBoatsPreview(){
+    	List<CottageDTO> dtos = new ArrayList<CottageDTO>();
+    	List<Cottage> cottages = cottageService.getCottagesPreview();
+		for(Cottage c: cottages) {
+			CottageDTO dto = new CottageDTO(c);
+			dtos.add(dto);
+		}
+		return new ResponseEntity<>(dtos, HttpStatus.OK);    	
+    }
+    
+    @GetMapping(value = "/getCottagesPreviewParam/{param}")
+    public ResponseEntity<?> getBoatsPreviewParam(@PathVariable String param){
+    	List<CottageDTO> dtos = new ArrayList<CottageDTO>();
+    	List<Cottage> cottages = cottageService.getCottagesPreviewParam(param);
+		for(Cottage c: cottages) {
+			CottageDTO dto = new CottageDTO(c);
+			dtos.add(dto);
+		}
+		return new ResponseEntity<>(dtos, HttpStatus.OK);    	
+    }
 
 }

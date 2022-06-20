@@ -23,6 +23,9 @@ export class StartpageLoginComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    if (localStorage.getItem('jwt') !== null) {
+      this.redirectLoggedUser();
+    }
     let activationStatus = this.route.snapshot.paramMap.get('status');
 
     switch (activationStatus) {
@@ -63,11 +66,24 @@ export class StartpageLoginComponent implements OnInit {
       .pipe()
       .subscribe(
         (res) => {
-          this.router.navigateByUrl('home/');
+          this.redirectLoggedUser();
         },
         (error) => {
           this.messageService.showMessage(error, MessageType.ERROR);
         }
+      );
+  }
+
+  redirectLoggedUser(): void {
+    if (this.loginService.getRole() == 'ROLE_USER')
+      this.router.navigateByUrl('home/');
+    else if (this.loginService.getRole() == 'ROLE_COTTAGE_OWNER')
+      this.router.navigateByUrl('cottageOwner/' + this.loginService.getId());
+    else if (this.loginService.getRole() == 'ROLE_BOAT_OWNER')
+      this.router.navigateByUrl('boatOwner/' + this.loginService.getId());
+    else if (this.loginService.getRole() == 'ROLE_INSTRUCTOR')
+      this.router.navigateByUrl(
+        'instructorProfile/' + this.loginService.getId()
       );
   }
 }

@@ -1,8 +1,6 @@
 package tim7.ISAMRSproject.dto;
 
-import tim7.ISAMRSproject.model.Address;
 import tim7.ISAMRSproject.model.Adventure;
-import tim7.ISAMRSproject.model.FishingInstructor;
 
 public class AdventureDTO {
 	
@@ -26,7 +24,6 @@ public class AdventureDTO {
 	private String instructorBiography;
 	private float rating; 
 	private boolean deleted;
-	
 	
 
 	public boolean isDeleted() {

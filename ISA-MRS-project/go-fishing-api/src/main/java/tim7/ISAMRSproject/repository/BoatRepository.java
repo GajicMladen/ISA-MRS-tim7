@@ -37,5 +37,7 @@ public interface BoatRepository extends JpaRepository<Boat,Integer>{
 
   List<Boat> findBySubscribers_IdEquals(Integer id);
   
+  @Query("select b from Boat b where upper(b.name) like ?1 or str(b.maxSpeed) like ?1 or str(b.rating) like ?1 or str(b.price) like ?1 or str(b.capacity) like ?1")
+  public List<Boat> getBoatsPreviewParam(String param, Pageable pageable);
 }
 

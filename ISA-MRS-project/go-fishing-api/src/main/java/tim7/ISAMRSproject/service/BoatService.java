@@ -10,10 +10,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+
+import tim7.ISAMRSproject.dto.BoatDTO;
 import tim7.ISAMRSproject.dto.OfferShortDTO;
 import tim7.ISAMRSproject.model.Boat;
-import tim7.ISAMRSproject.dto.BoatDTO;
-import tim7.ISAMRSproject.model.*;
+import tim7.ISAMRSproject.model.BoatOwner;
+import tim7.ISAMRSproject.model.User;
 import tim7.ISAMRSproject.repository.BoatRepository;
 
 @Service
@@ -169,4 +171,14 @@ public class BoatService {
 		boatRepository.updateBoat(id, name,
 				description,price,capacity);
 	}
+
+  
+  public List<Boat> getBoatsPreview(){
+	  return boatRepository.findAll(PageRequest.of(0, 5)).getContent();
+  }
+  
+  public List<Boat> getBoatsPreviewParam(String param){
+	  String paramSql = "%" + param.toUpperCase() + "%";
+	  return boatRepository.getBoatsPreviewParam(paramSql, PageRequest.of(0, 5));
+  }
 }

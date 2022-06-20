@@ -15,6 +15,10 @@ export class ConfigService {
   private _client_controller_url = this._server_address + '/api/clients';
   private _loyalty_controller_url = this._server_address + '/api/loyalty';
 
+  private _boat_controller_url = this._server_address + '/api/boats';
+  private _cottage_controller_url = this._server_address + '/api/cottages';
+  private _adventure_controller_url = this._server_address + '/adventure';
+
   get loginUrl(): string {
     return this._login_url;
   }
@@ -166,10 +170,13 @@ export class ConfigService {
   get resubscribeUrl(): string {
     return this._client_controller_url + '/resubscribe';
   }
+  get penaltyCountUrl(): string {
+    return this._client_controller_url + '/penalties';
+  }
 
   /*
    *
-   *   CLIENT CONTROLLER
+   *   LOYALTY CONTROLLER
    *
    */
 
@@ -187,5 +194,39 @@ export class ConfigService {
 
   get addLoyaltyUrl(): string {
     return this._loyalty_controller_url + '/addLoyalty';
+  }
+
+  /*
+   *
+   *   PREVIEW CONTROLLERS
+   *
+   */
+
+  get previewBoatListUrl(): string {
+    return this._boat_controller_url + '/getBoatsPreview';
+  }
+
+  get previewBoatListParamUrl(): string {
+    return this._boat_controller_url + '/getBoatsPreviewParam/';
+  }
+
+  get previewCottageListUrl(): string {
+    return this._cottage_controller_url + '/getCottagesPreview';
+  }
+
+  get previewCottageListParamUrl(): string {
+    return this._cottage_controller_url + '/getCottagesPreviewParam/';
+  }
+
+  get previewAdventureListUrl(): string {
+    return this._adventure_controller_url + '/getAdventuresPreview';
+  }
+
+  get previewAdventureListParamUrl(): string {
+    return this._adventure_controller_url + '/getAdventuresPreviewParam/';
+  }
+
+  get roleUrl(): string {
+    return this._user_controller_url + '/getUserRole';
   }
 }

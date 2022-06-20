@@ -11,7 +11,6 @@ import tim7.ISAMRSproject.model.Reservation;
 import tim7.ISAMRSproject.repository.ComplaintRepository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Transactional
@@ -43,10 +42,12 @@ public class ComplaintService {
 		return this.complaintRepository.findOnWait();
 	}
 	
+	@Transactional
 	public Optional<Complaint> getComplaintById(int id) {
 		return this.complaintRepository.findById(id);
 	}
 
+	@Transactional
 	public void save(Complaint complaint) {
 		this.complaintRepository.save(complaint);
 		

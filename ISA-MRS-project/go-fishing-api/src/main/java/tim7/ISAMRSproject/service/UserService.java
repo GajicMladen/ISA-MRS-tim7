@@ -11,19 +11,21 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import tim7.ISAMRSproject.dto.ChangePasswordDTO;
-import tim7.ISAMRSproject.dto.SubscriptionDTO;
 import tim7.ISAMRSproject.dto.UserRegisterDTO;
 import tim7.ISAMRSproject.model.Address;
 import tim7.ISAMRSproject.model.Admin;
 import tim7.ISAMRSproject.model.Adventure;
 import tim7.ISAMRSproject.model.Boat;
 import tim7.ISAMRSproject.model.BoatOwner;
+import tim7.ISAMRSproject.model.Client;
 import tim7.ISAMRSproject.model.Cottage;
 import tim7.ISAMRSproject.model.CottageOwner;
 import tim7.ISAMRSproject.model.DeletionRequest;
 import tim7.ISAMRSproject.model.FishingInstructor;
+import tim7.ISAMRSproject.model.Offer;
 import tim7.ISAMRSproject.model.RegistrationRequest;
 import tim7.ISAMRSproject.model.RegistrationRequest.RegistrationRequestStatus;
 import tim7.ISAMRSproject.model.Role;
@@ -32,6 +34,7 @@ import tim7.ISAMRSproject.repository.AdminRepository;
 import tim7.ISAMRSproject.repository.AdventureRepository;
 import tim7.ISAMRSproject.repository.BoatOwnerRepository;
 import tim7.ISAMRSproject.repository.BoatRepository;
+import tim7.ISAMRSproject.repository.ClientRepository;
 import tim7.ISAMRSproject.repository.CottageOwnerRepository;
 import tim7.ISAMRSproject.repository.CottageRepository;
 import tim7.ISAMRSproject.repository.DeletionRequestRepository;
@@ -43,6 +46,9 @@ public class UserService implements UserDetailsService {
 
 	@Autowired
 	private UserRepository userRepository;
+	
+	@Autowired
+	private ClientRepository clientRepository;
 	
 	@Autowired
 	private BoatOwnerRepository boatOwnerRepository;
@@ -74,6 +80,7 @@ public class UserService implements UserDetailsService {
 	@Autowired
 	private RoleService roleService;
 	
+	@Transactional
 	public Optional<User> findById(int id) {
 		return userRepository.findById(id);
 	}
@@ -119,7 +126,6 @@ public class UserService implements UserDetailsService {
 		address.setStreet(userRegisterDTO.getAddress());
 		address.setLatitude("0");
 		address.setLongitude("0");
-		address.setUser(newUser);
 		
 		newUser.setEmail(userRegisterDTO.getEmail());
 		newUser.setName(userRegisterDTO.getName());
@@ -130,7 +136,6 @@ public class UserService implements UserDetailsService {
 		newUser.setDeleted(false);
 		newUser.setActive(false);
 		List<Role> roles = new ArrayList<Role>();
-		roles.add(roleService.findByName("ROLE_USER"));
 		RegistrationRequest rr = new RegistrationRequest();
 		if (!userRegisterDTO.getRole().equals("ROLE_USER")) {
 			roles.add(roleService.findByName(userRegisterDTO.getRole()));
@@ -138,11 +143,14 @@ public class UserService implements UserDetailsService {
 			rr.setRequestStatus(RegistrationRequestStatus.PENDING);
 			rr.setUser(newUser);
 			newUser.setRegistrationRequest(rr);		
+		} else {
+			roles.add(roleService.findByName("ROLE_USER"));
 		}
 		newUser.setRoles(roles);
 		switch(userRegisterDTO.getRole()) {
 			case("ROLE_USER"):
-				return (User)(this.userRepository.save(newUser));
+				User u = (User)this.clientRepository.save(new Client(newUser));
+				return u;
 			case("ROLE_BOAT_OWNER"):
 				return (User)(this.boatOwnerRepository.save((BoatOwner)newUser));
 			case("ROLE_COTTAGE_OWNER"):
@@ -180,6 +188,7 @@ public class UserService implements UserDetailsService {
 		this.userRepository.save(user);
 	}
 	
+	@Transactional
 	public User save(User user) {
 		return this.userRepository.save(user);
 	}
@@ -233,41 +242,16 @@ public class UserService implements UserDetailsService {
 		return user.get();
 	}
 	
-	public List<SubscriptionDTO> getAllSubscriptions(User u){
-		List<SubscriptionDTO> subs = new ArrayList<SubscriptionDTO>();
-		for(Cottage c: cottageRepository.findBySubscribers_IdEquals(u.getId())) {
-			SubscriptionDTO subDTO = new SubscriptionDTO();
-			subDTO.setId(c.getId());
-			subDTO.setOfferName(c.getName());
-			subDTO.setOfferAddress(c.getAddress().toString());
-			subDTO.setSubscribed(true);
-			subDTO.setPrice(c.getPrice());
-			subDTO.setOwnerName(c.getCottageOwner().getName() + " " + c.getCottageOwner().getLastName());
-			subDTO.setInstructor(false);
-			subs.add(subDTO);
-		}
-		for(Boat b: boatRepository.findBySubscribers_IdEquals(u.getId())){
-			SubscriptionDTO subDTO = new SubscriptionDTO();
-			subDTO.setId(b.getId());
-			subDTO.setOfferName(b.getName());
-			subDTO.setOfferAddress(b.getAddress().toString());
-			subDTO.setSubscribed(true);
-			subDTO.setPrice(b.getPrice());
-			subDTO.setOwnerName(b.getBoatOwner().getName() + " " + b.getBoatOwner().getLastName());
-			subDTO.setInstructor(false);
-			subs.add(subDTO);
-		}
-		for(Adventure a: adventureRepository.findByInstructorId(u.getId())){
-			SubscriptionDTO subDTO = new SubscriptionDTO();
-			subDTO.setId(a.getId());
-			subDTO.setOfferName(a.getName());
-			subDTO.setOfferAddress(a.getAddress().toString());
-			subDTO.setSubscribed(true);
-			subDTO.setPrice(a.getPrice());
-			subDTO.setOwnerName(a.getFishingInstructor().getName() + " " + a.getFishingInstructor().getLastName());
-			subDTO.setInstructor(true);
-			subs.add(subDTO);
-		}
+	public List<Offer> getAllSubscriptions(User u){
+		List<Offer> subs = new ArrayList<Offer>();
+		for(Cottage c: cottageRepository.findBySubscribers_IdEquals(u.getId()))
+			subs.add(c);
+			
+		for(Boat b: boatRepository.findBySubscribers_IdEquals(u.getId()))
+			subs.add(b);
+		
+		for(Adventure a: adventureRepository.findByInstructorId(u.getId()))
+			subs.add(a);
 		return subs;
 	}
 
