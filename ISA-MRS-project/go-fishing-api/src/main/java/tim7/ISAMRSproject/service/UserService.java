@@ -161,6 +161,7 @@ public class UserService implements UserDetailsService {
 		return null;
 	}
 	
+	@Transactional
 	public void updateUser(User user, UserRegisterDTO dto) {
 		if (!(user.getName().equals(dto.getName())))
 			user.setName(dto.getName());
@@ -168,18 +169,22 @@ public class UserService implements UserDetailsService {
 			user.setLastName(dto.getLastName());
 		if (!(user.getPhone().equals(dto.getPhoneNumber())))
 			user.setPhone(dto.getPhoneNumber());
-		
+		user.getAddress().setCity(dto.getTown());
+		user.getAddress().setCountry(dto.getCountry());
+		user.getAddress().setStreet(dto.getAddress());
+		/*
 		Address dtoAddress = new Address();
 		dtoAddress.setCity(dto.getTown());
 		dtoAddress.setCountry(dto.getCountry());
 		dtoAddress.setStreet(dto.getAddress());
 		
 		if (!(user.getAddress().equals(dtoAddress))) {
-			dtoAddress.setUser(user);
+			//dtoAddress.setUser(user);
 			user.setAddress(dtoAddress);			
 		}
-		
-		this.userRepository.save(user);
+		*/
+		save(user);
+		//this.userRepository.save(user);
 		
 	}
 	
