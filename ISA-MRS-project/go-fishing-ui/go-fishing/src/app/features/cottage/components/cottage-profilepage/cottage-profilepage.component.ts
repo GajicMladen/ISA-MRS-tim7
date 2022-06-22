@@ -97,8 +97,6 @@ export class CottageProfilepageComponent implements OnInit {
           this.actions = actions;
         });
 
-      this.getIsSuscribed();
-
       this.reservationService
         .getFreePeriodsById(this.cottageId)
         .subscribe((res: any) => {
