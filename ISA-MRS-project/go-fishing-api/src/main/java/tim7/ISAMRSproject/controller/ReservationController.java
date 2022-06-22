@@ -339,6 +339,8 @@ public class ReservationController {
     @PostMapping(value = "/newReservation")
     public ResponseEntity<?> addNewReservation(@RequestBody DateRangeStringDTO dateRangeDTO, Principal user){
     	User u = userService.findByEmail(user.getName());
+    	if (clientService.findByEmail(u.getEmail()).getPenalCount() >= 3)
+    		return new ResponseEntity<>(HttpStatus.FORBIDDEN);
     	int points = loyaltyService.getPointsForUser(u);
     	Reservation res = reservationService.createReservationFromData(dateRangeDTO.getStartDateString(), dateRangeDTO.getEndDateString(), dateRangeDTO.getOfferId(), dateRangeDTO.getTotalPrice(), dateRangeDTO.getOfferType(), u);
     	reservationService.reserveFreePeriods(res);
@@ -450,10 +452,10 @@ public class ReservationController {
                 return new ResponseEntity<>(HttpStatus.OK);
             }
             else
-                return new ResponseEntity<>("{message:'Nismo uspeli da rezervišemo akciju'}",HttpStatus.FORBIDDEN);
+                return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
         catch (OptimisticEntityLockException e){
-            return new ResponseEntity<>("{message:'Izgleda da je akcija već rezervisana'}",HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
     }
 

@@ -132,12 +132,20 @@ export class CottageProfilepageComponent implements OnInit {
           this.actions.findIndex((i) => i.id === item.id),
           1
         );
-        this.reservationService.confirmAction(item.id).subscribe((res: any) => {
-          this.messageService.showMessage(
-            'Action reserved successfully!',
-            MessageType.SUCCESS
-          );
-        });
+        this.reservationService.confirmAction(item.id).subscribe(
+          (res: any) => {
+            this.messageService.showMessage(
+              'Action reserved successfully!',
+              MessageType.SUCCESS
+            );
+          },
+          (err: any) => {
+            this.messageService.showMessage(
+              'Your reservation has been declined!',
+              MessageType.ERROR
+            );
+          }
+        );
       }
     });
   }
@@ -184,12 +192,20 @@ export class CottageProfilepageComponent implements OnInit {
                 res.totalPrice,
                 this.cottage.id
               )
-              .subscribe((res: any) => {
-                this.messageService.showMessage(
-                  res.status,
-                  MessageType.SUCCESS
-                );
-              });
+              .subscribe(
+                (res: any) => {
+                  this.messageService.showMessage(
+                    res.status,
+                    MessageType.SUCCESS
+                  );
+                },
+                (err: any) => {
+                  this.messageService.showMessage(
+                    'Your reservation has been declined!',
+                    MessageType.ERROR
+                  );
+                }
+              );
           }
         });
       });

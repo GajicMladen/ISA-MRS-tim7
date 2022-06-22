@@ -45,23 +45,15 @@ import { AdminComplaintsComponent } from './features/admin/components/admin-comp
 import { AdminLoyaltyProgramComponent } from './features/admin/components/admin-loyalty-program/admin-loyalty-program.component';
 import { AdminReviewsComponent } from './features/admin/components/admin-reviews/admin-reviews.component';
 
-
 const routes: Routes = [
   { path: '', component: StartpagePreviewListComponent },
   { path: 'login', component: StartpageLoginComponent },
   { path: 'login/:status', component: StartpageLoginComponent },
   { path: 'register', component: StartpageRegisterComponent },
   { path: 'cottageProfile/:id', component: CottageProfilepageComponent },
-  { path: 'reservationStart', component: ReservationStartpageComponent },
   { path: 'adventureProfile/:id', component: AdventureProfilpageComponent },
-  {
-    path: 'adventureReservations/:id',
-    component: AdventureReservationsComponent,
-  },
 
-  { path: 'adventureCard', component: AdventureCardComponent },
   { path: 'cottageOwner/:id', component: CottageOwnerpageComponent },
-  { path: 'adventureAddNew', component: AdventureAddNewComponent },
   { path: 'instructorProfile', component: AdventureInstructorpageComponent },
   { path: 'editInstructor', component: AdventureInstructorEditComponent },
   { path: 'boatProfile/:id', component: BoatProfilepageComponent },
@@ -69,7 +61,6 @@ const routes: Routes = [
   { path: 'editProfile', component: UserprofileComponent },
   { path: 'addNewCottage', component: CottageAddNewComponent },
   { path: 'editCottage/:id', component: CottageEditComponent },
-  { path: 'home', component: HomepageComponent },
 
   { path: 'addNewBoat', component: BoatAddNewComponent },
   { path: 'editBoat/:id', component: BoatEditComponent },
@@ -107,7 +98,7 @@ const routes: Routes = [
     component: AdminRegistrationRequestsComponent,
   },
   { path: 'deletionRequests/:id', component: AdminDeletionRequestsComponent },
-  { path: 'complaints/:id', component: AdminComplaintsComponent},
+  { path: 'complaints/:id', component: AdminComplaintsComponent },
   { path: 'addAdmin/:id', component: AdminAddAdminComponent },
   { path: 'adminReport/:id', component: AdminReportComponent },
   { path: 'editInstructor/:id', component: AdventureInstructorEditComponent },

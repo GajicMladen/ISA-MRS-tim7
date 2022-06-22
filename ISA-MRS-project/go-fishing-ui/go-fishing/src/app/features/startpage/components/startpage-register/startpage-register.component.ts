@@ -30,6 +30,9 @@ export class StartpageRegisterComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    if (localStorage.getItem('jwt') !== null) {
+      this.router.navigateByUrl('');
+    }
     this.form.get('password')?.valueChanges.subscribe(() => {
       this.activatePassMatchError =
         String(this.form.get('confirmPassword')!.value) !==
