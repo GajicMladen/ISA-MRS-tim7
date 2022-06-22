@@ -88,13 +88,20 @@ public class UserController {
 	
 	
 	@GetMapping(value = "/getUserData")
-	@PreAuthorize("hasRole('ROLE_USER')")
+	@PreAuthorize("hasRole('ROLE_USER')" +
+			"|| hasRole('ROLE_COTTAGE_OWNER')" +
+			"|| hasRole('ROLE_BOAT_OWNER')" +
+			"|| hasRole('ROLE_INSTRUCTOR')")
 	public UserRegisterDTO user(Principal user){
 		
 		return UserRegisterDTO.getUserDTOFromUser(userService.findByEmail(user.getName()));
 	}
 	
 	@PostMapping(value = "/updateProfile")
+	@PreAuthorize("hasRole('ROLE_USER')" +
+			"|| hasRole('ROLE_COTTAGE_OWNER')" +
+			"|| hasRole('ROLE_BOAT_OWNER')" +
+			"|| hasRole('ROLE_INSTRUCTOR')")
 	public ResponseEntity<?> updateProfile(@RequestBody UserRegisterDTO userRegisterDTO, UriComponentsBuilder ucBuilder){
 		// Converts appropriate fields to title case.
 		userRegisterDTO.casify();

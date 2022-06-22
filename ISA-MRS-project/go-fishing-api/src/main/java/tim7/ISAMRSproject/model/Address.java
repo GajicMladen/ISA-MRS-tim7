@@ -31,7 +31,7 @@ public class Address implements Comparable<Address>{
 	private String latitude;
 	
 	
-	@OneToOne(mappedBy = "livingAddress")
+	@OneToOne(mappedBy = "livingAddress", optional = true)
     private User user;
   
 	@OneToOne(mappedBy = "address", optional = true)

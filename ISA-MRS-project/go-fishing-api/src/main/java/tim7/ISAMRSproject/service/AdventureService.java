@@ -56,6 +56,7 @@ public class AdventureService {
 		address.setCountry(a.getCountry());
 		address.setLatitude(a.getLatitude());
 		address.setLongitude(a.getLongitude());
+		address.setOffer(adventure);		
 		adventure.setAddress(address);
 		adventure.setCapacity(a.getCapacity());
 		adventure.setDeleted(false);

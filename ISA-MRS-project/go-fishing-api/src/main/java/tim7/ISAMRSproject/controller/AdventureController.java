@@ -7,6 +7,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,14 +23,10 @@ import tim7.ISAMRSproject.dto.AdventureDTO;
 import tim7.ISAMRSproject.dto.ChangePasswordDTO;
 import tim7.ISAMRSproject.dto.DeletionRequestDTO;
 import tim7.ISAMRSproject.dto.UserDTO;
-import tim7.ISAMRSproject.model.Adventure;
-import tim7.ISAMRSproject.model.DeletionRequest;
-import tim7.ISAMRSproject.model.Reservation;
+import tim7.ISAMRSproject.model.*;
 import tim7.ISAMRSproject.model.DeletionRequest.DeletionRequestStatus;
-import tim7.ISAMRSproject.model.User;
-import tim7.ISAMRSproject.service.ActionService;
-import tim7.ISAMRSproject.service.AdventureService;
-import tim7.ISAMRSproject.service.UserService;
+import tim7.ISAMRSproject.service.*;
+import tim7.ISAMRSproject.utils.EmailServiceImpl;
 
 @RestController
 @RequestMapping(value = "adventure")
@@ -44,6 +41,18 @@ public class AdventureController {
 	
 	@Autowired
 	private ActionService actionService;
+	
+	@Autowired
+	private ClientService clientService;
+	
+	@Autowired
+	private EmailServiceImpl emailService;
+	
+	@Autowired
+	private ReservationService reservationService;
+
+	@Autowired
+	private ReservationServiceOwner reservationServiceOwner;
 	
 	@GetMapping(value = "/get/{id}")
 	public ResponseEntity<AdventureDTO> getAdventureById(@PathVariable Integer id){
@@ -62,14 +71,16 @@ public class AdventureController {
 		
 	
 		for (Adventure a : adventures) {
-			adventuresDTO.add(new AdventureDTO(a));
+			if (!a.isDeleted()) {
+				adventuresDTO.add(new AdventureDTO(a));
+			}
 		}
 		
 		return new ResponseEntity<>(adventuresDTO, HttpStatus.OK);
 	}
 	
 	@DeleteMapping(value = "/{id}")
-	@CrossOrigin(origins = "http://localhost:4200")
+	@PreAuthorize("hasRole('ROLE_INSTRUCTOR')")
 	public ResponseEntity<AdventureDTO> deleteAdventure(@PathVariable Integer id) {
 		Optional<Adventure> adventure = adventureService.findById(id);
 		
@@ -85,20 +96,22 @@ public class AdventureController {
 		}
 	}
 	
-	@CrossOrigin(origins="http://localhost:4200/")
 	@PostMapping()
+	@PreAuthorize("hasRole('ROLE_INSTRUCTOR')")
 	public ResponseEntity<Void> addAdventure(@RequestBody AdventureDTO a) {
 		this.adventureService.addAdventure(a);
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 	
 	@PutMapping(value = "/instructor")
+	@PreAuthorize("hasRole('ROLE_INSTRUCTOR')")
 	public ResponseEntity<Void> updateInstructorData(@RequestBody UserDTO i) {
 		this.adventureService.updateInstructorData(i);
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 	
 	@PutMapping(value = "/edit")
+	@PreAuthorize("hasRole('ROLE_INSTRUCTOR')")
 	public ResponseEntity<Void> editAdventure(@RequestBody AdventureDTO a) {
 		try {
 			this.adventureService.editAdventure(a);
@@ -111,6 +124,7 @@ public class AdventureController {
 	}
 	
 	@PostMapping(value = "/instructor/passwordChange/{id}")
+	@PreAuthorize("hasRole('ROLE_INSTRUCTOR')")
 	public ResponseEntity<?> changeInstructorPassword(@PathVariable Integer id, @RequestBody ChangePasswordDTO changePasswordDTO) {
 		if(!changePasswordDTO.validate())
 			return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body("Pogrešni podaci!");
@@ -126,6 +140,7 @@ public class AdventureController {
 	}
 	
 	@PostMapping(value = "/instructor/delete/{id}")
+	@PreAuthorize("hasRole('ROLE_INSTRUCTOR')")
 	public ResponseEntity<?> saveDeletionRequest(@PathVariable Integer id, @RequestBody DeletionRequestDTO deletionRequestDTO) {
 		if (deletionRequestDTO.getDeletionReason().length() < 10) {
 			return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body("Pogrešni podaci!");
@@ -154,19 +169,40 @@ public class AdventureController {
 		
 	
 		for (Adventure a : adventures) {
-			adventuresId.add(a.getId());
+			if (!a.isDeleted()) {
+				adventuresId.add(a.getId());
+			}
 		}
 		
 		return new ResponseEntity<>(adventuresId, HttpStatus.OK);
 	}
 	
 	@PostMapping(value = "/addAction")
-	public ResponseEntity<Void> addAction(@RequestBody ActionDTO actionDTO) {
-		if (this.actionService.addAction(actionDTO)) {
-			return new ResponseEntity<Void>(HttpStatus.OK);
+	@PreAuthorize("hasRole('ROLE_INSTRUCTOR')")
+	public ResponseEntity<?> addAction(@RequestBody ActionDTO actionDTO) {
+
+
+		int instructorId = adventureService.getFishingInstructorByOfferId(actionDTO.getOfferId());
+		for (Offer offer: adventureService.getAdventuresByInstructorId(instructorId) ) {
+			if(reservationServiceOwner.isPeriodReserved(offer,actionDTO.getStartDate(),actionDTO.getEndDate()))
+				return new ResponseEntity<>("Period je vec rezervisan.",HttpStatus.FORBIDDEN);
+		}
+
+		Reservation action = this.actionService.addAction(actionDTO);
+		if (action != null) {
+			List<Client> subscribers = clientService.getSubscribersForOffer(actionDTO.getOfferId());
+            for(Client client: subscribers ) {
+                try {
+                    emailService.sendActionEmail(client, action);
+                }
+                catch (Exception e){
+                    System.out.println("Exceprion on sending email to : "+client.getEmail());
+                }
+            }
+			return new ResponseEntity<>(HttpStatus.OK);
 		} 
 		else {
-			return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
 	

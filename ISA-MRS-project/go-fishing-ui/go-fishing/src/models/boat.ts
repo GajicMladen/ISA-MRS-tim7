@@ -14,7 +14,7 @@ export class Boat implements Offer {
   ownerId:number;
   boatType: string;
   length: number;
-  numOfEngines: number;
+  numOfMotors: number;
   powerOfEngines: number;
   maxSpeed: number;
   reservationCancellationTerms?: string;

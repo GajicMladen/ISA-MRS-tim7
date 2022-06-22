@@ -29,12 +29,12 @@
                 <input type="text" name="cottageName" [(ngModel)]="name" [value]="currentCottage.name">
                     
                 <h2 class="font-weight-bold"> <span class="text-muted">Cena po danu:</span></h2>
-                <input type="number" min="0" [(ngModel)]="price" >
+                <input type="number" min="0" [(ngModel)]="price" min="1">
                 
-                <span class="font-weight-bold">Kapcitet ljudi:</span><input type="number" [(ngModel)]="capacity">
+                <span class="font-weight-bold">Kapcitet ljudi:</span><input type="number" [(ngModel)]="capacity" min="1">
                     
-                <span class="font-weight-bold">Broj soba:</span> <input type="number" [(ngModel)]="roomCount">
-                <span class="font-weight-bold">Broj kreveta:</span><input type="number" [(ngModel)]="bedCount">
+                <span class="font-weight-bold">Broj soba:</span> <input type="number" [(ngModel)]="roomCount" min="1">
+                <span class="font-weight-bold">Broj kreveta:</span><input type="number" [(ngModel)]="bedCount" min="1">
                 <span class="font-weight-bold">Opis:</span>
                         <textarea type="text" rows="10" cols="40" [(ngModel)]="promoDescription"></textarea>
                             

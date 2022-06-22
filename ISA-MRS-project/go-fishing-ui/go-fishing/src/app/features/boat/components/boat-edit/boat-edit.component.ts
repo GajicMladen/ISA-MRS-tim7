@@ -50,6 +50,9 @@ export class BoatEditComponent implements OnInit {
     this.boatService.editBoat(this.newBoat).subscribe(response => {
       this.messageService.showMessage("Uspešno ste izmenili brod.",MessageType.SUCCESS);
       this.router.navigateByUrl("/boatProfile/"+this.boatId);
+    },err =>{
+      this.messageService.showMessage("Niste u mogucnosti da izmenite brod",MessageType.ERROR);
+      
     });
 
   }

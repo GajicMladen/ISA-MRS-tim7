@@ -30,4 +30,6 @@ public interface ReservationRepository extends JpaRepository<Reservation, Intege
     @Modifying
     @Query("DELETE FROM Reservation WHERE id = ?1")
     void cancelReservationById(Integer id);
+
+
 }

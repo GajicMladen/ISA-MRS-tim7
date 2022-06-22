@@ -59,13 +59,11 @@ export class CalendarComponent implements OnInit {
       
     });
   }
+  
   getReservations(){
-    this.reservationService.getReservationsForOffer(this.offerId).subscribe(
-      data=>{
-        this.reservations = data;
-      }
-    )
-
+    this.reservationService.getReservationsForOffer(this.offerId).subscribe(data=>{
+      this.reservations = data;
+    });
   }
 
   deletePeriod(id:number){

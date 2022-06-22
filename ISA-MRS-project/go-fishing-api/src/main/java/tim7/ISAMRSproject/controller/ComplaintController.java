@@ -7,6 +7,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -45,6 +46,10 @@ public class ComplaintController {
     private UserService userService;
 
     @PostMapping(value = "/addNew")
+    @PreAuthorize("hasRole('ROLE_COTTAGE_OWNER')" +
+            "|| hasRole('ROLE_BOAT_OWNER')" +
+            "|| hasRole('ROLE_INSTRUCTOR')" +
+            "|| hasRole('ROLE_USER')")
     public void addNewComplaint(@RequestBody ComplaintDTO complaintDTO){
 
         Complaint newOne = new Complaint(complaintDTO);
@@ -77,6 +82,8 @@ public class ComplaintController {
     }
     
     @PostMapping(value = "/refuseComplaint")
+    @PreAuthorize("hasRole('ROLE_ADMIN')"+
+            "|| hasRole('ROLE_SYSADMIN')")
     public ResponseEntity<Void> refuseComplaint(@RequestBody int id) {
     	Optional<Complaint> c = this.complaintService.getComplaintById(id);
     	if (c.isPresent()) {
@@ -88,6 +95,8 @@ public class ComplaintController {
     }
     
     @PostMapping(value = "/sendResponse/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')"+
+            "|| hasRole('ROLE_SYSADMIN')")
     public ResponseEntity<Void> sendResponse(@PathVariable int id, @RequestBody String response) {
     	Optional<Complaint> c = this.complaintService.getComplaintById(id);
     	if (c.isPresent()) {

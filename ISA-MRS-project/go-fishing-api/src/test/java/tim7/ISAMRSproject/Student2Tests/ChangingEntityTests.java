@@ -21,7 +21,7 @@ import java.util.concurrent.Future;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class ReservationTest {
+public class ChangingEntityTests {
 
 
     @Autowired
@@ -30,8 +30,9 @@ public class ReservationTest {
     private CottageService cottageService;
     @Autowired
     private ClientService clientService;
+
     @Test(expected = ObjectOptimisticLockingFailureException.class)
-    public void testMultipleReservationsFromOwnerAndClientAtSametime() throws Throwable {
+    public void testChangeNameWhenClientReserve() throws Throwable {
 
         ExecutorService executor = Executors.newFixedThreadPool(2);
         Future<?> future1 = executor.submit(new Runnable() {
@@ -41,12 +42,9 @@ public class ReservationTest {
 
                 System.out.println("Startovan Thread 1");
                 Cottage cottage = cottageService.getCottageById(1).get();
-                Client client = clientService.findClientById(9);
-                LocalDateTime startDate = LocalDateTime.now();
-                LocalDateTime endDate = LocalDateTime.now().plusDays(7);
-                Reservation newRes = reservationServiceOwner.reserveCottage(cottage,client,startDate,endDate);
-                reservationServiceOwner.saveReservation(newRes);
-                System.out.println(newRes.getTotalPrice());
+
+                try { Thread.sleep(3000); } catch (InterruptedException e) {}
+                cottageService.editCottage(cottage,cottage.getId(),"Novo ime","novi opis",365,50);
             }
         });
 
@@ -65,6 +63,54 @@ public class ReservationTest {
                 Reservation newRes = reservationServiceOwner.reserveCottage(cottage,client,startDate,endDate);
                 reservationServiceOwner.saveReservation(newRes);
 
+
+            }
+        });
+
+        try {
+            future1.get(); // podize ExecutionException za bilo koji izuzetak iz prvog child threada
+        } catch (ExecutionException e) {
+            System.out.println("Exception from thread " + e.getCause().getClass()); // u pitanju je bas ObjectOptimisticLockingFailureException
+            throw e.getCause();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        executor.shutdown();
+    }
+
+    @Test(expected = ObjectOptimisticLockingFailureException.class)
+    public void testClientReserveWhenOwnerEditCottage() throws Throwable {
+
+        ExecutorService executor = Executors.newFixedThreadPool(2);
+        Future<?> future1 = executor.submit(new Runnable() {
+
+            @Override
+            public void run() {
+
+                System.out.println("Startovan Thread 1");
+                Cottage cottage = cottageService.getCottageById(1).get();
+                Client client = clientService.findClientById(10);
+                LocalDateTime startDate = LocalDateTime.now();
+                LocalDateTime endDate = LocalDateTime.now().plusDays(7);
+
+                try { Thread.sleep(3000); } catch (InterruptedException e) {}
+                Reservation newRes = reservationServiceOwner.reserveCottage(cottage,client,startDate,endDate);
+                reservationServiceOwner.saveReservation(newRes);
+            }
+        });
+
+
+        executor.submit(new Runnable() {
+
+            @Override
+            public void run() {
+
+                System.out.println("Thread 2 start");
+
+
+                Cottage cottage = cottageService.getCottageById(1).get();
+
+                cottageService.editCottage(cottage,cottage.getId(),"Novo ime","novi opis",365,50);
 
             }
         });

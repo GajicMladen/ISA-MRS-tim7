@@ -48,7 +48,10 @@ public class LoginController {
 		
 		String jwt = tokenUtils.generateToken(user.getUsername());
 		int expiresIn = tokenUtils.getExpiredIn();
-		
+
+		if(user.isDeleted())
+			return new ResponseEntity<>("Account is deleted!",HttpStatus.FORBIDDEN);
+
 		if(user.isActive())
 			return ResponseEntity.ok(new UserTokenState(jwt, expiresIn, user));
 		else

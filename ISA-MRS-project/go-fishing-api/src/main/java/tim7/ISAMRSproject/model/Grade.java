@@ -32,6 +32,12 @@ public class Grade {
 	@Column(name = "version", columnDefinition = "integer DEFAULT 0", nullable = false)
 	private Integer version;
 
+	public Grade(){}
+
+	public Grade(float grade) {
+		this.grade = grade;
+	}
+
 	public Integer getId() {
 		return id;
 	}

@@ -99,7 +99,7 @@ export class AdventureAddNewComponent implements OnInit {
     if (!isNaN(this.instructorId)) {
       this.userService.findById(this.instructorId).subscribe((user) => {
         this.instructor = user;
-        this.adventure.instructorId = this.instructor.id;
+        this.adventure.instructorId = this.instructorId;
         this.adventure.instructorName = this.instructor.name;
         this.adventure.instructorSurname = this.instructor.lastName;
       });
@@ -144,18 +144,11 @@ export class AdventureAddNewComponent implements OnInit {
 
   addAdventure() {
     if (!this.CheckForErrors()) {
-      this.adventure.equipment = this.adventure.equipment
-        .split(/\r?\n/)
-        .join('|');
-      this.adventure.rulesOfConduct = this.adventure.rulesOfConduct
-        .split(/\r?\n/)
-        .join('|');
-      this.adventureService.addAdventure(this.adventure).subscribe((data) => {
-        this.messageService.showMessage(
-          'Uspešno dodata nova avantura',
-          MessageType.SUCCESS
-        );
-        console.log(data);
+      this.adventure.equipment = this.adventure.equipment.split(/\r?\n/).join("|");
+      this.adventure.rulesOfConduct = this.adventure.rulesOfConduct.split(/\r?\n/).join("|");
+      console.log(this.adventure);
+      this.adventureService.addAdventure(this.adventure).subscribe(data => {
+        this.messageService.showMessage("Uspešno dodata nova avantura", MessageType.SUCCESS);
       });
       this.adventure = this.getEmptyAdventure();
     }

@@ -53,6 +53,8 @@ public class LoyaltyController {
 	}
 	
 	@PostMapping(value = "/editLoyalty")
+	@PreAuthorize("hasRole('ROLE_ADMIN')"+
+			"|| hasRole('ROLE_SYSADMIN')")
 	public ResponseEntity<Void> editLoyalty(@RequestBody LoyaltyDTO dto) {
 		Optional<LoyaltyDefinition> loyalty = this.loyaltyService.findLoyaltyById(dto.getId());
 		if (loyalty.isPresent()) {
@@ -68,6 +70,8 @@ public class LoyaltyController {
 	}
 	
 	@PostMapping(value = "/addLoyalty")
+	@PreAuthorize("hasRole('ROLE_ADMIN')"+
+			"|| hasRole('ROLE_SYSADMIN')")
 	public ResponseEntity<Void> addLoyalty(@RequestBody LoyaltyDTO dto) {
 		LoyaltyDefinition loyalty = new LoyaltyDefinition();
 		loyalty.setMinPoints(dto.getMinPoints());

@@ -41,6 +41,10 @@ public class Adventure extends Offer {
 		// TODO Auto-generated constructor stub
 	}
 
+	public Adventure(Integer id, String name, String promoDescription, float price, int capacity) {
+		super(id, name, promoDescription, price, capacity);
+	}
+
 	public Adventure(Integer id, String name, String promoDescription, List<String> slike, String rulesOfConduct, String equipment,
 					 String moreInfo, String rulesOfCancelation, float price, int capacity) {
 		super(id, name, promoDescription, price, capacity);

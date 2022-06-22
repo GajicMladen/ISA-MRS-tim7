@@ -1,4 +1,4 @@
-package tim7.ISAMRSproject.Student2Tests;
+package tim7.ISAMRSproject.Student1Tests;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -21,11 +21,11 @@ import java.util.concurrent.Future;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class ReservationTest {
+public class ReservationTests {
 
 
     @Autowired
-    private ReservationServiceOwner reservationServiceOwner;
+    private ReservationService reservationService;
     @Autowired
     private CottageService cottageService;
     @Autowired
@@ -40,12 +40,14 @@ public class ReservationTest {
             public void run() {
 
                 System.out.println("Startovan Thread 1");
-                Cottage cottage = cottageService.getCottageById(1).get();
                 Client client = clientService.findClientById(9);
-                LocalDateTime startDate = LocalDateTime.now();
-                LocalDateTime endDate = LocalDateTime.now().plusDays(7);
-                Reservation newRes = reservationServiceOwner.reserveCottage(cottage,client,startDate,endDate);
-                reservationServiceOwner.saveReservation(newRes);
+                Cottage cottage = cottageService.getCottageById(1).get();
+                String startDate = "18-6-2022";
+                String endDate = "19-6-2022";
+
+                Reservation newRes = reservationService.createReservationFromData(startDate,endDate,cottage,1500,"cottage",client);
+                reservationService.reserveFreePeriods(newRes);
+                reservationService.saveReservation(newRes,client,10);
                 System.out.println(newRes.getTotalPrice());
             }
         });
@@ -57,15 +59,15 @@ public class ReservationTest {
             public void run() {
 
                 System.out.println("Thread 2 start");
-
-                Cottage cottage = cottageService.getCottageById(1).get();
                 Client client = clientService.findClientById(10);
-                LocalDateTime startDate = LocalDateTime.now();
-                LocalDateTime endDate = LocalDateTime.now().plusDays(7);
-                Reservation newRes = reservationServiceOwner.reserveCottage(cottage,client,startDate,endDate);
-                reservationServiceOwner.saveReservation(newRes);
+                Cottage cottage = cottageService.getCottageById(1).get();
+                String startDate = "18-6-2022";
+                String endDate = "19-6-2022";
 
-
+                Reservation newRes = reservationService.createReservationFromData(startDate,endDate,cottage,1500,"cottage",client);
+                reservationService.reserveFreePeriods(newRes);
+                reservationService.saveReservation(newRes,client,10);
+                System.out.println(newRes.getTotalPrice());
             }
         });
 

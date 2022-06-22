@@ -102,6 +102,9 @@ export class AdventureActionComponent implements OnInit {
     if (this.form.valid && startDateTime !== '' && endDateTime !== '') {
       this.adventureService.addAction(action).subscribe(res => {
         this.messageService.showMessage('Nova akcija je dodata', MessageType.SUCCESS);  
+      },
+      error=>{
+        this.messageService.showMessage(error.error,MessageType.ERROR);
       });
     } else {
       this.messageService.showMessage('Unesite ispravne podatke!', MessageType.WARNING);

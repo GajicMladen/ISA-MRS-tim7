@@ -20,11 +20,7 @@ INSERT INTO public.address(city, country, street, latitude, longitude) VALUES
 INSERT INTO public.address(city, country, street, latitude, longitude) VALUES
 						('Ljubovija', 'Srbija', 'Karadjordjeva 10', '44.188249', '19.377129');
 INSERT INTO public.address(city, country, street, latitude, longitude) VALUES
-						('Ljubovija', 'Srbija', 'Karadjordjeva 33', '44.188249', '19.377129');
-INSERT INTO public.address(city, country, street, latitude, longitude) VALUES
-						('Ljubovija', 'Srbija', 'Karadjordjeva 11', '44.188259', '19.387129');
-INSERT INTO public.address(city, country, street, latitude, longitude) VALUES
-						('Ljubovija', 'Srbija', 'Vojvode Misica 11', '44.100259', '19.387129');
+						('Ljubovija', 'Srbija', 'Karadjordjeva 1', '44.188249', '19.377129');
 
 
             
@@ -55,18 +51,14 @@ INSERT INTO public.users(active, deleted, email, lastname, name, password, phone
                 (true, false, 'niko.nikic093+test2@gmail.com', 'Klijentovic2', 'Klijent2', '$2a$10$XeS1WZloSVVq2Z2dJd3L7ePADJy51sWu/oLqcy.Qcmppr6VcUtcr6', '+381659997778', 600, 1);
 INSERT INTO public.users(active, deleted, email, lastname, name, password, phone, loyalty_points, address_id) VALUES
 				(true, false, 'max.verstappen@gmail.com', 'Verstappen', 'Max', '$2a$10$XeS1WZloSVVq2Z2dJd3L7ePADJy51sWu/oLqcy.Qcmppr6VcUtcr6', '+381612345678', 0, 11);
-
-INSERT INTO public.users(active, deleted, email, lastname, name, password, phone, loyalty_points, address_id) VALUES
-				(true, false, 'sergio.perez@gmail.com', 'Perez', 'Sergio', '$2a$10$XeS1WZloSVVq2Z2dJd3L7ePADJy51sWu/oLqcy.Qcmppr6VcUtcr6', '+381688345678', 0, 12);
-INSERT INTO public.users(active, deleted, email, lastname, name, password, phone, loyalty_points, address_id) VALUES
-				(false, false, 'carlos.sainz@gmail.com', 'Sainz', 'Carlos', '$2a$10$XeS1WZloSVVq2Z2dJd3L7ePADJy51sWu/oLqcy.Qcmppr6VcUtcr6', '+381612345678', 0, 13);				
                 
 --KLIJENTI
 INSERT INTO public.client(penal_count, suspended, id) VALUES (0, FALSE, 9);
 INSERT INTO public.client(penal_count, suspended, id) VALUES (0, FALSE, 10);
 INSERT INTO public.client(penal_count, suspended, id) VALUES (0, FALSE, 11);
 INSERT INTO public.client(penal_count, suspended, id) VALUES (0, FALSE, 12);
-INSERT INTO public.client(penal_count, suspended, id) VALUES (2, FALSE, 1);
+INSERT INTO public.client(penal_count, suspended, id) VALUES (0, FALSE, 1);
+
 
 -- VLASNICI KOLIBA				
 INSERT INTO public.cottage_owners(id) VALUES(2);
@@ -82,8 +74,6 @@ INSERT INTO public.boat_owner(id) VALUES (8);
 -- INSTRUKTORI
 INSERT INTO public.fishing_instructor (id) VALUES (3);
 INSERT INTO public.fishing_instructor (id) VALUES (4);
-INSERT INTO public.fishing_instructor (id) VALUES (14);
-INSERT INTO public.fishing_instructor (id) VALUES (15);
 
 --ADMINI
 INSERT INTO public.admin (id, is_first_login) VALUES (10, false);
@@ -356,17 +346,13 @@ INSERT INTO public.free_period (
 
 --REVIEWS
 INSERT INTO public.grade (grade, revision, status) VALUES (3, 'Nije lose kakvih ima. Moze bolje.', 0);
-INSERT INTO public.grade (grade, revision, status) VALUES (3.5, 'Uozbiljite se', 1);
+INSERT INTO public.grade (grade, revision, status) VALUES (3.5, 'Uozbiljite se', 0);
 INSERT INTO public.grade (grade, revision, status) VALUES (1, 'Jako lose iskustvo sam imao sa ovim covekom', 0);
 INSERT INTO public.grade (grade, revision, status) VALUES (4.5, 'Sve pohvale gazda! Samo sabijaj!', 0);
-INSERT INTO public.grade (grade, revision, status) VALUES (5, 'Sve je bilo top! Najjaci provod!', 1);
-INSERT INTO public.grade (grade, revision, status) VALUES (4, 'Nije za mene ali treba probati!', 1);
-INSERT INTO public.grade (grade, revision, status) VALUES (4.5, 'Ja sam se lepo provela.', 1);
-INSERT INTO public.grade (grade, revision, status) VALUES (4.5, 'Ide gas.', 1);
-
+	
 --REZERVACIJE
 INSERT INTO public.reservation(end_date_time, start_date_time, status, total_price, client_id, grade, offer_id)
-	VALUES ('2022-05-31T00:00:01', '2022-05-30T00:00:01', 0, 365.36, 1, 8, 1);
+	VALUES ('2022-05-31T00:00:01', '2022-05-30T00:00:01', 4, 365.36, null, null, 1);
 
 INSERT INTO public.reservation(end_date_time, start_date_time, status, total_price, client_id, grade, offer_id)
     	VALUES ('2022-05-25T00:00:01', '2022-05-24T00:00:01', 0, 120.5, 1, 2, 1);
@@ -380,7 +366,7 @@ INSERT INTO public.reservation(end_date_time, start_date_time, status, total_pri
 INSERT INTO public.reservation(end_date_time, start_date_time, status, total_price, client_id, grade, offer_id)
     	VALUES ('2022-07-10T00:00:00', '2022-07-05T00:00:00', 0, 120.5, 1, null, 2);
 INSERT INTO public.reservation(end_date_time, start_date_time, status, total_price, client_id, grade, offer_id)
-    	VALUES ('2022-06-27T00:00:01', '2022-06-26T00:00:01', 1, 129.99, 9, 6, 23);
+    	VALUES ('2022-06-27T00:00:01', '2022-06-26T00:00:01', 1, 129.99, 9, null, 23);
 INSERT INTO public.reservation(end_date_time, start_date_time, status, total_price, client_id, grade, offer_id)
     	VALUES ('2022-06-29T00:00:01', '2022-06-28T00:00:01', 1, 199.99, 9, null, 24);
 INSERT INTO public.reservation(end_date_time, start_date_time, status, total_price, client_id, grade, offer_id)
@@ -398,15 +384,15 @@ INSERT INTO public.reservation(end_date_time, start_date_time, status, total_pri
 INSERT INTO public.reservation(end_date_time, start_date_time, status, total_price, client_id, grade, offer_id)
     	VALUES ('2022-05-25T00:00:01', '2022-05-24T00:00:01', 3, 120.5, 9, null, 1);
 INSERT INTO public.reservation(end_date_time, start_date_time, status, total_price, client_id, grade, offer_id)
-    	VALUES ('2022-04-25T00:00:01', '2022-04-24T00:00:01', 3, 99.99, 9, 7, 22);
+    	VALUES ('2022-04-25T00:00:01', '2022-04-24T00:00:01', 3, 99.99, 9, null, 22);
 INSERT INTO public.reservation(end_date_time, start_date_time, status, total_price, client_id, grade, offer_id)
-    	VALUES ('2022-04-27T00:00:01', '2022-04-26T00:00:01', 3, 129.99, 9, 5, 23);
+    	VALUES ('2022-04-27T00:00:01', '2022-04-26T00:00:01', 3, 129.99, 9, null, 23);
 INSERT INTO public.reservation(end_date_time, start_date_time, status, total_price, client_id, grade, offer_id)
     	VALUES ('2022-05-29T00:00:01', '2022-05-28T00:00:01', 3, 199.99, 9, null, 24);
 INSERT INTO public.reservation(end_date_time, start_date_time, status, total_price, client_id, grade, offer_id)
     	VALUES ('2022-06-01T00:00:01', '2022-05-30T00:00:01', 3, 79.99, 9, null, 25);
 INSERT INTO public.reservation(end_date_time, start_date_time, status, total_price, client_id, grade, offer_id)
-    	VALUES ('2022-08-08T00:00:01', '2022-08-02T00:00:01', 4, 49.99, null, null, 26);
+    	VALUES ('2022-07-08T00:00:01', '2022-08-02T00:00:01', 4, 49.99, null, null, 26);
 
 --ZALBE
 INSERT INTO public.complaint(for_offer, from_owner, offender_id, pusnih_offender, status, text, reservation_id)
@@ -436,15 +422,4 @@ INSERT INTO public.loyalty_definition(
 INSERT INTO public.loyalty_definition(
 	discount_rate, max_points, min_points, rank_name, points_per_reservation)
 	VALUES (0.8, 99999, 1000, 'Platinum', 6);
-
---ZAHTEV ZA BRISANJE
-INSERT INTO public.deletion_request (deletion_reason, deletion_request_status)
-	VALUES ('Prestajem da se bavim ovim poslom i postajem programer.', 0);
 	
-UPDATE public.users SET deletion_request = 1 WHERE id = 14;
-
---ZAHTEV ZA REGISTRACIJU
-INSERT INTO public.registration_request (registration_reason, registration_request_status)
-	VALUES ('Hocu da postanem instruktor pecanja!', 0);
-
-UPDATE public.users SET registration_request = 1 WHERE id = 15;

@@ -73,6 +73,11 @@ export class NewActionComponent implements OnInit {
 
   addNewAction(){
 
+    if(this.totalPrice <= 0){
+      this.messageService.showMessage("Morate uneti cenu koja je veća od 0!",MessageType.ERROR);
+      return;
+    }
+
     if(this.fromDate != undefined && this.toDate !=undefined){
       
       let action = new ActionSendDTO();
@@ -86,6 +91,9 @@ export class NewActionComponent implements OnInit {
         this.router.navigate(["/calendar/"+this.offerId]);
         this._pData.callParentMethod();
         this.messageService.showMessage("Uspešno ste dodali akciju.",MessageType.SUCCESS);
+      },
+      error=>{
+        this.messageService.showMessage(error.error,MessageType.ERROR);   
       });
     }
     else{

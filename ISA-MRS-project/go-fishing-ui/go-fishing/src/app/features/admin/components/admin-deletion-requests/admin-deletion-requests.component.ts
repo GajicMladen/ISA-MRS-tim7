@@ -13,7 +13,7 @@ export class AdminDeletionRequestsComponent implements OnInit {
 
   adminId: number;
   beingRefused: number = -1;
-  deletionRequests: DeletionRequest[];
+  deletionRequests: DeletionRequest[] = [];
 
   constructor(private route: ActivatedRoute,
               private messageService: MessageService,
@@ -36,6 +36,10 @@ export class AdminDeletionRequestsComponent implements OnInit {
     this.adminService.refuseDeletion(this.beingRefused, reasonInput.value).subscribe(data => {
       this.messageService.showMessage('Zahtev za brisanje naloga odbijen!', MessageType.SUCCESS);
       this.deletionRequests.forEach((element, index) => {if(element.userId === this.beingRefused.toString()) this.deletionRequests.splice(index, 1)});
+      if (!this.deletionRequests) {
+        console.log('aaaaa');
+        this.deletionRequests = [];
+      }
     });    
   }
 
