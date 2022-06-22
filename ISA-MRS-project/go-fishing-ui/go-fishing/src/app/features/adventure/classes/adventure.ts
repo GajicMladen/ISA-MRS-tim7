@@ -1,5 +1,4 @@
 
-
 export interface IAdventure {
 	id?: number;
 	name: string;
@@ -27,7 +26,7 @@ export interface IAdventure {
 	deleted: boolean;
 }
 
-export class Adventure {
+export class Adventure{
     id?: number;
 	name: string;
 	promoDescription: string;

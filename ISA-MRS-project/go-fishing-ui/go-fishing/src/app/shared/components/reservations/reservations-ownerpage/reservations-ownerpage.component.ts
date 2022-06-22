@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { AdventureService } from 'src/app/features/adventure/adventure.service';
 import { BoatService } from 'src/app/features/boat/services/boat.service';
 import { CottageService } from 'src/app/features/cottage/services/cottage.service';
 import { ReservationService } from 'src/app/shared/services/reservation-service/reservation.service';
@@ -14,7 +15,8 @@ export class ReservationsOwnerpageComponent implements OnInit {
 
   constructor(private reservationService:ReservationService,
     private cottageService:CottageService,
-    private boatService:BoatService) { }
+    private boatService:BoatService,
+    private adventureService: AdventureService) { }
 
   @Input() ownerId : number;
   @Input() ownerType : string;

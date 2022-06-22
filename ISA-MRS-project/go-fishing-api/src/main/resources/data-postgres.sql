@@ -398,7 +398,7 @@ INSERT INTO public.reservation(end_date_time, start_date_time, status, total_pri
 INSERT INTO public.reservation(end_date_time, start_date_time, status, total_price, client_id, grade, offer_id)
     	VALUES ('2022-05-25T00:00:01', '2022-05-24T00:00:01', 3, 120.5, 9, null, 1);
 INSERT INTO public.reservation(end_date_time, start_date_time, status, total_price, client_id, grade, offer_id)
-    	VALUES ('2022-04-25T00:00:01', '2022-04-24T00:00:01', 3, 99.99, 9, 7, 22);
+    	VALUES ('2022-04-25T00:00:01', '2022-04-24T00:00:01', 0, 99.99, 9, 7, 22);
 INSERT INTO public.reservation(end_date_time, start_date_time, status, total_price, client_id, grade, offer_id)
     	VALUES ('2022-04-27T00:00:01', '2022-04-26T00:00:01', 3, 129.99, 9, 5, 23);
 INSERT INTO public.reservation(end_date_time, start_date_time, status, total_price, client_id, grade, offer_id)

@@ -37,4 +37,24 @@ export class AdventureReservationsComponent implements OnInit {
     }
   }
 
+  onChange(offerId:any){
+    /*
+    if(offerId == "all"){
+      this.reservationService.getReservationsForOwner(this.ownerId,this.ownerType).subscribe(
+        data => {
+          this.reservations = data;
+          console.log(data);
+          console.log(this.reservations);
+        }
+      );
+    }
+    else{
+      this.reservationService.getReservationsForOffer(offerId).subscribe(data=>{
+        this.reservations = data;
+        console.log(this.reservations);
+      });
+    }
+    */
+  }
+
 }
