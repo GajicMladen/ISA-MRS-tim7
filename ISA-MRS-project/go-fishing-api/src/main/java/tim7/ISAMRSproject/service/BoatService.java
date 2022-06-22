@@ -163,13 +163,24 @@ public class BoatService {
   }
 
 
-	public void editBoat(Boat boat,Integer id,String name,String description,float price,int capacity){
+	public void editBoat(Boat boat,String name,String description,float price,int capacity,
+						 String extraFavors,float length,int numOfMotors,float powerOfEngines, float maxSpeed,
+						 String reservationCancellationTerms){
 
 		boat.setChanging(!boat.isChanging());
-		boatRepository.save(boat);
 
-		boatRepository.updateBoat(id, name,
-				description,price,capacity);
+		boat.setName(name);
+		boat.setPromoDescription(description);
+		boat.setPrice(price);
+		boat.setCapacity(capacity);
+		boat.setExtraFavors(extraFavors);
+		boat.setMaxSpeed(maxSpeed);
+		boat.setCancelConditions(reservationCancellationTerms);
+		boat.setLength(length);
+		boat.setMotorPower(powerOfEngines);
+		boat.setMotorsCount(numOfMotors);
+
+		boatRepository.save(boat);
 	}
 
   

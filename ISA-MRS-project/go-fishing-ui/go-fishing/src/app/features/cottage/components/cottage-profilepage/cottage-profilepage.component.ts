@@ -60,11 +60,12 @@ export class CottageProfilepageComponent implements OnInit {
 
   ngOnInit(): void {
     this.cottageId = Number(this.route.snapshot.paramMap.get('id'));
-    if (!isNaN(this.cottageId)) {
+    
       this.cottageService
         .findCottageById(this.cottageId)
         .subscribe((cottage) => {
           this.cottage = cottage;
+          console.log("updated cottage")
           if (this.cottage != null && this.cottage.extraFavors != null)
             this.extraFavors = this.cottage.extraFavors.split('|');
 
@@ -109,7 +110,7 @@ export class CottageProfilepageComponent implements OnInit {
           this.grades = res;
         }
       )
-    }
+    
   }
 
   getIsSuscribed() {

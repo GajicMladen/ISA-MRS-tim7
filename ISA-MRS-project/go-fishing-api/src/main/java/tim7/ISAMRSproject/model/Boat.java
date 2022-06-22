@@ -28,7 +28,7 @@ public class Boat extends Offer {
 	@Column(name = "maxSpeed",nullable = false)
 	private float maxSpeed;
 	
-	@Column(name ="cancelConditions",nullable = false)
+	@Column(name ="cancelConditions",nullable = true)
 	private String cancelConditions;
 
 

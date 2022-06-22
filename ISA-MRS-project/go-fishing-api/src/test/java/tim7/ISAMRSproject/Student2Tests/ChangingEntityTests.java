@@ -44,7 +44,8 @@ public class ChangingEntityTests {
                 Cottage cottage = cottageService.getCottageById(1).get();
 
                 try { Thread.sleep(3000); } catch (InterruptedException e) {}
-                cottageService.editCottage(cottage,cottage.getId(),"Novo ime","novi opis",365,50);
+                cottageService.editCottage(cottage,cottage.getId(),"Novo ime","novi opis",365,50,2,
+                        "sa",50);
             }
         });
 
@@ -110,7 +111,8 @@ public class ChangingEntityTests {
 
                 Cottage cottage = cottageService.getCottageById(1).get();
 
-                cottageService.editCottage(cottage,cottage.getId(),"Novo ime","novi opis",365,50);
+                cottageService.editCottage(cottage,cottage.getId(),"Novo ime","novi opis",365,50,
+                        10," sad",10);
 
             }
         });

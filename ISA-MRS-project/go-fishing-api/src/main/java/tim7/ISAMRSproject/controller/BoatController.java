@@ -83,7 +83,9 @@ public class BoatController {
     public void updateBoat(@RequestBody BoatDTO boat){
 
         Boat boat1 = boatService.getBoat(boat.getId()).get();
-        boatService.editBoat(boat1,boat.getId(),boat.getName(),boat.getDescription(),boat.getPrice(),boat.getCapacity());
+        boatService.editBoat(boat1,boat.getName(),boat.getDescription(),boat.getPrice(),boat.getCapacity(),
+                boat.getExtraFavors(),boat.getLength(),boat.getNumOfMotors(),boat.getPowerOfEngines(),
+                boat.getMaxSpeed(),boat.getReservationCancellationTerms());
     }
     
     @GetMapping(value = "/getBoatsPreview")

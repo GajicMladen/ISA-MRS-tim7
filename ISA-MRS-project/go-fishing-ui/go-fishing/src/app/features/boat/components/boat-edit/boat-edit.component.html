@@ -30,8 +30,12 @@
                     
                 <h2 class="font-weight-bold"> <span class="text-muted">Cena po danu:</span></h2>
                 <input type="number" min="0" [(ngModel)]="price" >
+                <span class="font-weight-bold">Dužina:</span><input type="number" [(ngModel)]="length">
                 
                 <span class="font-weight-bold">Kapcitet ljudi:</span><input type="number" [(ngModel)]="capacity">
+                <span class="font-weight-bold">Broj motora:</span><input type="number" [(ngModel)]="numOfMotors">
+                <span class="font-weight-bold">Snaga motora:</span><input type="number" [(ngModel)]="powerOfEngines">
+                <span class="font-weight-bold">Maksimalna brzina:</span><input type="number" [(ngModel)]="maxSpeed">
                     
                 <span class="font-weight-bold">Opis:</span>
                         <textarea type="text" rows="10" cols="40" [(ngModel)]="promoDescription"></textarea>
@@ -39,7 +43,7 @@
                             <span class="font-weight-bold">Dodatne usluge:</span>
                         <div class="bullets">
                             Dodatne usluge (novi red za svaku dodatnu uslugu):
-                            <textarea matInput [(ngModel)]="extraFavorsString" name="equipment" placeholder="Oprema"></textarea>
+                            <textarea matInput [(ngModel)]="extraFavorString" name="equipment" placeholder="Oprema"></textarea>
                         </div>
                     
             </div>            

@@ -31,19 +31,19 @@
                 <input type="text" name="cottageName" [(ngModel)]="boatType">
                     
                 <h2 class="font-weight-bold"> <span class="text-muted">Cena po danu:</span></h2>
-                <input  type="number" min="0" [(ngModel)]="price" >
+                <input  type="number" min="1" [(ngModel)]="price" >
                 
                 <span class="font-weight-bold">Kapcitet ljudi:</span>
-                <input  type="number" [(ngModel)]="capacity">
+                <input  type="number" [(ngModel)]="capacity" min="1">
 
                 <span class="font-weight-bold">Broj motora:</span>
-                <input  type="number" [(ngModel)]="numOfEngines">
+                <input  type="number" [(ngModel)]="numOfEngines" min="1">
                 
                 <span class="font-weight-bold">Snaga motora:</span>
-                <input  type="number" [(ngModel)]="powerOfEngines">
+                <input  type="number" [(ngModel)]="powerOfEngines" min="1">
                 
                 <span class="font-weight-bold">Brzina motora:</span>
-                <input  type="number" [(ngModel)]="maxSpeed">
+                <input  type="number" [(ngModel)]="maxSpeed" min="1">
                     
                 <span class="font-weight-bold">Opis:</span>
                 <textarea  type="text" rows="10" cols="40" [(ngModel)]="promoDescription"></textarea>

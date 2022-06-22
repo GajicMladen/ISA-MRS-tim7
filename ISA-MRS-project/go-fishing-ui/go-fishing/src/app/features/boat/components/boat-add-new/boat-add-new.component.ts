@@ -58,7 +58,12 @@ export class BoatAddNewComponent implements OnInit {
     this.newBoat.numOfMotors = this.numOfEngines;
     this.newBoat.powerOfEngines = this.powerOfEngines;
     this.newBoat.reservationCancellationTerms = this.reservationCancellationTerms;
+    if(this.extraFavorsString != undefined){
     this.newBoat.extraFavors = this.extraFavorsString.split(/\r?\n/).join("|");
+    }
+    else{
+      this.newBoat.extraFavors = "";
+    }
     this.newBoat.maxSpeed = this.maxSpeed;
 
     

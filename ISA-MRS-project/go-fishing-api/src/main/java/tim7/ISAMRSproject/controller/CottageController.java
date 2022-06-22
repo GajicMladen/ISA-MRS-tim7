@@ -89,7 +89,8 @@ public class CottageController {
 
 		Cottage cottage1 = cottageService.getCottageById(cottage.getId()).get();
 		cottageService.editCottage(cottage1,cottage.getId(),cottage.getName(),cottage.getDescription(),
-				cottage.getPrice(),cottage.getCapacity());
+				cottage.getPrice(),cottage.getCapacity(),cottage.getBedCount(),
+				cottage.getExtraFavors(),cottage.getRoomCount());
 	}
 	
     @GetMapping(value = "/getCottagesPreview")

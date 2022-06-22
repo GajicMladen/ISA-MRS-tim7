@@ -38,6 +38,8 @@ export class BoatProfilepageComponent implements OnInit {
   hasFreePeriods: boolean = true;
 
   canReserve: boolean = true;
+
+
   constructor(
     private route: ActivatedRoute,
     private boatService: BoatService,

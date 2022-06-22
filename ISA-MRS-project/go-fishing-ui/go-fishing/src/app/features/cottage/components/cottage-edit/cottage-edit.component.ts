@@ -22,6 +22,8 @@ export class CottageEditComponent implements OnInit {
   bedCount:number;
   roomCount:number;
 
+  extraFavorString:string;
+
   constructor(private cottageService:CottageService,
     private route: ActivatedRoute,
     private router:Router,
@@ -54,6 +56,14 @@ export class CottageEditComponent implements OnInit {
     this.newCottage.bedCount = this.bedCount;
     this.newCottage.id = this.cottageId;
     this.newCottage.roomCount = this.roomCount;
+    if (this.extraFavorString != undefined) {
+    this.newCottage.extraFavors = this.extraFavorString
+    .split(/\r?\n/)
+    .join('|') ;
+    }
+    else{
+      this.newCottage.extraFavors = "";
+    }
 
     //console.log(this.newCottage);
     

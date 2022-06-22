@@ -38,15 +38,31 @@ export class CottageAddNewComponent implements OnInit {
   }
 
   addNewCottage() {
+
+    if((this.name == undefined || this.name.length == 0) &&
+      this.price == 0 &&
+      this.capacity == 0 &&
+      (this.promoDescription == undefined || this.promoDescription.length == 0) &&
+      this.bedCount == 0)
+      {
+        this.messageService.showMessage("Popunite polja",MessageType.ERROR);
+        return;
+      }
+
     this.newCottage.name = this.name;
     this.newCottage.price = this.price;
     this.newCottage.capacity = this.capacity;
     this.newCottage.description = this.promoDescription;
     this.newCottage.bedCount = this.bedCount;
     this.newCottage.ownerId = this.ownerId;
+    if(this.extraFavorString != undefined){
     this.newCottage.extraFavors = this.extraFavorString
       .split(/\r?\n/)
       .join('|');
+    }
+    else{
+      this.newCottage.extraFavors = "";
+    }
 
     this.cottageService.addNewCottage(this.newCottage).subscribe((data) => {
       this.messageService.showMessage(

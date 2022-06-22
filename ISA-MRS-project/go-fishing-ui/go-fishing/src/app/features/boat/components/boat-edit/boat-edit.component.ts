@@ -20,7 +20,13 @@ export class BoatEditComponent implements OnInit {
   price:number;
   capacity:number;
   promoDescription : string;
-  extraFavorsString:string;
+  extraFavorString:string;
+  
+  length: number;
+  numOfMotors: number;
+  powerOfEngines: number;
+  maxSpeed: number;
+  reservationCancellationTerms?: string;
 
   constructor(private boatService:BoatService,
     private route: ActivatedRoute,
@@ -36,6 +42,10 @@ export class BoatEditComponent implements OnInit {
       this.price = this.currentBoat.price;
       this.capacity = this.currentBoat.capacity;
       this.promoDescription = this.currentBoat.description;
+      this.length = this.currentBoat.length;
+      this.numOfMotors = this.currentBoat.numOfMotors;
+      this.powerOfEngines = this.currentBoat.powerOfEngines;
+      this.maxSpeed = this.currentBoat.maxSpeed;
     })
   }
 
@@ -45,6 +55,18 @@ export class BoatEditComponent implements OnInit {
     this.newBoat.capacity = this.capacity;
     this.newBoat.description = this.promoDescription;
     this.newBoat.id = this.boatId;
+    this.newBoat.maxSpeed = this.maxSpeed;
+    this.newBoat.numOfMotors = this.numOfMotors;
+    this.newBoat.powerOfEngines = this.powerOfEngines;
+    this.newBoat.length = this.length;
+    if(this.extraFavorString != undefined){
+      this.newBoat.extraFavors = this.extraFavorString
+      .split(/\r?\n/)
+      .join('|');
+    }
+    else{
+      this.newBoat.extraFavors = "";
+    }
 
     
     this.boatService.editBoat(this.newBoat).subscribe(response => {

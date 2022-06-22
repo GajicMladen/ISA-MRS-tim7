@@ -63,13 +63,22 @@ public class CottageService {
 		}
 	}
 
-	public void editCottage(Cottage cottage,Integer id,String name,String description,float price,int capacity){
+	public void editCottage(Cottage cottage,Integer id,String name,String description,float price,int capacity,
+							int bedCount,String extraFavors,int roomCount){
 
 		cottage.setChanging(!cottage.isChanging());
 		cottageRepository.save(cottage);
 
-		cottageRepository.updateCottage(id, name,
-				description,price,capacity);
+		cottage.setPrice(price);
+		cottage.setCapacity(capacity);
+		cottage.setName(name);
+		cottage.setPromoDescription(description);
+
+		cottage.setBedCount(bedCount);
+		cottage.setExtraFavors(extraFavors);
+		cottage.setRoomCount(roomCount);
+
+		cottageRepository.save(cottage);
 	}
 	
 	public List<OfferShortDTO> getCottagesPage(int page, int perPage, String sort){
