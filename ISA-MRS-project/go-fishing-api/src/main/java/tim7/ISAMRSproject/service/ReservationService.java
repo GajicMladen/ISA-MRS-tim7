@@ -52,7 +52,7 @@ public class ReservationService {
 
 	public boolean AdventureHasReservations(Integer id) {
 		for (Reservation r : reservationRepository.findAll()) {
-			if (r.getOffer().getId() == id) {
+			if (r.getOffer().getId() == id && r.getStatus() == ReservationStatus.ACTIVE) {
 				return true;
 			}
 		}

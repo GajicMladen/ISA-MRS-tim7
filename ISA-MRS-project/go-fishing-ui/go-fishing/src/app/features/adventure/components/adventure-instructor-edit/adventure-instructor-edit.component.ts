@@ -50,10 +50,21 @@ export class AdventureInstructorEditComponent implements OnInit {
     } else {
       if (this.router.url.split('/')[1] !== localStorage.getItem('user-id')) {
         this.router.navigateByUrl(
+          'editInstructor/' + localStorage.getItem('user-id')
+        );
+      }
+    }
+    /*
+    if (localStorage.getItem('user-role') !== 'ROLE_INSTRUCTOR') {
+      this.router.navigateByUrl('');
+    } else {
+      if (this.router.url.split('/')[1] !== localStorage.getItem('user-id')) {
+        this.router.navigateByUrl(
           'adventureAddNew/' + localStorage.getItem('user-id')
         );
       }
     }
+    */
     this.instructorId = Number(this.route.snapshot.paramMap.get('id'));
 
     if (!isNaN(this.instructorId)) {

@@ -487,7 +487,7 @@ public class ReservationController {
         }
         catch (OptimisticEntityLockException e){
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-                return new ResponseEntity<>("Nismo uspeli da rezervišemo akciju,pokusajte ponovo.",HttpStatus.FORBIDDEN);
+                //return new ResponseEntity<>("Nismo uspeli da rezervišemo akciju,pokusajte ponovo.",HttpStatus.FORBIDDEN);
         }
     }
 

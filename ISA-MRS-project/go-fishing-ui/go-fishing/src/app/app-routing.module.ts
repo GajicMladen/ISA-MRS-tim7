@@ -93,6 +93,7 @@ const routes: Routes = [
   { path: 'newFreePeriod/:id', component: NewFreePeriodComponent },
   { path: 'calendar/:id', component: CalendarComponent },
   { path: 'editInstructor/:id', component: AdventureInstructorEditComponent },
+  { path: 'adventureReservations/:id', component: AdventureReservationsComponent},
   {
     path: 'registrationRequests/:id',
     component: AdminRegistrationRequestsComponent,
@@ -101,7 +102,7 @@ const routes: Routes = [
   { path: 'complaints/:id', component: AdminComplaintsComponent },
   { path: 'addAdmin/:id', component: AdminAddAdminComponent },
   { path: 'adminReport/:id', component: AdminReportComponent },
-  { path: 'editInstructor/:id', component: AdventureInstructorEditComponent },
+  //{ path: 'editInstructor/:id', component: AdventureInstructorEditComponent },
   { path: 'boatProfile/:id', component: BoatProfilepageComponent },
   { path: 'boatOwner/:id', component: BoatOwnerpageComponent },
   { path: 'editAdventure/:id', component: AdventureEditComponent },

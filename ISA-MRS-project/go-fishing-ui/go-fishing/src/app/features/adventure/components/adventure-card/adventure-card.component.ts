@@ -81,6 +81,9 @@ export class AdventureCardComponent implements OnInit {
         console.log(adventure);
         this.messageService.showMessage("Avantura uspešno obrisana!", MessageType.SUCCESS);        
         this.OnAdventureDeleted.emit(this.adventureId);
+      },
+      error => {
+        this.messageService.showMessage("Avantura ima aktivne rezervacije!", MessageType.ERROR);
       });
   }
 

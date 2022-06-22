@@ -81,18 +81,18 @@ public class AdventureController {
 	
 	@DeleteMapping(value = "/{id}")
 	@PreAuthorize("hasRole('ROLE_INSTRUCTOR')")
-	public ResponseEntity<AdventureDTO> deleteAdventure(@PathVariable Integer id) {
+	public ResponseEntity<?> deleteAdventure(@PathVariable Integer id) {
 		Optional<Adventure> adventure = adventureService.findById(id);
 		
 		if (adventure.isPresent()) {
-			//if (!reservationService.AdventureHasReservations(id)) {
-			adventureService.remove(id);
-			return new ResponseEntity<AdventureDTO>(new AdventureDTO(adventure.get()), HttpStatus.OK);
-			//}
-			//return new ResponseEntity<Void>(HttpStatus.FORBIDDEN);
+			if (!reservationService.AdventureHasReservations(id)) {
+				adventureService.remove(id);
+				return new ResponseEntity<>(new AdventureDTO(adventure.get()), HttpStatus.OK);
+			}
+			return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
 		}
 		else {
-			return new ResponseEntity<AdventureDTO>(new AdventureDTO(adventure.get()), HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>(new AdventureDTO(adventure.get()), HttpStatus.NOT_FOUND);
 		}
 	}
 	

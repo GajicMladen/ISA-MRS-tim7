@@ -3,6 +3,7 @@ package tim7.ISAMRSproject.service;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -48,9 +49,8 @@ public class ComplaintService {
 	}
 
 	@Transactional
-	public void save(Complaint complaint) {
+	public void save(Complaint complaint) {		
 		this.complaintRepository.save(complaint);
-		
 	}
 }
 

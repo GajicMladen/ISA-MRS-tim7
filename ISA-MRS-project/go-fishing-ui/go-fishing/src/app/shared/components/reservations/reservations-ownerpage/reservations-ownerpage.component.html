@@ -3,7 +3,7 @@
 
     <mat-label *ngSwitchCase="'C'">Vikendice:</mat-label>
     <mat-label *ngSwitchCase="'B'">Brodovi:</mat-label>
-    <mat-label *ngSwitchCase="'A'">Avanture:</mat-label> 
+    <mat-label *ngSwitchCase="'I'">Avanture:</mat-label> 
 
     <mat-select class="select" [ngModel]="selectedOffer" *ngIf="offers != null && offers.length > 0" (ngModelChange)="onChange($event)">
         
