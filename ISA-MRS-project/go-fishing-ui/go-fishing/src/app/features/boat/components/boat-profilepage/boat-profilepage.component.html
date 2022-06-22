@@ -90,16 +90,21 @@
                     </div>
                 </div>
                 <div class="buttons">
-                    <a href="../reservationStart">
-                        <button class="btn btn-outline-warning btn-long cart">Rezerviši</button>
-                    </a>
-                        <button class="btn btn-warning btn-long buy"><i class="fa fa-calendar-check-o"></i> Proveri dostupnost </button> <button class="btn btn-light wishlist"> <i class="fa fa-heart"></i> </button> </div>
+                    <span [matTooltip]="reservationTooltipText" [matTooltipDisabled]="hasFreePeriods && canReserve">
+                        <button style="margin-right: 7px" class="btn btn-outline-warning btn-long cart" (click)="openReservationDialog()" [disabled]="!hasFreePeriods || !canReserve" *ngIf="clientLoggedIn">Rezerviši</button>
+                    </span>                  
+                        <button style="margin-right: 7px" class="btn btn-warning btn-long buy" routerLink="/calendar/{{boat.id}}" [disabled]="!isAuthentified"><i class="fa fa-calendar-check-o"></i> Proveri dostupnost </button> 
+                        
+                        <button class="btn btn-light wishlist" (click)="addSubscription()" *ngIf="!isSuscribed && clientLoggedIn"> <i class="fa fa-bell"></i> Pretplati se </button> 
+                        <button class="btn btn-light wishlist" (click)="removeSubscription()" *ngIf="isSuscribed && clientLoggedIn"> <i class="fa fa-bell-slash"></i> Odjavi se </button> 
+                </div>
                 <hr>
                 <div class="product-description">
-                    <div><span class="font-weight-bold">Broj soba:</span><span> 2</span></div>
-                    <div><span class="font-weight-bold">Broj kreveta:</span><span> 4</span></div>
+                    <div><span class="font-weight-bold">Duzina:</span><span> {{boat.length}}</span></div>
+                    <div><span class="font-weight-bold">Broj motora:</span><span>{{boat.numOfMotors}}</span></div>
                     <br />
-                    <div><span class="font-weight-bold">Kapcitet ljudi:</span><span> 17</span></div>
+                    <div><span class="font-weight-bold">Snaga motora:</span><span> {{boat.powerOfEngines}} kw</span></div>
+                    <div><span class="font-weight-bold">Maksimalna brzina:</span><span> {{boat.maxSpeed}} km/h</span></div>
                     <hr >
                     <div class="mt-2"> <span class="font-weight-bold">Opis:</span>
                         <p>
@@ -108,23 +113,20 @@
                         <hr >       
                         <div class="bullets">
                             <span class="font-weight-bold">Dodatne usluge:</span>
-                            <div class="d-flex align-items-center"> <span class="dot"></span> <span class="bullet-text">Wi-fi</span> </div>
-                            <div class="d-flex align-items-center"> <span class="dot"></span> <span class="bullet-text">Spa</span> </div>
-                            <div class="d-flex align-items-center"> <span class="dot"></span> <span class="bullet-text">Đakuzi</span> </div>
-                            <div class="d-flex align-items-center"> <span class="dot"></span> <span class="bullet-text">Bazen</span> </div>
-                            <div class="d-flex align-items-center"> <span class="dot"></span> <span class="bullet-text">TV</span> </div>
-                            <div class="d-flex align-items-center"> <span class="dot"></span> <span class="bullet-text">Klima</span> </div>
+                            <div *ngFor="let extraFavor of extraFavors" class="d-flex align-items-center"> 
+                                <span class="dot"></span> <span class="bullet-text">{{extraFavor}}</span> 
+                            </div>
                         </div>
                     </div>
                     <hr >
                     <div class="mt-2"> <span class="font-weight-bold">Izdavač</span> </div>
                     <div class="d-flex flex-row align-items-center">
-                        <a  routerLink="/boatOwner/{{boat.ownerId}}">
+                        <a  routerLink="/boatOwner/{{boat.ownerId}}" [class.clickable]="!isAuthentified">
                             <img src="https://i.imgur.com/N2fYgvD.png" class="rounded-circle store-image">
                         </a>
-                        <a routerLink="/boatOwner/{{boat.ownerId}}">
+                        <a routerLink="/boatOwner/{{boat.ownerId}}" [class.clickable]="!isAuthentified">
                             <div class="d-flex flex-column ml-1 comment-profile">
-                                <div class="comment-ratings"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> </div> <span class="username">Agencija izdavanje NS</span> <small class="followers">25K Followers</small>
+                                <div class="comment-ratings"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> </div> <span class="username">{{ownerName}}</span> <small class="followers">25K Followers</small>
                             </div>
                         </a>
                     </div>
@@ -132,67 +134,21 @@
 
                         <div class="">
                             <div class="actions">
-                                <span class="font-weight-bold">Akcije za vikendicu:</span>
-                                <div class="card action-card-body">
-                                    <div class="media align-items-center align-items-lg-start text-center text-lg-left flex-column flex-lg-row">
+                                <span class="font-weight-bold">Akcije za brod:</span>
+                                <div *ngFor="let action of actions" class="card action-card-body">
+                                    <div  class="media align-items-center align-items-lg-start text-center text-lg-left flex-column flex-lg-row">
                                         <div class="action-img"> <img src="../../../../../assets/images/boats/b1.jpg" alt=""> </div>
                     
                                         <div class="media-body">
-                                            <h4 class="media-title font-weight-semibold">Brod SARA</h4>
+                                            <h4 class="media-title font-weight-semibold">{{boat.name}}</h4>
                                             <div class="action-info">
-                                                <span class="text-muted">Početak:</span><span class="action-info-d">12.04.2022. 12:00</span>
-                                                <span class="text-muted">Kraj:</span><span class="action-info-d">18.04.2022. 12:00</span>
-                                                <span class="text-muted">Broj osoba:</span ><span class="action-info-d">12</span>
-                                            </div>
+                                                <span class="text-muted">Početak:</span><span class="action-info-d">{{action.getStartDateString()}}</span>
+                                                <span class="text-muted">Kraj:</span><span class="action-info-d">{{action.getEndDateString()}}</span>
+                                               </div>
                                         </div>
                                         <div class="mt-3 mt-lg-0 ml-lg-3 text-center">
-                                            <h3 class="mb-0 font-weight-semibold action-price" >$459.99</h3>
-                                            
-                                            <a href="../reservationStart">
-                                                <button type="button" class="btn btn-primary text-white action-btn-r" >Rezerviši</button>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card action-card-body">
-                                    <div class="media align-items-center align-items-lg-start text-center text-lg-left flex-column flex-lg-row">
-                                        <div class="action-img"> <img src="../../../../../assets/images/boats/b1.jpg" alt=""> </div>
-                    
-                                        <div class="media-body">
-                                            <h4 class="media-title font-weight-semibold"> Brod SARA</h4>
-                                            <div class="action-info">
-                                                <span class="text-muted">Početak:</span><span class="action-info-d">18.04.2022. 12:00</span>
-                                                <span class="text-muted">Kraj:</span><span class="action-info-d">20.04.2022. 12:00</span>
-                                                <span class="text-muted">Broj osoba:</span ><span class="action-info-d">17</span>
-                                            </div>
-                                        </div>
-                                        <div class="mt-3 mt-lg-0 ml-lg-3 text-center">
-                                            <h3 class="mb-0 font-weight-semibold action-price" >$189.99</h3>
-                                            <a href="../reservationStart">
-                                               <button type="button" class="btn btn-primary text-white action-btn-r">Rezerviši</button>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card action-card-body">
-                                    <div class="media align-items-center align-items-lg-start text-center text-lg-left flex-column flex-lg-row">
-                                        <div class="action-img"> <img src="../../../../../assets/images/boats/b1.jpg" alt=""> </div>
-                    
-                                        <div class="media-body">
-                                            <h4 class="media-title font-weight-semibold"> Brod SARA</h4>
-                                            <div class="action-info">
-                                                <span class="text-muted">Početak:</span><span class="action-info-d">12.04.2022. 12:00</span>
-                                                <span class="text-muted">Kraj:</span><span class="action-info-d">18.04.2022. 12:00</span>
-                                                <span class="text-muted">Broj osoba:</span ><span class="action-info-d">12</span>
-                                            </div>
-                                        </div>
-                                        <div class="mt-3 mt-lg-0 ml-lg-3 text-center">
-                                            <h3 class="mb-0 font-weight-semibold action-price" >$459.99</h3>
-                                            
-                                            <!--redirect-->
-                                            <a href="../reservationStart">
-                                                <button type="button" class="btn btn-primary text-white action-btn-r">Rezerviši</button>
-                                            </a>
+                                            <h3 class="mb-0 font-weight-semibold action-price" >${{action.totalPrice}}</h3>
+                                            <button type="button" class="btn btn-primary text-white action-btn-r" (click)="openActionConfirmDialog(action)" [disabled]="!isAuthentified">Rezerviši</button>                                           
                                         </div>
                                     </div>
                                 </div>

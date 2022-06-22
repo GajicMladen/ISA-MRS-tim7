@@ -1,5 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  FormControl,
+  FormGroup,
+  ValidationErrors,
+  ValidatorFn,
+  Validators,
+} from '@angular/forms';
 import {
   MessageService,
   MessageType,
@@ -24,6 +30,9 @@ export class StartpageRegisterComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    if (localStorage.getItem('jwt') !== null) {
+      this.router.navigateByUrl('');
+    }
     this.form.get('password')?.valueChanges.subscribe(() => {
       this.activatePassMatchError =
         String(this.form.get('confirmPassword')!.value) !==
@@ -35,6 +44,11 @@ export class StartpageRegisterComponent implements OnInit {
         String(this.form.get('confirmPassword')!.value) !==
           String(this.form.get('password')!.value) &&
         String(this.form.get('confirmPassword')!.value) !== '';
+    });
+    this.form.get('role')?.valueChanges.subscribe((res: any) => {
+      if (res === 'ROLE_USER') this.form.get('reason')?.clearValidators();
+      else this.form.get('reason')?.addValidators(Validators.required);
+      this.form.get('reason')?.updateValueAndValidity();
     });
   }
 
@@ -55,8 +69,14 @@ export class StartpageRegisterComponent implements OnInit {
       town: new FormControl(''),
       address: new FormControl(''),
       phoneNumber: new FormControl('', Validators.pattern('^[+][0-9]{10,12}$')),
-      role: new FormControl('client'),
+      role: new FormControl('ROLE_USER'),
+      reason: new FormControl(''),
     });
+  }
+
+  get showRegistrationReason(): boolean {
+    let role = this.form.controls['role'].value;
+    return role !== 'ROLE_USER';
   }
 
   saveRequest(): void {
@@ -71,10 +91,13 @@ export class StartpageRegisterComponent implements OnInit {
         .pipe()
         .subscribe(
           (res) => {
-            this.messageService.showMessage(
-              'Success! A confirmation e-mail has been sent!',
-              MessageType.SUCCESS
-            );
+            let msgString;
+            if (this.form.controls['role'].value === 'ROLE_USER')
+              msgString = 'Success! A confirmation e-mail has been sent!';
+            else
+              msgString =
+                'Success! An admin will review your applicaton shortly!';
+            this.messageService.showMessage(msgString, MessageType.SUCCESS);
             this.router.navigate(['/login']);
           },
           (error) => {

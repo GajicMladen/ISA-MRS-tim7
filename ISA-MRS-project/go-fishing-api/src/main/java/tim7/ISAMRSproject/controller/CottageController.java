@@ -8,14 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import tim7.ISAMRSproject.dto.CottageDTO;
-import tim7.ISAMRSproject.dto.FreePeriodDTO;
 import tim7.ISAMRSproject.model.Cottage;
 import tim7.ISAMRSproject.model.User;
 import tim7.ISAMRSproject.service.CottageService;
-import tim7.ISAMRSproject.service.RoleService;
 import tim7.ISAMRSproject.service.UserService;
 
 //import javax.jws.soap.SOAPBinding;
@@ -68,6 +67,7 @@ public class CottageController {
 	@PostMapping(
 			value = "/newCottage",
 			consumes = MediaType.APPLICATION_JSON_VALUE)
+	@PreAuthorize("hasRole('ROLE_COTTAGE_OWNER')")
 	public CottageDTO addNewCottage(@RequestBody CottageDTO newOne) {
 		Optional<User> user = userService.findById(newOne.getOwnerId());
 		if(user.isPresent() && user.get().hasRole("ROLE_COTTAGE_OWNER"))
@@ -76,6 +76,7 @@ public class CottageController {
 	}
 
 	@DeleteMapping(value = "/deleteCottage/{id}")
+	@PreAuthorize("hasRole('ROLE_COTTAGE_OWNER')")
 	public boolean deleteCottage(@PathVariable Integer id){
 
 		return cottageService.deleteCottage(id);
@@ -83,8 +84,35 @@ public class CottageController {
 	}
 
 	@PutMapping(value = "/updateCottage",consumes = MediaType.APPLICATION_JSON_VALUE)
+	@PreAuthorize("hasRole('ROLE_COTTAGE_OWNER')")
 	public void updateCottage(@RequestBody CottageDTO cottage){
-		cottageService.editCottage(cottage);
+
+		Cottage cottage1 = cottageService.getCottageById(cottage.getId()).get();
+		cottageService.editCottage(cottage1,cottage.getId(),cottage.getName(),cottage.getDescription(),
+				cottage.getPrice(),cottage.getCapacity(),cottage.getBedCount(),
+				cottage.getExtraFavors(),cottage.getRoomCount());
 	}
+	
+    @GetMapping(value = "/getCottagesPreview")
+    public ResponseEntity<?> getBoatsPreview(){
+    	List<CottageDTO> dtos = new ArrayList<CottageDTO>();
+    	List<Cottage> cottages = cottageService.getCottagesPreview();
+		for(Cottage c: cottages) {
+			CottageDTO dto = new CottageDTO(c);
+			dtos.add(dto);
+		}
+		return new ResponseEntity<>(dtos, HttpStatus.OK);    	
+    }
+    
+    @GetMapping(value = "/getCottagesPreviewParam/{param}")
+    public ResponseEntity<?> getBoatsPreviewParam(@PathVariable String param){
+    	List<CottageDTO> dtos = new ArrayList<CottageDTO>();
+    	List<Cottage> cottages = cottageService.getCottagesPreviewParam(param);
+		for(Cottage c: cottages) {
+			CottageDTO dto = new CottageDTO(c);
+			dtos.add(dto);
+		}
+		return new ResponseEntity<>(dtos, HttpStatus.OK);    	
+    }
 
 }

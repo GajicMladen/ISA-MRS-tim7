@@ -66,7 +66,7 @@
             <!-- Role -->
             <label id="role-radio-group">Please select your role: </label>
             <mat-radio-group class="role-radio-group" formControlName="role">
-                <mat-radio-button class="role-radio-button" value="ROLE_USER"  checked>
+                <mat-radio-button class="role-radio-button" value="ROLE_USER">
                     Client
                 </mat-radio-button>
                 <mat-radio-button class="role-radio-button" value="ROLE_COTTAGE_OWNER">
@@ -79,7 +79,11 @@
                     Adventure Instructor
                 </mat-radio-button>
             </mat-radio-group>
-
+            
+            <mat-form-field *ngIf="showRegistrationReason">
+                <mat-label>Leave an explanation</mat-label>
+                <textarea matInput formControlName="reason" class="reason-textarea"></textarea>
+            </mat-form-field>
 
             <button mat-raised-button color="primary" type="button" (click)="saveRequest()">Register</button>
             <h3 class="top-spacing">Already have an account? <a routerLink="/login" routerLinkActive="active">Log In!</a></h3>

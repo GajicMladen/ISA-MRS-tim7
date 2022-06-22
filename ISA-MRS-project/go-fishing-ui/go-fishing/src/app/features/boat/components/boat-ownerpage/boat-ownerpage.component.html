@@ -25,7 +25,7 @@
                 <p>Glavni cilj portala za nekretnine jeste zadovoljavanje potreba naših klijenata, bilo individualnih internet korisnika ili agencija, na bolji i efikasniji način od naših konkurenata. U nameri da ostvarimo ovaj cilj, kreiran je program usluga za naše korisnike koji se po svojim bitnim karakteristikama diferenciraju od drugih portala u ove svrhe. </p>
                 
             </div>
-            <div class="justify-content-end" style="display: flex;">
+            <div class="justify-content-end" style="display: flex;" *ngIf="ownerLoggedIn">
                 <a routerLink="/editProfile" routerLinkActive="active"  class="btn  btn-link btn-dribbble"><i class="fa fa-edit"></i>Izmeni podatke</a>
             </div>
             <div>
@@ -41,15 +41,15 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#favorite" role="tab" data-toggle="tab">
+                            <a class="nav-link" href="#reservations" role="tab" data-toggle="tab" *ngIf="ownerLoggedIn">
                               <i class="material-icons">list</i>
                                 Rezervacije
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#works" role="tab" data-toggle="tab">
-                              <i class="material-icons">star</i>
-                                Ocene
+                            <a class="nav-link" href="#charts" role="tab" data-toggle="tab" *ngIf="ownerLoggedIn">
+                              <i class="material-icons">bar_chart</i>
+                                Izveštaji
                             </a>
                         </li>
                       </ul>
@@ -59,16 +59,15 @@
     
       <div class="tab-content tab-space">
         <div class="tab-pane active text-center gallery" id="boats">
-              
+              <app-boat-gallery-owner [ownerId]="ownerId" *ngIf="ownerLoggedIn"></app-boat-gallery-owner>
+              <app-boat-gallery-visitor [ownerId]="ownerId" *ngIf="!ownerLoggedIn"></app-boat-gallery-visitor>
           </div>
-        <div class="tab-pane text-center gallery" id="works">
+        <div class="tab-pane text-center gallery" id="reservations">
+            <app-reservations-ownerpage [ownerId]="ownerId" [ownerType]="'B'"></app-reservations-ownerpage>
+        </div>
+        <div class="tab-pane text-center gallery" id="charts">
               <div class="row">
-                  
-              </div>
-          </div>
-        <div class="tab-pane text-center gallery" id="favorite">
-              <div class="row">
-                  
+                  <app-boat-reports [ownerId]="ownerId"></app-boat-reports>
               </div>
           </div>
       </div>

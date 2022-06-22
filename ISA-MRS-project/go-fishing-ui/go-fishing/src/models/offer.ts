@@ -8,4 +8,6 @@ export interface Offer {
   deleted: boolean;
   capacity: number;
   averageRating: number;
+  extraFavors:string;
+
 }

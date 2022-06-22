@@ -25,12 +25,12 @@
             <br />
             <div><span class="font-weight-bold">Cena: </span><span class="font-weight-bold">{{adventure.price | currency}}</span></div>
             <div *ngIf='isInstructor'>
-                <p class="instructorOptions">
-                    <button class="buttonDisplay" routerLink="" mat-icon-button aria-label="Example icon button with a vertical three dot icon">
+                <div class="instructorOptions">
+                    <button class="buttonDisplay" routerLink="/addFreePeriod/{{adventureId}}" mat-icon-button aria-label="Example icon button with a vertical three dot icon">
                         <mat-icon>more_time</mat-icon>
                         <h6>Dodaj termin</h6>
                     </button>
-                    <button class="buttonDisplay" routerLink="" mat-icon-button aria-label="Example icon button with a vertical three dot icon">
+                    <button class="buttonDisplay" routerLink="/newAction/{{adventureId}}" mat-icon-button aria-label="Example icon button with a vertical three dot icon">
                         <mat-icon>add_alert</mat-icon>
                         <h6>Dodaj akciju</h6>
                     </button>
@@ -42,7 +42,7 @@
                         <mat-icon>delete</mat-icon>
                         <h6>Ukloni</h6>
                     </button>
-                </p>
+                </div>
             </div>
         </div>
     </div>

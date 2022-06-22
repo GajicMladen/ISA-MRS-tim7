@@ -13,6 +13,7 @@ export class BoatOwnerpageComponent implements OnInit {
 
   ownerId : number;
   owner : User;
+  ownerLoggedIn: boolean;
 
   constructor(private route : ActivatedRoute,private userService:UserService ) { }
 
@@ -23,8 +24,16 @@ export class BoatOwnerpageComponent implements OnInit {
     if(!isNaN(this.ownerId)){
       this.userService.findById(this.ownerId).subscribe(user => {
         this.owner = user;
+        console.log(user);
+        console.log("===========");
         console.log(this.owner);
-      })
+      });
+      
+      this.userService.isThisLoggedUser(this.ownerId).subscribe(
+        data=>{
+          this.ownerLoggedIn = data;
+        }
+      )
     }
 
   }

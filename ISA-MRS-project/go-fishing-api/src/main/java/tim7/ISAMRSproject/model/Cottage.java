@@ -22,10 +22,18 @@ public class Cottage extends Offer {
 
 	}
 
+	public Cottage(Integer id, String name, String promoDescription, float price, int capacity, int roomCount, int bedCount) {
+		super(id, name, promoDescription, price, capacity);
+		this.roomCount = roomCount;
+		this.bedCount = bedCount;
+	}
+
 	public Cottage(CottageDTO cottageDTO){
-		super(cottageDTO.getId(), cottageDTO.getName(), cottageDTO.getDescription(), null,null, cottageDTO.getPrice(), cottageDTO.getCapacity());
+		super(cottageDTO.getId(), cottageDTO.getName(), cottageDTO.getDescription(),
+				cottageDTO.getPrice(), cottageDTO.getCapacity(),cottageDTO.getExtraFavors());
 		roomCount = cottageDTO.getRoomCount();
 		bedCount = cottageDTO.getBedCount();
+
 	}
 	
 	public int getCottageOwnerId(){

@@ -13,17 +13,24 @@ export class CottageOwnerpageComponent implements OnInit {
   ownerId : number;
   owner : User;
 
+  ownerLoggedIn: boolean;
+
   constructor(private route : ActivatedRoute,private userService:UserService ) { }
 
   ngOnInit(): void {
     this.ownerId = Number(this.route.snapshot.paramMap.get('id'));
-    console.log(this.ownerId);
     
     if(!isNaN(this.ownerId)){
       this.userService.findById(this.ownerId).subscribe(user => {
         this.owner = user;
-        console.log(this.owner);
-      })
+      });
+
+      this.userService.isThisLoggedUser(this.ownerId).subscribe(
+        data=>{
+          this.ownerLoggedIn = data;
+        }
+      )
+
     }
 
   }

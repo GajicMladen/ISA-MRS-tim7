@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { MessageService, MessageType } from 'src/app/shared/services/message-service/message.service';
 import { Cottage } from 'src/models/cottage';
 import { CottageService } from '../../services/cottage.service';
 
@@ -13,7 +14,7 @@ export class CottageEditComponent implements OnInit {
   cottageId:number;
   currentCottage:Cottage;
 
-  newCottage: Cottage;
+  newCottage: Cottage= new Cottage();
   name :string;
   price:number;
   capacity:number;
@@ -21,7 +22,12 @@ export class CottageEditComponent implements OnInit {
   bedCount:number;
   roomCount:number;
 
-  constructor(private cottageService:CottageService,private route: ActivatedRoute) { }
+  extraFavorString:string;
+
+  constructor(private cottageService:CottageService,
+    private route: ActivatedRoute,
+    private router:Router,
+    private messageService:MessageService) { }
 
   ngOnInit(): void {
     this.cottageId = Number(this.route.snapshot.paramMap.get('id'));
@@ -38,6 +44,11 @@ export class CottageEditComponent implements OnInit {
   }
 
   editCottage() {
+
+    if(this.price < 10 ){
+            this.messageService.showMessage("Unesite neku normalnu cenu",MessageType.ERROR);
+    }
+
     this.newCottage.name = this.name;
     this.newCottage.price = this.price;
     this.newCottage.capacity = this.capacity;
@@ -45,11 +56,25 @@ export class CottageEditComponent implements OnInit {
     this.newCottage.bedCount = this.bedCount;
     this.newCottage.id = this.cottageId;
     this.newCottage.roomCount = this.roomCount;
+    if (this.extraFavorString != undefined) {
+    this.newCottage.extraFavors = this.extraFavorString
+    .split(/\r?\n/)
+    .join('|') ;
+    }
+    else{
+      this.newCottage.extraFavors = "";
+    }
 
     //console.log(this.newCottage);
     
-    this.cottageService.editCottage(this.newCottage).subscribe(response => {console.log(response)} );
+    this.cottageService.editCottage(this.newCottage).subscribe(response => {
+      this.messageService.showMessage("Uspešno ste izmenili vikendicu",MessageType.SUCCESS);
+      },
+      err =>{
+        this.messageService.showMessage("Niste u mogućnosti da izmenite vikendicu.",MessageType.ERROR);
+      },
+    );
+    this.router.navigateByUrl("/cottageProfile/"+this.cottageId);
 
-    window.location.href = "http://localhost:4200/cottageProfile/"+this.cottageId;
   }
 }

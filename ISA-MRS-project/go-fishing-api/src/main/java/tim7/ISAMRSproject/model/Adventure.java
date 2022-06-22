@@ -1,7 +1,6 @@
 package tim7.ISAMRSproject.model;
 
 import java.util.List;
-import java.util.Optional;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -32,13 +31,6 @@ public class Adventure extends Offer {
 	@Column(nullable = true, columnDefinition = "TEXT")
 	private String rulesOfCancelation;
 	
-	
-
-	/*
-	 * Kada vrsim update insturktorovih podataka moram da koristim Lazy fetch type,
-	 * a kada mi je potreban instruktor iz tabele moze samo da se izvrsi ako je fetch type Eager
-	 * 
-	 * */
 	@ManyToOne(fetch = FetchType.EAGER)
 	//@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "instruktor_id")
@@ -47,6 +39,10 @@ public class Adventure extends Offer {
 	public Adventure() {
 		super();
 		// TODO Auto-generated constructor stub
+	}
+
+	public Adventure(Integer id, String name, String promoDescription, float price, int capacity) {
+		super(id, name, promoDescription, price, capacity);
 	}
 
 	public Adventure(Integer id, String name, String promoDescription, List<String> slike, String rulesOfConduct, String equipment,

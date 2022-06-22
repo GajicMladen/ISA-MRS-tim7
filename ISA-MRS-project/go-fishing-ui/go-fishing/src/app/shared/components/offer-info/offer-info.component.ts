@@ -18,26 +18,48 @@ export class OfferInfoComponent implements OnInit {
 
   ngOnInit(): void {
     
-    this.offerService.getOfferById(this.offerId).subscribe(data =>{
+    this.offerService.getCottageById(this.offerId).subscribe(data =>{
       this.offer = <Offer>data;
-      console.log(data);
-      this.offerType = this.getOfferType(data);
+      
+      if(this.offer == undefined){
+        this.offerService.getBoatById(this.offerId).subscribe(data => {
+          this.offer = <Offer>data;
+
+          if(this.offer == undefined){
+            this.offerService.getAdventureById(this.offerId).subscribe(
+              data=> {
+                console.log(data);
+                this.offer = <Offer><unknown>data;
+                this.offerType = this.getOfferType(data);
+              }
+            )
+          }
+          else{
+            this.offerType = this.getOfferType(data);
+          }
+
+        });
+      }
+      else{
+        this.offerType = this.getOfferType(data);
+      }
     });
   }
 
   getOfferType(offer:Object):string{
-    console.log(offer.hasOwnProperty("ownerId"));
-    if(offer.hasOwnProperty("ownerId")) 
-      return "C";
+
     if(offer.hasOwnProperty("maxSpeed"))
       return "B";
-    if(offer.hasOwnProperty("biography"))
+    if(offer.hasOwnProperty("instructorBiography"))
       return "I";
+    if(offer.hasOwnProperty("ownerId")) 
+      return "C";
     
     return "N";
   }
 
   openProfile(){
+    console.log(this.offerType)
     switch(this.offerType){
       case "C":
         this.router.navigate(["cottageProfile/"+this.offerId])
@@ -46,7 +68,7 @@ export class OfferInfoComponent implements OnInit {
         this.router.navigate(["boatProfile/"+this.offerId])
         break;
       case "I":
-        this.router.navigate(["instructorProfile/"+this.offerId])
+        this.router.navigate(["adventureProfile/"+this.offerId])
         break;
     }
   }

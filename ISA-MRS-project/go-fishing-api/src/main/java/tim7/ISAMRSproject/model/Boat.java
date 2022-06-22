@@ -1,5 +1,7 @@
 package tim7.ISAMRSproject.model;
 
+import tim7.ISAMRSproject.dto.BoatDTO;
+
 import java.util.List;
 
 import javax.persistence.Column;
@@ -11,7 +13,7 @@ import javax.persistence.ManyToOne;
 @Entity
 public class Boat extends Offer {
 
-	@Column(name = "type",nullable = false)
+	@Column(name = "type",nullable = true)
 	private String type;
 	
 	@Column(name = "length",nullable = false)
@@ -26,7 +28,7 @@ public class Boat extends Offer {
 	@Column(name = "maxSpeed",nullable = false)
 	private float maxSpeed;
 	
-	@Column(name ="cancelConditions",nullable = false)
+	@Column(name ="cancelConditions",nullable = true)
 	private String cancelConditions;
 
 
@@ -40,7 +42,16 @@ public class Boat extends Offer {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Boat(Integer id, String naziv, String promoOpis, List<String> slike, List<String> pravilaPonasanja, float cena,
+	public Boat(BoatDTO boatDTO){
+		super(boatDTO.getId(), boatDTO.getName(), boatDTO.getDescription(), boatDTO.getPrice(),
+				boatDTO.getCapacity(), boatDTO.getExtraFavors());
+		this.cancelConditions = boatDTO.getReservationCancellationTerms();
+		this.length = boatDTO.getLength();
+		this.maxSpeed = boatDTO.getMaxSpeed();
+		this.motorPower = boatDTO.getPowerOfEngines();
+		this.motorsCount = boatDTO.getNumOfMotors();
+	}
+	public Boat(Integer id, String naziv, String promoOpis, float cena,
 				int kapacitet) {
 		super(id, naziv, promoOpis, cena, kapacitet);
 	}

@@ -7,8 +7,14 @@ import { RouterModule } from '@angular/router';
 import { CottageAddNewComponent } from './components/cottage-add-new/cottage-add-new.component';
 import { CottageService } from './services/cottage.service';
 import { HttpClientModule } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CottageEditComponent } from './components/cottage-edit/cottage-edit.component';
+import { BoatEntityService } from './services/boat-entity.service';
+import { CottageReportsComponent } from './components/cottage-reports/cottage-reports.component';
+import { SharedModule } from 'src/app/shared/shared.module';
+import { CottageClientReservationDialogComponent } from './components/cottage-client-reservation-dialog/cottage-client-reservation-dialog.component';
+import { CottageGalleryVisitorComponent } from './components/cottage-gallery-visitor/cottage-gallery-visitor.component';
+import { CottageActionConfirmDialogComponent } from './components/cottage-action-confirm-dialog/cottage-action-confirm-dialog.component';
 
 @NgModule({
   declarations: [
@@ -17,13 +23,19 @@ import { CottageEditComponent } from './components/cottage-edit/cottage-edit.com
     CottageGalleryOwnerComponent,
     CottageAddNewComponent,
     CottageEditComponent,
+    CottageReportsComponent,
+    CottageClientReservationDialogComponent,
+    CottageGalleryVisitorComponent,
+    CottageActionConfirmDialogComponent,
   ],
   imports: [
     CommonModule,
     RouterModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    SharedModule,
+    ReactiveFormsModule,
   ],
-  providers:[CottageService]
+  providers: [CottageService, BoatEntityService],
 })
-export class CottageModule { }
+export class CottageModule {}

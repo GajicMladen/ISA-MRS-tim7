@@ -18,6 +18,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Version;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -58,6 +59,19 @@ public class User implements UserDetails {
 	@Column(name = "active",nullable = false)
 	private boolean active;
 	
+	@Column(name = "loyalty_points", nullable = false)
+	private int loyaltyPoints;
+	
+	@JsonIgnore
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "deletion_request", referencedColumnName = "id")
+	private DeletionRequest deletionRequest;
+	
+	@JsonIgnore
+	@OneToOne(cascade = {CascadeType.ALL})
+	@JoinColumn(name = "registration_request", referencedColumnName = "id")
+	private RegistrationRequest registrationRequest;
+	
 	@JsonIgnore
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id", referencedColumnName = "id")
@@ -67,7 +81,11 @@ public class User implements UserDetails {
     @JoinTable(name = "user_role",
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
-    private List<Role> roles;
+    protected List<Role> roles;
+    
+    @Version
+	@Column(name = "version", columnDefinition = "integer DEFAULT 0", nullable = false)
+	private Integer version;
     
     public User() {
     	
@@ -83,7 +101,20 @@ public class User implements UserDetails {
 		this.phone = phone;
 		this.active = false;
 		this.deleted = false;
-
+		this.loyaltyPoints = 0;
+	}
+	
+	public User(Integer id, String password, String email, String name, String lastName, String phone, int points) {
+		super();
+		this.id = id;
+		this.password = password;
+		this.email = email;
+		this.name = name;
+		this.lastName = lastName;
+		this.phone = phone;
+		this.active = false;
+		this.deleted = false;
+		this.loyaltyPoints = points;
 	}
 	
 	public User(User user) {
@@ -92,10 +123,13 @@ public class User implements UserDetails {
 		this.password = user.password;
 		this.email = user.email;
 		this.name = user.name;
-		this.lastName = user.name;
-		this.phone = user.name;
+		this.lastName = user.lastName;
+		this.phone = user.phone;
 		this.active = user.active;
 		this.deleted = user.deleted;
+		this.loyaltyPoints = user.loyaltyPoints;
+		this.livingAddress = user.livingAddress;
+		this.roles = user.roles;
 	}
 
 	public Integer getId() {
@@ -145,6 +179,14 @@ public class User implements UserDetails {
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
+	
+	public int getLoyaltyPoints() {
+		return this.loyaltyPoints;
+	}
+	
+	public void setLoyaltyPoints(int points) {
+		this.loyaltyPoints = points;
+	}
 
 	public boolean isDeleted() {
 		return deleted;
@@ -171,13 +213,43 @@ public class User implements UserDetails {
 		this.livingAddress = address;
 	}
 	
-    public List<Role> getRoles() {
+	@JsonIgnore
+	public DeletionRequest getDeletionRequest() {
+		return deletionRequest;
+	}
+	
+	public void setDeletionRequest(DeletionRequest deletionRequest) {
+		this.deletionRequest = deletionRequest;
+	}
+	
+	@JsonIgnore
+    public RegistrationRequest getRegistrationRequest() {
+		return registrationRequest;
+	}
+
+	public void setRegistrationRequest(RegistrationRequest registrationRequest) {
+		this.registrationRequest = registrationRequest;
+	}
+
+	public List<Role> getRoles() {
         return roles;
      }
     
-    public void setRoles(List<Role> roles) {
-    	this.roles = roles;
-    }
+  public void setRoles(List<Role> roles) {
+    this.roles = roles;
+  }
+
+  public String getRoleString() {
+    return this.roles.get(0).getName();
+  }
+    
+	public Integer getVersion() {
+		return version;
+	}
+
+	public void setVersion(Integer version) {
+		this.version = version;
+	}
 
 	@JsonIgnore
 	@Override

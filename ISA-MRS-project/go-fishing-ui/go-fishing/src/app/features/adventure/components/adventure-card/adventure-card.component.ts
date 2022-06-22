@@ -3,6 +3,7 @@ import { MessageService, MessageType } from 'src/app/shared/services/message-ser
 import { AdventureService } from '../../adventure.service';
 import { Adventure } from '../../classes/adventure';
 
+
 @Component({
   selector: 'app-adventure-card',
   templateUrl: './adventure-card.component.html',
@@ -32,7 +33,8 @@ export class AdventureCardComponent implements OnInit {
 	  instructorBiography: '',
 	  instructorName: '',
 	  instructorSurname: '',
-    deleted: false
+    deleted: false,
+    rating: 0
   });
   
   @Input('adventureId')
@@ -79,6 +81,9 @@ export class AdventureCardComponent implements OnInit {
         console.log(adventure);
         this.messageService.showMessage("Avantura uspešno obrisana!", MessageType.SUCCESS);        
         this.OnAdventureDeleted.emit(this.adventureId);
+      },
+      error => {
+        this.messageService.showMessage("Avantura ima aktivne rezervacije!", MessageType.ERROR);
       });
   }
 

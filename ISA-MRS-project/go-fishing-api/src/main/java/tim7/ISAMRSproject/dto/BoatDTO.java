@@ -9,14 +9,17 @@ public class BoatDTO {
     private String description;
     private float price;
     private int capacity;
+
+    private String extraFavors;
     private Integer ownerId;
     private float length;
     private Integer numOfMotors;
     private float powerOfEngines;
     private float maxSpeed;
     private String reservationCancellationTerms;
+    private float rating;
 
-    public BoatDTO(){
+	public BoatDTO(){
 
     }
 
@@ -32,6 +35,24 @@ public class BoatDTO {
         powerOfEngines = boat.getMotorPower();
         maxSpeed = boat.getMaxSpeed();
         reservationCancellationTerms = boat.getCancelConditions();
+        extraFavors = boat.getExtraFavors();
+        rating = boat.getRating();
+    }
+    
+    public float getRating() {
+		return rating;
+	}
+
+	public void setRating(float rating) {
+		this.rating = rating;
+	}
+
+    public String getExtraFavors() {
+        return extraFavors;
+    }
+
+    public void setExtraFavors(String extraFavors) {
+        this.extraFavors = extraFavors;
     }
 
     public Integer getId() {

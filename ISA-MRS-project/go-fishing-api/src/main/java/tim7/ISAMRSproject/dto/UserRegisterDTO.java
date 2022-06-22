@@ -4,6 +4,8 @@ import java.util.Arrays;
 
 import org.springframework.util.StringUtils;
 
+import tim7.ISAMRSproject.model.User;
+
 // DTO koji preuzima podatke iz registracione forme
 public class UserRegisterDTO {
 	
@@ -18,7 +20,14 @@ public class UserRegisterDTO {
 	private String address;
 	private String phoneNumber;
 	private String role;
+	private String reason;
 	
+	public String getReason() {
+		return reason;
+	}
+	public void setReason(String reason) {
+		this.reason = reason;
+	}
 	public Long getId() {
 		return id;
 	}
@@ -91,11 +100,18 @@ public class UserRegisterDTO {
 	public boolean validate() {
 		String[] validRoles = {"ROLE_USER", "ROLE_COTTAGE_OWNER", "ROLE_BOAT_OWNER", "ROLE_INSTRUCTOR"};
 		
-		return email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$") &&
-			   password.length() >= 8 && password.length() <= 30 &&
-			   password.equals(confirmPassword) &&
-			   phoneNumber.matches("^[+][0-9]{10,12}$") &&
-			   Arrays.asList(validRoles).contains(role);
+		if (password != null && confirmPassword != null && role != null) {
+			return email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$") &&
+					   password.length() >= 8 && password.length() <= 30 &&
+					   password.equals(confirmPassword) &&
+					   phoneNumber.matches("^[+][0-9]{10,12}$") &&
+					   Arrays.asList(validRoles).contains(role);
+		} else {
+			return 	phoneNumber.matches("^[+][0-9]{10,12}$");
+		}
+
+				 
+	
 	}
 	
 	public void casify() {
@@ -112,6 +128,18 @@ public class UserRegisterDTO {
 		for(String token: tokens)
 			res += StringUtils.capitalize(token.toLowerCase()) + " ";
 		return res.trim();
+	}
+	
+	public static UserRegisterDTO getUserDTOFromUser(User user) {
+		UserRegisterDTO ret = new UserRegisterDTO();
+		ret.setEmail(user.getEmail());
+		ret.setName(user.getName());
+		ret.setLastName(user.getLastName());
+		ret.setCountry(user.getAddress().getCountry());
+		ret.setTown(user.getAddress().getCity());
+		ret.setAddress(user.getAddress().getStreet());
+		ret.setPhoneNumber(user.getPhone());
+		return ret;
 	}
 
 }

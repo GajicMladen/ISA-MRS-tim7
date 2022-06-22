@@ -8,6 +8,10 @@
     align-items: center;
 }
 
+.clickable{
+    pointer-events: none;
+}
+
 body {
     background-color: #eee;
     font-family: "Poppins", sans-serif
@@ -245,4 +249,26 @@ label.radio input:checked+span::before {
 .full {
     height: 350px;
     width: 700px;
+}
+
+.actions{
+    display: grid;
+    grid-template-columns: minmax(300px, 100%);
+    gap: 10px;
+}
+.action-card-body {
+    padding: 30px 15px;
+    background: #e9ecff;
+}
+.action-info{
+
+    display: grid;
+    grid-template-columns: 30% 70%;
+    grid-gap: 10px;
+}
+
+.action-img{
+
+    width: 150px;
+    margin-right: 15px;
 }

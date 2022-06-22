@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Boat } from 'src/models/boat';
 import { BoatService } from '../../services/boat.service';
 import { RouterModule } from '@angular/router';
+import { MessageService, MessageType } from 'src/app/shared/services/message-service/message.service';
 
 @Component({
   selector: 'app-boat-gallery-owner',
@@ -15,7 +16,7 @@ export class BoatGalleryOwnerComponent implements OnInit {
 
   boats:Boat[];
 
-  constructor(private boatService:BoatService,private router:Router) { }
+  constructor(private boatService:BoatService,private router:Router,private messageService:MessageService) { }
 
   ngOnInit(): void {
     
@@ -33,13 +34,17 @@ export class BoatGalleryOwnerComponent implements OnInit {
       this.boatService.deleteBoat(BoatId).subscribe(
         deleted =>{
           if(deleted){
-            alert("Izbrisali ste je!"); 
+            this.messageService.showMessage("Uspešno ste obrisali brod!",MessageType.SUCCESS);
           
             this.boats.splice(this.boats.findIndex(Boat => Boat.id === BoatId),1);
           }
           else
-            alert("Nismo uspeli da izbrisemo vikendicu.")
+            this.messageService.showMessage("Nismo uspeli da obrišemo brod.",MessageType.ERROR);
         
+        },
+        err =>{
+          this.messageService.showMessage("Niste u mogućnosti da obrišete brod.",MessageType.ERROR);
+          
         }
       )
     }

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import {
   MessageService,
   MessageType,
@@ -18,10 +18,14 @@ export class StartpageLoginComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private messageService: MessageService,
-    private loginService: StartpageLoginService
+    private loginService: StartpageLoginService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
+    if (localStorage.getItem('jwt') !== null) {
+      this.redirectLoggedUser();
+    }
     let activationStatus = this.route.snapshot.paramMap.get('status');
 
     switch (activationStatus) {
@@ -62,15 +66,27 @@ export class StartpageLoginComponent implements OnInit {
       .pipe()
       .subscribe(
         (res) => {
-          //TODO: Redirect na homepage.
-          this.messageService.showMessage(
-            'Login successful!',
-            MessageType.SUCCESS
-          );
+          this.redirectLoggedUser();
         },
         (error) => {
           this.messageService.showMessage(error, MessageType.ERROR);
         }
       );
+  }
+
+  redirectLoggedUser(): void {
+    if (this.loginService.getRole() == 'ROLE_USER')
+      this.router.navigateByUrl('home/');
+    else if (this.loginService.getRole() == 'ROLE_COTTAGE_OWNER')
+      this.router.navigateByUrl('cottageOwner/' + this.loginService.getId());
+    else if (this.loginService.getRole() == 'ROLE_BOAT_OWNER')
+      this.router.navigateByUrl('boatOwner/' + this.loginService.getId());
+    else if (this.loginService.getRole() == 'ROLE_INSTRUCTOR')
+      this.router.navigateByUrl('instructorProfile/' + this.loginService.getId());
+    else if (this.loginService.getRole() == 'ROLE_ADMIN')
+      this.router.navigateByUrl('adminProfile/' + this.loginService.getId());
+    else if (this.loginService.getRole() == 'ROLE_SYSADMIN')
+      this.router.navigateByUrl('adminProfile/' + this.loginService.getId());
+    
   }
 }

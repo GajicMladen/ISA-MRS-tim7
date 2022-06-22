@@ -15,7 +15,9 @@ public class CottageDTO {
 
 	private Integer ownerId;
 
-
+	private String extraFavors;
+	
+	private float rating;
 	
 	public CottageDTO() {
 		
@@ -32,8 +34,26 @@ public class CottageDTO {
 		ownerId = cottage.getCottageOwnerId();
 		roomCount = cottage.getRoomCount();
 		bedCount = cottage.getBedCount();
+		extraFavors = cottage.getExtraFavors();
+		rating = cottage.getRating();
 	}
-	
+
+	public float getRating() {
+		return rating;
+	}
+
+	public void setRating(float rating) {
+		this.rating = rating;
+	}
+
+	public String getExtraFavors() {
+		return extraFavors;
+	}
+
+	public void setExtraFavors(String extraFavors) {
+		this.extraFavors = extraFavors;
+	}
+
 	public Integer getId() {
 		return id;
 	}
