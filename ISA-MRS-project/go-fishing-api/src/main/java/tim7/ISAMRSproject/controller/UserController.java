@@ -110,7 +110,11 @@ public class UserController {
 			return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body("Invalid data!");
 		
 		User existingUser = userService.findByEmail(userRegisterDTO.getEmail());
-		userService.updateUser(existingUser, userRegisterDTO);
+		try {
+			userService.updateUser(existingUser, userRegisterDTO);
+		} catch (Exception e) {
+			return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+		}
 		
 		return ResponseEntity.status(HttpStatus.CREATED).body(existingUser);
 	}

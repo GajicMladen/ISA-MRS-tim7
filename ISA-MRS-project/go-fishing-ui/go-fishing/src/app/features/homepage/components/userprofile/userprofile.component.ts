@@ -35,9 +35,7 @@ export class UserprofileComponent implements OnInit {
 
   ngOnInit(): void {
     if (
-      localStorage.getItem('jwt') === null ||
-      localStorage.getItem('user-role') !== 'ROLE_COTTAGE_OWNER' ||
-      localStorage.getItem('user-role') !== 'ROLE_BOAT_OWNER'
+      localStorage.getItem('jwt') === null
     ) {
       this.router.navigateByUrl('');
     }
@@ -126,8 +124,12 @@ export class UserprofileComponent implements OnInit {
             'Profile updated sucessfully!',
             MessageType.SUCCESS
           );
+        }, (error) => {
+          this.messageService.showMessage('Error has occured!', MessageType.ERROR);
         });
+
     }
+
   }
 
   changePasswordDialog() {
