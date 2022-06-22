@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { ImageServiceService } from 'src/app/shared/services/image-service/image-service.service';
 import {
   MessageService,
@@ -28,10 +29,18 @@ export class UserprofileComponent implements OnInit {
     private profileService: UserprofileService,
     private messageService: MessageService,
     private dialog: MatDialog,
-    private imageService: ImageServiceService
+    private imageService: ImageServiceService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
+    if (
+      localStorage.getItem('jwt') === null ||
+      localStorage.getItem('user-role') !== 'ROLE_COTTAGE_OWNER' ||
+      localStorage.getItem('user-role') !== 'ROLE_BOAT_OWNER'
+    ) {
+      this.router.navigateByUrl('');
+    }
     this.getUserData().subscribe(
       (res: any) => {
         this.oldForm.patchValue(res);

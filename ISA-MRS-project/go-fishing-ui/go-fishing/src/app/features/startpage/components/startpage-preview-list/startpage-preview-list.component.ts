@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { StartpagePreviewListService } from './startpage-preview-list.service';
 
 @Component({
@@ -14,7 +15,10 @@ export class StartpagePreviewListComponent implements OnInit {
 
   form: FormGroup = this.createSearchControl();
 
-  constructor(private previewListService: StartpagePreviewListService) {}
+  constructor(
+    private previewListService: StartpagePreviewListService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.subscribeBoatList();
@@ -45,7 +49,6 @@ export class StartpagePreviewListComponent implements OnInit {
 
   subscribeBoatListParam(param: string) {
     this.getBoatPreviewListParam(param).subscribe((res: any) => {
-      console.log(res);
       for (let i of res) i.image = this.getBoatImage(res.indexOf(i));
       this.boatList = res;
     });
@@ -146,5 +149,17 @@ export class StartpagePreviewListComponent implements OnInit {
       ((i % 5) + 1) +
       'preview.jpg'
     );
+  }
+
+  public redirectCottage(id: number) {
+    this.router.navigateByUrl('cottageProfile/' + id);
+  }
+
+  public redirectBoat(id: number) {
+    this.router.navigateByUrl('boatProfile/' + id);
+  }
+
+  public redirectAdventure(id: number) {
+    this.router.navigateByUrl('adventureProfile/' + id);
   }
 }

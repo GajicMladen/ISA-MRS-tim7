@@ -8,6 +8,10 @@
     align-items: center;
 }
 
+.clickable{
+    pointer-events: none;
+}
+
 body {
     background-color: #eee;
     font-family: "Poppins", sans-serif

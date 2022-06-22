@@ -44,6 +44,7 @@ export class CottageProfilepageComponent implements OnInit {
   grades:Grade[];
 
   canReserve: boolean = true;
+
   constructor(
     private route: ActivatedRoute,
     private cottageService: CottageService,
@@ -58,9 +59,6 @@ export class CottageProfilepageComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.profileService.getPenaltyCount().subscribe((res) => {
-      if (res >= 3) this.canReserve = false;
-    });
     this.cottageId = Number(this.route.snapshot.paramMap.get('id'));
     if (!isNaN(this.cottageId)) {
       this.cottageService
@@ -75,10 +73,24 @@ export class CottageProfilepageComponent implements OnInit {
           });
         });
 
-      this.userService.isLoggedUserOnlyClient().subscribe((data) => {
-        this.clientLoggedIn = data;
-      });
+      if (this.isAuthentified) {
+        this.userService.isLoggedUserOnlyClient().subscribe((data) => {
+          this.clientLoggedIn = data;
+        });
 
+        this.getIsSuscribed();
+
+        this.reservationService
+          .getFreePeriodsById(this.cottageId)
+          .subscribe((res: any) => {
+            this.hasFreePeriods = res.length > 0;
+          });
+      }
+      if (localStorage.getItem('user-role') === 'ROLE_USER') {
+        this.profileService.getPenaltyCount().subscribe((res) => {
+          if (res >= 3) this.canReserve = false;
+        });
+      }
       this.actionService
         .getActionsForOffer(this.cottageId)
         .subscribe((actions) => {
@@ -139,12 +151,20 @@ export class CottageProfilepageComponent implements OnInit {
           this.actions.findIndex((i) => i.id === item.id),
           1
         );
-        this.reservationService.confirmAction(item.id).subscribe((res: any) => {
-          this.messageService.showMessage(
-            'Action reserved successfully!',
-            MessageType.SUCCESS
-          );
-        });
+        this.reservationService.confirmAction(item.id).subscribe(
+          (res: any) => {
+            this.messageService.showMessage(
+              'Action reserved successfully!',
+              MessageType.SUCCESS
+            );
+          },
+          (err: any) => {
+            this.messageService.showMessage(
+              'Your reservation has been declined!',
+              MessageType.ERROR
+            );
+          }
+        );
       }
     });
   }
@@ -191,12 +211,20 @@ export class CottageProfilepageComponent implements OnInit {
                 res.totalPrice,
                 this.cottage.id
               )
-              .subscribe((res: any) => {
-                this.messageService.showMessage(
-                  res.status,
-                  MessageType.SUCCESS
-                );
-              });
+              .subscribe(
+                (res: any) => {
+                  this.messageService.showMessage(
+                    res.status,
+                    MessageType.SUCCESS
+                  );
+                },
+                (err: any) => {
+                  this.messageService.showMessage(
+                    'Your reservation has been declined!',
+                    MessageType.ERROR
+                  );
+                }
+              );
           }
         });
       });
@@ -232,5 +260,9 @@ export class CottageProfilepageComponent implements OnInit {
   get reservationTooltipText() {
     if (!this.canReserve) return 'Your reservation privileges are disabled!';
     return 'No free periods are available!';
+  }
+
+  get isAuthentified() {
+    return localStorage.getItem('jwt') !== null;
   }
 }

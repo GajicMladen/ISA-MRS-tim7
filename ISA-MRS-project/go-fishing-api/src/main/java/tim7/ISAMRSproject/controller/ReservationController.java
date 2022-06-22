@@ -354,6 +354,8 @@ public class ReservationController {
             "|| hasRole('ROLE_USER')")
     public ResponseEntity<?> addNewReservation(@RequestBody DateRangeStringDTO dateRangeDTO, Principal user){
     	User u = userService.findByEmail(user.getName());
+    	if (clientService.findByEmail(u.getEmail()).getPenalCount() >= 3)
+    		return new ResponseEntity<>(HttpStatus.FORBIDDEN);
     	int points = loyaltyService.getPointsForUser(u);
 
         Offer offer;
@@ -481,10 +483,11 @@ public class ReservationController {
                 return new ResponseEntity<>(HttpStatus.OK);
             }
             else
-                return new ResponseEntity<>("Nismo uspeli da rezervišemo akciju,pokusajte ponovo.",HttpStatus.FORBIDDEN);
+                return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
         catch (OptimisticEntityLockException e){
-            return new ResponseEntity<>("Izgleda da je akcija već rezervisana",HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+                return new ResponseEntity<>("Nismo uspeli da rezervišemo akciju,pokusajte ponovo.",HttpStatus.FORBIDDEN);
         }
     }
 

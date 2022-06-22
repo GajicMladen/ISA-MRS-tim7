@@ -45,6 +45,9 @@ img {
 hr {
     color: #d4d4d4
 }
+.clickable {
+    pointer-events: none;
+}
 
 .badge {
     padding: 5px !important;
