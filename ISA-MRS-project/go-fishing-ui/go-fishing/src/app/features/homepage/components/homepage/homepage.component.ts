@@ -14,7 +14,7 @@ export class HomepageComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    if (localStorage.getItem('user-role') !== 'ROLE_CLIENT') {
+    if (localStorage.getItem('user-role') !== 'ROLE_USER') {
       this.router.navigateByUrl('');
     }
   }

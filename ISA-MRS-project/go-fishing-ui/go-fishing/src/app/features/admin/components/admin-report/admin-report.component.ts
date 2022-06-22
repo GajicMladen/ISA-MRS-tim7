@@ -73,7 +73,7 @@ export class AdminReportComponent implements OnInit {
         await this.delay(500);
         for (let ii = 0; ii < this.reservations.length; ii++) {
           this.earned += this.countEarned(this.reservations[ii].totalPrice);
-          this.data.push({name: (ii+1) + " " + this.reservations[ii].getStartDateString(), value: this.reservations[ii].totalPrice});          
+          this.data.push({name: (ii+1) + " - " + this.reservations[ii].getStartDateString(), value: this.reservations[ii].totalPrice});          
         }
         console.log(this.data);
         await this.delay(500);

@@ -255,7 +255,7 @@ public class UserService implements UserDetailsService {
 		for(Boat b: boatRepository.findBySubscribers_IdEquals(u.getId()))
 			subs.add(b);
 		
-		for(Adventure a: adventureRepository.findByInstructorId(u.getId()))
+		for(Adventure a: adventureRepository.findBySubscribers_IdEquals(u.getId()))
 			subs.add(a);
 		return subs;
 	}

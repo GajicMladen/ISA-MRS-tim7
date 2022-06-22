@@ -309,6 +309,7 @@ export class AdventureProfilpageComponent implements OnInit {
   addSubscription() {
     this.clientService.addSubscription(this.adventureId).subscribe((data) => {
       this.getIsSuscribed();
+      this.messageService.showMessage('Uspešno ste se pretplatili!', MessageType.SUCCESS);
     });
   }
   removeSubscription() {

@@ -52,7 +52,7 @@ public class EmailServiceImpl {
 		String confirmationBody = "Dear " + user.getName() + " " + user.getLastName() + ", \n";
 		confirmationBody += "Thank you for joining Go Fishing! You have been added as admin! ";
 		
-		sendSimpleMessage("djordjejovanovic27@gmail.com", "Go fishing admin", confirmationBody);
+		sendSimpleMessage(user.getEmail(), "Go fishing admin", confirmationBody);
 	}
 	
 	public void sendDeletionEmail(User user, boolean deleted, String reason) {
@@ -65,7 +65,7 @@ public class EmailServiceImpl {
 			confirmationBody += "Reason for refusal: " + reason + "\n";
 		}
 		confirmationBody += "\nGoFishing! admin team";
-		sendSimpleMessage("djordjejovanovic27@gmail.com", "Go fishing admin", confirmationBody);
+		sendSimpleMessage(user.getEmail(), "Go fishing admin", confirmationBody);
 	}
 	
 	public void sendRegistrationEmail(User user, boolean registered, String reason) {
@@ -79,7 +79,7 @@ public class EmailServiceImpl {
 			confirmationBody += "Reason for refusal: " + reason + "\n";
 		}
 		confirmationBody += "\nGoFishing! admin team";
-		sendSimpleMessage("djordjejovanovic27@gmail.com", "Go fishing admin", confirmationBody);
+		sendSimpleMessage(user.getEmail(), "Go fishing admin", confirmationBody);
 	}
 	
 	public void sendComplaintResponse(User accuser, User offender, String response) {
