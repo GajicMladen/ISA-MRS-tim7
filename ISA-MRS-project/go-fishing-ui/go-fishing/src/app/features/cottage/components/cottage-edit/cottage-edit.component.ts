@@ -40,13 +40,26 @@ export class CottageEditComponent implements OnInit {
       this.promoDescription = this.currentCottage.description;
       this.bedCount = this.currentCottage.bedCount;
       this.roomCount = this.currentCottage.roomCount;
+      this.extraFavorString = this.currentCottage.extraFavors.split('|').join('\n');
     })
   }
 
   editCottage() {
 
+    if(this.name == undefined || this.name.length == 0 ||
+      this.price == undefined || this.price == 0 ||
+      this.capacity == undefined || this.capacity == 0 ||
+      this.promoDescription == undefined || this.promoDescription.length == 0 ||
+      this.bedCount == undefined || this.bedCount == 0 ||
+      this.roomCount == undefined || this.roomCount == 0 ||
+      this.extraFavorString == undefined || this.extraFavorString.length == 0)
+      {
+        this.messageService.showMessage("Popunite polja",MessageType.ERROR);
+        return;
+      }
     if(this.price < 10 ){
-            this.messageService.showMessage("Unesite neku normalnu cenu",MessageType.ERROR);
+      this.messageService.showMessage("Minimalna cena je 10!",MessageType.ERROR);
+      return;
     }
 
     this.newCottage.name = this.name;
@@ -69,12 +82,12 @@ export class CottageEditComponent implements OnInit {
     
     this.cottageService.editCottage(this.newCottage).subscribe(response => {
       this.messageService.showMessage("Uspešno ste izmenili vikendicu",MessageType.SUCCESS);
+      this.router.navigateByUrl("/cottageProfile/"+this.cottageId);
       },
       err =>{
         this.messageService.showMessage("Niste u mogućnosti da izmenite vikendicu.",MessageType.ERROR);
       },
     );
-    this.router.navigateByUrl("/cottageProfile/"+this.cottageId);
 
   }
 }

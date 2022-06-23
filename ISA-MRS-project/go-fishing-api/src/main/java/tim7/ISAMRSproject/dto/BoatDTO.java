@@ -19,6 +19,8 @@ public class BoatDTO {
     private String reservationCancellationTerms;
     private float rating;
 
+    private String address;
+
 	public BoatDTO(){
 
     }
@@ -37,8 +39,17 @@ public class BoatDTO {
         reservationCancellationTerms = boat.getCancelConditions();
         extraFavors = boat.getExtraFavors();
         rating = boat.getRating();
+        address = boat.getAddress().toString();
     }
-    
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
     public float getRating() {
 		return rating;
 	}

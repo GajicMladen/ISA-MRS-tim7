@@ -15,6 +15,8 @@ import { BoatClientReservationDialogComponent } from '../boat-client-reservation
 import { UserService } from 'src/app/shared/services/users-services/user.service';
 import { CottageActionConfirmDialogComponent } from 'src/app/features/cottage/components/cottage-action-confirm-dialog/cottage-action-confirm-dialog.component';
 import { UserprofileService } from 'src/app/features/homepage/components/userprofile/userprofile.service';
+import { Grade } from 'src/models/grade';
+import { GradeService } from 'src/app/shared/services/grade-service/grade-service.service';
 
 @Component({
   selector: 'app-boat-profilepage',
@@ -39,6 +41,8 @@ export class BoatProfilepageComponent implements OnInit {
 
   canReserve: boolean = true;
 
+  grades: Grade[];
+
 
   constructor(
     private route: ActivatedRoute,
@@ -49,7 +53,8 @@ export class BoatProfilepageComponent implements OnInit {
     private messageService: MessageService,
     private clientService: ClientService,
     private userService: UserService,
-    private profileService: UserprofileService
+    private profileService: UserprofileService,
+    private gradeService:GradeService
   ) {}
   ngOnInit(): void {
     this.boatId = Number(this.route.snapshot.paramMap.get('id'));
@@ -82,6 +87,12 @@ export class BoatProfilepageComponent implements OnInit {
     this.actionService.getActionsForOffer(this.boatId).subscribe((data) => {
       this.actions = data;
     });
+
+    this.gradeService.getReviewsForOffer(this.boatId).subscribe(
+      data =>{
+        this.grades= data;
+      }
+    );
   }
 
   public openActionConfirmDialog(item: any) {

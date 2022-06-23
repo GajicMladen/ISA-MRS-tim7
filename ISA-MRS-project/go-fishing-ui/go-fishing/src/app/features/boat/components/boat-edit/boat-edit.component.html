@@ -40,10 +40,9 @@
                 <span class="font-weight-bold">Opis:</span>
                         <textarea type="text" rows="10" cols="40" [(ngModel)]="promoDescription"></textarea>
                             
-                            <span class="font-weight-bold">Dodatne usluge:</span>
+                        <span class="font-weight-bold">Dodatne usluge (novi red za svaku dodatnu uslugu):</span>
                         <div class="bullets">
-                            Dodatne usluge (novi red za svaku dodatnu uslugu):
-                            <textarea matInput [(ngModel)]="extraFavorString" name="equipment" placeholder="Oprema"></textarea>
+                            <textarea [(ngModel)]="extraFavorString" name="equipment" placeholder="Oprema"></textarea>
                         </div>
                     
             </div>            

@@ -16,4 +16,6 @@ export class Cottage implements Offer {
     roomCount: number;
     bedCount:number;
 
+    address :string;
+
 }

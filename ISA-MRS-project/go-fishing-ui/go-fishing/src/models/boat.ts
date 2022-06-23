@@ -19,5 +19,7 @@ export class Boat implements Offer {
   maxSpeed: number;
   reservationCancellationTerms?: string;
 
+  address:string;
+
   
 }

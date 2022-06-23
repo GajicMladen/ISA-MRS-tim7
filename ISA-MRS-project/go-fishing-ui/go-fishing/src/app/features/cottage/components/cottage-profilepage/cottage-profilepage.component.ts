@@ -59,7 +59,7 @@ export class CottageProfilepageComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.cottageId = Number(this.route.snapshot.paramMap.get('id'));
+      this.cottageId = Number(this.route.snapshot.paramMap.get('id'));
     
       this.cottageService
         .findCottageById(this.cottageId)
@@ -106,7 +106,6 @@ export class CottageProfilepageComponent implements OnInit {
 
       this.gradeService.getReviewsForOffer(this.cottageId).subscribe(
         res =>{
-          console.log(res);
           this.grades = res;
         }
       )

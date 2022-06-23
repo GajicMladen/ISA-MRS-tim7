@@ -18,7 +18,9 @@ public class CottageDTO {
 	private String extraFavors;
 	
 	private float rating;
-	
+
+	private String address;
+
 	public CottageDTO() {
 		
 		
@@ -36,6 +38,15 @@ public class CottageDTO {
 		bedCount = cottage.getBedCount();
 		extraFavors = cottage.getExtraFavors();
 		rating = cottage.getRating();
+		address = cottage.getAddress().toString();
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String adress) {
+		this.address = adress;
 	}
 
 	public float getRating() {

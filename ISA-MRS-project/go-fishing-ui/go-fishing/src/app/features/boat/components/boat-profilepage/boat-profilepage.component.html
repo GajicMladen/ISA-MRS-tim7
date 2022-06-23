@@ -50,41 +50,27 @@
                 </div>
             </div>
             <div class="card mt-2">
-                <h6>Utisci</h6>
-                <div class="d-flex flex-row">
-                    <div class="stars"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> </div> <span class="ml-1 font-weight-bold">4.6</span>
-                </div>
                 <hr>
-                <div class="badges"> <span class="badge bg-light ">All (230)</span> <span class="badge bg-light "> <i class="fa fa-image"></i> 23 </span> <span class="badge bg-light "> <i class="fa fa-comments-o"></i> 23 </span> <span class="badge bg-warning"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <span class="ml-1">2,123</span> </span> </div>
-                <hr>
-                <div class="comment-section">
+                <h3>Utisci:</h3>
+                <div class="comment-section" *ngFor="let grade of grades" style="padding: 30px 20px;">
                     <div class="d-flex justify-content-between align-items-center">
-                        <div class="d-flex flex-row align-items-center"> <img src="https://i.imgur.com/o5uMfKo.jpg" class="rounded-circle profile-image">
+                        <div class="d-flex flex-row align-items-center">
                             <div class="d-flex flex-column ml-1 comment-profile">
-                                <div class="comment-ratings"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> </div> <span class="username">Lori Benneth</span>
+                                <div class="comment-ratings" > 
+                                    <i class="fa fa-star"></i><span class="text-muted"> {{grade.grade}}</span> 
+                                </div>
+                                <span class="username">{{grade.reviewText}}</span>
                             </div>
                         </div>
-                        <div class="date"> <span class="text-muted">2 May</span> </div>
-                    </div>
-                    <hr>
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div class="d-flex flex-row align-items-center"> <img src="https://i.imgur.com/tmdHXOY.jpg" class="rounded-circle profile-image">
-                            <div class="d-flex flex-column ml-1 comment-profile">
-                                <div class="comment-ratings"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> </div> <span class="username">Timona Simaung</span>
-                            </div>
-                        </div>
-                        <div class="date"> <span class="text-muted">12 May</span> </div>
                     </div>
                 </div>
             </div>
         </div>
         <div class="col-md-7">
             <div class="card">
-                <div class="d-flex flex-row align-items-center">
-                    <div class="p-ratings"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> </div> <span class="ml-1">5.0</span>
-                </div>
                 <div class="about"> 
                     <h1 class="font  font-weight-bold">{{boat.name}}</h1>
+                    <h3> <i class="material-icons">location_on</i> {{boat.address}}</h3>
                     <div>
                         <span class="text-muted">Cena po danu:</span> <h2 class="font-weight-bold">${{boat.price}}</h2>
                     </div>

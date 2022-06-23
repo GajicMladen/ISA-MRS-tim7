@@ -141,8 +141,19 @@ public class BoatService {
 
   public Boat addNewBoat(BoatDTO boatDTO, User user) {
 
-      Boat boat = new Boat(boatDTO);
+      Boat boat = new Boat();
+	  boat.setExtraFavors(boatDTO.getExtraFavors());
+	  boat.setCapacity(boatDTO.getCapacity());
+	  boat.setPrice(boatDTO.getPrice());
+	  boat.setName(boatDTO.getName());
+	  boat.setMotorsCount(boatDTO.getNumOfMotors());
+	  boat.setMotorPower(boatDTO.getPowerOfEngines());
+	  boat.setPromoDescription(boatDTO.getDescription());
+	  boat.setLength(boatDTO.getLength());
+	  boat.setCancelConditions(boat.getCancelConditions());
+	  boat.setMaxSpeed(boatDTO.getMaxSpeed());
       boat.setBoatOwner((BoatOwner) user);
+
       return saveBoat(boat);
 
   }

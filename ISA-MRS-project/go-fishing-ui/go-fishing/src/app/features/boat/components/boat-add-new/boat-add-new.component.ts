@@ -25,12 +25,12 @@ export class BoatAddNewComponent implements OnInit {
 
   boatType: string;
   length: number;
-  numOfEngines: number;
+  numOfMotors: number;
   powerOfEngines: number;
   maxSpeed: number;
   reservationCancellationTerms?: string;
 
-  extraFavorsString:String;
+  extraFavorString:String;
 
 
   constructor(
@@ -47,6 +47,25 @@ export class BoatAddNewComponent implements OnInit {
   }
 
   addNewBoat() {
+
+
+    if(this.name == undefined || this.name.length == 0 ||
+      this.price == undefined || this.price == 0 ||
+      this.capacity == undefined || this.capacity == 0 ||
+      this.promoDescription == undefined || this.promoDescription.length == 0 ||
+      this.length == undefined || this.length == 0 ||
+      this.maxSpeed == undefined || this.maxSpeed == 0 ||
+      this.numOfMotors == undefined || this.numOfMotors == 0 ||
+      this.powerOfEngines == undefined || this.powerOfEngines == 0 ||
+      this.extraFavorString == undefined || this.extraFavorString.length == 0)
+      {
+        this.messageService.showMessage("Popunite polja",MessageType.ERROR);
+        return;
+      }
+
+
+
+    
     this.newBoat.name = this.name;
     this.newBoat.price = this.price;
     this.newBoat.capacity = this.capacity;
@@ -55,11 +74,11 @@ export class BoatAddNewComponent implements OnInit {
 
     this.newBoat.boatType = this.boatType;
     this.newBoat.length = this.length;
-    this.newBoat.numOfMotors = this.numOfEngines;
+    this.newBoat.numOfMotors = this.numOfMotors;
     this.newBoat.powerOfEngines = this.powerOfEngines;
     this.newBoat.reservationCancellationTerms = this.reservationCancellationTerms;
-    if(this.extraFavorsString != undefined){
-    this.newBoat.extraFavors = this.extraFavorsString.split(/\r?\n/).join("|");
+    if(this.extraFavorString != undefined){
+    this.newBoat.extraFavors = this.extraFavorString.split(/\r?\n/).join("|");
     }
     else{
       this.newBoat.extraFavors = "";
@@ -67,10 +86,6 @@ export class BoatAddNewComponent implements OnInit {
     this.newBoat.maxSpeed = this.maxSpeed;
 
     
-    this.boatService.addNewBoat(this.newBoat).subscribe(data =>{
-      this.messageService.showMessage("Uspešno ste dodali novi brod.",MessageType.SUCCESS);
-    });
-
     this.boatService.addNewBoat(this.newBoat).subscribe((data) => {
       this.messageService.showMessage(
         'Uspešno ste dodali novi brod.',

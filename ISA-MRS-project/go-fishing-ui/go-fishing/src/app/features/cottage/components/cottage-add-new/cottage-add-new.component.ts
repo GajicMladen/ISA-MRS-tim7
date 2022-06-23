@@ -22,6 +22,7 @@ export class CottageAddNewComponent implements OnInit {
   capacity: number;
   promoDescription: string;
   bedCount: number;
+  roomCount:number;
 
   extraFavorString: string;
   constructor(
@@ -39,11 +40,13 @@ export class CottageAddNewComponent implements OnInit {
 
   addNewCottage() {
 
-    if((this.name == undefined || this.name.length == 0) &&
-      this.price == 0 &&
-      this.capacity == 0 &&
-      (this.promoDescription == undefined || this.promoDescription.length == 0) &&
-      this.bedCount == 0)
+    if(this.name == undefined || this.name.length == 0 ||
+      this.price == undefined || this.price == 0 ||
+      this.capacity == undefined || this.capacity == 0 ||
+      this.promoDescription == undefined || this.promoDescription.length == 0 ||
+      this.bedCount == undefined || this.bedCount == 0 ||
+      this.roomCount == undefined || this.roomCount == 0 ||
+      this.extraFavorString == undefined || this.extraFavorString.length == 0)
       {
         this.messageService.showMessage("Popunite polja",MessageType.ERROR);
         return;
@@ -54,6 +57,7 @@ export class CottageAddNewComponent implements OnInit {
     this.newCottage.capacity = this.capacity;
     this.newCottage.description = this.promoDescription;
     this.newCottage.bedCount = this.bedCount;
+    this.newCottage.roomCount = this.roomCount;
     this.newCottage.ownerId = this.ownerId;
     if(this.extraFavorString != undefined){
     this.newCottage.extraFavors = this.extraFavorString
